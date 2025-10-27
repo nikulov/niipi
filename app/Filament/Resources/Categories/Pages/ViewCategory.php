@@ -9,6 +9,11 @@ use Filament\Resources\Pages\ViewRecord;
 class ViewCategory extends ViewRecord
 {
     protected static string $resource = CategoryResource::class;
+    
+    public function getTitle(): string
+    {
+        return __('panel.view_category');
+    }
 
     protected function getHeaderActions(): array
     {

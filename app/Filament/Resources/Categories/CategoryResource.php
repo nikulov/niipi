@@ -21,12 +21,26 @@ class CategoryResource extends Resource
     protected static ?string $model = Category::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
-
-    protected static ?string $recordTitleAttribute = 'title';
     
-    protected static ?string $navigationLabel = 'Категории';
+    public static function getModelLabel(): string
+    {
+        return __('panel.category');
+    }
     
-    protected static string|null|\UnitEnum $navigationGroup = 'Новости';
+    public static function getPluralModelLabel(): string
+    {
+        return __('panel.categories');
+    }
+    
+    public static function getNavigationLabel(): string
+    {
+        return __('panel.categories');
+    }
+    
+    public static function getNavigationGroup(): ?string
+    {
+        return __('panel.news');
+    }
     
     protected static ?int $navigationSort = 2;
 

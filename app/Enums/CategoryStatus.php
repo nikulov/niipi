@@ -23,9 +23,9 @@ enum CategoryStatus: string implements HasColor, HasLabel
     public function getLabel(): ?string
     {
         return match ($this) {
-            self::Draft => (__('Draft')),
-            self::Published => (__( 'Active' )),
-            self::Archived => (__( 'Archived' )),
+            self::Draft => (__('panel.draft')),
+            self::Published => (__( 'panel.active' )),
+            self::Archived => (__( 'panel.archived' )),
         };
     }
 }

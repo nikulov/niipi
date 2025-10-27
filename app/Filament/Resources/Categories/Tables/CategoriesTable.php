@@ -16,17 +16,17 @@ class CategoriesTable
     {
         return $table
             ->columns([
-                TextColumn::make('name')->label(__('Name'))
+                TextColumn::make('name')->label(__('panel.name'))
                     ->sortable()
                     ->searchable(),
-                TextColumn::make('status')->label(__('Status'))
+                TextColumn::make('status')->label(__('panel.status'))
                     ->sortable()
                     ->searchable()
                     ->badge(),
-                TextColumn::make('posts_count')->label(__('Posts count'))
+                TextColumn::make('posts_count')->label(__('panel.posts_count'))
                     ->sortable()
                     ->alignCenter(),
-                TextColumn::make('slug')->label(__('Slug'))
+                TextColumn::make('slug')->label(__('panel.slug'))
                     ->sortable()
                     ->searchable(),
             ])

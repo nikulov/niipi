@@ -21,11 +21,11 @@ class CategoryForm
     {
         return $schema
             ->components([
-                Fieldset::make('general')->label(__('General'))
+                Fieldset::make('general')->label(__('panel.general'))
                     ->columns(12)
                     ->columnSpanFull()
                     ->schema([
-                        TextInput::make('name')->label(__('Name'))
+                        TextInput::make('name')->label(__('panel.name'))
                             ->columnSpan(4)
                             ->required()
                             ->maxLength(255)
@@ -51,7 +51,7 @@ class CategoryForm
                             ->dehydrated()
                             ->unique(Category::class, 'slug', ignoreRecord: true)
                             ->maxLength(255),
-                        Select::make('status')->label(__('Status'))
+                        Select::make('status')->label(__('panel.status'))
                             ->required()
                             ->columnSpan(4)
                             ->options(CategoryStatus::class),
@@ -60,13 +60,13 @@ class CategoryForm
                     ->columns(12)
                     ->columnSpanFull()
                     ->schema([
-                        TextInput::make('meta_title')
+                        TextInput::make('meta_title')->label(__('panel.meta_title'))
                         ->columnSpan(6)
                         ->maxLength(500),
-                        Textarea::make('meta_keywords')
+                        Textarea::make('meta_keywords')->label(__('panel.meta_keywords'))
                         ->columnSpan(6)
                         ->maxLength(2000),
-                        Textarea::make('meta_description')
+                        Textarea::make('meta_description')->label(__('panel.meta_description'))
                         ->columnSpan(12),
                     ])
             ]);

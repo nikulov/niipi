@@ -17,18 +17,18 @@ class PostsTable
     {
         return $table
             ->columns([
-                TextColumn::make('title')->label(__('Title'))
+                TextColumn::make('title')->label(__('panel.title'))
                     ->limit(50)
                     ->sortable(),
-                TextColumn::make('status')->label(__('Status'))
+                TextColumn::make('status')->label(__('panel.status'))
                     ->badge(),
-                TextColumn::make('published_at')->label(__('Published At'))
+                TextColumn::make('published_at')->label(__('panel.published_at'))
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('created_at')->label(__('Created At'))
+                TextColumn::make('created_at')->label(__('panel.created_at'))
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')->label(__('Updated At'))
+                TextColumn::make('updated_at')->label(__('panel.updated_at'))
                     ->sortable()
                     ->formatStateUsing(function ($state) {
                         if (! $state) {return null;}
@@ -54,6 +54,6 @@ class PostsTable
                 ]),
             ])
             ->searchable(['title'])
-            ->searchPlaceholder(__('Search title'));
+            ->searchPlaceholder(__('panel.search_placeholder'));
     }
 }

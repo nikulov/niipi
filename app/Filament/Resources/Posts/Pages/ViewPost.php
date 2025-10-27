@@ -9,7 +9,11 @@ use Filament\Resources\Pages\ViewRecord;
 class ViewPost extends ViewRecord
 {
     protected static string $resource = PostResource::class;
-
+    
+    public function getTitle(): string
+    {
+        return __('panel.view_post');
+    }
     protected function getHeaderActions(): array
     {
         return [

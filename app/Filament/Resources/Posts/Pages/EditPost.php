@@ -17,7 +17,7 @@ class EditPost extends EditRecord
     {
         return [
             Actions\Action::make('save')
-                ->label(__('Save'))
+                ->label(__('panel.save'))
                 ->action(fn() => $this->save()),
             ViewAction::make(),
             DeleteAction::make(),
@@ -27,7 +27,7 @@ class EditPost extends EditRecord
     protected function getSavedNotification(): ?Notification
     {
         return Notification::make()
-        ->title(__( 'Post saved successfully' ))
+        ->title(__( 'panel.post_saved_successfully' ))
         ->icon('heroicon-o-check-circle')
         ->iconColor('success');
     }

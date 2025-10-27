@@ -25,21 +25,22 @@ class PostForm
     {
         return $schema
             ->components([
-                Fieldset::make('Settings')->label(__('Settings'))
+                Fieldset::make('settings')->label(__('panel.settings'))
                     ->columns(24)
                     ->columnSpanFull()
                     ->schema([
-                        TextInput::make('title')
+                        TextInput::make('title')->label(__('panel.title'))
                             ->required()
-                            ->columnSpan(9)
+                            ->columnSpan(24)
                             ->maxLength(500)
                             ->live(onBlur: true)
-                            ->afterStateUpdated(fn(Set $set, ?string $state) => $set('slug', Str::slug($state))),
-                        TextInput::make('slug')
+                            ->afterStateUpdated(
+                                fn(Set $set, ?string $state) => $set('slug', Str::slug($state))
+                            ),
+                        TextInput::make('slug')->label(__('panel.slug'))
                             ->maxLength(255)
-                            ->columnSpan(9)
+                            ->columnSpan(24)
                             ->prefix('niipigrad.ru/')
-                            ->label('Slug')
                             ->suffixActions([
                                 Action::make('open')
                                     ->icon('heroicon-o-globe-alt')
@@ -47,20 +48,27 @@ class PostForm
                                     ->hiddenLabel()
                                     ->url(fn($state) => $state ? url($state) : null)
                                     ->openUrlInNewTab()
-                                    ->tooltip(__('Open page in new tab'))
+                                    ->tooltip(__('panel.open_page_in_new_tab'))
                                     ->extraAttributes(['class' => 'text-green-500 [&>svg]:text-green-500']),
                             ])
                             ->disabled()
                             ->dehydrated()
                             ->unique(Post::class, 'slug', ignoreRecord: true)
                             ->maxLength(255),
-                        Select::make('status')
-                            ->columnSpan(6)
-                            ->required()
-                            ->options(PostStatus::class)
-                            ->default(PostStatus::Draft),
-                        FileUpload::make('thumbnail')
-                            ->columnSpan(18)
+                        Group::make()->schema([
+                            Select::make('status')->label(__('panel.status'))
+                                ->columnSpan(6)
+                                ->required()
+                                ->options(PostStatus::class)
+                                ->default(PostStatus::Draft),
+                            Select::make('category_id')->label(__('panel.category'))
+                                ->multiple()
+                                ->preload()
+                                ->relationship('category', 'name')
+                                ->columnSpan(6),
+                        ])->columnSpan(8),
+                        FileUpload::make('thumbnail')->label(__('panel.thumbnail'))
+                            ->columnSpan(16)
                             ->getUploadedFileNameForStorageUsing(
                                 fn($file) => str(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME))
                                     ->slug()
@@ -90,51 +98,47 @@ class PostForm
                                 '1:1',
                             ])
                             ->maxSize(1024), // 1MB
-                        Select::make('category_id')->label(__('Category'))
-                            ->multiple()
-                            ->preload()
-                            ->relationship('category', 'name')
-                            ->columnSpan(6),
                     ]),
-                Fieldset::make('seo')->label(__('SEO'))
+                Fieldset::make('seo')->label(__('panel.seo'))
                     ->columns(12)
                     ->columnSpanFull()
                     ->schema([
-                        TextInput::make('meta_title')
+                        TextInput::make('meta_title')->label(__('panel.meta_title'))
                             ->columnSpan(6)
                             ->maxLength(500),
-                        Textarea::make('meta_keywords')
+                        Textarea::make('meta_keywords')->label(__('panel.meta_keywords'))
                             ->columnSpan(6)
                             ->maxLength(2000),
-                        Textarea::make('meta_description')
+                        Textarea::make('meta_description')->label(__('panel.meta_description'))
                             ->columnSpan(12)
                     ]),
-                Builder::make('content')->label(__('Content'))
-                    ->deleteAction(fn(Action $action) => $action->requiresConfirmation())
+                Builder::make('content')->label(__('panel.content'))
+                    ->deleteAction(
+                        fn(Action $action) => $action->requiresConfirmation()
+                    )
                     ->columnSpanFull()
                     ->reorderableWithButtons()
-                    ->addActionLabel(__('Add block'))
+                    ->addActionLabel(__('panel.add_block'))
                     ->blocks([
-                        Block::make('heading')->label(__('Heading'))
+                        Block::make('heading')->label(__('panel.heading'))
                             ->schema([
-                                TextInput::make('content')
-                                    ->label(__('Heading'))
+                                TextInput::make('content')->label(__('panel.heading'))
                                     ->required(),
-                                Select::make('heading_size')
+                                Select::make('heading_size')->label(__('panel.heading_size'))
                                     ->options([
-                                        'h2' => 'Heading 2',
-                                        'h3' => 'Heading 3',
-                                        'h4' => 'Heading 4',
-                                        'h5' => 'Heading 5',
-                                        'h6' => 'Heading 6',
+                                        'h2' => __('panel.heading') . ' 2',
+                                        'h3' => __('panel.heading') . ' 3',
+                                        'h4' => __('panel.heading') . ' 4',
+                                        'h5' => __('panel.heading') . ' 5',
+                                        'h6' => __('panel.heading') . ' 6',
                                     ])
                                     ->required(),
                             ])
                             ->columns(2),
-                        Block::make('paragraph')->label(__('Paragraph'))
+                        Block::make('paragraph')->label(__('panel.paragraph'))
                             ->schema([
                                 RichEditor::make('content')
-                                    ->label(__('Paragraph'))
+                                    ->label(__('panel.paragraph'))
                                     ->required()
                                     ->toolbarButtons([
                                         ['bold', 'italic', 'underline', 'strike', 'subscript', 'superscript', 'link'],
@@ -154,12 +158,12 @@ class PostForm
                                         ['undo', 'redo'],
                                     ])
                             ]),
-                        Block::make('image')->label(__('Image'))
+                        Block::make('image')->label(__('panel.image'))
                             ->columns(2)
                             ->schema([
                                 FileUpload::make('url')
                                     ->columnSpan(1)
-                                    ->label(__('Choose image'))
+                                    ->label(__('panel.choose_image'))
                                     ->getUploadedFileNameForStorageUsing(
                                         fn($file) => str(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME))
                                             ->slug()
@@ -181,21 +185,20 @@ class PostForm
                                     ])
                                     ->required(),
                                 Group::make()->schema([
-                                    TextInput::make('alt')
-                                        ->label(__('Alt text'))
+                                    TextInput::make('alt')->label(__('panel.alt_text'))
                                         ->required(),
-                                    Select::make('alignment')->label(__('Alignment'))
+                                    Select::make('alignment')->label(__('panel.alignment'))
                                         ->options([
-                                            'left' => 'Left',
-                                            'center' => 'Center',
-                                            'right' => 'Right',
+                                            'left' => __('panel.left'),
+                                            'center' => __('panel.center'),
+                                            'right' => __('panel.right'),
                                         ])
                                 ])->columnSpan(1),
                             
                             ]),
-                        Block::make('galery')->label(__('Galery'))
+                        Block::make('galery')->label(__('panel.gallery'))
                             ->schema([
-                                FileUpload::make('url')->label(__('Choose images'))
+                                FileUpload::make('url')->label(__('panel.choose_images'))
                                     ->required()
                                     ->multiple()
                                     ->getUploadedFileNameForStorageUsing(
