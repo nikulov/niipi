@@ -43,6 +43,7 @@ class PostForm
                             ->suffixActions([
                                 Action::make('open')
                                     ->icon('heroicon-o-globe-alt')
+                                    ->color('success')
                                     ->hiddenLabel()
                                     ->url(fn($state) => $state ? url($state) : null)
                                     ->openUrlInNewTab()
