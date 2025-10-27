@@ -60,12 +60,12 @@ class PostForm
                             ->options(PostStatus::class)
                             ->default(PostStatus::Draft),
                         FileUpload::make('thumbnail')
-                            ->columnSpan(12)
+                            ->columnSpan(18)
                             ->getUploadedFileNameForStorageUsing(
                                 fn($file) => str(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME))
                                     ->slug()
                                     ->limit(20)
-                                    ->append('-' . time() . '.'.$file->getClientOriginalExtension())
+                                    ->append('-' . time() . '.' . $file->getClientOriginalExtension())
                                     ->toString()
                             )
                             ->moveFiles()
@@ -89,8 +89,12 @@ class PostForm
                                 '4:3',
                                 '1:1',
                             ])
-                            ->maxSize(1024) // 1MB
-                    
+                            ->maxSize(1024), // 1MB
+                        Select::make('category_id')->label(__('Category'))
+                            ->multiple()
+                            ->preload()
+                            ->relationship('category', 'name')
+                            ->columnSpan(6),
                     ]),
                 Fieldset::make('seo')->label(__('SEO'))
                     ->columns(12)
@@ -160,7 +164,7 @@ class PostForm
                                         fn($file) => str(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME))
                                             ->slug()
                                             ->limit(20)
-                                            ->append('-' . time() . '.'.$file->getClientOriginalExtension())
+                                            ->append('-' . time() . '.' . $file->getClientOriginalExtension())
                                             ->toString()
                                     )
                                     ->moveFiles()
@@ -198,7 +202,7 @@ class PostForm
                                         fn($file) => str(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME))
                                             ->slug()
                                             ->limit(20)
-                                            ->append('-' . time() . '.'.$file->getClientOriginalExtension())
+                                            ->append('-' . time() . '.' . $file->getClientOriginalExtension())
                                             ->toString()
                                     )
                                     ->moveFiles()

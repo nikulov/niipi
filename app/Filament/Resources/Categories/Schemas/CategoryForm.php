@@ -52,9 +52,9 @@ class CategoryForm
                             ->unique(Category::class, 'slug', ignoreRecord: true)
                             ->maxLength(255),
                         Select::make('status')->label(__('Status'))
+                            ->required()
                             ->columnSpan(4)
-                            ->options(CategoryStatus::class)
-                            ->default(CategoryStatus::Draft),
+                            ->options(CategoryStatus::class),
                     ]),
                 Fieldset::make('seo')->label(__('SEO'))
                     ->columns(12)

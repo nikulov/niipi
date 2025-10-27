@@ -25,4 +25,9 @@ class Post extends Model
         'published_at' => 'datetime',
         'status' => PostStatus::class,
     ];
+    
+    public function category(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Category::class);
+    }
 }

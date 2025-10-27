@@ -19,4 +19,9 @@ class Category extends Model
     protected $casts = [
         'status' => CategoryStatus::class,
     ];
+    
+    public function posts(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->BelongsToMany(Post::class);
+    }
 }
