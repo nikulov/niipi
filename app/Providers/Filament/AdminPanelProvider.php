@@ -25,15 +25,18 @@ class AdminPanelProvider extends PanelProvider
     {
         return $panel
             ->default()
+            ->favicon(asset('images/favicon.ico'))
             ->id('admin')
             ->path('admin')
             ->login()
+            ->globalSearch(false)
             ->viteTheme('resources/css/filament/admin/theme.css')
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => Color::Cyan,
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
+            ->collapsibleNavigationGroups(false)
             ->pages([
                 Dashboard::class,
             ])
