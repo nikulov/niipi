@@ -47,6 +47,8 @@ return [
     'posts_count' => 'Количество постов',
     'category_saved_successfully' => 'Категория успешно сохранена',
     'page_saved_successfully' => 'Страница успешно сохранена',
+    'post_saved_successfully'=> 'Новость успешно сохранена',
+    'post_created_successfully' => 'Новость успешно создана',
     'settings' => 'Настройки',
     'open_page_in_new_tab' => 'Открыть страницу в новой вкладке',
     'left' => 'Слева',
