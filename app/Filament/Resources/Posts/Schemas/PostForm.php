@@ -30,6 +30,7 @@ class PostForm
                     ->columnSpanFull()
                     ->schema([
                         TextInput::make('title')
+                            ->required()
                             ->columnSpan(9)
                             ->maxLength(500)
                             ->live(onBlur: true)
@@ -59,7 +60,26 @@ class PostForm
                             ->default(PostStatus::Draft),
                         FileUpload::make('thumbnail')
                             ->columnSpan(12)
-                            ->preserveFilenames()
+                            ->getUploadedFileNameForStorageUsing(
+                                fn($file) => str(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME))
+                                    ->slug()
+                                    ->limit(20)
+                                    ->append('-' . time() . '.'.$file->getClientOriginalExtension())
+                                    ->toString()
+                            )
+                            ->moveFiles()
+                            ->disk('public')
+//                            ->directory(
+//                                fn(callable $get) => $get('slug')
+//                                    ? "gallery/posts/{$get('slug')}" : 'gallery/posts/default'
+//                            )
+//                            ->directory(fn($record) =>
+//                            $record?->id
+//                                ? "gallery/posts/{$record->id}"
+//                                : "gallery/posts/__default"
+//                            )
+                            ->directory('gallery/posts/default')
+                            ->visibility('public')
                             ->image()
                             ->imageEditor()
                             ->imageEditorAspectRatios([
@@ -88,6 +108,7 @@ class PostForm
                     ->deleteAction(fn(Action $action) => $action->requiresConfirmation())
                     ->columnSpanFull()
                     ->reorderableWithButtons()
+                    ->addActionLabel(__('Add block'))
                     ->blocks([
                         Block::make('heading')->label(__('Heading'))
                             ->schema([
@@ -134,7 +155,17 @@ class PostForm
                                 FileUpload::make('url')
                                     ->columnSpan(1)
                                     ->label(__('Choose image'))
-                                    ->preserveFilenames()
+                                    ->getUploadedFileNameForStorageUsing(
+                                        fn($file) => str(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME))
+                                            ->slug()
+                                            ->limit(20)
+                                            ->append('-' . time() . '.'.$file->getClientOriginalExtension())
+                                            ->toString()
+                                    )
+                                    ->moveFiles()
+                                    ->disk('public')
+                                    ->directory('gallery/posts/default')
+                                    ->visibility('public')
                                     ->image()
                                     ->imageEditor()
                                     ->imageEditorAspectRatios([
@@ -160,8 +191,19 @@ class PostForm
                         Block::make('galery')->label(__('Galery'))
                             ->schema([
                                 FileUpload::make('url')->label(__('Choose images'))
+                                    ->required()
                                     ->multiple()
-                                    ->preserveFilenames()
+                                    ->getUploadedFileNameForStorageUsing(
+                                        fn($file) => str(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME))
+                                            ->slug()
+                                            ->limit(20)
+                                            ->append('-' . time() . '.'.$file->getClientOriginalExtension())
+                                            ->toString()
+                                    )
+                                    ->moveFiles()
+                                    ->disk('public')
+                                    ->directory('gallery/posts/default')
+                                    ->visibility('public')
                                     ->image()
                                     ->imageEditor()
                                     ->imageEditorAspectRatios([
@@ -172,6 +214,8 @@ class PostForm
                                     ])
                                     ->panelLayout('grid')
                                     ->reorderable()
+                                    ->minFiles(2)
+                                    ->maxFiles(20)
                                     ->maxSize(2048) // 2MB
                             
                             ])
