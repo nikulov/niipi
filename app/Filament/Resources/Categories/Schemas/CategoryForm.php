@@ -11,7 +11,9 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Fieldset;
+use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
+use Illuminate\Support\Str;
 
 class CategoryForm
 {
@@ -26,7 +28,10 @@ class CategoryForm
                         TextInput::make('name')->label(__('Name'))
                             ->columnSpan(4)
                             ->required()
-                            ->maxLength(255),
+                            ->maxLength(255)
+                        ->live(onBlur: true)
+                        ->afterStateUpdated(fn(Set $set, ?string $state) => $set('slug', Str::slug($state))),
+                        
                         TextInput::make('slug')
                             ->columnSpan(4)
                             ->maxLength(255)
