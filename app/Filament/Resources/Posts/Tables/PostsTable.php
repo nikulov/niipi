@@ -22,6 +22,8 @@ class PostsTable
                     ->sortable(),
                 TextColumn::make('status')->label(__('panel.status'))
                     ->badge(),
+                TextColumn::make('category.name')->label(__('panel.category'))
+                ->badge(),
                 TextColumn::make('published_at')->label(__('panel.published_at'))
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -31,7 +33,9 @@ class PostsTable
                 TextColumn::make('updated_at')->label(__('panel.updated_at'))
                     ->sortable()
                     ->formatStateUsing(function ($state) {
-                        if (! $state) {return null;}
+                        if (!$state) {
+                            return null;
+                        }
                         $date = Carbon::parse($state);
                         $hours = $date->diffInHours(now());
                         if ($hours > 6) {
@@ -44,9 +48,15 @@ class PostsTable
                 //
             ])
             ->recordActions([
-                ViewAction::make(),
-                EditAction::make(),
-                DeleteAction::make(),
+                ViewAction::make()->label(__(''))
+                    ->iconSize('md')
+                    ->tooltip(__('panel.view_post')),
+                EditAction::make()->label(__(''))
+                    ->iconSize('md')
+                    ->tooltip(__('panel.edit_post')),
+                DeleteAction::make()->label(__(''))
+                    ->iconSize('md')
+                    ->tooltip(__('panel.delete_post')),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

@@ -34,9 +34,15 @@ class CategoriesTable
                 //
             ])
             ->recordActions([
-                ViewAction::make(),
-                EditAction::make(),
-                DeleteAction::make(),
+                ViewAction::make()->label(__(''))
+                    ->iconSize('md')
+                    ->tooltip(__('panel.view_category')),
+                EditAction::make()->label(__(''))
+                    ->iconSize('md')
+                    ->tooltip(__('panel.edit_category')),
+                DeleteAction::make()->label(__(''))
+                    ->iconSize('md')
+                    ->tooltip(__('panel.delete_category')),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
