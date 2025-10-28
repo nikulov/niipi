@@ -31,4 +31,9 @@ class EditCategory extends EditRecord
             ->icon('heroicon-o-check-circle')
             ->iconColor('success');
     }
+    
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
+    }
 }
