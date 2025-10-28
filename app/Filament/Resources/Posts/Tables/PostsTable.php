@@ -18,7 +18,9 @@ class PostsTable
         return $table
             ->columns([
                 TextColumn::make('title')->label(__('panel.title'))
-                    ->limit(50)
+                    ->limit(150)
+                    ->searchable()
+                    ->wrap()
                     ->sortable(),
                 TextColumn::make('status')->label(__('panel.status'))
                     ->badge(),
