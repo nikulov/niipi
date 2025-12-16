@@ -64,4 +64,8 @@ return [
     'view' => 'View',
     'heading_size' => 'Heading size',
     'thumbnail' => 'Thumbnail',
+    'filter' => 'Filter',
+    'created_from' => 'Created from',
+    'created_until' => 'Created until',
+    
 ];
