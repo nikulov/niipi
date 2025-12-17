@@ -9,6 +9,7 @@ use App\Blocks\Renderers\CardsBlockWithButtonRenderer;
 use App\Blocks\Renderers\ImageTittleFullWidthRenderer;
 use App\Blocks\Renderers\InfoBlockWithAchievementsRenderer;
 use App\Blocks\Renderers\InfoBlockWithButtonsRenderer;
+use App\Blocks\Renderers\NewsBlockRenderer;
 use App\Blocks\Renderers\SliderFullWidthRenderer;
 
 
@@ -24,7 +25,7 @@ final class BlockRenderRegistry
             ImageTittleFullWidthRenderer::key() => ImageTittleFullWidthRenderer::class,
             InfoBlockWithAchievementsRenderer::key() => InfoBlockWithAchievementsRenderer::class,
             InfoBlockWithButtonsRenderer::key() => InfoBlockWithButtonsRenderer::class,
-            
+            NewsBlockRenderer::key() => NewsBlockRenderer::class,
             SliderFullWidthRenderer::key() => SliderFullWidthRenderer::class,
             
             

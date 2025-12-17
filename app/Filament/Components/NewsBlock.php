@@ -5,6 +5,7 @@ namespace App\Filament\Components;
 
 use App\Filament\Forms\Components\UrlInput;
 use Filament\Forms\Components\Builder\Block;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\TextInput;
 
 
@@ -38,7 +39,17 @@ final class NewsBlock
                 UrlInput::make('btn_url')->label(__(key: 'panel.btn_url'))
                     ->columnSpan(5)
                     ->required()
-                    ->default('news')
+                    ->default('news'),
+                FileUpload::make('bgImageUrl')->label(__(key: 'panel.bg_image'))
+                    ->columnSpan(12)
+                    ->preserveFilenames()
+                    ->disk('public')
+                    ->directory('images/')
+                    ->visibility('public')
+                    ->image()
+                    ->imageEditor()
+                    ->imageEditorAspectRatios([null, '16:9'])
+                    ->required(),
             ]);
     }
     
