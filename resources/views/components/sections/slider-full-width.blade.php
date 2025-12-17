@@ -40,7 +40,7 @@
                     >
                         <div class="max-w-1290 w-full mx-auto flex flex-row flex-wrap items-center justify-start gap-10 py-16">
                             <img src="{{public_asset($slide['iconUrl'])}}" class="hidden md:block w-[120px]" alt="{{$slide['iconAlt']}}"/>
-                            <h1 class="text-white">{{$slide['title']}}</h1>
+                            <h1 class="text-white max-w-[900px]">{{$slide['title']}}</h1>
                         </div>
                     </div>
                 </div>
