@@ -20,7 +20,7 @@ final class CardsBlockWithButtonRenderer implements BlockRenderer
             'cards' => array_values((array)($data['cards'] ?? [])),
         ];
         
-        return view('components.pages.cards-block-with-button',
+        return view('components.sections.cards-block-with-button',
             [
                 'cards' => $cards,
             ]

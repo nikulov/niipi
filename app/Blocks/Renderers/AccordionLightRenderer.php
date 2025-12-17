@@ -19,7 +19,7 @@ final class AccordionLightRenderer implements BlockRenderer
             'accordions' => array_values((array)($data['accordions'] ?? [])),
         ];
         
-        return view('components.pages.accordion-light',
+        return view('components.sections.accordion-light',
             [
                 'accordions' => $accordions,
             ]

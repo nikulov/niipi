@@ -20,7 +20,7 @@ final class AccordionRenderer implements BlockRenderer
         ];
         
         
-        return view('components.pages.accordion',
+        return view('components.sections.accordion',
             [
                 'accordions' => $accordions,
             ]

@@ -15,7 +15,7 @@ final class SliderFullWidthRenderer implements BlockRenderer
         
         $sliders = array_values((array)($data['sliders'] ?? []));
         
-        return view('components.pages.slider-full-width',
+        return view('components.sections.slider-full-width',
             [
                 'sliders' => $sliders,
             ]

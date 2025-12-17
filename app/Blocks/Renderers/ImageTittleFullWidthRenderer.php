@@ -12,6 +12,6 @@ final class ImageTittleFullWidthRenderer implements BlockRenderer
     
     public function render(array $data, Page $page, int $index): string
     {
-        return view('components.pages.image-title-full-width', $data)->render();
+        return view('components.sections.image-title-full-width', $data)->render();
     }
 }

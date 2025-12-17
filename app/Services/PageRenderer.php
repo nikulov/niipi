@@ -13,11 +13,11 @@ class PageRenderer
     public function render(Page $page, int $ttl = 600): HtmlString
     {
         $cacheKey = $this->makeCacheKey($page, 'all');
-        
+
         $html = Cache::remember($cacheKey, $ttl, function () use ($page) {
             return $this->renderBlocksForSection($page, null);
         });
-        
+
         return new HtmlString($html);
     }
     

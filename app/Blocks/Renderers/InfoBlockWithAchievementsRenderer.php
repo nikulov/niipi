@@ -12,6 +12,6 @@ final class InfoBlockWithAchievementsRenderer implements BlockRenderer
     
     public function render(array $data, Page $page, int $index): string
     {
-        return view('components.pages.info-block-with-achievements', $data)->render();
+        return view('components.sections.info-block-with-achievements', $data)->render();
     }
 }
