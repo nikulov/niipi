@@ -26,7 +26,9 @@ class MenuResource extends Resource
     
     protected static ?string $navigationLabel = 'Меню';
     
-    protected static string|null|\UnitEnum $navigationGroup = 'Settings';
+    protected static string|null|\UnitEnum $navigationGroup = 'Настройки';
+    
+    protected static ?int $navigationSort = 1;
 
     public static function form(Schema $schema): Schema
     {

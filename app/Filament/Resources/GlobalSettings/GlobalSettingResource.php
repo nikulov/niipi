@@ -23,7 +23,9 @@ class GlobalSettingResource extends Resource
     
     protected static ?string $navigationLabel = 'Глобальные настройки';
     
-    protected static string|null|\UnitEnum $navigationGroup = 'Settings';
+    protected static string|null|\UnitEnum $navigationGroup = 'Настройки';
+    
+    protected static ?int $navigationSort = 2;
     
     public static function form(Schema $schema): Schema
     {
