@@ -28,4 +28,14 @@ enum PageStatus: string implements HasColor, HasLabel
             self::Archived => ('Архив'),
         };
     }
+    
+    public function getIcon(): ?string
+    {
+        return match ($this) {
+            self::Draft => 'heroicon-o-pencil-square',
+            self::Published => 'heroicon-o-check-circle',
+            self::Archived => 'heroicon-o-x-circle',
+        };
+        
+    }
 }
