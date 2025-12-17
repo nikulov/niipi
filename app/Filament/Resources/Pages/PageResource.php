@@ -20,9 +20,13 @@ class PageResource extends Resource
 {
     protected static ?string $model = Page::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::DocumentText;
 
     protected static ?string $recordTitleAttribute = 'Page';
+    
+    protected static ?string $navigationLabel = 'Страницы';
+    
+    protected static string|null|\UnitEnum $navigationGroup = 'Страницы';
 
     public static function form(Schema $schema): Schema
     {
