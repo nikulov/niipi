@@ -10,7 +10,7 @@ function initSlider()
     if (!sliderEl) return;
 
     const slider = new Swiper(sliderEl, {
-        modules: [Navigation, Pagination, Autoplay,],
+        modules: [Navigation, Pagination, Autoplay],
         direction: 'horizontal',
         loop: true,
         speed: 1000,
