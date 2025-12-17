@@ -12,18 +12,6 @@ final class CardsBlockWithButtonRenderer implements BlockRenderer
     
     public function render(array $data, Page $page, int $index): string
     {
-        
-        $cards = [
-            'title' => $data['title'] ?? '',
-            'btnUrl' => $data['btnUrl'] ?? '',
-            'btnLabel' => $data['btnLabel'] ?? '',
-            'cards' => array_values((array)($data['cards'] ?? [])),
-        ];
-        
-        return view('components.sections.cards-block-with-button',
-            [
-                'cards' => $cards,
-            ]
-        )->render();
+        return view('components.sections.cards-block-with-button', $data)->render();
     }
 }

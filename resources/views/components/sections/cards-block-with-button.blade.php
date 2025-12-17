@@ -1,7 +1,7 @@
 @props([
-    'title' => '// УСЛУГИ',
-    'btnUrl' => '#',
-    'btnLabel' => 'все услуги',
+    'title' => '',
+    'btnUrl' => '',
+    'btnLabel' => '',
     'cards' =>
     [
         [
@@ -41,11 +41,13 @@
 
 <section class="container flex flex-col mx-auto my-inner-section-y px-inner-section-x max-w-1242 w-full">
     
-    <h2 class="mb-after-title text-primary">{{$title}}</h2>
+    @if($title)
+        <h2 class="mb-after-title text-primary">{{$title}}</h2>
+    @endif
     
     <div class="flex flex-row flex-wrap gap-[37px] justify-between">
         
-        @foreach($cards['cards'] as $card)
+        @foreach($cards as $card)
             <x-other.small-card-button btn-url="{{$card['cardBtnUrl']}}"
                                        btn-label="{{$card['cardBtnLabel']}}"
                                        card-title="{{$card['cardTitle']}}"
@@ -53,13 +55,15 @@
             />
         @endforeach
         
-        <div class="relative flex justify-end items-end max-w-[368px] w-full">
-            <x-buttons.btn url="{{$btnUrl}}"
-                           text="{{$btnLabel}}"
-                           type="btn-primary"
-            />
-        </div>
-        
-    </div>
+        @if($btnLabel && $btnUrl)
+            <div class="relative flex justify-end items-end max-w-[368px] w-full">
+                <x-buttons.btn url="{{$btnUrl}}"
+                               text="{{$btnLabel}}"
+                               type="btn-primary"
+                />
+            </div>
+        @endif
     
+    </div>
+
 </section>

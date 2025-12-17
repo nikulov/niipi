@@ -29,7 +29,6 @@ final class CardsBlockWithButton
                     ->trim()
                     ->columnSpanFull(),
                 CustomRepeater::make('cards')->label('')
-                    ->maxItems(5)
                     ->grid(3)
                     ->hiddenLabel()
                     ->itemLabel(fn(array $state): string => $state['title'] ?? __(key: 'panel.card'))
@@ -57,12 +56,9 @@ final class CardsBlockWithButton
                     ]),
                 TextInput::make('btnLabel')->label(__(key: 'panel.btn_label'))
                     ->columnSpan(12)
-                    ->trim()
-                    ->required(),
+                    ->trim(),
                 UrlInput::make('btnUrl')->label(__(key: 'panel.btn_url'))
-                    ->columnSpan(12)
-                    ->required(),
-            
+                    ->columnSpan(12),
             ])->columns(24);
     }
     
