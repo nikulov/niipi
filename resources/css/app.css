@@ -350,48 +350,48 @@
         background-color: theme('colors.accent') !important;
     }
 
-    .acc-description ul {
+    .rich-editor ul {
         @apply list-disc pl-6;
     }
 
-    .acc-description a {
+    .rich-editor a {
         @apply underline;
     }
 
-    .acc-description p {
+    .rich-editor p {
         @apply mb-4;
     }
 
-    .acc-description ol {
+    .rich-editor ol {
         @apply list-decimal pl-6;
     }
 
-    .acc-description ol p {
+    .rich-editor ol p {
         @apply mb-0;
     }
 
-    .acc-description table {
+    .rich-editor table {
         @apply w-full mt-4 mb-4 border-collapse;
     }
 
-    .acc-description th,
-    .acc-description td {
+    .rich-editor th,
+    .rich-editor td {
         @apply  border border-gray-200 p-3 align-top;
     }
 
-    .acc-description th {
+    .rich-editor th {
         @apply font-bold text-left bg-gray-300;
     }
 
-    .acc-description tbody tr:nth-child(even) td {
+    .rich-editor tbody tr:nth-child(even) td {
         @apply bg-gray-50;
     }
 
-    .acc-description td p,
-    .acc-description th p {
+    .rich-editor td p,
+    .rich-editor th p {
         @apply mb-0;
     }
-    .dark .acc-description {
+    .dark .rich-editor {
         --table-border: oklch(0.4 0 0);
         --table-head-bg: oklch(0.25 0 0);
         --table-row-alt: oklch(0.22 0 0);

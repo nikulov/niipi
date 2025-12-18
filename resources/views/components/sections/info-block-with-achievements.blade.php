@@ -42,7 +42,7 @@
                 
                 <h2 class="mb-after-title text-primary">{{$title}}</h2>
                 
-                <div class="text-normal ">
+                <div class="rich-editor text-normal">
                     {!!$description!!}
                 </div>
             
