@@ -7,6 +7,7 @@ use App\Filament\Components\AccordionLight;
 use App\Filament\Components\CardsBlockWithButton;
 use App\Filament\Components\Gallery;
 use App\Filament\Components\ImageFull;
+use App\Filament\Components\ImageText;
 use App\Filament\Components\ImageTittleFullWidth;
 use App\Filament\Components\InfoBlockWithAchievements;
 use App\Filament\Components\InfoBlockWithButtons;
@@ -28,6 +29,7 @@ final class BlockRegistry
             CardsBlockWithButton::block(),
             Gallery::block(),
             ImageFull::block(),
+            ImageText::block(),
             ImageTittleFullWidth::block(),
             InfoBlockWithAchievements::block(),
             InfoBlockWithButtons::block(),
@@ -56,6 +58,7 @@ final class BlockRegistry
             CardsBlockWithButton::block(),
             Gallery::block(),
             ImageFull::block(),
+            ImageText::block(),
             InfoBlockWithAchievements::block(),
             InfoBlockWithButtons::block(),
             TextFull::block(),
@@ -80,6 +83,7 @@ final class BlockRegistry
             CardsBlockWithButton::key() => CardsBlockWithButton::view(),
             Gallery::key() => Gallery::view(),
             ImageFull::key() => ImageFull::view(),
+            ImageText::key() => ImageText::view(),
             ImageTittleFullWidth::key() => ImageTittleFullWidth::view(),
             InfoBlockWithAchievements::key() => InfoBlockWithAchievements::view(),
             InfoBlockWithButtons::key() => InfoBlockWithButtons::view(),

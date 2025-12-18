@@ -1,7 +1,8 @@
 @props(
     [
-        'src' => 'images/content/Zykova-1-500x39.png',
+        'url' => 'images/image 2.jpg',
         'alt'=> 'alt',
+        'position' => '1',
         'content' => '27 ноября 2025 года на площадке НИУ МГСУ начал свою работу Седьмой  Объединенный Евразийский конгресс «ТИМ-сообщество. Люди. Технологии.  Стратегия». <br> <br>
         Главный градостроитель нашего Института Надежда Николаевна Зыкова приняла  участие в работе сессии «Информационное моделирование в  градостроительной деятельности и развитие ГИСОГД».<br> <br>
         Сессия прошла при поддержке Оргкомитета Совета главных архитекторов им. А.В. Кузьмина Союза архитекторов России.<br> <br>
@@ -13,11 +14,13 @@
 <div class="w-full max-w-1242 mx-auto my-inner-section-y px-inner-section-x
             grid grid-cols-1 md:grid-cols-3 gap-12 items-center">
     
-    <div class="md:col-span-1 flex items-center h-full">
-        <img src="{{$src}}" alt="{{$alt}}" class="w-full h-full object-cover">
+    <div class="md:col-span-1 flex items-center h-full"
+        style="order: {{$position}}"
+    >
+        <img src="{{public_asset($url)}}" alt="{{$alt}}" class="w-full h-full object-cover">
     </div>
     
-    <div class="md:col-span-2 text-justify text-normal text-text">
+    <div class="md:col-span-2 order-1 text-justify text-normal text-text">
         {!! $content !!}
     </div>
 

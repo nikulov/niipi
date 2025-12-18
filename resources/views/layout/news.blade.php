@@ -12,6 +12,7 @@
 @section('main_section')
 
     
+    <x-sections.image-text/>
     <x-sections.image-full/>
     <x-sections.title/>
     <x-sections.text-full/>

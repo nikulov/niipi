@@ -8,6 +8,7 @@ use App\Blocks\Renderers\AccordionRenderer;
 use App\Blocks\Renderers\CardsBlockWithButtonRenderer;
 use App\Blocks\Renderers\GalleryRenderer;
 use App\Blocks\Renderers\ImageFullRenderer;
+use App\Blocks\Renderers\ImageTextRenderer;
 use App\Blocks\Renderers\ImageTittleFullWidthRenderer;
 use App\Blocks\Renderers\InfoBlockWithAchievementsRenderer;
 use App\Blocks\Renderers\InfoBlockWithButtonsRenderer;
@@ -15,6 +16,7 @@ use App\Blocks\Renderers\NewsBlockRenderer;
 use App\Blocks\Renderers\SliderFullWidthRenderer;
 use App\Blocks\Renderers\TextFullRenderer;
 use App\Blocks\Renderers\TitleRenderer;
+use App\Filament\Components\ImageText;
 
 
 final class BlockRenderRegistry
@@ -28,6 +30,7 @@ final class BlockRenderRegistry
             CardsBlockWithButtonRenderer::key() => CardsBlockWithButtonRenderer::class,
             GalleryRenderer::key() => GalleryRenderer::class,
             ImageFullRenderer::key() => ImageFullRenderer::class,
+            ImageText::key() => ImageTextRenderer::class,
             ImageTittleFullWidthRenderer::key() => ImageTittleFullWidthRenderer::class,
             InfoBlockWithAchievementsRenderer::key() => InfoBlockWithAchievementsRenderer::class,
             InfoBlockWithButtonsRenderer::key() => InfoBlockWithButtonsRenderer::class,
