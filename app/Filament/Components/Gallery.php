@@ -32,7 +32,7 @@ final class Gallery
                     )
                     ->moveFiles()
                     ->disk('public')
-                    ->directory('gallery/posts/default')
+                    ->directory('images')
                     ->visibility('public')
                     ->image()
                     ->imageEditor()
