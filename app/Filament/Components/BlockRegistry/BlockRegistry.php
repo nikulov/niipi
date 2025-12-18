@@ -1,7 +1,18 @@
 <?php
 
-namespace App\Filament\Components;
+namespace App\Filament\Components\BlockRegistry;
 
+use App\Filament\Components\Accordion;
+use App\Filament\Components\AccordionLight;
+use App\Filament\Components\CardsBlockWithButton;
+use App\Filament\Components\Gallery;
+use App\Filament\Components\ImageTittleFullWidth;
+use App\Filament\Components\InfoBlockWithAchievements;
+use App\Filament\Components\InfoBlockWithButtons;
+use App\Filament\Components\NewsBlock;
+use App\Filament\Components\ProjectsBlock;
+use App\Filament\Components\SliderFullWidth;
+use App\Filament\Components\TextFull;
 use Filament\Forms\Components\Builder\Block;
 
 final class BlockRegistry
@@ -20,6 +31,7 @@ final class BlockRegistry
             NewsBlock::block(),
             ProjectsBlock::block(),
             SliderFullWidth::block(),
+            TextFull::block(),
         
         ];
     }
@@ -41,6 +53,7 @@ final class BlockRegistry
             Gallery::block(),
             InfoBlockWithAchievements::block(),
             InfoBlockWithButtons::block(),
+            TextFull::block(),
         ];
     }
     
@@ -66,6 +79,7 @@ final class BlockRegistry
             NewsBlock::key() => NewsBlock::view(),
             ProjectsBlock::key() => ProjectsBlock::view(),
             SliderFullWidth::key() => SliderFullWidth::view(),
+            TextFull::key() => TextFull::view(),
         
         
         ];

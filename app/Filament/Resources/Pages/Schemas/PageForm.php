@@ -3,7 +3,7 @@
 namespace App\Filament\Resources\Pages\Schemas;
 
 use App\Enums\PageStatus;
-use App\Filament\Components\BlockRegistry;
+use App\Filament\Components\BlockRegistry\BlockRegistry;
 use App\Filament\Forms\Components\UrlInput;
 use App\Models\Page;
 use Filament\Actions\Action;
