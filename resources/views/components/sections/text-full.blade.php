@@ -7,7 +7,7 @@
     ]
 )
 
-<div class="max-w-1242 w-full mx-auto my-inner-section-y px-inner-section-x text-normal text-text text-justify whitespace-pre-wrap">
+<div class="max-w-1242 w-full mx-auto my-inner-section-y px-inner-section-x text-normal text-text text-justify">
     
     {!! $textFull !!}
     
