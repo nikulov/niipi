@@ -12,11 +12,16 @@ class PageController extends Controller
         if ($slug === null || $slug === '/' || $slug === 'home') {
             $slug = 'home';
         }
-        
+
         $slug = ltrim($slug, '/');
         $page = Page::query()->where('slug', $slug)->firstOrFail();
-        
+
         return view('layout.page', compact('page'));
+    }
+    
+    public function news()
+    {
+        return view('layout.news');
     }
     
 }
