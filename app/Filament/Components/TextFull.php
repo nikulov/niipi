@@ -4,7 +4,6 @@
 namespace App\Filament\Components;
 
 use Filament\Forms\Components\Builder\Block;
-use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
 
 

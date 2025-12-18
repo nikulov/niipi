@@ -4,12 +4,8 @@
 namespace App\Filament\Components;
 
 use Filament\Forms\Components\Builder\Block;
-use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\TextInput;
-
 
 final class Title
 {

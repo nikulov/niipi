@@ -22,7 +22,6 @@ final class InfoBlockWithButtons
         return Block::make(self::key())->label(__('panel.info-block-with-buttons'))
             ->columnSpanFull()
             ->schema([
-                
                 TextInput::make('title')->label(__(key: 'panel.title'))
                     ->columnSpanFull()
                     ->required(),
