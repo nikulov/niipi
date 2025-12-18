@@ -11,7 +11,9 @@
 
 @section('main_section')
 
+    
     <x-sections.image-full/>
+    <x-sections.title/>
     <x-sections.text-full/>
     <x-sections.gallery/>
     

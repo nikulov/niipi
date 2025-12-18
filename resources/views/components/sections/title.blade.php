@@ -6,5 +6,5 @@
 )
 
 <{{$type}}
-        class="text-center max-w-1242 w-full mx-auto my-inner-section-y px-inner-section-x text-primary"
+        class="text-center max-w-1242 w-full mx-auto my-inner-section-y px-inner-section-x text-primary whitespace-pre-wrap"
 >{{$title}}</{{$type}}>

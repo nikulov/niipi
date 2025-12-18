@@ -14,6 +14,7 @@ use App\Filament\Components\NewsBlock;
 use App\Filament\Components\ProjectsBlock;
 use App\Filament\Components\SliderFullWidth;
 use App\Filament\Components\TextFull;
+use App\Filament\Components\Title;
 use Filament\Forms\Components\Builder\Block;
 
 final class BlockRegistry
@@ -34,6 +35,7 @@ final class BlockRegistry
             ProjectsBlock::block(),
             SliderFullWidth::block(),
             TextFull::block(),
+            Title::block(),
         
         ];
     }
@@ -57,6 +59,7 @@ final class BlockRegistry
             InfoBlockWithAchievements::block(),
             InfoBlockWithButtons::block(),
             TextFull::block(),
+            Title::block(),
         ];
     }
     
@@ -84,6 +87,7 @@ final class BlockRegistry
             ProjectsBlock::key() => ProjectsBlock::view(),
             SliderFullWidth::key() => SliderFullWidth::view(),
             TextFull::key() => TextFull::view(),
+            Title::key() => Title::view(),
         
         
         ];
