@@ -6,6 +6,7 @@ use App\Filament\Components\Accordion;
 use App\Filament\Components\AccordionLight;
 use App\Filament\Components\CardsBlockWithButton;
 use App\Filament\Components\Gallery;
+use App\Filament\Components\ImageFull;
 use App\Filament\Components\ImageTittleFullWidth;
 use App\Filament\Components\InfoBlockWithAchievements;
 use App\Filament\Components\InfoBlockWithButtons;
@@ -25,6 +26,7 @@ final class BlockRegistry
             AccordionLight::block(),
             CardsBlockWithButton::block(),
             Gallery::block(),
+            ImageFull::block(),
             ImageTittleFullWidth::block(),
             InfoBlockWithAchievements::block(),
             InfoBlockWithButtons::block(),
@@ -51,6 +53,7 @@ final class BlockRegistry
             AccordionLight::block(),
             CardsBlockWithButton::block(),
             Gallery::block(),
+            ImageFull::block(),
             InfoBlockWithAchievements::block(),
             InfoBlockWithButtons::block(),
             TextFull::block(),
@@ -73,6 +76,7 @@ final class BlockRegistry
             AccordionLight::key() => AccordionLight::view(),
             CardsBlockWithButton::key() => CardsBlockWithButton::view(),
             Gallery::key() => Gallery::view(),
+            ImageFull::key() => ImageFull::view(),
             ImageTittleFullWidth::key() => ImageTittleFullWidth::view(),
             InfoBlockWithAchievements::key() => InfoBlockWithAchievements::view(),
             InfoBlockWithButtons::key() => InfoBlockWithButtons::view(),

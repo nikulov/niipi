@@ -7,6 +7,7 @@ use App\Blocks\Renderers\AccordionLightRenderer;
 use App\Blocks\Renderers\AccordionRenderer;
 use App\Blocks\Renderers\CardsBlockWithButtonRenderer;
 use App\Blocks\Renderers\GalleryRenderer;
+use App\Blocks\Renderers\ImageFullRenderer;
 use App\Blocks\Renderers\ImageTittleFullWidthRenderer;
 use App\Blocks\Renderers\InfoBlockWithAchievementsRenderer;
 use App\Blocks\Renderers\InfoBlockWithButtonsRenderer;
@@ -25,6 +26,7 @@ final class BlockRenderRegistry
             AccordionLightRenderer::key() => AccordionLightRenderer::class,
             CardsBlockWithButtonRenderer::key() => CardsBlockWithButtonRenderer::class,
             GalleryRenderer::key() => GalleryRenderer::class,
+            ImageFullRenderer::key() => ImageFullRenderer::class,
             ImageTittleFullWidthRenderer::key() => ImageTittleFullWidthRenderer::class,
             InfoBlockWithAchievementsRenderer::key() => InfoBlockWithAchievementsRenderer::class,
             InfoBlockWithButtonsRenderer::key() => InfoBlockWithButtonsRenderer::class,
