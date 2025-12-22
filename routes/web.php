@@ -1,14 +1,11 @@
 <?php
 
-use App\Http\Controllers\PageController;
+use App\Http\Controllers\ContentController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [PageController::class, 'index'])->name('home');
+Route::get('/', [ContentController::class, 'page'])->name('home');
+Route::get('/news/{slug}', [ContentController::class, 'post'])->name('news.show');
 
-Route::get('/news-test', [PageController::class, 'news'])->name('page.news');
-
-
-
-Route::get('/{slug}', [PageController::class,'index'])
-    ->where('slug','^(?!admin|api|login|register).+')
+Route::get('/{slug}', [ContentController::class, 'page'])
+    ->where('slug', '^(?!admin|api|login|register).+')
     ->name('page.index');

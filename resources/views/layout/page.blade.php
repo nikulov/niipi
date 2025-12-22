@@ -1,16 +1,15 @@
 @extends('layout.base')
-@php use App\Services\PageRenderer; @endphp
 
 @section('page.title', $page -> title ?? 'TEST')
 
 @section('top_section')
-    {!! app(PageRenderer::class)->renderSection($page, 'top_section') !!}
+    {!! $renderer->renderSection($page, 'top') !!}
 @endsection
 
 @section('main_section')
-    {!! app(PageRenderer::class)->renderSection($page, 'main_section') !!}
+    {!! $renderer->renderSection($page, 'main') !!}
 @endsection
 
 @section('bottom_section')
-    {!! app(PageRenderer::class)->renderSection($page, 'bottom_section') !!}
+    {!! $renderer->renderSection($page, 'bottom') !!}
 @endsection

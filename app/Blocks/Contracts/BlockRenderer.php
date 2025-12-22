@@ -13,5 +13,5 @@ interface BlockRenderer
     public static function version(): string;
     
     /** Return rendered HTML of the block */
-    public function render(array $data, Page $page, int $index): string;
+    public function render(array $data, HasBlockSections $model, int $index): string;
 }
