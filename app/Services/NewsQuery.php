@@ -11,15 +11,15 @@ final class NewsQuery
     public function latest(int $limit = 4, ?array $categoryIds = null): Collection
     {
         $query = Post::query()
-            ->select(['id', 'title','description', 'slug', 'thumbnail', 'published_at'])
-            ->with(['categories:id,name,slug'])
+            ->with('categories')
             ->where('status', PostStatus::Published)
             ->orderByDesc('published_at');
         
         if ($categoryIds && $categoryIds !== []) {
-            $query->whereHas('categories', function ($q) use ($categoryIds) {
-                $q->whereIn('categories.id', $categoryIds);
-            });
+            $query->whereHas(
+                'categories',
+                fn ($q) => $q->whereIn('categories.id', $categoryIds)
+            );
         }
         
         return $query->limit($limit)->get();

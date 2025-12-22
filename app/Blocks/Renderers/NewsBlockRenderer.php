@@ -4,6 +4,7 @@ namespace App\Blocks\Renderers;
 
 use App\Blocks\Contracts\BlockRenderer;
 use App\Blocks\Contracts\HasBlockSections;
+use App\Presenters\Blocks\NewsBlockPresenter;
 use App\Services\NewsQuery;
 
 final class NewsBlockRenderer implements BlockRenderer
@@ -20,10 +21,11 @@ final class NewsBlockRenderer implements BlockRenderer
         
         $posts = $this->newsQuery->latest($limit, null);
         
+        $cards = $posts->map(fn ($post) => NewsBlockPresenter::make($post))->toArray();
+        
         return view('components.sections.news-block', [
             'data' => $data,
-            'posts' => $posts,
+            'cards' => $cards,
         ])->render();
     }
-    
 }
