@@ -221,7 +221,7 @@
     }
 
     .btn-secondary-text {
-        @apply text-white;
+        @apply text-white group-hover:text-accent;
     }
 
     .btn-secondary-bg {

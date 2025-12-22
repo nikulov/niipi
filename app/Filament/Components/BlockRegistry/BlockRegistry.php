@@ -12,6 +12,7 @@ use App\Filament\Components\ImageTittleFullWidth;
 use App\Filament\Components\InfoBlockWithAchievements;
 use App\Filament\Components\InfoBlockWithButtons;
 use App\Filament\Components\NewsBlock;
+use App\Filament\Components\NewsFull;
 use App\Filament\Components\ProjectsBlock;
 use App\Filament\Components\SliderFullWidth;
 use App\Filament\Components\TextFull;
@@ -34,6 +35,7 @@ final class BlockRegistry
             InfoBlockWithAchievements::block(),
             InfoBlockWithButtons::block(),
             NewsBlock::block(),
+            NewsFull::block(),
             ProjectsBlock::block(),
             SliderFullWidth::block(),
             TextFull::block(),
@@ -61,6 +63,7 @@ final class BlockRegistry
             ImageText::block(),
             InfoBlockWithAchievements::block(),
             InfoBlockWithButtons::block(),
+            NewsFull::block(),
             TextFull::block(),
             Title::block(),
         ];
@@ -88,6 +91,7 @@ final class BlockRegistry
             InfoBlockWithAchievements::key() => InfoBlockWithAchievements::view(),
             InfoBlockWithButtons::key() => InfoBlockWithButtons::view(),
             NewsBlock::key() => NewsBlock::view(),
+            NewsFull::key() => NewsFull::view(),
             ProjectsBlock::key() => ProjectsBlock::view(),
             SliderFullWidth::key() => SliderFullWidth::view(),
             TextFull::key() => TextFull::view(),

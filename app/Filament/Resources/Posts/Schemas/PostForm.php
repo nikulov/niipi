@@ -83,6 +83,7 @@ class PostForm
                                     ->toString()
                             )
                             ->moveFiles()
+                            ->default('gallery/posts/default/temp-image-dark2-1766411627.jpg')
                             ->disk('public')
                             ->directory('gallery/posts/default')
                             ->visibility('public')
