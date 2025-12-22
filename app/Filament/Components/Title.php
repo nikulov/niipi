@@ -22,6 +22,7 @@ final class Title
             ->schema([
                 Textarea::make('title')->label(__('panel.heading'))
                     ->rows(2)
+                    ->columnSpanFull()
                     ->trim()
                     ->required(),
                 Select::make('type')->label(__('panel.heading_size'))
@@ -32,8 +33,18 @@ final class Title
                         'h5' => __('panel.heading') . ' 5',
                         'h6' => __('panel.heading') . ' 6',
                     ])
-                    ->required(),
-            ]);
+                    ->required()
+                    ->columnSpan(6),
+                Select::make('position')->label(__('panel.position_title'))
+                    ->default('left')
+                    ->options([
+                        'left' => __('panel.left'),
+                        'center' => __('panel.center'),
+                        'right' => __('panel.right'),
+                    ])
+                    ->required()
+                    ->columnSpan(6),
+            ])->columns(12);
     }
     
     /** Blade view for frontend */
