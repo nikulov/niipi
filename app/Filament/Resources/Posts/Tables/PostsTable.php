@@ -33,7 +33,7 @@ class PostsTable
                 TextColumn::make('status')->label(__('panel.status'))
                     ->badge()
                     ->icon(fn (PostStatus $state) => $state->getIcon()),
-                TextColumn::make('category.name')->label(__('panel.category'))
+                TextColumn::make('categories.name')->label(__('panel.category'))
                     ->badge(),
                 TextColumn::make('published_at')->label(__('panel.published_at'))
                     ->sortable()
@@ -63,7 +63,7 @@ class PostsTable
                     ->preload(),
                 SelectFilter::make('category_id')->label(__('panel.category'))
                     ->columnSpan(3)
-                    ->relationship('category', 'name')
+                    ->relationship('categories', 'name')
                     ->multiple()
                     ->preload(),
                 Filter::make('created_at')

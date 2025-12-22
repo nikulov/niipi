@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\CategoryStatus;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Category extends Model
 {
@@ -20,8 +21,8 @@ class Category extends Model
         'status' => CategoryStatus::class,
     ];
     
-    public function posts(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function posts(): BelongsToMany
     {
-        return $this->BelongsToMany(Post::class);
+        return $this->belongsToMany(Post::class);
     }
 }

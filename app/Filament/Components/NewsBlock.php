@@ -27,16 +27,16 @@ final class NewsBlock
                     ->columnSpan(3)
                     ->default(__(key: 'panel.news'))
                     ->required(),
-                TextInput::make('quantity')->label(__(key: 'pane.quantity'))
+                TextInput::make('limit')->label(__(key: 'pane.limit'))
                     ->columnSpan(1)
                     ->numeric()
                     ->default(4)
                     ->required(),
-                TextInput::make('btn_label')->label(__(key: 'panel.btn_label'))
+                TextInput::make('btnLabel')->label(__(key: 'panel.btn_label'))
                     ->columnSpan(3)
                     ->default(__(key: 'panel.all_news'))
                     ->required(),
-                UrlInput::make('btn_url')->label(__(key: 'panel.btn_url'))
+                UrlInput::make('btnUrl')->label(__(key: 'panel.btn_url'))
                     ->columnSpan(5)
                     ->required()
                     ->default('news'),
@@ -44,7 +44,7 @@ final class NewsBlock
                     ->columnSpan(12)
                     ->preserveFilenames()
                     ->disk('public')
-                    ->directory('images/')
+                    ->directory('images')
                     ->visibility('public')
                     ->image()
                     ->imageEditor()

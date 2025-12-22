@@ -28,17 +28,24 @@ class PostForm
                     ->columns(24)
                     ->columnSpanFull()
                     ->schema([
-                        TextInput::make('title')->label(__('panel.title'))
+                        Textarea::make('title')->label(__('panel.title'))
                             ->required()
+                            ->trim()
                             ->columnSpan(24)
                             ->maxLength(500)
                             ->live(onBlur: true)
                             ->afterStateUpdated(
                                 fn(Set $set, ?string $state) => $set('slug', Str::slug($state))
                             ),
+                        Textarea::make('description')->label(__('panel.description'))
+                            ->required()
+                            ->trim()
+                            ->columnSpan(24)
+                            ->maxLength(1000),
                         TextInput::make('slug')->label(__('panel.slug'))
                             ->maxLength(255)
                             ->columnSpan(24)
+                            ->trim()
                             ->prefix('niipigrad.ru/news/')
                             ->suffixActions([
                                 Action::make('open')
@@ -63,7 +70,7 @@ class PostForm
                             Select::make('category_id')->label(__('panel.category'))
                                 ->multiple()
                                 ->preload()
-                                ->relationship('category', 'name')
+                                ->relationship('categories', 'name')
                                 ->columnSpan(6),
                         ])->columnSpan(8),
                         FileUpload::make('thumbnail')->label(__('panel.thumbnail'))
@@ -95,12 +102,15 @@ class PostForm
                     ->schema([
                         TextInput::make('meta_title')->label(__('panel.meta_title'))
                             ->columnSpan(6)
+                            ->trim()
                             ->maxLength(500),
                         Textarea::make('meta_keywords')->label(__('panel.meta_keywords'))
                             ->columnSpan(6)
+                            ->trim()
                             ->maxLength(2000),
                         Textarea::make('meta_description')->label(__('panel.meta_description'))
                             ->columnSpan(12)
+                            ->trim(),
                     ]),
                 Fieldset::make('top_items')->label(__('Top section'))
                     ->columnSpanFull()

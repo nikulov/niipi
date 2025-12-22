@@ -1,38 +1,45 @@
 @props([
-    'title' => '// новости',
-    'btnUrl' => '#',
-    'btnText' => 'все новости',
-    'bgImageUrl' => '/resources/images/layout/bg-news.png',
-    'newsDate' => '01.01.2026',
-    'newsUrl' => '#',
-    'newsTitle' => 'Заголовок новости',
-    'newsDescription' => 'Многие думают, что Lorem Ipsum - взятый с потолка псевдо-латинский набор слов, но это не совсем так. Его корни уходят в один фрагмент классической латыни 45 года н.э., то есть более двух тысячелетий назад. Ричард МакКлинток, профессор латыни из колледжа Hampden-Sydney, штат Вирджиния, взял одно из самых странных слов в Lorem Ipsum, "consectetur", и занялся его поисками в классической латинской литературе.',
+    'title' => '',
+    'btnUrl' => '',
+    'btnLabel' => '',
+    'bgImageUrl' => '',
+    'posts' => [
+        [
+            'published_at' => '01.01.2026',
+            'slug' => '#',
+            'title' => 'Заголовок новости',
+            'description' => 'Многие думают, что Lorem Ipsum - взятый с потолка псевдо-латинский набор слов, но это не совсем так. Его корни уходят в один фрагмент классической латыни 45 года н.э., то есть более двух тысячелетий назад. Ричард МакКлинток, профессор латыни из колледжа Hampden-Sydney, штат Вирджиния, взял одно из самых странных слов в Lorem Ipsum, "consectetur", и занялся его поисками в классической латинской литературе.',
+        ],
+        
+    ],
+    
+    
 ])
 
-<x-layout.section-full bg-image-url="{{$bgImageUrl}}">
+<x-layout.section-full bg-image-url="{{$data['bgImageUrl']}}">
     <h2 class="text-white">{{$title}}</h2>
     
     <div class="grid grid-cols-1 md:grid-cols-2 gap-y-10 gap-x-32">
-        @for($news = 1; $news <= 4; $news++)
+        @foreach($posts as $post)
             <article class="relative w-full">
-                <h3 class="text-white pb-1 border-b border-b-white ">
-                    {{$newsTitle}}
+                <h3 class="text-white pb-1 border-b border-b-white line-clamp-2 whitespace-normal">
+                    {{$post['title']}}
                 </h3>
                 
                 <p class="mt-5 text-normal text-white line-clamp-4">
-                    {{$newsDescription}}
+                    {{$post['description']}}
                 </p>
                 
                 <div class="mt-6 flex items-end justify-between gap-4">
                     <span class="text-small text-accent-add">
-                        {{$newsDate}}
+                        {{$post['published_at']}}
                     </span>
-                    <x-buttons.btn-more url="{{$newsUrl}}" text="подробнее"/>
+                    <x-buttons.btn-more url="{{'news/' . $post['slug']}}" text="подробнее"/>
                 </div>
             </article>
-        @endfor
+            @endforeach
     </div>
     
-    <x-buttons.btn url="{{$btnUrl}}" text="{{$btnText}}" type="btn-secondary" class="self-end"/>
+    <x-buttons.btn url="{{$data['btnUrl']}}" text="{{$data['btnLabel']}}" type="btn-secondary" class="self-end"/>
 </x-layout.section-full>
 
