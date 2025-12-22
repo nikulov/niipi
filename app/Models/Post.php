@@ -10,8 +10,6 @@ class Post extends Model implements HasBlockSections
 {
     protected $fillable = [
         'title',
-        'content',
-        'category_id',
         'slug',
         'thumbnail',
         'status',
@@ -19,10 +17,15 @@ class Post extends Model implements HasBlockSections
         'meta_title',
         'meta_keywords',
         'meta_description',
+        'top_section',
+        'main_section',
+        'bottom_section',
     ];
     
     protected $casts = [
-        'content' => 'array',
+        'top_section' => 'array',
+        'main_section' => 'array',
+        'bottom_section' => 'array',
         'published_at' => 'datetime',
         'status' => PostStatus::class,
     ];
