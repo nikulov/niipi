@@ -5,11 +5,13 @@ namespace App\Models;
 use App\Blocks\Contracts\HasBlockSections;
 use App\Enums\PostStatus;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Post extends Model implements HasBlockSections
 {
     protected $fillable = [
         'title',
+        'description',
         'slug',
         'thumbnail',
         'status',
@@ -30,7 +32,7 @@ class Post extends Model implements HasBlockSections
         'status' => PostStatus::class,
     ];
     
-    public function category(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function categories(): BelongsToMany
     {
         return $this->belongsToMany(Category::class);
     }
