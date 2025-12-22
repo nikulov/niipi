@@ -53,6 +53,7 @@ class PagesTable
                         return $date->diffForHumans();
                     }),
             ])
+            ->defaultSort('updated_at', 'desc')
             ->filters([
                 SelectFilter::make('status')->label(__('panel.status'))
                     ->columnSpan(3)
