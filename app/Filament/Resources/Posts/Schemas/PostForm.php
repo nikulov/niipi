@@ -4,12 +4,11 @@ namespace App\Filament\Resources\Posts\Schemas;
 
 
 use App\Enums\PostStatus;
+use App\Filament\Components\BlockRegistry\BlockRegistry;
 use App\Models\Post;
 use Filament\Actions\Action;
 use Filament\Forms\Components\Builder;
-use Filament\Forms\Components\Builder\Block;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -40,13 +39,13 @@ class PostForm
                         TextInput::make('slug')->label(__('panel.slug'))
                             ->maxLength(255)
                             ->columnSpan(24)
-                            ->prefix('niipigrad.ru/')
+                            ->prefix('niipigrad.ru/news/')
                             ->suffixActions([
                                 Action::make('open')
                                     ->icon('heroicon-o-globe-alt')
                                     ->color('success')
                                     ->hiddenLabel()
-                                    ->url(fn($state) => $state ? url($state) : null)
+                                    ->url(fn ($state) => $state ? url('news/' . ltrim($state, '/')) : null)
                                     ->openUrlInNewTab()
                                     ->tooltip(__('panel.open_page_in_new_tab'))
                                     ->extraAttributes(['class' => 'text-green-500 [&>svg]:text-green-500']),
@@ -78,15 +77,6 @@ class PostForm
                             )
                             ->moveFiles()
                             ->disk('public')
-//                            ->directory(
-//                                fn(callable $get) => $get('slug')
-//                                    ? "gallery/posts/{$get('slug')}" : 'gallery/posts/default'
-//                            )
-//                            ->directory(fn($record) =>
-//                            $record?->id
-//                                ? "gallery/posts/{$record->id}"
-//                                : "gallery/posts/__default"
-//                            )
                             ->directory('gallery/posts/default')
                             ->visibility('public')
                             ->image()
@@ -97,7 +87,7 @@ class PostForm
                                 '4:3',
                                 '1:1',
                             ])
-                            ->maxSize(1024), // 1MB
+                            ->maxSize(2048), // 2MB
                     ]),
                 Fieldset::make('seo')->label(__('panel.seo'))
                     ->columns(12)
@@ -112,122 +102,43 @@ class PostForm
                         Textarea::make('meta_description')->label(__('panel.meta_description'))
                             ->columnSpan(12)
                     ]),
-                Builder::make('content')->label(__('panel.content'))
-                    ->deleteAction(
-                        fn(Action $action) => $action->requiresConfirmation()
-                    )
+                Fieldset::make('top_items')->label(__('Top section'))
                     ->columnSpanFull()
-                    ->reorderableWithButtons()
-                    ->addActionLabel(__('panel.add_block'))
-                    ->blocks([
-                        Block::make('heading')->label(__('panel.heading'))
-                            ->schema([
-                                TextInput::make('content')->label(__('panel.heading'))
-                                    ->required(),
-                                Select::make('heading_size')->label(__('panel.heading_size'))
-                                    ->options([
-                                        'h2' => __('panel.heading') . ' 2',
-                                        'h3' => __('panel.heading') . ' 3',
-                                        'h4' => __('panel.heading') . ' 4',
-                                        'h5' => __('panel.heading') . ' 5',
-                                        'h6' => __('panel.heading') . ' 6',
-                                    ])
-                                    ->required(),
-                            ])
-                            ->columns(2),
-                        Block::make('paragraph')->label(__('panel.paragraph'))
-                            ->schema([
-                                RichEditor::make('content')
-                                    ->label(__('panel.paragraph'))
-                                    ->required()
-                                    ->toolbarButtons([
-                                        ['bold', 'italic', 'underline', 'strike', 'subscript', 'superscript', 'link'],
-                                        [
-                                            'h2',
-                                            'h3',
-                                            'textColor',
-                                            'highlight',
-                                            'horizontalRule',
-                                            'alignStart',
-                                            'alignCenter',
-                                            'alignEnd',
-                                            'grid'
-                                        ],
-                                        ['blockquote', 'codeBlock', 'bulletList', 'orderedList'],
-                                        ['table', 'attachFiles'],
-                                        ['undo', 'redo'],
-                                    ])
-                            ]),
-                        Block::make('image')->label(__('panel.image'))
-                            ->columns(2)
-                            ->schema([
-                                FileUpload::make('url')
-                                    ->columnSpan(1)
-                                    ->label(__('panel.choose_image'))
-                                    ->getUploadedFileNameForStorageUsing(
-                                        fn($file) => str(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME))
-                                            ->slug()
-                                            ->limit(20)
-                                            ->append('-' . time() . '.' . $file->getClientOriginalExtension())
-                                            ->toString()
-                                    )
-                                    ->moveFiles()
-                                    ->disk('public')
-                                    ->directory('gallery/posts/default')
-                                    ->visibility('public')
-                                    ->image()
-                                    ->imageEditor()
-                                    ->imageEditorAspectRatios([
-                                        null,
-                                        '16:9',
-                                        '4:3',
-                                        '1:1',
-                                    ])
-                                    ->required(),
-                                Group::make()->schema([
-                                    TextInput::make('alt')->label(__('panel.alt_text'))
-                                        ->required(),
-                                    Select::make('alignment')->label(__('panel.alignment'))
-                                        ->options([
-                                            'left' => __('panel.left'),
-                                            'center' => __('panel.center'),
-                                            'right' => __('panel.right'),
-                                        ])
-                                ])->columnSpan(1),
-                            
-                            ]),
-                        Block::make('galery')->label(__('panel.gallery'))
-                            ->schema([
-                                FileUpload::make('url')->label(__('panel.choose_images'))
-                                    ->required()
-                                    ->multiple()
-                                    ->getUploadedFileNameForStorageUsing(
-                                        fn($file) => str(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME))
-                                            ->slug()
-                                            ->limit(20)
-                                            ->append('-' . time() . '.' . $file->getClientOriginalExtension())
-                                            ->toString()
-                                    )
-                                    ->moveFiles()
-                                    ->disk('public')
-                                    ->directory('gallery/posts/default')
-                                    ->visibility('public')
-                                    ->image()
-                                    ->imageEditor()
-                                    ->imageEditorAspectRatios([
-                                        null,
-                                        '16:9',
-                                        '4:3',
-                                        '1:1',
-                                    ])
-                                    ->panelLayout('grid')
-                                    ->reorderable()
-                                    ->minFiles(2)
-                                    ->maxFiles(20)
-                                    ->maxSize(2048) // 2MB
-                            
-                            ])
+                    ->schema([
+                        Builder::make('top_section')->label('')
+                            ->deleteAction(
+                                fn(Action $action) => $action->requiresConfirmation(),
+                            )
+                            ->hiddenLabel()
+                            ->reorderableWithButtons()
+                            ->columnSpanFull()
+                            ->blocks(BlockRegistry::topSection())
                     ]),
+                Fieldset::make('main_items')->label(__('Main section'))
+                    ->columnSpanFull()
+                    ->schema([
+                        Builder::make('main_section')->label('')
+                            ->deleteAction(
+                                fn(Action $action) => $action->requiresConfirmation(),
+                            )
+                            ->hiddenLabel()
+                            ->reorderableWithButtons()
+                            ->columnSpanFull()
+                            ->blocks(BlockRegistry::mainSection())
+                    ]),
+                Fieldset::make('bottom_items')->label(__('Bottom section'))
+                    ->columnSpanFull()
+                    ->schema([
+                        Builder::make('bottom_section')->label('')
+                            ->deleteAction(
+                                fn(Action $action) => $action->requiresConfirmation(),
+                            )
+                            ->hiddenLabel()
+                            ->reorderableWithButtons()
+                            ->columnSpanFull()
+                            ->blocks(BlockRegistry::bottomSection())
+                    ])
+            
             ]);
     }
 }
