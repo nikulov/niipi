@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use App\Models\GlobalSetting;
+use App\Models\Post;
+use App\Observers\PostObserver;
 use Filament\Notifications\Livewire\Notifications;
 use Filament\Support\Enums\Alignment;
 use Filament\Support\Enums\VerticalAlignment;
@@ -24,6 +26,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Post::observe(PostObserver::class);
+        
         Notifications::alignment(Alignment::End);
         Notifications::verticalAlignment(VerticalAlignment::End);
         
