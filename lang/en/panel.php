@@ -120,4 +120,20 @@ return [
     'code_body_bottom' => 'Code at the end of <body>',
     'limit' => 'Limit',
     'category_created_successfully' => 'Category created successfully',
+    // Menus (Resources/Menus/Schemas/MenuForm.php)
+    'top_menu' => 'Top menu',
+    'top_menu_items' => 'Top menu items',
+    'add_top_menu_item' => 'Add top menu item',
+    'sub_menu_items' => 'Submenu items',
+    'add_sub_menu_item' => 'Add submenu item',
+    'footer_menu' => 'Footer menu',
+    'footer_menu_items' => 'Footer menu items',
+    'add_footer_menu_item' => 'Add footer menu item',
+    'type_link' => 'Link type',
+    'page' => 'Page',
+    'custom_url' => 'Custom URL',
+    'label' => 'Label',
+    // Footer (Resources/Footers/Schemas/FooterForm.php)
+    'social-icon' => 'Social icon',
+    'url' => 'URL',
 ];

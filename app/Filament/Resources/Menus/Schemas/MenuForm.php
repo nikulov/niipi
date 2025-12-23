@@ -20,11 +20,12 @@ class MenuForm
     {
         return $schema
             ->components([
-                Fieldset::make('top_menu')->label('Top menu')
+                Fieldset::make('top_menu')->label(__(key: 'panel.top_menu'))
                     ->columns(2)
                     ->columnSpanFull()
                     ->schema([
-                        CustomRepeater::make('top_items')->label('menu items')
+                        
+                        CustomRepeater::make('top_items')->label(__(key: 'panel.top_menu_items'))
                             ->hiddenLabel()
                             ->maxItems(5)
                             ->columns(24)
@@ -35,7 +36,7 @@ class MenuForm
                             ->collapsible()
                             ->collapsed()
                             ->reorderableWithButtons()
-                            ->addActionLabel('Добавить пункт меню')
+                            ->addActionLabel(__(key: 'panel.add_top_menu_item'))
                             ->deleteAction(
                                 fn(Action $action) => $action->requiresConfirmation(),
                             )
@@ -43,7 +44,7 @@ class MenuForm
                                 
                                 ...self::menuItemSchema(),
                                 
-                                CustomRepeater::make('children')->label(__('panel.Sub-menu-items'))
+                                CustomRepeater::make('children')->label(__('panel.sub_menu_items'))
                                     ->maxItems(5)
                                     ->columns(24)
                                     ->columnSpanFull()
@@ -53,18 +54,20 @@ class MenuForm
                                     ->collapsible()
                                     ->collapsed()
                                     ->reorderableWithButtons()
-                                    ->addActionLabel('Добавить подпункт')
+                                    ->addActionLabel(__(key: 'panel.add_sub_menu_item'))
                                     ->deleteAction(
                                         fn(Action $action) => $action->requiresConfirmation(),
                                     )
                                     ->schema(self::menuItemSchema())
                             ])
                     ]),
-                Fieldset::make('footer_menu')->label('footer menu')
+                
+                Fieldset::make('footer_menu')->label(__(key: 'panel.footer_menu'))
                     ->columns(2)
                     ->columnSpanFull()
                     ->schema([
-                        CustomRepeater::make('footer_items')->label('menu items')
+                        
+                        CustomRepeater::make('footer_items')->label(__(key: 'panel.footer_menu_items'))
                             ->hiddenLabel()
                             ->maxItems(10)
                             ->columns(24)
@@ -75,7 +78,7 @@ class MenuForm
                             ->collapsible()
                             ->collapsed()
                             ->reorderableWithButtons()
-                            ->addActionLabel('Добавить пункт меню')
+                            ->addActionLabel(__(key: 'panel.add_footer_menu_item'))
                             ->deleteAction(
                                 fn(Action $action) => $action->requiresConfirmation(),
                             )
@@ -99,7 +102,7 @@ class MenuForm
     {
         return [
             
-            Select::make('type')->label('Link type')
+            Select::make('type')->label(__('panel.type_link'))
                 ->columnSpan(5)
                 ->options([
                     'page' => 'Page',
@@ -109,7 +112,7 @@ class MenuForm
                 ->required()
                 ->live(),
             
-            Select::make('page_slug')->label('Page')
+            Select::make('page_slug')->label(__(key: 'panel.page'))
                 ->live()
                 ->columnSpan(7)
                 ->options(fn() => static::getPageOptions())
@@ -122,20 +125,20 @@ class MenuForm
                     $set('label', $title);
                 }),
             
-            UrlInput::make('url')->label('Custom URL')
+            UrlInput::make('url')->label(__(key: 'panel.custom_url'))
                 ->columnSpan(7)
                 ->required()
                 ->placeholder('/about')
                 ->visible(fn(callable $get): bool => $get('type') === 'custom')
                 ->required(fn(callable $get): bool => $get('type') === 'custom'),
             
-            TextInput::make('label')->label('Label')
+            TextInput::make('label')->label(__(key: 'panel.label'))
                 ->live()
                 ->columnSpan(7)
                 ->required()
                 ->maxLength(255),
             
-            Toggle::make('blank')->label('Open in new tab')
+            Toggle::make('blank')->label(__(key: 'panel.open_page_in_new_tab'))
                 ->columnSpan(5)
                 ->inline(false)
                 ->default(false)

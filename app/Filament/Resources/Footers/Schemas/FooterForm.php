@@ -42,10 +42,10 @@ class FooterForm
                         fn(Action $action) => $action->requiresConfirmation(),
                     )
                     ->maxItems(20)
-                    ->itemLabel(fn(array $state): string => $state['title'] ?? __('panel.social-icon'))
+                    ->itemLabel(fn(array $state): string => $state['title'] ?? __('panel.social_icon'))
                     ->reorderableWithButtons()
                     ->cloneable()
-                    ->addActionLabel(__(key: 'panel.add-social-icon'))
+                    ->addActionLabel(__(key: 'panel.add_social_icon'))
                     ->columnSpanFull()
                     ->columns(24)
                     ->collapsed()
