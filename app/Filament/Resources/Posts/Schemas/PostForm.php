@@ -16,6 +16,7 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Fieldset;
 use Filament\Schemas\Components\Group;
+use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
 use Illuminate\Support\Str;
@@ -36,10 +37,15 @@ class PostForm
                             ->columnSpan(24)
                             ->maxLength(500)
                             ->live(onBlur: true)
-                            ->afterStateUpdated(
-                                fn(Set $set, ?string $state) => $set('slug', Str::slug($state))
-                            ),
-                        Textarea::make('description')->label(__('panel.description'))
+                            ->afterStateUpdated(function (Set $set, Get $get, ?string $state, string $operation) {
+                                // Only auto-generate slug on create and only if slug is empty
+                                if ($operation !== 'create' || filled($get('slug'))) {
+                                    return;
+                                }
+                                
+                                $set('slug', Str::slug((string) $state));
+                            }),
+                        Textarea::make('description')->label(__('panel.excerpt'))
                             ->required()
                             ->trim()
                             ->columnSpan(24)
@@ -48,6 +54,7 @@ class PostForm
                             ->maxLength(255)
                             ->columnSpan(24)
                             ->trim()
+                            ->required()
                             ->prefix('niipigrad.ru/news/')
                             ->suffixActions([
                                 Action::make('open')
@@ -59,8 +66,6 @@ class PostForm
                                     ->tooltip(__('panel.open_page_in_new_tab'))
                                     ->extraAttributes(['class' => 'text-green-500 [&>svg]:text-green-500']),
                             ])
-                            ->disabled()
-                            ->dehydrated()
                             ->unique(Post::class, 'slug', ignoreRecord: true)
                             ->maxLength(255),
                         Group::make()->schema([
