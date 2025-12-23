@@ -25,7 +25,7 @@ final class ImageTittleFullWidth
                     ->columnSpan(12)
                     ->preserveFilenames()
                     ->disk('public')
-                    ->directory('images/')
+                    ->directory('images')
                     ->visibility('public')
                     ->image()
                     ->imageEditor()
@@ -46,7 +46,7 @@ final class ImageTittleFullWidth
                     ->preserveFilenames()
                     ->moveFiles()
                     ->disk('public')
-                    ->directory('images/')
+                    ->directory('images')
                     ->visibility('public')
                     ->image()
                     ->imageEditor()
@@ -74,9 +74,9 @@ final class ImageTittleFullWidth
                     'data' => [
                         'title' => "НОВОСТИ,\nМЕРОПРИЯТИЯ, СОБЫТИЯ",
                         'iconAlt' => 'icon',
-                        'iconUrl' => 'images//Group104.svg',
+                        'iconUrl' => 'images/Group104.svg',
                         'imageAlt' => 'image',
-                        'imageUrl' => 'images//top-news.jpg',
+                        'imageUrl' => 'images/top-news.jpg',
                     ],
                 ],
             ];

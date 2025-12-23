@@ -79,9 +79,9 @@ class Post extends Model implements HasBlockSections, HasMeta
             "data" => [
                 "title" => "НОВОСТИ, \nМЕРОПРИЯТИЯ, СОБЫТИЯ",
                 "iconAlt" => "icon",
-                "iconUrl" => "images//Group104.svg",
+                "iconUrl" => "images/Group104.svg",
                 "imageAlt" => "image",
-                "imageUrl" => "images//top-news.jpg"
+                "imageUrl" => "images/top-news.jpg"
             ],
             "type" => "image-tittle-full-width",
         ];

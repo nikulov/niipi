@@ -63,7 +63,7 @@ final class InfoBlockWithAchievements
                     ->preserveFilenames()
                     ->moveFiles()
                     ->disk('public')
-                    ->directory('images/')
+                    ->directory('images')
                     ->visibility('public')
                     ->image()
                     ->imageEditor()
