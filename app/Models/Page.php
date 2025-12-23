@@ -5,11 +5,14 @@ namespace App\Models;
 use App\Blocks\Contracts\HasBlockSections;
 use App\Contracts\HasMeta;
 use App\Enums\PageStatus;
+use App\Models\Concerns\HasSectionOptions;
 use Illuminate\Database\Eloquent\Model;
 
 
 class Page extends Model implements HasBlockSections, HasMeta
 {
+    use HasSectionOptions;
+    
     protected $table = 'pages';
     
     protected $fillable = [

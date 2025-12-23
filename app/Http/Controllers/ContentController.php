@@ -18,6 +18,7 @@ final class ContentController extends Controller
         return view('layout.page', [
             'page' => $model,
             'meta' => $model instanceof HasMeta ? $model->meta() : [],
+            'bgForMainSection' => $model->getBgForMainSection(),
             'renderer' => $renderer,
         ]);
     }
@@ -29,6 +30,7 @@ final class ContentController extends Controller
         return view('layout.page', [
             'page' => $model,
             'meta' => $model instanceof HasMeta ? $model->meta() : [],
+            'bgForMainSection' => $model->getBgForMainSection(),
             'renderer' => $renderer,
         ]);
     }

@@ -4,6 +4,7 @@ namespace App\Filament\Components\BlockRegistry;
 
 use App\Filament\Components\Accordion;
 use App\Filament\Components\AccordionLight;
+use App\Filament\Components\BgForMainSection;
 use App\Filament\Components\CardsBlockWithButton;
 use App\Filament\Components\CategoryList;
 use App\Filament\Components\Gallery;
@@ -28,6 +29,7 @@ final class BlockRegistry
         return [
             Accordion::block(),
             AccordionLight::block(),
+            BgForMainSection::block(),
             CardsBlockWithButton::block(),
             CategoryList::block(),
             Gallery::block(),
@@ -59,6 +61,7 @@ final class BlockRegistry
         return [
             Accordion::block(),
             AccordionLight::block(),
+            BgForMainSection::block(),
             CardsBlockWithButton::block(),
             CategoryList::block(),
             Gallery::block(),
@@ -86,6 +89,7 @@ final class BlockRegistry
         return [
             Accordion::key() => Accordion::view(),
             AccordionLight::key() => AccordionLight::view(),
+            BgForMainSection::key() => BgForMainSection::view(),
             CardsBlockWithButton::key() => CardsBlockWithButton::view(),
             CategoryList::key() => CategoryList::view(),
             Gallery::key() => Gallery::view(),

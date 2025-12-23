@@ -5,11 +5,13 @@ namespace App\Models;
 use App\Blocks\Contracts\HasBlockSections;
 use App\Contracts\HasMeta;
 use App\Enums\PostStatus;
+use App\Models\Concerns\HasSectionOptions;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Post extends Model implements HasBlockSections, HasMeta
 {
+    use HasSectionOptions;
     protected $fillable = [
         'title',
         'description',
