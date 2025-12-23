@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Models\GlobalSetting;
+use App\Models\Page;
 use App\Models\Post;
+use App\Observers\PageObserver;
 use App\Observers\PostObserver;
 use App\View\Composers\FooterComposer;
 use Filament\Notifications\Livewire\Notifications;
@@ -28,6 +30,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Post::observe(PostObserver::class);
+        Page::observe(PageObserver::class);
         
         Notifications::alignment(Alignment::End);
         Notifications::verticalAlignment(VerticalAlignment::End);
