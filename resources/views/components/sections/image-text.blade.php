@@ -12,7 +12,7 @@
 
 
 <div class="w-full max-w-1242 mx-auto my-inner-section-y px-inner-section-x
-            grid grid-cols-1 md:grid-cols-3 gap-12 items-center">
+            grid grid-cols-1 md:grid-cols-3 gap-12 items-start">
     
     <div class="md:col-span-1 flex items-center h-full"
         style="order: {{$position}}"

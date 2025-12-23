@@ -64,4 +64,21 @@ final class ImageTittleFullWidth
     {
         return 'components.sections.image-tittle-full-width';
     }
+    
+    public static function getDefaultBlock(): array
+    {
+        return
+            [
+                [
+                    'type' => self::key(),
+                    'data' => [
+                        'title' => "НОВОСТИ,\nМЕРОПРИЯТИЯ, СОБЫТИЯ",
+                        'iconAlt' => 'icon',
+                        'iconUrl' => 'images//Group104.svg',
+                        'imageAlt' => 'image',
+                        'imageUrl' => 'images//top-news.jpg',
+                    ],
+                ],
+            ];
+    }
 }
