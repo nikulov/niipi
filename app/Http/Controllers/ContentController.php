@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Contracts\HasMeta;
 use App\Models\Page;
 use App\Models\Post;
 use App\Services\ContentRenderer;
@@ -16,6 +17,7 @@ final class ContentController extends Controller
         
         return view('layout.page', [
             'page' => $model,
+            'meta' => $model instanceof HasMeta ? $model->meta() : [],
             'renderer' => $renderer,
         ]);
     }
@@ -26,6 +28,7 @@ final class ContentController extends Controller
         
         return view('layout.page', [
             'page' => $model,
+            'meta' => $model instanceof HasMeta ? $model->meta() : [],
             'renderer' => $renderer,
         ]);
     }

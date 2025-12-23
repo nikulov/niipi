@@ -4,11 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
+    @isset($meta['description'])
+        <meta name="description" content="{{ $meta['description'] }}">
+    @endisset
+    
+    @isset($meta['keywords'])
+        <meta name="keywords" content="{{ $meta['keywords'] }}">
+    @endisset
+    
     <title>@yield('page.title', $settings->title ?? config('app.name'))</title>
     
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     @if(!empty($settings?->code_header))

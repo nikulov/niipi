@@ -3,11 +3,12 @@
 namespace App\Models;
 
 use App\Blocks\Contracts\HasBlockSections;
+use App\Contracts\HasMeta;
 use App\Enums\PostStatus;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class Post extends Model implements HasBlockSections
+class Post extends Model implements HasBlockSections, HasMeta
 {
     protected $fillable = [
         'title',
@@ -84,5 +85,14 @@ class Post extends Model implements HasBlockSections
             ],
             "type" => "image-tittle-full-width",
         ];
+    }
+    
+    public function meta(): array
+    {
+        return [
+            'title' => $this->meta_title ?? $this->title,
+            'description' => $this->meta_description,
+            'keywords' => $this->meta_keywords,
+            ];
     }
 }

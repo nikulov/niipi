@@ -27,10 +27,12 @@ class PostForm
     {
         return $schema
             ->components([
+                
                 Fieldset::make('settings')->label(__('panel.settings'))
                     ->columns(24)
                     ->columnSpanFull()
                     ->schema([
+                        
                         Textarea::make('title')->label(__('panel.title'))
                             ->required()
                             ->trim()
@@ -45,11 +47,13 @@ class PostForm
                                 
                                 $set('slug', Str::slug((string) $state));
                             }),
+                        
                         Textarea::make('description')->label(__('panel.excerpt'))
                             ->required()
                             ->trim()
                             ->columnSpan(24)
                             ->maxLength(1000),
+                        
                         TextInput::make('slug')->label(__('panel.slug'))
                             ->maxLength(255)
                             ->columnSpan(24)
@@ -68,18 +72,23 @@ class PostForm
                             ])
                             ->unique(Post::class, 'slug', ignoreRecord: true)
                             ->maxLength(255),
+                        
                         Group::make()->schema([
+                            
                             Select::make('status')->label(__('panel.status'))
                                 ->columnSpan(6)
                                 ->required()
                                 ->options(PostStatus::class)
                                 ->default(PostStatus::Draft),
+                            
                             Select::make('category_id')->label(__('panel.category'))
                                 ->multiple()
                                 ->preload()
                                 ->relationship('categories', 'name')
                                 ->columnSpan(6),
+                            
                         ])->columnSpan(8),
+                        
                         FileUpload::make('thumbnail')->label(__('panel.thumbnail'))
                             ->columnSpan(16)
                             ->getUploadedFileNameForStorageUsing(
@@ -104,14 +113,18 @@ class PostForm
                             ])
                             ->maxSize(2048), // 2MB
                     ]),
+                
                 Fieldset::make('seo')->label(__('panel.seo'))
                     ->columns(12)
                     ->columnSpanFull()
                     ->schema([
+                        
+                        //todo removed and unit to json for all meta
                         TextInput::make('meta_title')->label(__('panel.meta_title'))
                             ->columnSpan(6)
                             ->trim()
                             ->maxLength(500),
+                        
                         Textarea::make('meta_keywords')->label(__('panel.meta_keywords'))
                             ->columnSpan(6)
                             ->trim()
@@ -120,9 +133,11 @@ class PostForm
                             ->columnSpan(12)
                             ->trim(),
                     ]),
+                
                 Fieldset::make('top_items')->label(__('panel.top_section'))
                     ->columnSpanFull()
                     ->schema([
+                        
                         Builder::make('top_section')->label('')
                             ->addActionLabel(__(key: 'panel.add_top_block'))
                             ->deleteAction(
@@ -137,9 +152,11 @@ class PostForm
                             ->default(ImageTittleFullWidth::getDefaultBlock())
                             ->blocks(BlockRegistry::topSection())
                     ]),
+                
                 Fieldset::make('main_items')->label(__('panel.main_section'))
                     ->columnSpanFull()
                     ->schema([
+                        
                         Builder::make('main_section')->label('')
                             ->addActionLabel(__(key: 'panel.add_main_block'))
                             ->collapsible()
@@ -154,9 +171,11 @@ class PostForm
                             ->default(CategoryList::getDefaultBlock())
                             ->blocks(BlockRegistry::mainSection())
                     ]),
+                
                 Fieldset::make('bottom_items')->label(__('panel.bottom_section'))
                     ->columnSpanFull()
                     ->schema([
+                        
                         Builder::make('bottom_section')->label('')
                             ->addActionLabel(__(key: 'panel.add_bottom_block'))
                             ->deleteAction(

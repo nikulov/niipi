@@ -3,11 +3,12 @@
 namespace App\Models;
 
 use App\Blocks\Contracts\HasBlockSections;
+use App\Contracts\HasMeta;
 use App\Enums\PageStatus;
 use Illuminate\Database\Eloquent\Model;
 
 
-class Page extends Model implements HasBlockSections
+class Page extends Model implements HasBlockSections, HasMeta
 {
     protected $table = 'pages';
     
@@ -66,6 +67,11 @@ class Page extends Model implements HasBlockSections
     public function getRenderUpdatedAtTimestamp(): int
     {
         return optional($this->updated_at)->timestamp ?? 0;
+    }
+    
+    public function meta(): array
+    {
+        return [];
     }
     
 }
