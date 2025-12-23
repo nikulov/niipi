@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Models\GlobalSetting;
 use App\Models\Post;
 use App\Observers\PostObserver;
+use App\View\Composers\FooterComposer;
 use Filament\Notifications\Livewire\Notifications;
 use Filament\Support\Enums\Alignment;
 use Filament\Support\Enums\VerticalAlignment;
@@ -32,9 +33,7 @@ class AppServiceProvider extends ServiceProvider
         Notifications::verticalAlignment(VerticalAlignment::End);
         
         View::share('year', date('Y'));
-        
-        View::composer('*', function ($view) {
-            $view->with('settings', GlobalSetting::getSetting());
-        });
+        View::composer('*', function ($view) {$view->with('settings', GlobalSetting::getSetting());});
+        View::composer('includes.footer', FooterComposer::class);
     }
 }
