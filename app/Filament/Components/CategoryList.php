@@ -26,4 +26,15 @@ final class CategoryList
     {
         return 'components.sections.category-list';
     }
+    
+    public static function getDefaultBlock(): array
+    {
+        return
+            [
+                [
+                    'type' => self::key(),
+                    'data' => [],
+                ]
+            ];
+    }
 }
