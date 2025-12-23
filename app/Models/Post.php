@@ -30,6 +30,8 @@ class Post extends Model implements HasBlockSections
         'bottom_section' => 'array',
         'published_at' => 'datetime',
         'status' => PostStatus::class,
+        'top_blocks' => 'array',
+        'bottom_blocks' => 'array',
     ];
     
     public function categories(): BelongsToMany
@@ -47,9 +49,9 @@ class Post extends Model implements HasBlockSections
         
         if ($section === null) {
             return array_merge(
-                (array) ($this->top_section ?? []),
-                (array) ($this->main_section ?? []),
-                (array) ($this->bottom_section ?? [])
+                (array)($this->top_section ?? []),
+                (array)($this->main_section ?? []),
+                (array)($this->bottom_section ?? [])
             );
         }
         
@@ -57,7 +59,7 @@ class Post extends Model implements HasBlockSections
             return [];
         }
         
-        return (array) ($this->{$map[$section]} ?? []);
+        return (array)($this->{$map[$section]} ?? []);
     }
     
     public function getRenderCacheId(): string
@@ -68,5 +70,19 @@ class Post extends Model implements HasBlockSections
     public function getRenderUpdatedAtTimestamp(): int
     {
         return optional($this->updated_at)->timestamp ?? 0;
+    }
+    
+    public static function defaultTopBlocks(): array
+    {
+        return [
+            "data" => [
+                "title" => "НОВОСТИ, \nМЕРОПРИЯТИЯ, СОБЫТИЯ",
+                "iconAlt" => "icon",
+                "iconUrl" => "images//Group104.svg",
+                "imageAlt" => "image",
+                "imageUrl" => "images//top-news.jpg"
+            ],
+            "type" => "image-tittle-full-width",
+        ];
     }
 }

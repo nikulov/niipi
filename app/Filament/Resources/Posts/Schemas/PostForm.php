@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Posts\Schemas;
 
 use App\Enums\PostStatus;
 use App\Filament\Components\BlockRegistry\BlockRegistry;
+use App\Filament\Components\ImageTittleFullWidth;
 use App\Models\Post;
 use Filament\Actions\Action;
 use Filament\Forms\Components\Builder;
@@ -123,6 +124,7 @@ class PostForm
                             ->hiddenLabel()
                             ->reorderableWithButtons()
                             ->columnSpanFull()
+                            ->default(ImageTittleFullWidth::getDefaultBlock())
                             ->blocks(BlockRegistry::topSection())
                     ]),
                 Fieldset::make('main_items')->label(__('Main section'))
