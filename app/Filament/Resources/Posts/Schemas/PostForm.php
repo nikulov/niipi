@@ -137,6 +137,7 @@ class PostForm
                             ->hiddenLabel()
                             ->reorderableWithButtons()
                             ->columnSpanFull()
+                            
                             ->blocks(BlockRegistry::mainSection())
                     ]),
                 Fieldset::make('bottom_items')->label(__('Bottom section'))
