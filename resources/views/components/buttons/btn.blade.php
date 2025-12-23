@@ -4,7 +4,7 @@
     'type' => 'btn-primary',
 ])
 
-<a href="{{ $url }}" {{ $attributes->class("group btn {$type}-bg") }}
+<a href="{{ $url }}" {{ $attributes->class("group btn no-underline {$type}-bg") }}
 >
     <div class="absolute top-[3px] left-[-3px] -rotate-45 min-w-[12px] w-[12px] min-h-[1px] h-[1px] border-b {{$type}}-bg transition-all duration-300"></div>
     
