@@ -26,7 +26,7 @@ final class ProjectsBlock
                     ->columnSpan(3)
                     ->default(__(key: 'panel.projects'))
                     ->required(),
-                TextInput::make('quantity')->label(__(key: 'pane.quantity'))
+                TextInput::make('quantity')->label(__(key: 'panel.quantity'))
                     ->columnSpan(1)
                     ->numeric()
                     ->default(4)

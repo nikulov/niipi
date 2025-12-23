@@ -34,13 +34,13 @@ class GlobalSettingForm
                     ->columns(24)
                     ->columnSpanFull()
                     ->schema([
-                        CodeEditor::make('code_header')->label(__('panel.code.header'))
+                        CodeEditor::make('code_header')->label(__('panel.code_header'))
                             ->columnSpan(24)
                             ->language(CodeEditor\Enums\Language::Html),
-                        CodeEditor::make('code_body_top')->label(__('panel.code.body-top'))
+                        CodeEditor::make('code_body_top')->label(__('panel.code_body_top'))
                             ->columnSpan(24)
                             ->language(CodeEditor\Enums\Language::Html),
-                        CodeEditor::make('code_body_bottom')->label(__('panel.code.body-bottom'))
+                        CodeEditor::make('code_body_bottom')->label(__('panel.code_body_bottom'))
                             ->columnSpan(24)
                             ->language(CodeEditor\Enums\Language::Html),
                     ]),

@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Posts\Schemas;
 
 use App\Enums\PostStatus;
 use App\Filament\Components\BlockRegistry\BlockRegistry;
+use App\Filament\Components\CategoryList;
 use App\Filament\Components\ImageTittleFullWidth;
 use App\Models\Post;
 use Filament\Actions\Action;
@@ -114,40 +115,49 @@ class PostForm
                             ->columnSpan(12)
                             ->trim(),
                     ]),
-                Fieldset::make('top_items')->label(__('Top section'))
+                Fieldset::make('top_items')->label(__('panel.top_section'))
                     ->columnSpanFull()
                     ->schema([
                         Builder::make('top_section')->label('')
+                            ->addActionLabel(__(key: 'panel.add_top_block'))
                             ->deleteAction(
                                 fn(Action $action) => $action->requiresConfirmation(),
                             )
                             ->hiddenLabel()
+                            ->collapsible()
+                            ->collapsed()
                             ->reorderableWithButtons()
                             ->columnSpanFull()
                             ->default(ImageTittleFullWidth::getDefaultBlock())
                             ->blocks(BlockRegistry::topSection())
                     ]),
-                Fieldset::make('main_items')->label(__('Main section'))
+                Fieldset::make('main_items')->label(__('panel.main_section'))
                     ->columnSpanFull()
                     ->schema([
                         Builder::make('main_section')->label('')
+                            ->addActionLabel(__(key: 'panel.add_main_block'))
+                            ->collapsible()
+                            ->collapsed()
                             ->deleteAction(
                                 fn(Action $action) => $action->requiresConfirmation(),
                             )
                             ->hiddenLabel()
                             ->reorderableWithButtons()
                             ->columnSpanFull()
-                            
+                            ->default(CategoryList::getDefaultBlock())
                             ->blocks(BlockRegistry::mainSection())
                     ]),
-                Fieldset::make('bottom_items')->label(__('Bottom section'))
+                Fieldset::make('bottom_items')->label(__('panel.bottom_section'))
                     ->columnSpanFull()
                     ->schema([
                         Builder::make('bottom_section')->label('')
+                            ->addActionLabel(__(key: 'panel.add_bottom_block'))
                             ->deleteAction(
                                 fn(Action $action) => $action->requiresConfirmation(),
                             )
                             ->hiddenLabel()
+                            ->collapsible()
+                            ->collapsed()
                             ->reorderableWithButtons()
                             ->columnSpanFull()
                             ->blocks(BlockRegistry::bottomSection())

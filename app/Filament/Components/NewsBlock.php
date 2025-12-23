@@ -27,7 +27,7 @@ final class NewsBlock
                     ->columnSpan(3)
                     ->default(__(key: 'panel.news'))
                     ->required(),
-                TextInput::make('limit')->label(__(key: 'pane.limit'))
+                TextInput::make('limit')->label(__(key: 'panel.limit'))
                     ->columnSpan(1)
                     ->numeric()
                     ->default(4)
