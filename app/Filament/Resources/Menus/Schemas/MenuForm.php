@@ -66,7 +66,7 @@ class MenuForm
                     ->schema([
                         CustomRepeater::make('footer_items')->label('menu items')
                             ->hiddenLabel()
-                            ->maxItems(5)
+                            ->maxItems(10)
                             ->columns(24)
                             ->columnSpanFull()
                             ->default([])

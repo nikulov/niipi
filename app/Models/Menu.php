@@ -26,7 +26,7 @@ class Menu extends Model
     }
     
     
-    public static function getFooterMenuItems()
+    public static function getFooterMenuItems(): array
     {
         $menuItems = self::query()->select('footer_items')->first()?->footer_items ?? [];
         
