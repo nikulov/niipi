@@ -42,7 +42,7 @@ class FooterForm
                         fn(Action $action) => $action->requiresConfirmation(),
                     )
                     ->maxItems(20)
-                    ->itemLabel(fn(array $state): string => $state['title'] ?? __('page.social-icon'))
+                    ->itemLabel(fn(array $state): string => $state['title'] ?? __('panel.social-icon'))
                     ->reorderableWithButtons()
                     ->cloneable()
                     ->addActionLabel(__(key: 'panel.add-social-icon'))
@@ -62,7 +62,7 @@ class FooterForm
                                 ->image()
                                 ->imageEditor()
                                 ->required(),
-                            UrlInput::make('url')->label(__('page.url'))
+                            UrlInput::make('url')->label(__('panel.url'))
                                 ->columnSpan(16)
                                 ->prefix(false),
                         ])->columns(24)->columnSpanFull(),

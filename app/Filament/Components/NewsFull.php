@@ -23,7 +23,7 @@ final class NewsFull
             ->columnSpanFull()
             ->columns(12)
             ->schema([
-                TextInput::make('limit')->label(__(key: 'pane.limit_per_page'))
+                TextInput::make('limit')->label(__(key: 'panel.limit_per_page'))
                     ->columnSpan(2)
                     ->numeric()
                     ->default(10)

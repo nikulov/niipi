@@ -19,7 +19,7 @@ final class InfoBlockWithButtons
     /** Build Filament Block */
     public static function block(): Block
     {
-        return Block::make(self::key())->label(__('panel.info-block-with-buttons'))
+        return Block::make(self::key())->label(__('panel.info_block_with_btn'))
             ->columnSpanFull()
             ->schema([
                 TextInput::make('title')->label(__(key: 'panel.title'))

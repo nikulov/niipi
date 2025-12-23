@@ -17,7 +17,7 @@ final class Gallery
     /** Build Filament Block */
     public static function block(): Block
     {
-        return Block::make(self::key())->label(__('page.gallery.label'))
+        return Block::make(self::key())->label(__('panel.gallery_label'))
             ->columnSpanFull()
             ->schema([
                 FileUpload::make('urls')->label(__('panel.choose_images'))

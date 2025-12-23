@@ -17,7 +17,7 @@ final class CategoryList
     /** Build Filament Block */
     public static function block(): Block
     {
-        return Block::make(self::key())->label(__('page.category-list.label'))
+        return Block::make(self::key())->label(__('panel.category_list_label'))
             ->columnSpanFull();
     }
     

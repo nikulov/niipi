@@ -20,7 +20,7 @@ final class AccordionLight
     /** Build Filament Block */
     public static function block(): Block
     {
-        return Block::make(self::key())->label(__('page.accordion-light'))
+        return Block::make(self::key())->label(__('panel.accordion-light'))
             ->columnSpanFull()
             ->schema([
                 TextInput::make('title')->label(__(key: 'panel.title'))
@@ -32,7 +32,7 @@ final class AccordionLight
                     ->label('')
                     ->maxItems(20)
                     ->hiddenLabel()
-                    ->itemLabel(fn(array $state): string => $state['title'] ?? __('page.accordion'))
+                    ->itemLabel(fn(array $state): string => $state['title'] ?? __('panel.accordion'))
                     ->reorderableWithButtons()
                     ->cloneable()
                     ->addActionLabel(__(key: 'panel.add_accordion'))
@@ -41,7 +41,7 @@ final class AccordionLight
                     ->collapsed()
                     ->reorderable()
                     ->schema([
-                        Textarea::make('itemTitle2')->label(__('page.title'))
+                        Textarea::make('itemTitle2')->label(__('panel.title'))
                             ->columnSpanFull()
                             ->maxLength(255)
                             ->required()

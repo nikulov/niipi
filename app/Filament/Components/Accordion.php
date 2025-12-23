@@ -24,7 +24,7 @@ final class Accordion
     /** Build Filament Block */
     public static function block(): Block
     {
-        return Block::make(self::key())->label(__('page.accordion'))
+        return Block::make(self::key())->label(__('panel.accordion'))
             ->columnSpanFull()
             ->schema([
                 Group::make([
@@ -36,8 +36,8 @@ final class Accordion
                         ->required()
                         ->default('white')
                         ->options([
-                            'white' => __('page.white'),
-                            'dark' => __('page.dark'),
+                            'white' => __('panel.white'),
+                            'dark' => __('panel.dark'),
                         ])
                         ->columnSpan(4),
                 ])->columnSpanFull()->columns(24),
@@ -48,7 +48,7 @@ final class Accordion
                     ->label('')
                     ->maxItems(20)
                     ->hiddenLabel()
-                    ->itemLabel(fn(array $state): string => $state['title'] ?? __('page.accordion'))
+                    ->itemLabel(fn(array $state): string => $state['title'] ?? __('panel.accordion'))
                     ->reorderableWithButtons()
                     ->cloneable()
                     ->addActionLabel(__(key: 'panel.add_accordion'))
@@ -63,7 +63,7 @@ final class Accordion
                                 ->columnSpan(4)
                                 ->trim()
                                 ->maxLength(20),
-                            TextInput::make('itemTitle')->label(__('page.title'))
+                            TextInput::make('itemTitle')->label(__('panel.title'))
                                 ->columnSpan(12)
                                 ->trim()
                                 ->maxLength(255)
@@ -85,15 +85,15 @@ final class Accordion
                             ->reorderableWithButtons()
                             ->cloneable()
                             ->schema([
-                                Block::make('question')->label(__('page.question'))
+                                Block::make('question')->label(__('panel.question'))
                                     ->columnSpanFull()
                                     ->schema(self::getBlocks())
                                     ->columns(24),
-                                Block::make('plus')->label(__('page.plus'))
+                                Block::make('plus')->label(__('panel.plus'))
                                     ->columnSpanFull()
                                     ->schema(self::getBlocks())
                                     ->columns(24),
-                                Block::make('info')->label(__('page.info'))
+                                Block::make('info')->label(__('panel.info'))
                                     ->columnSpanFull()
                                     ->schema(self::getBlocks())
                                     ->columns(24),
@@ -107,7 +107,7 @@ final class Accordion
     {
         return [
             
-            TextInput::make('title')->label(__('page.title'))
+            TextInput::make('title')->label(__('panel.title'))
                 ->required()
                 ->trim()
                 ->maxLength(255)
@@ -132,11 +132,11 @@ final class Accordion
                     ['table', 'attachFiles'],
                     ['undo', 'redo'],
                 ]),
-            TextInput::make('btnLabel')->label(__('page.button'))
+            TextInput::make('btnLabel')->label(__('panel.btn_label'))
                 ->maxLength(255)
                 ->trim()
                 ->columnSpan(12),
-            UrlInput::make('btnUrl')->label(__('page.button-url'))
+            UrlInput::make('btnUrl')->label(__('panel.btn_url'))
                 ->columnSpan(12),
         ];
     }

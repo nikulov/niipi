@@ -17,7 +17,7 @@ final class Title
     /** Build Filament Block */
     public static function block(): Block
     {
-        return Block::make(self::key())->label(__('page.title.label'))
+        return Block::make(self::key())->label(__('panel.title_label'))
             ->columnSpanFull()
             ->schema([
                 Textarea::make('title')->label(__('panel.heading'))

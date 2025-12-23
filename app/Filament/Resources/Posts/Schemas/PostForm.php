@@ -128,6 +128,7 @@ class PostForm
                             ->collapsed()
                             ->reorderableWithButtons()
                             ->columnSpanFull()
+                            ->blockPickerWidth('md')
                             ->default(ImageTittleFullWidth::getDefaultBlock())
                             ->blocks(BlockRegistry::topSection())
                     ]),
@@ -144,6 +145,7 @@ class PostForm
                             ->hiddenLabel()
                             ->reorderableWithButtons()
                             ->columnSpanFull()
+                            ->blockPickerWidth('md')
                             ->default(CategoryList::getDefaultBlock())
                             ->blocks(BlockRegistry::mainSection())
                     ]),
@@ -160,6 +162,7 @@ class PostForm
                             ->collapsed()
                             ->reorderableWithButtons()
                             ->columnSpanFull()
+                            ->blockPickerWidth('md')
                             ->blocks(BlockRegistry::bottomSection())
                     ])
             

@@ -20,7 +20,7 @@ final class SliderFullWidth
     /** Build Filament Block */
     public static function block(): Block
     {
-        return Block::make(self::key())->label(__('page.slider_full_width'))
+        return Block::make(self::key())->label(__('panel.slider_full_width'))
             ->columnSpanFull()
             ->schema([
                 CustomRepeater::make('sliders')->label('')
@@ -31,7 +31,7 @@ final class SliderFullWidth
                     ->maxItems(20)
                     ->minItems(2)
                     ->hiddenLabel()
-                    ->itemLabel(fn(array $state): string => $state['title'] ?? __('page.slide'))
+                    ->itemLabel(fn(array $state): string => $state['title'] ?? __('panel.slide'))
                     ->reorderableWithButtons()
                     ->cloneable()
                     ->addActionLabel(__(key: 'panel.add_slide'))

@@ -18,7 +18,7 @@ final class ImageFull
     /** Build Filament Block */
     public static function block(): Block
     {
-        return Block::make(self::key())->label(__('page.image-full'))
+        return Block::make(self::key())->label(__('panel.image_full'))
             ->columnSpanFull()
             ->schema([
                 FileUpload::make('url')->label(__(key: 'panel.image'))

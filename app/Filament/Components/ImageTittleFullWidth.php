@@ -18,7 +18,7 @@ final class ImageTittleFullWidth
     /** Build Filament Block */
     public static function block(): Block
     {
-        return Block::make(self::key())->label(__('page.image-tittle-full-width'))
+        return Block::make(self::key())->label(__('panel.image_tittle_full_width'))
             ->columnSpanFull()
             ->schema([
                 FileUpload::make('iconUrl')->label(__(key: 'panel.icon'))

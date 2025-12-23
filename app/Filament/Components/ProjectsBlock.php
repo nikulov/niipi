@@ -39,7 +39,7 @@ final class ProjectsBlock
                     ->columnSpan(5)
                     ->required()
                     ->default('projects'),
-            
+        
             ]);
     }
     

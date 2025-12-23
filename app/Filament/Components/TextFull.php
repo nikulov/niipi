@@ -17,7 +17,7 @@ final class TextFull
     /** Build Filament Block */
     public static function block(): Block
     {
-        return Block::make(self::key())->label(__('page.text_full.label'))
+        return Block::make(self::key())->label(__('panel.text_full_label'))
             ->columnSpanFull()
             ->schema([
                 RichEditor::make('textFull')

@@ -22,7 +22,7 @@ class PageResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::DocumentText;
 
-    protected static ?string $recordTitleAttribute = 'Page';
+    protected static ?string $recordTitleAttribute = 'Страницы';
     
     protected static ?string $navigationLabel = 'Страницы';
     
