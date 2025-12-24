@@ -3,12 +3,12 @@
         
         @foreach($menuItems as $item)
             <li class="">
-                <x-other.menu-footer-link
+                <x-menu.desktop-footer-link
                         href="{{$item['href']}}"
                         blank="{{$item['blank']}}"
                 >
                     {{$item['label']}}
-                </x-other.menu-footer-link>
+                </x-menu.desktop-footer-link>
             </li>
         @endforeach
     

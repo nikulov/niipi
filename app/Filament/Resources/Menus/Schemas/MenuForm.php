@@ -134,6 +134,7 @@ class MenuForm
             
             TextInput::make('label')->label(__(key: 'panel.label'))
                 ->live()
+                ->trim()
                 ->columnSpan(7)
                 ->required()
                 ->maxLength(255),

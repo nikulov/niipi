@@ -22,7 +22,10 @@
     @endif
 
 </head>
-<body class="font-inter text-text antialiased">
+<body class="font-inter text-text antialiased"
+      x-data="{ menuOpen: false }"
+      :class="{ 'overflow-hidden': menuOpen }"
+>
     @if(!empty($settings?->code_body_top))
         {!! $settings->code_body_top!!}
     @endif

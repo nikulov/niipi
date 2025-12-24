@@ -99,9 +99,6 @@ class PostsTable
                     ->label(__('panel.filter')),
             )
             ->recordActions([
-                ViewAction::make()->label(__(''))
-                    ->iconSize('md')
-                    ->tooltip(__('panel.view_post')),
                 EditAction::make()->label(__(''))
                     ->iconSize('md')
                     ->tooltip(__('panel.edit_post')),

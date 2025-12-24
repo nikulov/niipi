@@ -145,6 +145,10 @@
         @apply absolute left-0 -bottom-1 w-full h-[1px] bg-accent transition-all;
     }
 
+    .menu-link-mobile {
+        @apply relative text-text text-center transition-colors uppercase w-full h-full py-6;
+    }
+
 
     .card-wrapper {
         @apply relative p-8 max-w-full md:max-w-[368px] w-full h-full pb-13 overflow-hidden

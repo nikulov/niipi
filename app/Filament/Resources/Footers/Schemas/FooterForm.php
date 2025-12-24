@@ -52,7 +52,7 @@ class FooterForm
                     ->reorderable()
                     ->schema([
                         Group::make([
-                            FileUpload::make('iconUrl')->label(__(key: 'panel.icon'))
+                            FileUpload::make('iconUrl')->label(__(key: 'panel.icon') . ' (' . __('panel.svg') . ')')
                                 ->columnSpan(8)
                                 ->preserveFilenames()
                                 ->moveFiles()
@@ -61,9 +61,11 @@ class FooterForm
                                 ->visibility('public')
                                 ->image()
                                 ->imageEditor()
+                                ->acceptedFileTypes(['image/svg+xml'])
                                 ->required(),
                             UrlInput::make('url')->label(__('panel.url'))
                                 ->columnSpan(16)
+                                ->required()
                                 ->prefix(false),
                         ])->columns(24)->columnSpanFull(),
                     ])

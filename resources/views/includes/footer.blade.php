@@ -24,7 +24,7 @@
                     НАВИГАЦИЯ ПО САЙТУ
                 </h3>
                 
-                <x-other.footer-menu/>
+                <x-menu.desktop-footer/>
                 
             </div>
             
