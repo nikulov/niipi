@@ -14,6 +14,10 @@
     
     <title>@yield('page.title', $settings->title ?? config('app.name'))</title>
     
+    <style>
+        [x-cloak] { display: none !important; }
+    </style>
+    
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
@@ -23,8 +27,7 @@
 
 </head>
 <body class="font-inter text-text antialiased"
-      x-data="{ menuOpen: false }"
-      :class="{ 'overflow-hidden': menuOpen }"
+      :class="menuOpen ? 'overflow-hidden' : ''"
 >
     @if(!empty($settings?->code_body_top))
         {!! $settings->code_body_top!!}

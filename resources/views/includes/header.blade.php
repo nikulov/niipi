@@ -2,7 +2,7 @@
     <div class="container mx-auto max-w-1290 w-full pb-6">
         <div class="relative flex justify-end md:justify-center items-end">
             
-            <div class="flex items-center absolute left-6">
+            <div class="flex items-center absolute left-0">
                 <a href="{{ route('home') }}"
                    class="">
                     <x-logo class="w-40 h-12 fill-[#5B8EAE]" />
@@ -10,8 +10,7 @@
             </div>
             
             <x-menu.top/>
-
-            <!-- Contact Links -->
+            
             <div class="flex items-center space-x-4 absolute right-6">
 {{--                <a href="#" class="text-gray-400 hover:text-blue-400 transition-colors duration-200">--}}
 {{--                    <x-icon.icon-switcher-color />--}}

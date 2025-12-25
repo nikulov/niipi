@@ -3,28 +3,32 @@
 ])
 
 <div class="md:hidden relative"
-     x-data="{ menuOpen: true }"
+     x-data="{ menuOpen: false }"
+     @keydown.escape.window="menuOpen = false"
 >
     <button type="button"
-            class="text-gray-600 hover:text-[#60C0C3] focus:outline-none transition-colors duration-200 cursor-pointer"
+            class="text-accent hover:text-accent-add focus:outline-none transition-colors duration-200 cursor-pointer"
             @click="menuOpen = true"
     >
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M4 6h16M4 12h16M4 18h16"/>
-        </svg>
+        <x-icon.icon-arrow-down class="w-6 h-6 fill-accent"/>
     </button>
-    
+
     <div
-            class="fixed inset-0 bg-background-dark z-50
-            bg-[url('/resources/images/layout/waves-mobile.png')] bg-cover bg-center"
-            x-show="menuOpen"
-            x-transition.opacity
             x-cloak
+            x-show="menuOpen"
+            
+            x-transition:enter="transition ease-out duration-400"
+            x-transition:enter-start="-translate-y-full"
+            x-transition:enter-end="translate-y-0 "
+            
+            x-transition:leave="transition ease-in duration-300"
+            x-transition:leave-start="translate-y-0"
+            x-transition:leave-end="-translate-y-full"
+            
+            class="transform fixed inset-0 z-50
+            bg-background-dark bg-[url('/resources/images/layout/waves-mobile.png')] bg-cover bg-center"
     >
-        <div class="flex flex-row justify-between px-inner-section-x py-inner-section-y">
+        <div class="flex flex-row justify-between items-end px-inner-section-x py-12">
             
             <div class="flex items-center">
                 <a href="{{ route('home') }}"
@@ -34,22 +38,19 @@
             </div>
             
             <button type="button"
-                    class="text-white hover:text-[#60C0C3] focus:outline-none transition-colors duration-200 cursor-pointer"
-                    @click="menuOpen = true"
+                    class="text-white hover:text-[#60C0C3] focus:outline-none transition-all duration-150 cursor-pointer delay-1000 opacity-0 translate-y-20"
+                    @click="menuOpen = false"
+                    x-transition
+                    :class="menuOpen ? 'opacity-100 !translate-y-0 pointer-events-auto' : ''"
             >
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="M4 6h16M4 12h16M4 18h16"/>
-                </svg>
+                <x-icon.icon-arrow-down class="w-6 h-6 fill-white rotate-180"/>
             </button>
         
         </div>
         
-        <div>
+        <div class="flex flex-col justify-center">
             
-            <div class="flex items-center justify-center space-x-8 bg-[#A7C1D2]">
+            <div class="flex items-center justify-center space-x-8 bg-white/30">
                 <ul class="w-full flex flex-col justify-center items-center space-x-6 px-inner-section-x">
                     
                     @foreach($menuItems as $item)
@@ -66,30 +67,33 @@
                 </ul>
             </div>
             
-            <a href="#" class="flex gap-8 justify-center items-center my-inner-section-y px-inner-section-x">
+            <div class="flex items-center justify-between my-inner-section-y px-inner-section-x">
+                <x-menu.mobile-contact-block url="#">
+                    <x-icon.icon-mobile class="w-9 h-9 fill-white"/>
+                </x-menu.mobile-contact-block>
+                
+                <x-menu.mobile-contact-block url="#">
+                    <x-icon.icon-at class="w-9 h-9 fill-white"/>
+                </x-menu.mobile-contact-block>
+                
+                <x-menu.mobile-contact-block url="#">
+                    <x-logo.logo-tg class="w-9 h-9 fill-white"/>
+                </x-menu.mobile-contact-block>
+            </div>
+            
+            <a href="#" class="flex gap-8 justify-center items-center mb-inner-section-y px-inner-section-x">
                 <x-icon.icon-point class="w-6 h-9 fill-[#4ECECB]"/>
                 <span class="max-w-[220px] text-white text-small font-century font-bold">
                         129110, г. Москва ул. Гиляровского, дом 47, строение 3.
                     </span>
             </a>
             
-            <div class="flex items-center justify-between px-inner-section-x">
-                <x-menu.mobile-contact-block>
-                    <x-icon.icon-mobile class="w-9 h-9 fill-white"/>
-                    <a href="#" class="text-white text-small font-bold">+7 (495) 242-77-07</a>
-                </x-menu.mobile-contact-block>
-                
-                <x-menu.mobile-contact-block>
-                    <x-icon.icon-at class="w-9 h-9 fill-white"/>
-                    <a href="#" class="text-white text-small font-bold">niipi@mosreg.ru</a>
-                </x-menu.mobile-contact-block>
-                
-                <x-menu.mobile-contact-block>
-                    <x-logo.logo-tg class="w-9 h-9 fill-white"/>
-                    <a href="#" class="text-white text-small font-bold">t.me/niipigrad</a>
-                </x-menu.mobile-contact-block>
-            </div>
-        
+            <hr class="w-full border-white">
+            
+            <span class="mt-2 text-white text-center text-small font-century">
+                © {{ config('app.name') }}  {{ $year }}
+            </span>
+            
         </div>
     
     </div>
