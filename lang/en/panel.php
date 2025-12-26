@@ -48,10 +48,6 @@ return [
     'add_block' => 'Add block',
     'search_placeholder' => 'Search title',
     'posts_count' => 'Posts count',
-    'category_saved_successfully' => 'Category updated successfully',
-    'page_saved_successfully' => 'Page updated successfully',
-    'post_saved_successfully'=> 'Post updated successfully',
-    'post_created_successfully' => 'Post created successfully',
     'settings' => 'Settings',
     'open_page_in_new_tab' => 'Open page in new tab',
     'left' => 'Left',
@@ -67,7 +63,6 @@ return [
     'filter' => 'Filter',
     'created_from' => 'Created from',
     'created_until' => 'Created until',
-    // Added keys to sync with RU and used in code
     'top_section' => 'Top section',
     'main_section' => 'Main section',
     'bottom_section' => 'Bottom section',
