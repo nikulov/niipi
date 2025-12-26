@@ -23,7 +23,7 @@
                     type="button"
                     class="relative block w-full aspect-4/3 overflow-hidden hover:opacity-80 transition"
                     @click="
-                                open = !open,
+                                open = !open
                                 currentSrc = @js(public_asset($url));
                             "
             >
@@ -31,7 +31,7 @@
                         src="{{ public_asset($url) }}"
                         class="w-full h-full object-cover"
                         loading="lazy"
-                >
+                 alt="">
             </button>
         @endforeach
     </div>
@@ -41,12 +41,11 @@
             x-transition.opacity
             x-cloak
             class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 none"
-            :class="open ? block"
             @click.self="open = !open"
     >
         <button
                 type="button"
-                class="absolute top-4 right-4 p-2 text-white text-2xl leading-none"
+                class="absolute top-4 right-4 p-2 text-white text-2xl leading-none cursor-pointer"
                 aria-label="Close image"
                 @click="open = !open"
         >
@@ -57,7 +56,7 @@
             <img
                     :src="currentSrc"
                     class="w-full h-auto max-h-[90vh] object-contain mx-auto"
-            >
+             alt="">
         </div>
     </div>
 </div>

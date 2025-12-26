@@ -1,6 +1,6 @@
-<footer class="bg-[url('/resources/images/layout/bg_footer.jpg')] flex bg-cover bg-center bg-no-repeat min-h-32 justify-center items-end dark:bg-[url('/resources/images/layout/bg_footer.jpg')] bg-[#5B8EAE] bg-blend-multiply max-w-1600 w-full m-auto">
-    <div class="w-[1267px] mx-auto px-4 lg:px-0 py-10 lg:py-14">
-        <div class="flex flex-col gap-10 lg:flex-row lg:items-start lg:justify-between">
+<footer class="bg-[url('/resources/images/layout/bg_footer.jpg')] flex bg-cover bg-center bg-no-repeat lg:min-h-32 justify-center items-end dark:bg-[url('/resources/images/layout/bg_footer.jpg')] bg-[#5B8EAE] bg-blend-multiply max-w-1600 w-full m-auto">
+    <div class="w-[1267px] mx-auto lg:px-0 lg:py-14">
+        <div class="hidden lg:flex flex-col gap-10 lg:flex-row lg:items-start lg:justify-between">
             
             <div class="lg:w-1/4 flex items-center lg:items-start">
                 <a href="{{ route('home') }}" class="inline-block">
@@ -43,5 +43,8 @@
             </div>
         
         </div>
+        
+        <x-other.footer-mobile/>
+        
     </div>
 </footer>

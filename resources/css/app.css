@@ -120,7 +120,11 @@
 
 @layer components {
     .menu-link {
-        @apply relative text-text transition-colors uppercase;
+        @apply relative flex flex-row items-center font-kosugi text-text transition-colors uppercase cursor-pointer;
+    }
+
+    .menu-link-btn {
+        @apply flex flex-row;
     }
 
     .menu-link:hover {
@@ -136,6 +140,10 @@
         @apply w-full;
     }
 
+    .menu-link-btn:hover::after {
+        @apply w-0;
+    }
+
     .menu-link-active {
         @apply text-accent;
     }
@@ -146,7 +154,7 @@
     }
 
     .menu-link-mobile {
-        @apply relative text-text text-center transition-colors uppercase w-full h-full py-6;
+        @apply relative block text-text text-center transition-colors uppercase w-full h-full py-6 cursor-pointer z-20;
     }
 
 
