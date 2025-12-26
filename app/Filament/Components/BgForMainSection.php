@@ -32,4 +32,9 @@ final class BgForMainSection
                     ->required(),
             ])->columns(24);
     }
+    
+    public static function view(): string
+    {
+        return '';
+    }
 }
