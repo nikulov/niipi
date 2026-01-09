@@ -5,6 +5,7 @@ namespace App\Blocks\Renderers;
 use App\Blocks\Contracts\BlockRenderer;
 use App\Blocks\Contracts\HasBlockSections;
 use App\Models\Post;
+use App\Models\Project;
 
 final class CategoryListRenderer implements BlockRenderer
 {
@@ -14,7 +15,7 @@ final class CategoryListRenderer implements BlockRenderer
     public function render(array $data, HasBlockSections $model, int $index): string
     {
         
-        if ( ! $model instanceof Post) {
+        if ( ! $model instanceof Post && ! $model instanceof Project ) {
             return  '';
         }
         
