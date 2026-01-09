@@ -13,7 +13,7 @@ enum CategoryType: string implements HasLabel, HasIcon
     public function getLabel(): ?string
     {
         return match ($this) {
-            self::Posts => __('panel.posts'),
+            self::Posts => __('panel.news'),
             self::Projects => __('panel.projects'),
         };
     }
@@ -21,7 +21,7 @@ enum CategoryType: string implements HasLabel, HasIcon
     public function getIcon(): ?string
     {
         return match ($this) {
-            self::Posts => 'heroicon-o-collection',
+            self::Posts => 'heroicon-o-document-text',
             self::Projects => 'heroicon-o-briefcase',
         };
     }
