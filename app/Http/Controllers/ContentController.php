@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Contracts\HasMeta;
 use App\Models\Page;
 use App\Models\Post;
+use App\Models\Project;
 use App\Services\ContentRenderer;
 
 final class ContentController extends Controller
@@ -26,6 +27,18 @@ final class ContentController extends Controller
     public function post(ContentRenderer $renderer, string $slug)
     {
         $model = Post::query()->where('slug', $slug)->firstOrFail();
+        
+        return view('layout.page', [
+            'page' => $model,
+            'meta' => $model instanceof HasMeta ? $model->meta() : [],
+            'bgForMainSection' => $model->getBgForMainSection(),
+            'renderer' => $renderer,
+        ]);
+    }
+    
+    public function project(ContentRenderer $renderer, string $slug)
+    {
+        $model = Project::query()->where('slug', $slug)->firstOrFail();
         
         return view('layout.page', [
             'page' => $model,
