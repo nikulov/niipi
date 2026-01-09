@@ -4,8 +4,6 @@
 namespace App\Filament\Components;
 
 use Filament\Forms\Components\Builder\Block;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\Textarea;
 
 final class CategoryList
 {
