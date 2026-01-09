@@ -31,8 +31,15 @@ final class NewsFull
                 Select::make('categoryIds')->label(__('panel.category'))
                     ->multiple()
                     ->preload()
-                    ->default(Category::all()->pluck('id', 'name')->all())
-                    ->options(Category::query()->orderBy('name')->pluck('name', 'id')->toArray())
+                    ->default(Category::query()
+                        ->where('type', 'posts')
+                        ->pluck('id', 'name')
+                        ->all())
+                    ->options(Category::query()
+                        ->where('type', 'posts')
+                        ->orderBy('name')
+                        ->pluck('name', 'id')
+                        ->toArray())
                     ->columnSpan(10),
             ]);
     }
