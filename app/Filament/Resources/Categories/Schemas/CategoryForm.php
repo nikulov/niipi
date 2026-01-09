@@ -3,9 +3,8 @@
 namespace App\Filament\Resources\Categories\Schemas;
 
 use App\Enums\CategoryStatus;
-use App\Enums\PostStatus;
+use App\Enums\CategoryType;
 use App\Models\Category;
-use App\Models\Post;
 use Filament\Actions\Action;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
@@ -26,14 +25,14 @@ class CategoryForm
                     ->columnSpanFull()
                     ->schema([
                         TextInput::make('name')->label(__('panel.name'))
-                            ->columnSpan(4)
+                            ->columnSpan(6)
                             ->required()
                             ->maxLength(255)
                         ->live(onBlur: true)
                         ->afterStateUpdated(fn(Set $set, ?string $state) => $set('slug', Str::slug($state))),
                         
                         TextInput::make('slug')
-                            ->columnSpan(4)
+                            ->columnSpan(6)
                             ->maxLength(255)
                             ->prefix('niipigrad.ru/')
                             ->label('Slug')
@@ -51,9 +50,13 @@ class CategoryForm
                             ->dehydrated()
                             ->unique(Category::class, 'slug', ignoreRecord: true)
                             ->maxLength(255),
+                        Select::make('type')->label(__('panel.type'))
+                            ->required()
+                            ->columnSpan(6)
+                            ->options(CategoryType::class),
                         Select::make('status')->label(__('panel.status'))
                             ->required()
-                            ->columnSpan(4)
+                            ->columnSpan(6)
                             ->options(CategoryStatus::class),
                     ]),
                 Fieldset::make('seo')->label(__('SEO'))
