@@ -33,13 +33,11 @@ class Post extends Model implements HasBlockSections, HasMeta
         'bottom_section' => 'array',
         'published_at' => 'datetime',
         'status' => PostStatus::class,
-        'top_blocks' => 'array',
-        'bottom_blocks' => 'array',
     ];
     
     public function categories(): BelongsToMany
     {
-        return $this->belongsToMany(Category::class);
+        return $this->belongsToMany(Category::class, 'category_post');
     }
     
     public function getBlocksForSection(?string $section): array
