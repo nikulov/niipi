@@ -134,5 +134,5 @@ return [
     'publications' => 'Publications',
     'projects_list' => 'Projects list',
     'excerpt_project' => 'Excerpt',
-    
+    'projects_full' => 'Full list of projects',
 ];

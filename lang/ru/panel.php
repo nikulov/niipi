@@ -157,5 +157,7 @@ return [
     'publications' => 'Публикации',
     'projects_list' => 'Список проектов',
     'excerpt_project' => 'Краткое описание проекта',
+    'projects_full'=> 'Проекты (полный список)',
+    
     
 ];

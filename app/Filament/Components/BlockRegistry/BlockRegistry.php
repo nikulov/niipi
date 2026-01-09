@@ -16,6 +16,7 @@ use App\Filament\Components\InfoBlockWithButtons;
 use App\Filament\Components\NewsBlock;
 use App\Filament\Components\NewsFull;
 use App\Filament\Components\ProjectsBlock;
+use App\Filament\Components\ProjectsFull;
 use App\Filament\Components\SliderFullWidth;
 use App\Filament\Components\TextFull;
 use App\Filament\Components\Title;
@@ -41,6 +42,7 @@ final class BlockRegistry
             NewsBlock::block(),
             NewsFull::block(),
             ProjectsBlock::block(),
+            ProjectsFull::block(),
             SliderFullWidth::block(),
             TextFull::block(),
             Title::block(),
@@ -71,6 +73,7 @@ final class BlockRegistry
             NewsBlock::block(),
             NewsFull::block(),
             ProjectsBlock::block(),
+            ProjectsFull::block(),
             TextFull::block(),
             Title::block(),
         ];
