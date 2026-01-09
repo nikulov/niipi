@@ -15,6 +15,7 @@ use App\Blocks\Renderers\InfoBlockWithAchievementsRenderer;
 use App\Blocks\Renderers\InfoBlockWithButtonsRenderer;
 use App\Blocks\Renderers\NewsBlockRenderer;
 use App\Blocks\Renderers\NewsFullRenderer;
+use App\Blocks\Renderers\ProkectsBlockRenderer;
 use App\Blocks\Renderers\SliderFullWidthRenderer;
 use App\Blocks\Renderers\TextFullRenderer;
 use App\Blocks\Renderers\TitleRenderer;
@@ -38,6 +39,7 @@ final class BlockRenderRegistry
             InfoBlockWithButtonsRenderer::key() => InfoBlockWithButtonsRenderer::class,
             NewsBlockRenderer::key() => NewsBlockRenderer::class,
             NewsFullRenderer::key() => NewsFullRenderer::class,
+            ProkectsBlockRenderer::key() => ProkectsBlockRenderer::class,
             SliderFullWidthRenderer::key() => SliderFullWidthRenderer::class,
             TextFullRenderer::key() => TextFullRenderer::class,
             TitleRenderer::key() => TitleRenderer::class,
