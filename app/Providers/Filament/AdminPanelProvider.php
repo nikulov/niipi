@@ -42,7 +42,7 @@ class AdminPanelProvider extends PanelProvider
                 Dashboard::class,
             ])
             ->navigationGroups([
-                'Новости',
+                'Публикации',
                 'Страницы',
                 'Settings',
             ])
