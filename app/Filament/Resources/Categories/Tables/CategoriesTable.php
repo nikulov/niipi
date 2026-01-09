@@ -23,6 +23,9 @@ class CategoriesTable
                     ->sortable()
                     ->searchable()
                     ->badge(),
+                TextColumn::make('type')->label(__('panel.type'))
+                    ->sortable()
+                    ->searchable(),
                 TextColumn::make('posts_count')->label(__('panel.posts_count'))
                     ->sortable()
                     ->alignCenter(),
@@ -34,9 +37,6 @@ class CategoriesTable
                 //
             ])
             ->recordActions([
-                ViewAction::make()->label(__(''))
-                    ->iconSize('md')
-                    ->tooltip(__('panel.view_category')),
                 EditAction::make()->label(__(''))
                     ->iconSize('md')
                     ->tooltip(__('panel.edit_category')),
