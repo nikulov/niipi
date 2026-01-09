@@ -39,10 +39,10 @@ class CategoryResource extends Resource
     
     public static function getNavigationGroup(): ?string
     {
-        return __('panel.news');
+        return __('panel.publications');
     }
     
-    protected static ?int $navigationSort = 2;
+    protected static ?int $navigationSort = 10;
 
     public static function form(Schema $schema): Schema
     {
