@@ -131,4 +131,8 @@ return [
     // Footer (Resources/Footers/Schemas/FooterForm.php)
     'social-icon' => 'Social icon',
     'url' => 'URL',
+    'publications' => 'Publications',
+    'projects_list' => 'Projects list',
+    'excerpt_project' => 'Excerpt',
+    
 ];
