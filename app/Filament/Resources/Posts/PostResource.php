@@ -20,7 +20,7 @@ class PostResource extends Resource
 {
     protected static ?string $model = Post::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::InformationCircle;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::DocumentText;
     
     public static function getModelLabel(): string
     {
@@ -39,7 +39,7 @@ class PostResource extends Resource
     
     public static function getNavigationGroup(): ?string
     {
-        return __('panel.news');
+        return __('panel.publications');
     }
     
     protected static ?int $navigationSort = 1;

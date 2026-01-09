@@ -20,6 +20,7 @@ use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
 use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 
 class PostForm
 {
@@ -84,7 +85,10 @@ class PostForm
                             Select::make('category_id')->label(__('panel.category'))
                                 ->multiple()
                                 ->preload()
-                                ->relationship('categories', 'name')
+                                ->relationship(
+                                    'categories',
+                                    'name',
+                                    modifyQueryUsing: fn (EloquentBuilder $query) => $query->posts())
                                 ->columnSpan(6),
                             
                         ])->columnSpan(8),
@@ -149,7 +153,7 @@ class PostForm
                             ->reorderableWithButtons()
                             ->columnSpanFull()
                             ->blockPickerWidth('md')
-                            ->default(ImageTittleFullWidth::getDefaultBlock())
+                            ->default(Post::getDefaultBlock())
                             ->blocks(BlockRegistry::topSection())
                     ]),
                 
