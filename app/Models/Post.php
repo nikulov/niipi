@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Blocks\Contracts\HasBlockSections;
 use App\Contracts\HasMeta;
 use App\Enums\PostStatus;
+use App\Filament\Components\ImageTittleFullWidth;
 use App\Models\Concerns\HasSectionOptions;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -73,18 +74,21 @@ class Post extends Model implements HasBlockSections, HasMeta
         return optional($this->updated_at)->timestamp ?? 0;
     }
     
-    public static function defaultTopBlocks(): array
+    public static function getDefaultBlock(): array
     {
-        return [
-            "data" => [
-                "title" => "НОВОСТИ, \nМЕРОПРИЯТИЯ, СОБЫТИЯ",
-                "iconAlt" => "icon",
-                "iconUrl" => "images/Group104.svg",
-                "imageAlt" => "image",
-                "imageUrl" => "images/top-news.jpg"
-            ],
-            "type" => "image-tittle-full-width",
-        ];
+        return
+            [
+                [
+                    'type' => ImageTittleFullWidth::key(),
+                    'data' => [
+                        'title' => "НОВОСТИ,\nМЕРОПРИЯТИЯ, СОБЫТИЯ",
+                        'iconAlt' => 'icon',
+                        'iconUrl' => 'images/Group104.svg',
+                        'imageAlt' => 'image',
+                        'imageUrl' => 'images/top-news.jpg',
+                    ],
+                ],
+            ];
     }
     
     public function meta(): array
