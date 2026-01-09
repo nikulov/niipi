@@ -44,7 +44,6 @@ final class BlockRegistry
             SliderFullWidth::block(),
             TextFull::block(),
             Title::block(),
-        
         ];
     }
     
@@ -69,7 +68,9 @@ final class BlockRegistry
             ImageText::block(),
             InfoBlockWithAchievements::block(),
             InfoBlockWithButtons::block(),
+            NewsBlock::block(),
             NewsFull::block(),
+            ProjectsBlock::block(),
             TextFull::block(),
             Title::block(),
         ];
