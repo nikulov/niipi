@@ -1,0 +1,108 @@
+{
+  "resources/css/app.css": {
+    "file": "assets/app-CZMW2jNc.css",
+    "src": "resources/css/app.css",
+    "isEntry": true,
+    "names": [
+      "app.css"
+    ]
+  },
+  "resources/fonts/Carlito-Bold.ttf": {
+    "file": "assets/Carlito-Bold-CEbRJbFG.ttf",
+    "src": "resources/fonts/Carlito-Bold.ttf"
+  },
+  "resources/fonts/Carlito-Regular.ttf": {
+    "file": "assets/Carlito-Regular-CIOplWD0.ttf",
+    "src": "resources/fonts/Carlito-Regular.ttf"
+  },
+  "resources/fonts/Kosugi-Regular.ttf": {
+    "file": "assets/Kosugi-Regular-BeDDOMUR.ttf",
+    "src": "resources/fonts/Kosugi-Regular.ttf"
+  },
+  "resources/fonts/centurygothic.ttf": {
+    "file": "assets/centurygothic-BOrGIO_o.ttf",
+    "src": "resources/fonts/centurygothic.ttf"
+  },
+  "resources/fonts/centurygothic_bold.ttf": {
+    "file": "assets/centurygothic_bold-BbKWdxWh.ttf",
+    "src": "resources/fonts/centurygothic_bold.ttf"
+  },
+  "resources/images/icon/icon-dots-dark.svg": {
+    "file": "assets/icon-dots-dark-DpuXVWfg.svg",
+    "src": "resources/images/icon/icon-dots-dark.svg"
+  },
+  "resources/images/icon/icon-dots-white.svg": {
+    "file": "assets/icon-dots-white-BA560PNN.svg",
+    "src": "resources/images/icon/icon-dots-white.svg"
+  },
+  "resources/images/icon/icon-info.svg": {
+    "file": "assets/icon-info-BBKZkWvF.svg",
+    "src": "resources/images/icon/icon-info.svg"
+  },
+  "resources/images/icon/icon-plus.svg": {
+    "file": "assets/icon-plus-BINYnpoG.svg",
+    "src": "resources/images/icon/icon-plus.svg"
+  },
+  "resources/images/icon/icon-question.svg": {
+    "file": "assets/icon-question-BvrtBWHx.svg",
+    "src": "resources/images/icon/icon-question.svg"
+  },
+  "resources/images/layout/acc-arrow-white.svg": {
+    "file": "assets/acc-arrow-white-HEhVZ20G.svg",
+    "src": "resources/images/layout/acc-arrow-white.svg"
+  },
+  "resources/images/layout/acc-dots-dark.svg": {
+    "file": "assets/acc-dots-dark--UUSlbvP.svg",
+    "src": "resources/images/layout/acc-dots-dark.svg"
+  },
+  "resources/images/layout/acc-dots-white.svg": {
+    "file": "assets/acc-dots-white-DvycfGe3.svg",
+    "src": "resources/images/layout/acc-dots-white.svg"
+  },
+  "resources/images/layout/bg_footer.jpg": {
+    "file": "assets/bg_footer-Dp9i8rA3.jpg",
+    "src": "resources/images/layout/bg_footer.jpg"
+  },
+  "resources/images/layout/item-bottom-left-content.svg": {
+    "file": "assets/item-bottom-left-content-BdKsF26o.svg",
+    "src": "resources/images/layout/item-bottom-left-content.svg"
+  },
+  "resources/images/layout/item-bottom-right-content.svg": {
+    "file": "assets/item-bottom-right-content-C-gqOOqT.svg",
+    "src": "resources/images/layout/item-bottom-right-content.svg"
+  },
+  "resources/images/layout/item-top-content.svg": {
+    "file": "assets/item-top-content-BhOgcRye.svg",
+    "src": "resources/images/layout/item-top-content.svg"
+  },
+  "resources/images/layout/item-top-right-content.svg": {
+    "file": "assets/item-top-right-content-DohE3zyR.svg",
+    "src": "resources/images/layout/item-top-right-content.svg"
+  },
+  "resources/images/layout/menu_bg.png": {
+    "file": "assets/menu_bg-CvmRD3NB.png",
+    "src": "resources/images/layout/menu_bg.png"
+  },
+  "resources/images/layout/slider-bullet-empty.svg": {
+    "file": "assets/slider-bullet-empty-YUcX225X.svg",
+    "src": "resources/images/layout/slider-bullet-empty.svg"
+  },
+  "resources/images/layout/slider-bullet.svg": {
+    "file": "assets/slider-bullet-Dc4Q6Yap.svg",
+    "src": "resources/images/layout/slider-bullet.svg"
+  },
+  "resources/images/layout/slider-left-arrow.svg": {
+    "file": "assets/slider-left-arrow-B6MWhMXa.svg",
+    "src": "resources/images/layout/slider-left-arrow.svg"
+  },
+  "resources/images/layout/slider-right-arrow.svg": {
+    "file": "assets/slider-right-arrow-DUp2B9EE.svg",
+    "src": "resources/images/layout/slider-right-arrow.svg"
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-BPqVh3pH.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true
+  }
+}
