@@ -1,6 +1,6 @@
 {
   "resources/css/app.css": {
-    "file": "assets/app-CZMW2jNc.css",
+    "file": "assets/app-mfhgyAKe.css",
     "src": "resources/css/app.css",
     "isEntry": true,
     "names": [
@@ -98,6 +98,10 @@
   "resources/images/layout/slider-right-arrow.svg": {
     "file": "assets/slider-right-arrow-DUp2B9EE.svg",
     "src": "resources/images/layout/slider-right-arrow.svg"
+  },
+  "resources/images/layout/waves-mobile.png": {
+    "file": "assets/waves-mobile-DofZzzyD.png",
+    "src": "resources/images/layout/waves-mobile.png"
   },
   "resources/js/app.js": {
     "file": "assets/app-BPqVh3pH.js",
