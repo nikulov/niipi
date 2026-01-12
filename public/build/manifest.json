@@ -7,6 +7,14 @@
       "app.css"
     ]
   },
+  "resources/css/filament/admin/theme.css": {
+    "file": "assets/theme-DjlgPnje.css",
+    "src": "resources/css/filament/admin/theme.css",
+    "isEntry": true,
+    "names": [
+      "theme.css"
+    ]
+  },
   "resources/fonts/Carlito-Bold.ttf": {
     "file": "assets/Carlito-Bold-CEbRJbFG.ttf",
     "src": "resources/fonts/Carlito-Bold.ttf"
