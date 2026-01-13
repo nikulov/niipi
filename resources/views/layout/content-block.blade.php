@@ -18,7 +18,7 @@
              bg-[url('/resources/images/layout/item-top-content.svg')]
         "></div>
         
-        <div class="absolute top-1/2 -translate-y-1/2 right-2 w-20 h-1.5 bg-no-repeat flex justify-center items-center
+        <div class="absolute top-1/2 -translate-y-1/2 right-2.5 w-20 h-1.5 bg-no-repeat flex justify-center items-center
              bg-[url('/resources/images/layout/item-top-right-content.svg')]
         "></div>
     

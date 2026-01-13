@@ -4,7 +4,7 @@
     <div class="grid grid-cols-1 md:grid-cols-2 gap-y-10 gap-x-32">
         @foreach($cards as $card)
             <article class="relative w-full">
-                <h3 class="text-white pb-1 border-b border-b-white line-clamp-2 whitespace-normal">
+                <h3 class="text-white normal-case pb-1 border-b border-b-white line-clamp-2 whitespace-normal">
                     {{$card['title']}}
                 </h3>
                 
@@ -13,10 +13,10 @@
                 </p>
                 
                 <div class="mt-6 flex items-end justify-between gap-4">
-                    <span class="text-small text-accent-add">
+                    <span class="text-small text-[#CBDEEA]">
                         {{$card['publishedAt']}}
                     </span>
-                    <x-buttons.btn-more url="{{$card['url']}}" text="подробнее"/>
+                    <x-buttons.btn-more url="{{$card['url']}}" text="подробнее" class="text-accent-add hover:text-[#9DDEE0]"/>
                 </div>
             </article>
         @endforeach

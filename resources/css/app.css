@@ -120,7 +120,7 @@
 
 @layer components {
     .menu-link {
-        @apply relative flex flex-row items-center font-kosugi text-text transition-colors uppercase cursor-pointer;
+        @apply relative flex flex-row items-center tracking-[2px] font-century text-text transition-colors uppercase cursor-pointer;
     }
 
     .menu-link-btn {
@@ -233,14 +233,14 @@
     }
 
     .btn-secondary-text {
-        @apply text-white group-hover:text-accent;
+        @apply text-white;
     }
 
     .btn-secondary-bg {
         @apply
         border-accent bg-accent
-        hover:border-accent hover:bg-transparent
-        group-hover:border-accent group-hover:bg-transparent;
+        hover:border-accent hover:bg-[#7BA2BA]
+        group-hover:border-accent group-hover:bg-[#7BA2BA];
     }
 
     .btn-accent-text {
