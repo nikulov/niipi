@@ -21,7 +21,7 @@ final class CardsBlockWithButton
     /** Build Filament Block */
     public static function block(): Block
     {
-        return Block::make(self::key())->label(__('panel.cards_block'))
+        return Block::make(self::key())->label(__('panel.services_block'))
             ->columnSpanFull()
             ->schema([
                 Textarea::make('title')->label(__(key: 'panel.title'))

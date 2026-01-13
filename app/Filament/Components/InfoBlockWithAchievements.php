@@ -58,7 +58,7 @@ final class InfoBlockWithAchievements
                             ->required()
                             ->columnSpan(12),
                     ]),
-                FileUpload::make('imageUrl')->label(__(key: 'panel.image'))
+                FileUpload::make('imageUrl')->label(__(key: 'panel.add_background_image'))
                     ->columnSpanFull()
                     ->preserveFilenames()
                     ->moveFiles()
