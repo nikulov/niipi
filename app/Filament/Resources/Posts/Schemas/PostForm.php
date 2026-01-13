@@ -172,7 +172,6 @@ class PostForm
                             ->reorderableWithButtons()
                             ->columnSpanFull()
                             ->blockPickerWidth('md')
-                            ->default(CategoryList::getDefaultBlock())
                             ->blocks(BlockRegistry::mainSection())
                     ]),
                 

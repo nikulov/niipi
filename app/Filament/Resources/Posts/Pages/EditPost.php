@@ -21,7 +21,6 @@ class EditPost extends EditRecord
             Action::make('save')
                 ->label(__('panel.save'))
                 ->action(fn() => $this->save()),
-            ViewAction::make(),
             DeleteAction::make(),
         ];
     }
