@@ -82,7 +82,7 @@ class PostForm
                                 ->options(PostStatus::class)
                                 ->default(PostStatus::Draft),
                             
-                            Select::make('category_id')->label(__('panel.category'))
+                            Select::make('category_ids')->label(__('panel.category'))
                                 ->multiple()
                                 ->preload()
                                 ->relationship(
