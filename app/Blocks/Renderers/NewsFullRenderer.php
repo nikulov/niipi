@@ -4,31 +4,45 @@ namespace App\Blocks\Renderers;
 
 use App\Blocks\Contracts\BlockRenderer;
 use App\Blocks\Contracts\HasBlockSections;
-use App\Presenters\Blocks\NewsFullPresenter;
-use App\Services\NewsQuery;
+use Livewire\Livewire;
 
 final class NewsFullRenderer implements BlockRenderer
 {
-    public function __construct(
-        private readonly NewsQuery $newsQuery,
-    ) {}
-    public static function key(): string { return 'news-full'; }
-    public static function version(): string { return '1'; }
+    public static function key(): string
+    {
+        return 'news-full';
+    }
+    
+    public static function version(): string
+    {
+        return '2';
+    }
     
     public function render(array $data, HasBlockSections $model, int $index): string
     {
-        
         $limit = (int) ($data['limit'] ?? 10);
-        
         $categoryIds = $data['categoryIds'] ?? null;
         
-        $paginator = $this->newsQuery->list($limit, $categoryIds, true);
+        $wireKey = sprintf(
+            'block:%s:%s:%d',
+            self::key(),
+            $model->getRenderCacheId(),
+            $index
+        );
         
-        $cards = $paginator->through(fn ($post) => NewsFullPresenter::make($post));
+        $mounted = Livewire::mount(
+            'components.news-full',
+            [
+                'limit' => $limit,
+                'categoryIds' => is_array($categoryIds) ? $categoryIds : null,
+            ],
+            $wireKey
+        );
         
-        return view('components.sections.news-full', [
-            'data' => $data,
-            'cards' => $cards,
-        ])->render();
+        if (is_string($mounted)) {
+            return $mounted;
+        }
+        
+        return method_exists($mounted, 'html') ? $mounted->html() : (string) $mounted;
     }
 }
