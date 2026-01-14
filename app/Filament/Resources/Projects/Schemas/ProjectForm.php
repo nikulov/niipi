@@ -171,7 +171,6 @@ class ProjectForm
                             ->reorderableWithButtons()
                             ->columnSpanFull()
                             ->blockPickerWidth('md')
-                            ->default(CategoryList::getDefaultBlock())
                             ->blocks(BlockRegistry::mainSection())
                     ]),
                 
