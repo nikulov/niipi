@@ -21,14 +21,14 @@
                             0 6px);">
         </div>
         
-        <div class="absolute top-[3px] left-[-5px] -rotate-45 min-w-[12px] w-[12px] min-h-[1px] h-[1px] border border-primary  transition-all duration-300 z-30"></div>
+        <div class="absolute top-[3px] left-[-5px] -rotate-45 min-w-3 w-3 min-h-px h-px border border-primary  transition-all duration-300 z-30"></div>
         
         <h3 class="relative mb-3 z-10 text-primary">{!!$cardTitle!!}</h3>
         <p class="relative text-normal z-10">{!!$cardDescription!!}</p>
         
         
-        <div class="absolute bottom-[29px] right-0 h-[1px] max-w-[110px] w-full bg-primary z-30"></div>
-        <div class="absolute bottom-[13px] right-[103px] -rotate-45 min-w-[46px] w-[46px] min-h-[1px] h-[1px] border-b transition-all duration-300 border-primary z-30"></div>
+        <div class="absolute bottom-[29px] right-0 h-px max-w-[110px] w-full bg-primary z-30"></div>
+        <div class="absolute bottom-[13px] right-[103px] -rotate-45 min-w-[46px] w-[46px] min-h-px h-px border-b transition-all duration-300 border-primary z-30"></div>
     
     </div>
     <x-buttons.btn-corner url="{{$btnUrl}}" label="{{$btnLabel}}"/>

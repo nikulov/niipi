@@ -59,7 +59,7 @@ final class BlockRegistry
     
     public static function mainSection(): array
     {
-        return [
+        return collect([
             Accordion::block(),
             AccordionLight::block(),
             BgForMainSection::block(),
@@ -76,7 +76,10 @@ final class BlockRegistry
             ProjectsFull::block(),
             TextFull::block(),
             Title::block(),
-        ];
+        ])
+            ->sortBy(fn ($block) => (string) $block->getLabel())
+            ->values()
+            ->all();
     }
     
     public static function bottomSection(): array

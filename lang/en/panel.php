@@ -135,4 +135,9 @@ return [
     'projects_list' => 'Projects list',
     'excerpt_project' => 'Excerpt',
     'projects_full' => 'Full list of projects',
+    'edit_page' => 'Edit page',
+    'delete_page' => 'Delete page',
+    'services_block' => 'Services block',
+    
+    
 ];

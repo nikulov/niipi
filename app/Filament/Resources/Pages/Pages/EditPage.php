@@ -19,7 +19,6 @@ class EditPage extends EditRecord
             Action::make('save')
                 ->label('Сохранить')
                 ->action(fn () => $this->save()),
-            ViewAction::make(),
             DeleteAction::make(),
         ];
     }

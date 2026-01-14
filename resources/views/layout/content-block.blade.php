@@ -4,7 +4,7 @@
     ]
 )
 
-<div class="container pt-px relative mx-auto max-w-1290 w-full min-h-20 bg-white mt-16 border-b border-border bg-cover bg-no-repeat "
+<div class="container pt-px relative mx-auto max-w-1290 w-full min-h-20 bg-white mt-16 border-b border-border bg-contain bg-center bg-no-repeat "
      @if( ! empty($bgForMainSection))
          style="background-image: url({{public_asset($bgForMainSection)}});"
      @endif
@@ -18,7 +18,7 @@
              bg-[url('/resources/images/layout/item-top-content.svg')]
         "></div>
         
-        <div class="absolute top-1/2 -translate-y-1/2 right-2 w-20 h-1.5 bg-no-repeat flex justify-center items-center
+        <div class="absolute top-1/2 -translate-y-1/2 right-2.5 w-20 h-1.5 bg-no-repeat flex justify-center items-center
              bg-[url('/resources/images/layout/item-top-right-content.svg')]
         "></div>
     

@@ -4,7 +4,7 @@
 
 <div class="relative max-w-1242 w-full mx-auto my-inner-section-y px-inner-section-x">
     
-    <div class="flex flex-col gap-y-10 gap-x-32">
+    <div class="flex flex-col gap-y-15 gap-x-32">
         @foreach($cards as $card)
             
             <article class="relative w-full grid md:grid-cols-2 gap-6">
@@ -31,7 +31,7 @@
                         <span class="text-small text-accent">
                             {{$card['publishedAt']}}
                         </span>
-                        <x-buttons.btn url="{{$card['url']}}" text="подробнее" type="btn-secondary"/>
+                        <x-buttons.btn-more url="{{$card['url']}}" text="подробнее" class="text-[#324B60] hover:text-[#5B8EAE]"/>
                     </div>
                 
                 </div>

@@ -92,15 +92,12 @@ class PagesTable
                     ->label(__('panel.filter')),
             )
             ->recordActions([
-                ViewAction::make()->label(__(''))
-                    ->iconSize('md')
-                    ->tooltip(__('panel.view_post')),
                 EditAction::make()->label(__(''))
                     ->iconSize('md')
-                    ->tooltip(__('panel.edit_post')),
+                    ->tooltip(__('panel.edit_page')),
                 DeleteAction::make()->label(__(''))
                     ->iconSize('md')
-                    ->tooltip(__('panel.delete_post')),
+                    ->tooltip(__('panel.delete_page')),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
