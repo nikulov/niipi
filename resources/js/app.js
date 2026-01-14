@@ -1,25 +1,6 @@
 import './bootstrap';
 import './swiper.js';
 
-import Alpine from 'alpinejs';
-import collapse from '@alpinejs/collapse';
-import intersect from '@alpinejs/intersect';
-import persist from '@alpinejs/persist';
-import mask from '@alpinejs/mask';
-import focus from '@alpinejs/focus';
-import morph from '@alpinejs/morph';
-
-Alpine.plugin(collapse);
-Alpine.plugin(intersect);
-Alpine.plugin(persist);
-Alpine.plugin(mask);
-Alpine.plugin(focus);
-Alpine.plugin(morph);
-
-window.Alpine = Alpine;
-Alpine.start();
-
-
 function imageGalleryModal() {
     return {
         isOpen: false,
