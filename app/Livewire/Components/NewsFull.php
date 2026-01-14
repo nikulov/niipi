@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Components;
 
+use App\Enums\PostStatus;
 use App\Models\Category;
 use App\Presenters\Blocks\NewsFullPresenter;
 use App\Services\NewsQuery;
@@ -29,48 +30,72 @@ final class NewsFull extends Component
     {
         $this->limit = $limit;
         $this->categoryIds = $categoryIds;
+        
+        $this->normalizeCategory();
     }
     
     public function setCategory(?string $slug): void
     {
         $this->category = $slug ?: null;
+    }
+    
+    public function updatedCategory(): void
+    {
+        $this->normalizeCategory();
         $this->resetPage();
+    }
+    
+    private function normalizeCategory(): void
+    {
+        if (!$this->category) {
+            return;
+        }
+        
+        $exists = $this->getCategories()->contains('slug', $this->category);
+        
+        if (!$exists) {
+            $this->category = null;
+        }
     }
     
     private function getCategories(): Collection
     {
-        return Category::query()
-            ->posts()
-            ->when(
-                is_array($this->categoryIds) && count($this->categoryIds) > 0,
-                fn($q) => $q->whereIn('id', $this->categoryIds)
-            )
-            ->orderBy('name')
-            ->get(['id', 'name', 'slug']);
+        $ids = is_array($this->categoryIds) && count($this->categoryIds) > 0
+            ? array_values($this->categoryIds)
+            : null;
+        
+        $cacheKey = 'news.categories:' . md5(json_encode($ids));
+        
+        return cache()
+            ->tags(['news', 'categories'])
+            ->remember($cacheKey, 600, function () use ($ids) {
+                return Category::query()
+                    ->posts()
+                    ->when(
+                        is_array($ids),
+                        fn ($q) => $q->whereIn('id', $ids)
+                    )
+                    ->withCount([
+                        'posts as posts_count' => fn ($q) =>
+                        $q->where('status', PostStatus::Published),
+                    ])
+                    ->having('posts_count', '>', 0)
+                    ->orderBy('name')
+                    ->get(['id', 'name', 'slug']);
+            });
     }
     
     private function getCards(NewsQuery $newsQuery, Collection $categories): LengthAwarePaginator
     {
-        $selectedId = null;
-        
-        if ($this->category) {
-            $selectedId = $categories->firstWhere('slug', $this->category)?->id;
-        }
-        
-        // If slug is invalid (not in allowed categories) reset filter.
-        if ($this->category && !$selectedId) {
-            $this->category = null;
-            $this->resetPage();
-        }
+        $selectedId = $this->category
+            ? $categories->firstWhere('slug', $this->category)?->id
+            : null;
         
         $filterIds = $selectedId ? [$selectedId] : $this->categoryIds;
         
-        $paginator = $newsQuery->list($this->limit, $filterIds, true);
-        
-        /** @var LengthAwarePaginator $cards */
-        $cards = $paginator->through(fn($post) => NewsFullPresenter::make($post));
-        
-        return $cards;
+        return $newsQuery
+            ->list($this->limit, $filterIds, true)
+            ->through(fn ($post) => NewsFullPresenter::make($post));
     }
     
     public function render(NewsQuery $newsQuery)
@@ -78,10 +103,13 @@ final class NewsFull extends Component
         $categories = $this->getCategories();
         $cards = $this->getCards($newsQuery, $categories);
         
+        $totalPostsCount = $categories->sum('posts_count');
+        
         return view('livewire.components.news-full', [
             'categories' => $categories,
             'cards' => $cards,
             'activeCategory' => $this->category,
+            'totalPostsCount' => $totalPostsCount,
         ]);
     }
 }

@@ -1,22 +1,33 @@
 <div id="news-block" class="relative max-w-1242 w-full mx-auto my-inner-section-y px-inner-section-x">
     
-    @if($categories->count() > 0)
-        <div class="flex flex-wrap gap-3 mb-10">
+    @if($categories->isNotEmpty())
+        <div class="relative flex flex-wrap justify-center gap-8 mb-10">
             <button
                     type="button"
                     wire:click="setCategory(null)"
-                    class="{{ $activeCategory === null ? 'text-accent' : 'text-text' }} cursor-pointer"
+                    class="relative cursor-pointer uppercase
+                    {{ $activeCategory === null ? 'text-accent' : 'text-primary' }}"
             >
                 Все
+                <span class="opacity-60">
+                    [{{$totalPostsCount}}]
+                </span>
             </button>
             
             @foreach($categories as $cat)
                 <button
                         type="button"
                         wire:click="setCategory('{{ $cat->slug }}')"
-                        class="{{ $activeCategory === $cat->slug ? 'text-accent' : 'text-text' }} cursor-pointer"
+                        class="relative cursor-pointer uppercase pl-8
+                        before:content-[''] before:absolute before:-left-px
+                        before:w-1 before:h-5
+                        before:bg-[url('/resources/images/layout/acc-dots-dark.svg')]
+                        {{ $activeCategory === $cat->slug ? 'text-accent' : 'text-primary' }}"
                 >
                     {{ $cat->name }}
+                    <span class="opacity-60">
+                        [{{$cat->posts_count}}]
+                    </span>
                 </button>
             @endforeach
         </div>
@@ -35,20 +46,20 @@
                 
                 <div class="flex flex-col">
                     <h3 class="text-primary pb-1 whitespace-normal">
-                        {{ $card['title'] }}
+                        {{$card['title']}}
                     </h3>
                     
                     <p class="mt-5 text-normal text-text line-clamp-4">
-                        {{ $card['description'] }}
+                        {{$card['description']}}
                     </p>
                     
                     <div class="pt-6 mt-auto flex items-end justify-between gap-4">
                         <span class="text-small text-accent">
-                            {{ $card['publishedAt'] }}
+                            {{$card['publishedAt']}}
                         </span>
                         
                         <x-buttons.btn-more
-                                url="{{ $card['url'] }}"
+                                url="{{ $card['url']}}"
                                 text="подробнее"
                                 class="text-[#324B60] hover:text-[#5B8EAE]"
                         />

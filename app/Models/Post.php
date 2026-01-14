@@ -99,4 +99,23 @@ class Post extends Model implements HasBlockSections, HasMeta
             'keywords' => $this->meta_keywords,
             ];
     }
+    
+    protected static function booted(): void
+    {
+        $flush = function (): void {
+            foreach (self::cacheTags() as $tags) {
+                cache()->tags($tags)->flush();
+            }
+        };
+        
+        static::saved($flush);
+        static::deleted($flush);
+    }
+    
+    private static function cacheTags(): array
+    {
+        return [
+            ['news', 'categories'],
+        ];
+    }
 }

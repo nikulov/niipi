@@ -44,4 +44,24 @@ class Category extends Model
     {
         return $query->where('type', CategoryType::Projects);
     }
+    
+    protected static function booted(): void
+    {
+        $flush = function (): void {
+            foreach (self::cacheTags() as $tags) {
+                cache()->tags($tags)->flush();
+            }
+        };
+        
+        static::saved($flush);
+        static::deleted($flush);
+    }
+    
+    private static function cacheTags(): array
+    {
+        return [
+            ['news', 'categories'],
+            ['projects', 'categories'],
+        ];
+    }
 }
