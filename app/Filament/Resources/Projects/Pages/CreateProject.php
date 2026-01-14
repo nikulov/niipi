@@ -17,6 +17,11 @@ class CreateProject extends CreateRecord
         return $data;
     }
     
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
+    }
+    
     private function appendDefaultMainBlock(array $state): array
     {
         if (empty($state)) {
@@ -27,5 +32,9 @@ class CreateProject extends CreateRecord
             ...$state,
             ...CategoryList::getDefaultBlock(),
         ];
+    }
+    protected function afterSave(): void
+    {
+        cache()->tags(['projects', 'categories'])->flush();
     }
 }

@@ -42,4 +42,9 @@ class EditPost extends EditRecord
     {
         return $this->getResource()::getUrl('index');
     }
+    
+    protected function afterSave(): void
+    {
+        cache()->tags(['news', 'categories'])->flush();
+    }
 }

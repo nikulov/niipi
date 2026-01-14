@@ -25,4 +25,9 @@ class EditProject extends EditRecord
     {
         return $this->getResource()::getUrl('index');
     }
+    
+    protected function afterSave(): void
+    {
+        cache()->tags(['projects', 'categories'])->flush();
+    }
 }
