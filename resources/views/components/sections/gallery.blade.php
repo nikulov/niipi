@@ -21,7 +21,7 @@
         @foreach($urls as $url)
             <button
                     type="button"
-                    class="relative block w-full aspect-4/3 overflow-hidden hover:opacity-80 transition"
+                    class="relative block w-full aspect-4/3 overflow-hidden hover:opacity-80 transition cursor-pointer"
                     @click="
                                 open = !open
                                 currentSrc = @js(public_asset($url));

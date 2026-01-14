@@ -4,7 +4,7 @@
     ]
 )
 
-<div class="container pt-px relative mx-auto max-w-1290 w-full min-h-20 bg-white mt-16 border-b border-border bg-cover bg-no-repeat "
+<div class="container pt-px relative mx-auto max-w-1290 w-full min-h-20 bg-white mt-16 border-b border-border bg-contain bg-center bg-no-repeat "
      @if( ! empty($bgForMainSection))
          style="background-image: url({{public_asset($bgForMainSection)}});"
      @endif
