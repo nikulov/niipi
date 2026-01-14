@@ -22,27 +22,33 @@ final class ProjectsFull extends Component
     
     public ?string $category = null;
     
+    public ?string $componentKey = null;
+    
     protected $queryString = [
-        'category' => ['except' => null],
+        'category' => ['except' => null, 'as' => 'projectsCategory'],
     ];
     
-    public function mount(int $limit = 10, ?array $categoryIds = null): void
+    public function mount(int $limit = 10, ?array $categoryIds = null, ?string $componentKey = null): void
     {
         $this->limit = $limit;
-        $this->categoryIds = $categoryIds;
+        $this->categoryIds = is_array($categoryIds) ? array_values($categoryIds) : null;
+        $this->componentKey = $componentKey;
         
         $this->normalizeCategory();
+    }
+    
+    public function getPageName(): string
+    {
+        return $this->componentKey
+            ? 'page_' . md5($this->componentKey)
+            : 'page';
     }
     
     public function setCategory(?string $slug): void
     {
         $this->category = $slug ?: null;
-    }
-    
-    public function updatedCategory(): void
-    {
         $this->normalizeCategory();
-        $this->resetPage();
+        $this->resetPage($this->getPageName());
     }
     
     private function normalizeCategory(): void
@@ -94,8 +100,8 @@ final class ProjectsFull extends Component
         $filterIds = $selectedId ? [$selectedId] : $this->categoryIds;
         
         return $projectsQuery
-            ->list($this->limit, $filterIds, true)
-            ->through(fn ($projects) => ProjectsFullPresenter::make($projects));
+            ->list($this->limit, $filterIds, true, $this->getPageName())
+            ->through(fn ($project) => ProjectsFullPresenter::make($project));
     }
     
     public function render(ProjectsQuery $projectsQuery)
