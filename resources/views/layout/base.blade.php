@@ -21,7 +21,6 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     
     @livewireStyles
-    @livewireScripts
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
@@ -38,7 +37,7 @@
         
         @include('includes.header')
         
-        <main class="flex-grow max-w-1600 w-full mx-auto bg-background-light">
+        <main class="grow max-w-1600 w-full mx-auto bg-background-light">
             
             <div class="container max-w-1600 w-full h-full">
                 @yield('top_section')
@@ -55,6 +54,9 @@
         @include('includes.footer')
     
     </div>
+    
+    @livewireScripts
+    
     @if(!empty($settings?->code_body_bottom))
         {!! $settings->code_body_bottom!!}
     @endif
