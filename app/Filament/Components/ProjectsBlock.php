@@ -52,10 +52,4 @@ final class ProjectsBlock
                     ->required(),
             ]);
     }
-    
-    /** Blade view for frontend */
-    public static function view(): string
-    {
-        return 'components.sections.projects-block';
-    }
 }

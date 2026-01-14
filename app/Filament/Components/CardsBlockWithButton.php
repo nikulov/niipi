@@ -61,10 +61,4 @@ final class CardsBlockWithButton
                     ->columnSpan(12),
             ])->columns(24);
     }
-    
-    /** Blade view for frontend */
-    public static function view(): string
-    {
-        return 'components.sections.cards-block-with-button';
-    }
 }

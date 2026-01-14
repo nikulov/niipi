@@ -89,30 +89,4 @@ final class BlockRegistry
             ProjectsBlock::block(),
         ];
     }
-    
-    /** key => view */
-    public static function views(): array
-    {
-        return [
-            Accordion::key() => Accordion::view(),
-            AccordionLight::key() => AccordionLight::view(),
-            BgForMainSection::key() => BgForMainSection::view(),
-            CardsBlockWithButton::key() => CardsBlockWithButton::view(),
-            CategoryList::key() => CategoryList::view(),
-            Gallery::key() => Gallery::view(),
-            ImageFull::key() => ImageFull::view(),
-            ImageText::key() => ImageText::view(),
-            ImageTittleFullWidth::key() => ImageTittleFullWidth::view(),
-            InfoBlockWithAchievements::key() => InfoBlockWithAchievements::view(),
-            InfoBlockWithButtons::key() => InfoBlockWithButtons::view(),
-            NewsBlock::key() => NewsBlock::view(),
-            NewsFull::key() => NewsFull::view(),
-            ProjectsBlock::key() => ProjectsBlock::view(),
-            SliderFullWidth::key() => SliderFullWidth::view(),
-            TextFull::key() => TextFull::view(),
-            Title::key() => Title::view(),
-        
-        
-        ];
-    }
 }

@@ -49,10 +49,4 @@ final class Gallery
                     ->maxSize(2048), // 2MB
             ]);
     }
-    
-    /** Blade view for frontend */
-    public static function view(): string
-    {
-        return 'components.sections.gallery';
-    }
 }

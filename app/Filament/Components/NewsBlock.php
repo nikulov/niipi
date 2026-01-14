@@ -52,10 +52,4 @@ final class NewsBlock
                     ->required(),
             ]);
     }
-    
-    /** Blade view for frontend */
-    public static function view(): string
-    {
-        return 'components.sections.news-block';
-    }
 }

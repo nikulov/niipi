@@ -58,10 +58,4 @@ final class ImageTittleFullWidth
                     ->columnSpanFull(),
             ])->columns(24);
     }
-    
-    /** Blade view for frontend */
-    public static function view(): string
-    {
-        return 'components.sections.image-tittle-full-width';
-    }
 }

@@ -72,10 +72,4 @@ final class InfoBlockWithAchievements
             
             ]);
     }
-    
-    /** Blade view for frontend */
-    public static function view(): string
-    {
-        return 'components.sections.info-block-with-achievements';
-    }
 }

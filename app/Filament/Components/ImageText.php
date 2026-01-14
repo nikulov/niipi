@@ -68,10 +68,4 @@ final class ImageText
                     ])
             ])->columns(24);
     }
-    
-    /** Blade view for frontend */
-    public static function view(): string
-    {
-        return 'components.sections.image-text';
-    }
 }

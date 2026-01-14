@@ -140,10 +140,4 @@ final class Accordion
                 ->columnSpan(12),
         ];
     }
-    
-    /** Blade view for frontend */
-    public static function view(): string
-    {
-        return 'components.sections.accordion';
-    }
 }

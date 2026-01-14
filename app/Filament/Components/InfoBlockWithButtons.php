@@ -38,10 +38,4 @@ final class InfoBlockWithButtons
                     ->required(),
             ]);
     }
-    
-    /** Blade view for frontend */
-    public static function view(): string
-    {
-        return 'components.sections.info-block-with-buttons';
-    }
 }

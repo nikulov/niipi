@@ -43,10 +43,4 @@ final class ProjectsFull
                     ->columnSpan(10),
             ]);
     }
-    
-    /** Blade view for frontend */
-    public static function view(): string
-    {
-        return 'components.sections.projects-full';
-    }
 }

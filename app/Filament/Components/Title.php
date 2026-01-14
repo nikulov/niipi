@@ -46,10 +46,4 @@ final class Title
                     ->columnSpan(6),
             ])->columns(12);
     }
-    
-    /** Blade view for frontend */
-    public static function view(): string
-    {
-        return 'components.sections.title';
-    }
 }
