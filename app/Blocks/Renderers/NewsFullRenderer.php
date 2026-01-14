@@ -20,8 +20,14 @@ final class NewsFullRenderer implements BlockRenderer
     
     public function render(array $data, HasBlockSections $model, int $index): string
     {
-        $limit = (int) ($data['limit'] ?? 10);
+        $limit = max(1, min(50, (int) ($data['limit'] ?? 10)));
+        
         $categoryIds = $data['categoryIds'] ?? null;
+        $categoryIds = is_array($categoryIds) ? array_values($categoryIds) : null;
+        
+        if (is_array($categoryIds) && count($categoryIds) === 0) {
+            $categoryIds = null;
+        }
         
         $wireKey = sprintf(
             'block:%s:%s:%d',
@@ -34,7 +40,8 @@ final class NewsFullRenderer implements BlockRenderer
             'components.news-full',
             [
                 'limit' => $limit,
-                'categoryIds' => is_array($categoryIds) ? $categoryIds : null,
+                'categoryIds' => $categoryIds,
+                'componentKey' => $wireKey,
             ],
             $wireKey
         );

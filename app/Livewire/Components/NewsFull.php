@@ -22,27 +22,33 @@ final class NewsFull extends Component
     
     public ?string $category = null;
     
+    public ?string $componentKey = null;
+    
     protected $queryString = [
-        'category' => ['except' => null],
+        'category' => ['except' => null, 'as' => 'newsCategory'],
     ];
     
-    public function mount(int $limit = 10, ?array $categoryIds = null): void
+    public function mount(int $limit = 10, ?array $categoryIds = null, ?string $componentKey = null): void
     {
         $this->limit = $limit;
-        $this->categoryIds = $categoryIds;
+        $this->categoryIds = is_array($categoryIds) ? array_values($categoryIds) : null;
+        $this->componentKey = $componentKey;
         
         $this->normalizeCategory();
+    }
+    
+    public function getPageName(): string
+    {
+        return $this->componentKey
+            ? 'page_' . md5($this->componentKey)
+            : 'page';
     }
     
     public function setCategory(?string $slug): void
     {
         $this->category = $slug ?: null;
-    }
-    
-    public function updatedCategory(): void
-    {
         $this->normalizeCategory();
-        $this->resetPage();
+        $this->resetPage($this->getPageName());
     }
     
     private function normalizeCategory(): void
@@ -94,7 +100,7 @@ final class NewsFull extends Component
         $filterIds = $selectedId ? [$selectedId] : $this->categoryIds;
         
         return $newsQuery
-            ->list($this->limit, $filterIds, true)
+            ->list($this->limit, $filterIds, true, $this->getPageName())
             ->through(fn ($post) => NewsFullPresenter::make($post));
     }
     
