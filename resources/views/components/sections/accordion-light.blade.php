@@ -67,7 +67,7 @@
                 />
                 
                 <x-other.accordion-description>
-                    <x-other.accordion-item-description class="text-normal !flex-col">
+                    <x-other.accordion-item-description class="text-normal flex-col!">
                         
                         {!! $accordion['item'] !!}
                     

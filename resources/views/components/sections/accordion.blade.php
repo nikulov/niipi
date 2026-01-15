@@ -65,18 +65,19 @@
                     <x-other.accordion-description>
                         <x-other.accordion-item-description class="acc-item-bg-{{$item['type']}}">
                             
-                            <div class="flex flex-wrap md:flex-nowrap items-center flex-row gap-8">
-                                <div class="min-w-[26px] min-h-[26px] w-7 h-7 icon-{{$item['type']}} bg-no-repeat bg-center"></div>
-                                <div>
-                                    <p class="pb-2 text-big text-text font-bold">{{$item['data']['title']}}</p>
-                                    <p class="text-normal text-text">{!! $item['data']['description'] !!}</p>
+                            <div class="flex flex-wrap md:flex-nowrap items-start flex-col gap-0">
+                                <div class="flex flex-raw gap-4">
+                                    <div class="min-w-[26px] min-h-[26px] w-7 h-7 icon-{{$item['type']}} bg-no-repeat bg-center"></div>
+                                    <p class="text-big text-text font-bold">{{$item['data']['title']}}</p>
                                 </div>
+                                <div class="pl-11 text-normal text-text">{!! $item['data']['description'] !!}</div>
                             </div>
                             
                             @if(isset($item['data']['btnUrl']))
                                 <x-buttons.btn url="{{$item['data']['btnUrl']}}"
                                                text="{{$item['data']['btnLabel']}}"
                                                type="btn-transparent"
+                                               class="mx-auto md:mx-0 md:ml-auto"
                                 />
                             @endif
                         

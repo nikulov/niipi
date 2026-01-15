@@ -32,13 +32,13 @@
     
 ])
 
-<div class="w-full max-w-1290 bg-cover bg-center bg-no-repeat mx-auto"
+<div class="w-full max-w-1290 bg-cover bg-right bg-no-repeat mx-auto"
      style="background-image: url('{{ public_asset("$imageUrl") }}');"
 >
     <div class="max-w-1242 mx-auto px-inner-section-x p-inner-section-y flex flex-col gap-10 justify-start items-start">
-        <div class="flex flex-row flex-wrap md:flex-nowrap gap-10">
+        <div class="flex flex-row flex-wrap xl:flex-nowrap gap-10">
             
-            <div class="w-full md:w-1/2">
+            <div class="w-full xl:w-1/2">
                 
                 <h2 class="mb-after-title text-primary">{{$title}}</h2>
                 
@@ -48,7 +48,7 @@
             
             </div>
             
-            <div class="w-full md:w-1/2 grid grid-cols-1 md:grid-cols-2 gap-10">
+            <div class="w-full md:w-[773px] xl:w-1/2 mx-auto grid grid-cols-1 md:grid-cols-2 gap-[37px]">
                 
                 @foreach($achievements as $achievement)
                     <x-other.achievements

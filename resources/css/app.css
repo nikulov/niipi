@@ -33,9 +33,17 @@
 
 
     --spacing-inner-section-y: 56px;
-    --spacing-inner-section-x: 32px;
     --spacing-after-title: 24px;
+}
 
+:root {
+    --spacing-inner-section-x: 32px; /* desktop */
+}
+
+@media (max-width: 767px) {
+    :root {
+        --spacing-inner-section-x: 12px; /* mobile */
+    }
 }
 
 @font-face {
@@ -260,7 +268,7 @@
 
     .btn-transparent-bg {
         @apply
-        border-primary bg-transparent
+        border-primary bg-white
         hover:border-[#CBDEEA] hover:bg-[#CBDEEA]
         group-hover:border-[#CBDEEA] group-hover:bg-[#CBDEEA];
     }
@@ -410,6 +418,11 @@
     }
 
 
+}
+
+@utility px-inner-section-x {
+    padding-left: var(--spacing-inner-section-x);
+    padding-right: var(--spacing-inner-section-x);
 }
 
 @utility text-big {

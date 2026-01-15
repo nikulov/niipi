@@ -7,9 +7,7 @@
 
 <div class="relative max-w-full md:max-w-[368px] w-full">
     
-    <div class="card-wrapper
-
-">
+    <div class="card-wrapper bg-white">
         <div class="absolute top-0 left-0 bg-primary w-full h-1.5"
              style="
                     clip-path: polygon(

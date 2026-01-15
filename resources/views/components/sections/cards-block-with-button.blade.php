@@ -45,7 +45,7 @@
         <h2 class="mb-after-title text-primary">{{$title}}</h2>
     @endif
     
-    <div class="flex flex-row flex-wrap gap-[37px] justify-between">
+    <div class="flex flex-row flex-wrap gap-[37px] justify-center xl:justify-between">
         
         @foreach($cards as $card)
             <x-other.small-card-button btn-url="{{$card['cardBtnUrl']}}"
@@ -56,7 +56,7 @@
         @endforeach
         
         @if($btnLabel && $btnUrl)
-            <div class="relative flex justify-end items-end max-w-[368px] w-full">
+            <div class="relative flex justify-center md:justify-end items-end md:max-w-[368px] w-full">
                 <x-buttons.btn url="{{$btnUrl}}"
                                text="{{$btnLabel}}"
                                type="btn-primary"

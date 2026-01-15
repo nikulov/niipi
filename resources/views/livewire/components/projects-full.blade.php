@@ -1,7 +1,7 @@
 <div id="news-block" class="relative max-w-1242 w-full mx-auto my-inner-section-y px-inner-section-x">
     
     @if($categories->isNotEmpty())
-        <div class="relative flex flex-wrap justify-center gap-8 mb-10">
+        <div class="relative flex flex-wrap justify-center gap-8 mb-20">
             <button
                     type="button"
                     wire:click="setCategory(null)"
