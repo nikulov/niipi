@@ -67,8 +67,7 @@ final class InfoBlockWithAchievements
                     ->visibility('public')
                     ->image()
                     ->imageEditor()
-                    ->imageEditorAspectRatios([null, '16:9'])
-                    ->required(),
+                    ->imageEditorAspectRatios([null, '16:9']),
             
             ]);
     }
