@@ -1,6 +1,6 @@
 {
   "resources/css/app.css": {
-    "file": "assets/app-DyTs5cQy.css",
+    "file": "assets/app-EwgjWKVK.css",
     "src": "resources/css/app.css",
     "isEntry": true,
     "names": [
@@ -66,6 +66,10 @@
   "resources/images/layout/acc-dots-white.svg": {
     "file": "assets/acc-dots-white-DvycfGe3.svg",
     "src": "resources/images/layout/acc-dots-white.svg"
+  },
+  "resources/images/layout/bg-mask-top-image.png": {
+    "file": "assets/bg-mask-top-image-CWdMpriO.png",
+    "src": "resources/images/layout/bg-mask-top-image.png"
   },
   "resources/images/layout/bg_footer.jpg": {
     "file": "assets/bg_footer-Dp9i8rA3.jpg",
