@@ -34,7 +34,8 @@ class PostsTable
                     ->badge()
                     ->icon(fn (PostStatus $state) => $state->getIcon()),
                 TextColumn::make('categories.name')->label(__('panel.category'))
-                    ->badge(),
+                    ->badge()
+                    ->wrap(),
                 TextColumn::make('published_at')->label(__('panel.published_at'))
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
