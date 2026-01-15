@@ -15,6 +15,7 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class CategoryResource extends Resource
 {
@@ -76,8 +77,9 @@ class CategoryResource extends Resource
         ];
     }
     
-    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    public static function getEloquentQuery(): Builder
     {
-        return parent::getEloquentQuery()->withCount('posts');
+        return parent::getEloquentQuery()
+            ->withCount(array_values(Category::typeToRelation()));
     }
 }

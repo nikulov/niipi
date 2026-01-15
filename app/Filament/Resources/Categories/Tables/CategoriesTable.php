@@ -9,6 +9,7 @@ use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class CategoriesTable
 {
@@ -26,8 +27,8 @@ class CategoriesTable
                 TextColumn::make('type')->label(__('panel.type'))
                     ->sortable()
                     ->searchable(),
-                TextColumn::make('posts_count')->label(__('panel.posts_count'))
-                    ->sortable()
+                TextColumn::make('items_count')
+                    ->label(__('panel.posts_count'))
                     ->alignCenter(),
                 TextColumn::make('slug')->label(__('panel.slug'))
                     ->sortable()
