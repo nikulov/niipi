@@ -34,17 +34,14 @@
             @foreach($sliders as $slide)
                 
                 <div class="swiper-slide">
-                    <div class="relative px-inner-section-x max-w-1600 min-h-74 mx-auto flex flex-col justify-end
-                                bg-cover bg-center"
-                        style="background-image: url('{{public_asset($slide["bgImageUrl"])}}');"
-                    >
-                        <div class="max-w-1290 w-full mx-auto flex flex-row flex-wrap items-center justify-start gap-10 py-16">
-                            <img src="{{public_asset($slide['iconUrl'])}}" class="hidden md:block w-[120px]" alt="{{$slide['iconAlt']}}"/>
-                            <h1 class="text-white max-w-[900px]">{{$slide['title']}}</h1>
-                        </div>
-                    </div>
+                    <x-other.image-title-full
+                            icon-url="{{$slide['iconUrl']}}"
+                            icon-alt="{{$slide['iconAlt']}}"
+                            image-url="{{$slide['bgImageUrl']}}"
+                            title="{{$slide['title']}}"
+                    />
                 </div>
-            
+                
             @endforeach
            
         </div>
