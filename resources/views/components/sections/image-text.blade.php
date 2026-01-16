@@ -20,7 +20,7 @@
         <img src="{{public_asset($url)}}" alt="{{$alt}}" class="w-full h-full object-cover">
     </div>
     
-    <div class="md:col-span-2 order-1 rich-editor text-justify text-normal text-text">
+    <div class="md:col-span-2 order-1 rich-editor text-left text-normal text-text">
         {!! $content !!}
     </div>
 

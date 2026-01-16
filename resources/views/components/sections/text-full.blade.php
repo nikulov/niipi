@@ -7,7 +7,7 @@
     ]
 )
 
-<div class="max-w-1242 w-full rich-editor mx-auto my-inner-section-y px-inner-section-x text-normal text-text text-justify">
+<div class="max-w-1242 w-full rich-editor mx-auto my-inner-section-y px-inner-section-x text-normal text-text text-left">
     
     {!! $textFull !!}
     
