@@ -11,14 +11,14 @@
             url('{{ public_asset($imageUrl) }}');
     ">
     
-    <x-icon.icon-left-top-image class="hidden 2xl:block absolute z-10 w-[104px] h-[300px] fill-white -translate-x-4.5 md:-translate-x-8"/>
+    <x-icon.icon-left-top-image class="absolute z-10 w-[104px] h-[300px] fill-white/70 -translate-x-4.5 md:-translate-x-8"/>
     
     <div class="absolute left-0 top-0  w-full h-full bg-cover bg-center md:bg-left
                 bg-[url('/resources/images/layout/bg-mask-top-image.png')]
     "></div>
     
     <div class="max-w-1290 w-full mx-auto flex flex-row flex-wrap items-center justify-start gap-10 py-16">
-        <img src={{public_asset($iconUrl)}} class="w-[120px] z-10" alt="{{$iconAlt}}"/>
+        <img src={{public_asset($iconUrl)}} class="hidden lg:block w-[120px] z-10" alt="{{$iconAlt}}"/>
         <h1 class="text-white z-10">{!!$title!!}</h1>
     </div>
 
