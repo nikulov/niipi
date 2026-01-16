@@ -1,4 +1,4 @@
-<footer class="bg-[url('/resources/images/layout/bg_footer.jpg')] flex bg-cover bg-center bg-no-repeat lg:min-h-32 justify-center items-end dark:bg-[url('/resources/images/layout/bg_footer.jpg')] bg-[#5B8EAE] bg-blend-multiply max-w-1600 w-full m-auto">
+<footer class="bg-[url('/resources/images/layout/bg_footer.jpg')] flex bg-cover bg-center bg-no-repeat lg:min-h-32 justify-center items-end dark:bg-[url('/resources/images/layout/bg_footer.jpg')] bg-[#5B8EAE] bg-blend-multiply max-w-1600 w-full m-auto to-top-white">
     <div class="w-[1267px] mx-auto lg:px-0 lg:py-14">
         <div class="hidden lg:flex flex-col gap-10 lg:flex-row lg:items-start lg:justify-between">
             
@@ -13,7 +13,7 @@
                     НАШИ КОНТАКТЫ
                 </h3>
                 
-                <div class="space-y-1 text-sm leading-relaxed text-white rich-editor">
+                <div class="space-y-1 text-sm leading-relaxed text-white rich-editor [&_p]:indent-0">
                     {!! $footer['contactData'] !!}
                 </div>
             </div>

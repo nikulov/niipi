@@ -4,7 +4,7 @@
     ]
 )
 
-<div class="px-3">
+<div class="px-3 to-top-dark">
     
     <div class="container pt-px relative mx-auto max-w-1290 w-full min-h-20 bg-white mt-16 border-b border-border bg-cover bg-top bg-no-repeat "
          @if( ! empty($bgForMainSection))

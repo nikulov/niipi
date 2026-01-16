@@ -39,13 +39,13 @@
         
         <main class="grow max-w-1600 w-full mx-auto bg-background-light">
             
-            <div class="container max-w-1600 w-full h-full">
+            <div class="container max-w-1600 w-full h-full to-top-white">
                 @yield('top_section')
             </div>
             
             @include('layout.content-block')
             
-            <div class="container max-w-1600 w-full mt-16 h-full">
+            <div class="container max-w-1600 w-full mt-16 h-full to-top-white">
                 @yield('bottom_section')
             </div>
         
@@ -54,6 +54,8 @@
         @include('includes.footer')
     
     </div>
+    
+    <x-buttons.to-top/>
     
     @livewireScripts
     
