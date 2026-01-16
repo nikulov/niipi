@@ -3,6 +3,18 @@ namespace App\Models\Concerns;
 
 trait HasSectionOptions
 {
+    protected function sectionOptionBlockTypes(): array
+    {
+        return [
+            'bg-for-main-section',
+        ];
+    }
+    
+    public function isSectionOptionBlock(string $blockType): bool
+    {
+        return in_array($blockType, $this->sectionOptionBlockTypes(), true);
+    }
+    
     public function getSectionOption(
         string $section,
         string $blockType,
