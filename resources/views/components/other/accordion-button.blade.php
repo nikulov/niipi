@@ -12,7 +12,7 @@
 >
     <div class="flex text-left justify-start items-center gap-2">
         @if($type == 'white')
-        <span class=" text-accordion-title text-accent-add min-w-14">{{$point}}</span>
+        <span class=" text-accordion-title text-accent-add min-w-15">{{$point}}</span>
         <div class="hidden md:block w-5 h-6 relative icon-dots-{{$type}} bg-no-repeat bg-center"></div>
         @endif
         <span class="text-accordion-title text-{{$type}}">{{$itemTitle}}</span>
