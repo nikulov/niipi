@@ -379,7 +379,7 @@
     }
 
     .rich-editor p {
-        @apply mb-4;
+        @apply mb-4 indent-6;
     }
 
     .rich-editor ol {
