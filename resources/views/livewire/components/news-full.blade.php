@@ -1,36 +1,10 @@
 <div id="news-block" class="relative max-w-1242 w-full mx-auto my-inner-section-y px-inner-section-x">
     
-    @if($categories->isNotEmpty())
-        <div class="relative flex flex-wrap justify-center gap-8 mb-20">
-            <button
-                    type="button"
-                    wire:click="setCategory(null)"
-                    class="relative cursor-pointer uppercase
-                    {{ $activeCategory === null ? 'text-accent' : 'text-primary' }}"
-            >
-                Все
-                <span class="opacity-60">
-                    [{{$totalPostsCount}}]
-                </span>
-            </button>
-            
-            @foreach($categories as $cat)
-                <button
-                        type="button"
-                        wire:click="setCategory('{{ $cat->slug }}')"
-                        class="relative cursor-pointer uppercase pl-8
-                        before:content-[''] before:absolute before:-left-px
-                        before:w-1 before:h-5
-                        before:bg-[url('/resources/images/layout/acc-dots-dark.svg')]
-                        {{ $activeCategory === $cat->slug ? 'text-accent' : 'text-primary' }}"
-                >
-                    {{ $cat->name }}
-                    <span class="opacity-60">
-                        [{{$cat->posts_count}}]
-                    </span>
-                </button>
-            @endforeach
-        </div>
+    @if($categoryItems->count() > 1)
+        {{-- Mobile --}}
+        <x-other.categories-select :items="$categoryItems" :active="$activeCategory"/>
+        {{-- Desktop --}}
+        <x-other.categories-list :items="$categoryItems" :active="$activeCategory"/>
     @endif
     
     <div class="flex flex-col gap-y-15 gap-x-32">
@@ -68,7 +42,7 @@
             </article>
         @endforeach
         
-        <div>
+        <div class="mt-5">
             {{ $cards->links('livewire::tailwind', data: ['scrollTo' => '#news-block']) }}
         </div>
     </div>
