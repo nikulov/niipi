@@ -83,7 +83,7 @@ final class ProjectsFull extends Component
                     )
                     ->withCount([
                         'projects as projects_count' => fn ($q) =>
-                        $q->where('status', ProjectStatus::Published),
+                        $q->where('status', ProjectStatus::Published->value),
                     ])
                     ->having('projects_count', '>', 0)
                     ->orderBy('name')
@@ -111,11 +111,24 @@ final class ProjectsFull extends Component
         
         $totalProjectsCount = $categories->sum('projects_count');
         
+        $categoryItems = collect([
+            [
+                'slug' => null,
+                'name' => 'Все',
+                'count' => $totalProjectsCount,
+            ],
+            ...$categories->map(fn ($cat) => [
+                'slug' => $cat->slug,
+                'name' => $cat->name,
+                'count' => $cat->projects_count,
+            ])->all(),
+        ]);
+        
         return view('livewire.components.projects-full', [
             'categories' => $categories,
             'cards' => $cards,
             'activeCategory' => $this->category,
-            'totalProjectsCount' => $totalProjectsCount,
+            'categoryItems' => $categoryItems,
         ]);
     }
 }

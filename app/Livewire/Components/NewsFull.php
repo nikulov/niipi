@@ -6,6 +6,7 @@ use App\Enums\PostStatus;
 use App\Models\Category;
 use App\Presenters\Blocks\NewsFullPresenter;
 use App\Services\NewsQuery;
+use App\Services\ProjectsQuery;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Livewire\Component;
@@ -27,6 +28,8 @@ final class NewsFull extends Component
     protected $queryString = [
         'category' => ['except' => null, 'as' => 'newsCategory'],
     ];
+    
+    private ?Collection $categoriesCache = null;
     
     public function mount(int $limit = 10, ?array $categoryIds = null, ?string $componentKey = null): void
     {
@@ -57,9 +60,7 @@ final class NewsFull extends Component
             return;
         }
         
-        $exists = $this->getCategories()->contains('slug', $this->category);
-        
-        if (!$exists) {
+        if (!$this->categories()->contains('slug', $this->category)) {
             $this->category = null;
         }
     }
@@ -83,12 +84,36 @@ final class NewsFull extends Component
                     )
                     ->withCount([
                         'posts as posts_count' => fn ($q) =>
-                        $q->where('status', PostStatus::Published),
+                        $q->where('status', PostStatus::Published->value),
                     ])
                     ->having('posts_count', '>', 0)
                     ->orderBy('name')
                     ->get(['id', 'name', 'slug']);
             });
+    }
+    
+    private function categories(): Collection
+    {
+        return $this->categoriesCache ??= $this->getCategories();
+    }
+    
+    public function getCategoryItemsProperty(): Collection
+    {
+        $categories = $this->categories();
+        $totalPostsCount = (int) $categories->sum('posts_count');
+        
+        return collect([
+            [
+                'slug' => null,
+                'name' => 'Все',
+                'count' => $totalPostsCount,
+            ],
+            ...$categories->map(fn ($cat) => [
+                'slug' => $cat->slug,
+                'name' => $cat->name,
+                'count' => (int) $cat->posts_count,
+            ])->all(),
+        ]);
     }
     
     private function getCards(NewsQuery $newsQuery, Collection $categories): LengthAwarePaginator
@@ -109,13 +134,26 @@ final class NewsFull extends Component
         $categories = $this->getCategories();
         $cards = $this->getCards($newsQuery, $categories);
         
-        $totalPostsCount = $categories->sum('posts_count');
+        $totalProjectsCount = $categories->sum('posts_count');
+        
+        $categoryItems = collect([
+            [
+                'slug' => null,
+                'name' => 'Все',
+                'count' => $totalProjectsCount,
+            ],
+            ...$categories->map(fn ($cat) => [
+                'slug' => $cat->slug,
+                'name' => $cat->name,
+                'count' => $cat->posts_count,
+            ])->all(),
+        ]);
         
         return view('livewire.components.news-full', [
             'categories' => $categories,
             'cards' => $cards,
             'activeCategory' => $this->category,
-            'totalPostsCount' => $totalPostsCount,
+            'categoryItems' => $categoryItems,
         ]);
     }
 }

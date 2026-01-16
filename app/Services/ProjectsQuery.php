@@ -17,7 +17,7 @@ final class ProjectsQuery
     ): Collection|LengthAwarePaginator {
         $query = Project::query()
             ->with('categories')
-            ->where('status', ProjectStatus::Published)
+            ->where('status', ProjectStatus::Published->value)
             ->orderByDesc('published_at');
         
         if ($categoryIds && $categoryIds !== []) {

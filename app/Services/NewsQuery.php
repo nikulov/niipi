@@ -18,7 +18,7 @@ final class NewsQuery
     ): Collection|LengthAwarePaginator {
         $query = Post::query()
             ->with('categories')
-            ->where('status', PostStatus::Published)
+            ->where('status', PostStatus::Published->value)
             ->orderByDesc('published_at');
         
         if ($categoryIds && $categoryIds !== []) {
