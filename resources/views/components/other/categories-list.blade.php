@@ -10,7 +10,7 @@
                 wire:click="setCategory({{ $item['slug'] ? "'{$item['slug']}'" : 'null' }})"
                 class="relative cursor-pointer uppercase
             {{ $item['slug'] ? 'pl-8 before:content-[\'\'] before:absolute before:-left-px before:w-1 before:h-5 before:bg-[url(\'/resources/images/layout/acc-dots-dark.svg\')]' : '' }}
-            {{ $active === $item['slug'] ? 'text-accent' : 'text-primary' }}"
+            {{ $active === $item['slug'] ? 'text-accent font-bold' : 'text-primary' }}"
         >
             {{ $item['name'] }}
             <span class="opacity-60">

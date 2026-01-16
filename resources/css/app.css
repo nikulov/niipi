@@ -122,8 +122,6 @@
         @apply text-4xl leading-none absolute -right-5 -bottom-3.5 text-accent;
     }
 
-
-
 }
 
 @layer components {
@@ -139,26 +137,8 @@
         @apply text-accent-add;
     }
 
-    .menu-link::after {
-        content: "";
-        @apply absolute left-0 -bottom-1 h-[1px] w-0 bg-accent-add transition-all;
-    }
-
-    .menu-link:hover::after {
-        @apply w-full;
-    }
-
-    .menu-link-btn:hover::after {
-        @apply w-0;
-    }
-
     .menu-link-active {
-        @apply text-accent;
-    }
-
-    .menu-link-active::after {
-        content: "";
-        @apply absolute left-0 -bottom-1 w-full h-[1px] bg-accent transition-all;
+        @apply text-accent font-bold;
     }
 
     .menu-link-mobile {

@@ -25,7 +25,6 @@
                                 class="font-carlito text-text transition-all duration-150
                                      group-hover:text-accent-add absolute -right-2.5 -top-2"
                         >
-                            +
                         </p>
                     @endif
                     
