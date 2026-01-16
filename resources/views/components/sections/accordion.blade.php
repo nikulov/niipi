@@ -70,7 +70,7 @@
                                     <div class="min-w-[26px] min-h-[26px] w-7 h-7 icon-{{$item['type']}} bg-no-repeat bg-center"></div>
                                     <p class="text-big text-text font-bold">{{$item['data']['title']}}</p>
                                 </div>
-                                <div class="pl-11 text-normal text-text break-all">{!! $item['data']['description'] !!}</div>
+                                <div class="pl-11 text-normal text-text">{!! $item['data']['description'] !!}</div>
                             </div>
                             
                             @if(isset($item['data']['btnUrl']))
