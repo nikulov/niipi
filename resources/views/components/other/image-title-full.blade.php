@@ -1,4 +1,4 @@
-<div class="relative px-inner-section-x max-w-1600 min-h-74 mx-auto flex flex-col justify-end bg-cover bg-right
+<div class="overflow-hidden relative px-inner-section-x max-w-1600 min-h-74 mx-auto flex flex-col justify-end bg-cover bg-right
 "
      style="
         background-image:
@@ -11,7 +11,7 @@
             url('{{ public_asset($imageUrl) }}');
     ">
     
-    <x-icon.icon-left-top-image class="absolute z-10 w-[104px] h-[300px] fill-white/70 -translate-x-4.5 md:-translate-x-8"/>
+    <x-icon.icon-left-top-image class="absolute z-10 w-[104px] h-[300px] fill-white/70 -translate-x-3.5 md:-translate-x-8"/>
     
     <div class="absolute left-0 top-0  w-full h-full bg-cover bg-center md:bg-left
                 bg-[url('/resources/images/layout/bg-mask-top-image.png')]
