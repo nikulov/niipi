@@ -39,7 +39,7 @@
         
         <main class="grow max-w-1600 w-full mx-auto bg-background-light">
             
-            <div class="container max-w-1600 w-full h-full to-top-white">
+            <div class="container max-w-1600 w-full h-full to-top-white border-y border-accent">
                 @yield('top_section')
             </div>
             
