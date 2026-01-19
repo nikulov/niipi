@@ -249,8 +249,8 @@
     .btn-transparent-bg {
         @apply
         border-primary bg-white
-        hover:border-[#CBDEEA] hover:bg-[#CBDEEA]
-        group-hover:border-[#CBDEEA] group-hover:bg-[#CBDEEA];
+        hover:border-primary hover:bg-[#CBDEEA]
+        group-hover:border-b-primary group-hover:bg-[#CBDEEA];
     }
 
     /* END BTN colors */
@@ -275,7 +275,7 @@
     }
 
     .acc-item-bg-question {
-        @aplly bg-white;
+        @aplly bg-[#FAFDFF];
     }
 
     .acc-item-bg-plus {
