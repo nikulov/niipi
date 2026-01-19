@@ -1,6 +1,6 @@
 {
   "resources/css/app.css": {
-    "file": "assets/app-4WXoMycc.css",
+    "file": "assets/app-DpdHx7wN.css",
     "src": "resources/css/app.css",
     "isEntry": true,
     "names": [
@@ -116,7 +116,7 @@
     "src": "resources/images/layout/waves-mobile.png"
   },
   "resources/js/app.js": {
-    "file": "assets/app-CZ34S0QR.js",
+    "file": "assets/app-B2ubSG3H.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true
