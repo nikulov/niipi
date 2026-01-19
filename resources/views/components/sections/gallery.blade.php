@@ -95,7 +95,7 @@
             
             <!-- Thumbs -->
             <div class="swiper js-gallery-slider-thumbs w-full max-w-5xl mt-6 h-[142px] max-sm:h-[96px]">
-                <div class="swiper-wrapper h-full">
+                <div class="swiper-wrapper h-full w-max! mx-auto">
                     @foreach($urls as $url)
                         <div class="swiper-slide !w-[200px] !h-[142px] max-sm:!w-[120px] max-sm:!h-[96px] opacity-70 cursor-pointer">
                             <img
