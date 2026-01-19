@@ -8,7 +8,7 @@
     <button
             type="button"
             {{ $attributes->class([
-                'menu-link menu-link-btn z-20 cursor-default',
+                'w-full menu-link relative group menu-link-btn z-20 cursor-default',
             ]) }}
     >
         

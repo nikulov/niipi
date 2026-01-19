@@ -1,6 +1,6 @@
 <nav class="bg-[url('/resources/images/layout/menu_bg.png')] px-inner-section-x flex bg-center bg-no-repeat min-h-30 justify-center items-end max-w-1600 w-full m-auto">
     <div class="container mx-auto max-w-1290 w-full pb-6">
-        <div class="relative flex justify-end md:justify-center items-end">
+        <div class="relative flex justify-end lg:justify-center items-end">
             
             <div class="flex items-center absolute left-0">
                 <a href="{{ route('home') }}"

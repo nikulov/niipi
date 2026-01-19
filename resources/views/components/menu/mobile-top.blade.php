@@ -2,7 +2,7 @@
     'menuItems' => [],
 ])
 
-<div class="md:hidden relative w-full h-auto"
+<div class="relative w-full h-auto"
      x-data="{
         menuOpen: false,
         scrollY: 0,
