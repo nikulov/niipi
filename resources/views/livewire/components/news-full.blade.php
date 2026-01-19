@@ -35,7 +35,7 @@
                         <x-buttons.btn-more
                                 url="{{ $card['url']}}"
                                 text="подробнее"
-                                class="text-[#324B60] hover:text-[#5B8EAE]"
+                                class="text-accent-add hover:text-[#5B8EAE]"
                         />
                     </div>
                 </div>
