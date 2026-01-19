@@ -48,9 +48,9 @@
         </div>
     </div>
     <div class="absolute inline-flex bottom-2 flex-row justify-between items-center gap-4">
-        <button type="button" class="js-main-slider-prev cursor-pointer w-10 h-10 z-20"></button>
+        <button type="button" class="js-slider-prev js-main-slider-prev cursor-pointer w-10 h-10 z-20"></button>
         <div class="js-main-slider-pagination flex justify-center items-center z-20"></div>
-        <button type="button" class="js-main-slider-next cursor-pointer w-10 h-10 z-20"></button>
+        <button type="button" class="js-slider-next js-main-slider-next cursor-pointer w-10 h-10 z-20"></button>
     </div>
     
 </div>

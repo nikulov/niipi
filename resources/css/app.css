@@ -315,39 +315,35 @@
     }
 
     .swiper-pagination-bullet {
-        width: 12px !important;
-        height: 12px !important;
+        @apply w-3! h-3! opacity-100! bg-accent! hover:bg-accent-add!;
         -webkit-mask: url('/resources/images/layout/slider-bullet-empty.svg') center/contain no-repeat;
         mask: url('/resources/images/layout/slider-bullet-empty.svg') center/contain no-repeat;
-        background-color: theme('colors.accent') !important;
-        opacity: 1 !important;
-    }
-
-    .swiper-pagination-bullet:hover {
-        background-color: theme('colors.accent-add') !important;
     }
 
     .swiper-pagination-bullet-active {
+        @apply bg-accent-add!;
         -webkit-mask: url('/resources/images/layout/slider-bullet.svg') center/contain no-repeat;
         mask: url('/resources/images/layout/slider-bullet.svg') center/contain no-repeat;
-        background-color: theme('colors.accent-add') !important;
     }
 
-    .js-main-slider-prev {
+    .js-slider-prev {
+        @apply bg-accent! hover:bg-accent-add!;
         -webkit-mask: url('/resources/images/layout/slider-left-arrow.svg') center/contain no-repeat;
         mask: url('/resources/images/layout/slider-left-arrow.svg') center/contain no-repeat;
-        background-color: theme('colors.accent') !important;
     }
 
-    .js-main-slider-next {
+    .js-slider-next {
+        @apply bg-accent! hover:bg-accent-add!;
         -webkit-mask: url('/resources/images/layout/slider-right-arrow.svg') center/contain no-repeat;
         mask: url('/resources/images/layout/slider-right-arrow.svg') center/contain no-repeat;
-        background-color: theme('colors.accent') !important;
     }
 
-    .js-main-slider-prev:hover,
-    .js-main-slider-next:hover {
-        background-color: theme('colors.accent-add') !important;
+    .js-gallery-slider-thumbs .swiper-slide-thumb-active {
+        @apply opacity-100!;
+    }
+
+    .js-gallery-slider-thumbs .swiper-slide-thumb-active {
+        @apply opacity-100 border-1 border-accent;
     }
 
     .rich-editor ul {
