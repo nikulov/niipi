@@ -4,6 +4,7 @@
 namespace App\Filament\Components;
 
 use App\Filament\Forms\Components\CustomRepeater;
+use App\Filament\Forms\Components\UrlInput;
 use Filament\Actions\Action;
 use Filament\Forms\Components\Builder\Block;
 use Filament\Forms\Components\FileUpload;
@@ -39,11 +40,15 @@ final class SliderFullWidth
                     ->collapsed()
                     ->reorderable()
                     ->schema([
+                        
                         Textarea::make('title')->label(__(key: 'panel.title'))
                             ->required()
                             ->columnSpanFull()
                             ->trim()
                             ->live(onBlur: true),
+                        UrlInput::make('url')->label(__(key: 'panel.title_url'))
+                        ->columnSpanFull(),
+                        
                         FileUpload::make('iconUrl')->label(__(key: 'panel.icon'))
                             ->columnSpan(12)
                             ->preserveFilenames()
@@ -54,10 +59,12 @@ final class SliderFullWidth
                             ->imageEditor()
                             ->imageEditorAspectRatios([null, '16:9'])
                             ->required(),
+                        
                         TextInput::make('iconAlt')->label(__(key: 'panel.icon_alt'))
                             ->required()
                             ->trim()
                             ->columnSpan(12),
+                        
                         FileUpload::make('bgImageUrl')->label(__(key: 'panel.image'))
                             ->preserveFilenames()
                             ->disk('public')
@@ -68,10 +75,12 @@ final class SliderFullWidth
                             ->imageEditorAspectRatios([null, '16:9'])
                             ->required()
                             ->columnSpan(12),
+                        
                         TextInput::make('imageAlt')->label(__(key: 'panel.alt'))
                             ->required()
                             ->trim()
                             ->columnSpan(12),
+                        
                     ])->columns(24),
             
             ]);

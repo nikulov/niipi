@@ -19,7 +19,9 @@
     
     <div class="max-w-1290 w-full mx-auto flex flex-row flex-wrap items-end justify-start gap-10 py-16">
         <img src={{public_asset($iconUrl)}} class="hidden pb-2.5 lg:block w-[120px] z-10" alt="{{$iconAlt}}"/>
-        <h1 class="text-white z-10">{!!$title!!}</h1>
+        <a @if(!empty($url)) href="{{$url}}" @endif class="z-10">
+            <h1 class="text-white @if(!empty($url)) hover:text-accent-add @endif">{!!$title!!}</h1>
+        </a>
     </div>
 
 </div>

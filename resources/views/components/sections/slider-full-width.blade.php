@@ -39,6 +39,7 @@
                             icon-alt="{{$slide['iconAlt']}}"
                             image-url="{{$slide['bgImageUrl']}}"
                             title="{{$slide['title']}}"
+                            url="{{$slide['url']}}"
                     />
                 </div>
                 
