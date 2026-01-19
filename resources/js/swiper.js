@@ -1,5 +1,5 @@
 import Swiper from "swiper";
-import {Autoplay, FreeMode, Navigation, Pagination, Thumbs} from "swiper/modules";
+import {Autoplay, FreeMode, Navigation, Pagination, Thumbs, Keyboard} from "swiper/modules";
 
 document.addEventListener('DOMContentLoaded', initMainSlider);
 document.addEventListener('turbo:load', initMainSlider);
@@ -60,7 +60,7 @@ function initGallerySliderForRoot(rootEl, startIndex = 0) {
     });
 
     const slider = new Swiper(sliderEl, {
-        modules: [Navigation, Pagination, Thumbs],
+        modules: [Navigation, Pagination, Thumbs, Keyboard],
         loop: true,
         speed: 250,
         slidesPerView: 1,
@@ -73,6 +73,11 @@ function initGallerySliderForRoot(rootEl, startIndex = 0) {
 
         thumbs: {
             swiper: thumbsSwiper,
+        },
+
+        keyboard: {
+            enabled: true,
+            onlyInViewport: false,
         },
     });
 
