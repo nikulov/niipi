@@ -10,8 +10,8 @@
             @php($hasChildren = !empty($item['children']))
             
             <li class="relative group flex flex-row mr-4 items-center
-                   before:content-['//'] first:before:hidden before:text-accent
-                   before:mr-4"
+                   after:content-['//'] last:after:hidden after:text-accent
+                   after:ml-4"
             >
                 <x-menu.desktop-link
                         href="{{$hasChildren ? '' : $item['href']}}"

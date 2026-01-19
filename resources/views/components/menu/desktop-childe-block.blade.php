@@ -1,4 +1,4 @@
-<div class="absolute z-10 left-0 top-full w-max pointer-events-none opacity-0 -translate-y-2 group-hover:translate-y-0 transition duration-300 ease-out group-hover:pointer-events-auto group-hover:opacity-100">
+<div class="absolute z-10 -left-8.5 top-full w-max pointer-events-none opacity-0 -translate-y-2 group-hover:translate-y-0 transition duration-300 ease-out group-hover:pointer-events-auto group-hover:opacity-100">
     <div class="h-6"></div>
     <ul class="w-full flex flex-col p-4 bg-[#f1f1f1] shadow-lg"
     >
