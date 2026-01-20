@@ -97,11 +97,11 @@
     }
 
     h2 {
-        @apply font-century text-[27px] leading-[37.8px] font-bold uppercase whitespace-pre-wrap;
+        @apply font-century text-[22px] md:text-[27px] leading-[37.8px] font-bold uppercase whitespace-pre-wrap;
     }
 
     h3 {
-        @apply font-century text-[21px] leading-[29.4px] font-bold uppercase whitespace-pre-wrap;
+        @apply font-century text-[18px] md:text-[21px] leading-[29.4px] font-bold uppercase whitespace-pre-wrap;
     }
 
     blockquote {
