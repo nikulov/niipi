@@ -32,7 +32,7 @@
     
 ])
 
-<div class="w-full max-w-1290 bg-cover bg-right bg-no-repeat mx-auto bg-white dark:bg-background-dark-add bg-blend-multiply"
+<section class="w-full max-w-1290 bg-cover bg-right bg-no-repeat mx-auto"
      style="background-image: url('{{ public_asset("$imageUrl") }}');"
 >
     <div class="max-w-1242 mx-auto px-inner-section-x p-inner-section-y flex flex-col gap-10 justify-start items-start">
@@ -62,4 +62,4 @@
             
         </div>
     </div>
-</div>
+</section>
