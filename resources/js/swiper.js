@@ -18,6 +18,20 @@ function initMainSlider()
         autoHeight: true,
         autoplay: {
             delay: 2000,
+            disableOnInteraction: false,
+        },
+        on: {
+            init(swiper) {
+                swiper.slides.forEach((slide) => {
+                    slide.addEventListener('mouseenter', () => {
+                        swiper.autoplay.stop();
+                    });
+
+                    slide.addEventListener('mouseleave', () => {
+                        swiper.autoplay.start();
+                    });
+                });
+            },
         },
         slidesPerView: 1,
         spaceBetween: 0,

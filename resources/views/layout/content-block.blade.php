@@ -30,11 +30,11 @@
         @yield('main_section')
         
         
-        <div class="absolute -bottom-4.5 right-0 w-1/2 h-4.5 flex justify-between items-start bg-accent"
+        <div class="absolute -bottom-4.5 right-0 w-[60%] md:w-[40%] h-4.5 flex justify-between items-start bg-accent"
              style="clip-path: polygon(0 0, 100% calc(100% - 18px), 100% 100%, 20px 100%, 0 calc( 100% - 18px));
     ">
             
-            <div class=" absolute top-1/2 -translate-y-1/2 left-4 w-20 h-1.5 bg-no-repeat flex justify-center items-center
+            <div class="absolute top-1/2 -translate-y-1/2 left-4 w-20 h-1.5 bg-no-repeat flex justify-center items-center
              bg-[url('/resources/images/layout/item-bottom-left-content.svg')]
         "></div>
             
