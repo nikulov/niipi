@@ -9,18 +9,18 @@
             </div>
             
             <div class="lg:w-1/3">
-                <h3 class="mb-4 text-sm font-bold tracking-[0.18em] uppercase text-white dark:text-text-dark-dark whitespace-normal">
+                <h3 class="mb-4 text-sm font-bold tracking-[0.18em] uppercase text-white dark:text-white-dark whitespace-normal">
                     НАШИ КОНТАКТЫ
                 </h3>
                 
-                <div class="space-y-1 text-sm leading-relaxed text-white dark:text-text-dark-dark rich-editor [&_p]:indent-0">
+                <div class="space-y-1 text-sm leading-relaxed text-white dark:text-white-dark rich-editor [&_p]:indent-0">
                     {!! $footer['contactData'] !!}
                 </div>
             </div>
             
             <div class="lg:w-1/2">
                 
-                <h3 class="mb-4 text-sm font-bold tracking-[0.18em] uppercase text-white dark:text-text-dark-dark whitespace-normal">
+                <h3 class="mb-4 text-sm font-bold tracking-[0.18em] uppercase text-white dark:text-white-dark whitespace-normal">
                     НАВИГАЦИЯ ПО САЙТУ
                 </h3>
                 
@@ -30,7 +30,7 @@
             
             <div class="lg:w-1/4">
                 
-                <h3 class="mb-4 text-sm font-bold tracking-[0.18em] uppercase text-white dark:text-text-dark-dark whitespace-normal">
+                <h3 class="mb-4 text-sm font-bold tracking-[0.18em] uppercase text-white dark:text-white-dark whitespace-normal">
                     СОЦИАЛЬНЫЕ СЕТИ
                 </h3>
                 

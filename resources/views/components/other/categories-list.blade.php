@@ -8,7 +8,7 @@
         <button
                 type="button"
                 wire:click="setCategory({{ $item['slug'] ? "'{$item['slug']}'" : 'null' }})"
-                class="relative cursor-pointer uppercase
+                class="relative cursor-pointer uppercase hover:text-[#5B8EAE]
             {{ $item['slug'] ? 'pl-8 before:content-[""] before:absolute before:-left-px before:w-1 before:h-5 before:bg-[url("/resources/images/layout/acc-dots-dark.svg")]' : '' }}
             {{ $active === $item['slug'] ? 'text-accent dark:text-accent-add-dark font-bold' : 'text-primary dark:text-accent-add-dark' }}"
         >

@@ -12,7 +12,7 @@
                 </div>
                 
                 <div class="flex flex-col">
-                    <p class="mt-5 text-normal uppercase text-white line-clamp-3">
+                    <p class="mt-5 text-normal uppercase text-white dark:text-white-dark line-clamp-3">
                         {{$card['title']}}
                     </p>
                 </div>

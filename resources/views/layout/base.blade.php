@@ -78,7 +78,7 @@
             show = true;
             setTimeout(() => show = false, 260);"
             x-show="show"
-            class="fixed inset-0 z-[9999] pointer-events-none bg-primary/30 dark:bg-back/30"
+            class="fixed max-w-1600 inset-0 z-9999 pointer-events-none bg-primary/30 dark:bg-primary/30"
             
             x-transition:enter="transition-opacity ease-out duration-100"
             x-transition:enter-start="opacity-0"

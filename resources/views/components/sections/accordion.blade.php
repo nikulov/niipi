@@ -44,7 +44,7 @@
 
 <section class="max-w-1242 w-full mx-auto my-inner-section-y px-inner-section-x">
     
-    <h2 class="mb-after-title text-primary">{{$accordions['title']}}</h2>
+    <h2 class="mb-after-title text-primary dark:text-accent-add-dark">{{$accordions['title']}}</h2>
     <div class="space-y-4">
         
         @foreach($accordions['accordions'] as $accordion)
@@ -68,9 +68,10 @@
                             <div class="flex flex-wrap md:flex-nowrap items-start flex-col gap-0">
                                 <div class="flex flex-raw gap-4">
                                     <div class="min-w-[26px] min-h-[26px] w-7 h-7 icon-{{$item['type']}} bg-no-repeat bg-center"></div>
-                                    <p class="text-big text-text font-bold">{{$item['data']['title']}}</p>
+                               
+                                    <p class="text-big text-text dark:text-white-dark font-bold">{{$item['data']['title']}}</p>
                                 </div>
-                                <div class="pl-11 text-normal text-text">{!! $item['data']['description'] !!}</div>
+                                <div class="pl-11 text-normal text-text dark:text-white-dark">{!! $item['data']['description'] !!}</div>
                             </div>
                             
                             @if(isset($item['data']['btnUrl']))

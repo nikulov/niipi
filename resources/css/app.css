@@ -217,8 +217,11 @@
     .btn-primary-bg {
         @apply
         border-primary bg-primary
+        dark:border-accent dark:bg-accent
         hover:border-accent hover:bg-accent
-        group-hover:border-accent group-hover:bg-accent;
+        group-hover:border-accent group-hover:bg-accent
+        dark:hover:border-accent dark:hover:bg-[#7BA2BA]
+        dark:group-hover:border-accent dark:group-hover:bg-[#7BA2BA];
     }
 
     .btn-secondary-text {
@@ -276,15 +279,17 @@
     }
 
     .acc-item-bg-question {
-        @aplly bg-[#FAFDFF];
+        @apply bg-[#FAFDFF] dark:bg-[#636b76]
+        border-b border-[#DEDEDE] dark:border-accent/50;
     }
 
     .acc-item-bg-plus {
-        @apply bg-[#F5F7FD];
+        @apply bg-[#F5F7FD] dark:bg-[#5b6574]
+        border-b border-[#DEDEDE] dark:border-accent/50;
     }
 
     .acc-item-bg-info {
-        @apply bg-background-light;
+        @apply bg-background-light dark:bg-[#5c6570] border-b border-[#DEDEDE] dark:border-accent/50;
     }
 
     .acc-dots-white {
@@ -296,7 +301,7 @@
     }
 
     .acc-dark {
-        @apply bg-[#FAFDFF];
+        @apply bg-[#FAFDFF] dark:bg-background-dark dark:text-text-dark;
     }
 
     .acc-white {
