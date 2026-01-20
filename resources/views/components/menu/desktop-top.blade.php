@@ -10,7 +10,7 @@
             @php($hasChildren = !empty($item['children']))
             
             <li class="relative group flex flex-row mr-4 items-center
-                   after:content-['//'] last:after:hidden after:text-accent
+                   after:content-['//'] last:after:hidden after:text-accent dark:after:text-accent-add-dark
                    after:ml-4"
             >
                 <x-menu.desktop-link

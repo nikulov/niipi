@@ -7,7 +7,8 @@
     ]
 )
 
-<div class="max-w-1242 w-full rich-editor mx-auto my-inner-section-y px-inner-section-x text-normal text-text text-left">
+<div class="max-w-1242 w-full rich-editor mx-auto my-inner-section-y px-inner-section-x text-normal
+            text-text dark:text-text-dark change-theme text-left">
     
     {!! $textFull !!}
     

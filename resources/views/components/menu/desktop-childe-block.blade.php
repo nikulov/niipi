@@ -1,10 +1,10 @@
 <div class="absolute z-10 -left-8.5 top-full w-max pointer-events-none opacity-0 -translate-y-2 group-hover:translate-y-0 transition duration-300 ease-out group-hover:pointer-events-auto group-hover:opacity-100">
     <div class="h-6"></div>
-    <ul class="w-full flex flex-col p-4 bg-[#f1f1f1] shadow-lg"
+    <ul class="w-full flex flex-col p-4 bg-[#f1f1f1] dark:bg-background-dark shadow-lg"
     >
         @foreach ($items as $child)
             
-            <li class="w-full inline-block py-2.5 first:pt-0 last:pb-0 border-b last:border-b-0 border-accent">
+            <li class="w-full inline-block py-2.5 first:pt-0 last:pb-0 border-b last:border-b-0 border-accent dark:border-accent-add-dark">
                 <x-menu.desktop-link
                         href="{{ $child['href'] }}"
                         blank="{{ $child['blank'] }}"

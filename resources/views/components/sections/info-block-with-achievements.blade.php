@@ -32,7 +32,7 @@
     
 ])
 
-<div class="w-full max-w-1290 bg-cover bg-right bg-no-repeat mx-auto"
+<div class="w-full max-w-1290 bg-cover bg-right bg-no-repeat mx-auto bg-white dark:bg-background-dark-add bg-blend-multiply"
      style="background-image: url('{{ public_asset("$imageUrl") }}');"
 >
     <div class="max-w-1242 mx-auto px-inner-section-x p-inner-section-y flex flex-col gap-10 justify-start items-start">
@@ -40,9 +40,9 @@
             
             <div class="w-full xl:w-1/2">
                 
-                <h2 class="mb-after-title text-primary">{{$title}}</h2>
+                <h2 class="mb-after-title text-primary dark:text-accent-add-dark">{{$title}}</h2>
                 
-                <div class="rich-editor text-normal">
+                <div class="rich-editor text-normal dark:text-text-dark">
                     {!!$description!!}
                 </div>
             

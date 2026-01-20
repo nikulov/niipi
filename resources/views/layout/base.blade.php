@@ -14,6 +14,15 @@
     
     <title>@yield('page.title', $settings->title ?? config('app.name'))</title>
     
+    <script>
+        document.documentElement.classList.toggle(
+            "dark",
+            localStorage.theme === "dark"
+            || (!("theme" in localStorage)
+            && window.matchMedia("(prefers-color-scheme: dark)").matches),
+        );
+    </script>
+    
     <style>
         [x-cloak] { display: none !important; }
     </style>
@@ -37,7 +46,7 @@
         
         @include('includes.header')
         
-        <main class="grow max-w-1600 w-full mx-auto bg-background-light">
+        <main class="grow max-w-1600 w-full mx-auto bg-background-light dark:bg-background-dark">
             
             <div class="container max-w-1600 w-full h-full to-top-white border-y border-accent">
                 @yield('top_section')

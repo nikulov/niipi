@@ -6,6 +6,6 @@
         class="fixed bottom-6 z-50 to-top right-2 2xl:right-[calc((100vw-1600px)/2)]"
 >
     <button @click="scrollTop" id="to-top-btn" class="rounded-full cursor-pointer">
-        <x-icon.icon-to-top class="w-16 h-16 transition-colors duration-300 ease-in-out"/>
+        <x-icon.icon-to-top class="w-16 h-16 transition-colors duration-300 ease-in-out dark:text-text-dark"/>
     </button>
 </div>
