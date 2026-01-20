@@ -42,7 +42,7 @@
 <section class="container flex flex-col mx-auto my-inner-section-y px-inner-section-x max-w-1242 w-full">
     
     @if($title)
-        <h2 class="mb-after-title text-primary dark:text-accent-add-dark">{{$title}}</h2>
+        <h2 class="mb-after-title text-primary dark:text-accent-add-dark ">{{$title}}</h2>
     @endif
     
     <div class="flex flex-row flex-wrap gap-[37px] justify-center xl:justify-between">

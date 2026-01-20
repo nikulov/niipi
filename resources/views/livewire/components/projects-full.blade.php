@@ -19,11 +19,11 @@
                 </div>
                 
                 <div class="flex flex-col">
-                    <h3 class="text-primary dark:text-white-dark change-theme pb-1 whitespace-normal">
+                    <h3 class="text-primary dark:text-white-dark  pb-1 whitespace-normal">
                         {{$card['title']}}
                     </h3>
                     
-                    <p class="mt-5 text-normal text-text dark:text-white-dark change-theme line-clamp-4">
+                    <p class="mt-5 text-normal text-text dark:text-white-dark  line-clamp-4">
                         {{$card['description']}}
                     </p>
                     

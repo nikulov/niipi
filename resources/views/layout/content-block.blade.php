@@ -6,7 +6,7 @@
 
 <div class="px-inner-section-x to-top-dark">
     
-    <div class="container pt-px relative mx-auto max-w-1290 w-full min-h-20 bg-white dark:bg-background-dark-add bg-blend-multiply change-theme mt-16 border-b border-border bg-cover bg-top bg-no-repeat "
+    <div class="container pt-px relative mx-auto max-w-1290 w-full min-h-20 bg-white dark:bg-background-dark-add bg-blend-multiply  mt-16 border-b border-border bg-cover bg-top bg-no-repeat "
          @if( ! empty($bgForMainSection))
              style="background-image: url({{public_asset($bgForMainSection)}});"
             @endif

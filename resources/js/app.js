@@ -109,17 +109,17 @@ function themeToggle() {
         isDark: document.documentElement.classList.contains('dark'),
 
         toggle() {
-            this.isDark = !this.isDark;
+            window.dispatchEvent(new CustomEvent('theme-fade'));
 
-            if (this.isDark) {
-                document.documentElement.classList.add('dark');
-                localStorage.setItem('theme', 'dark');
-                document.documentElement.style.colorScheme = 'dark';
-            } else {
-                document.documentElement.classList.remove('dark');
-                localStorage.setItem('theme', 'light');
-                document.documentElement.style.colorScheme = 'light';
-            }
+            const root = document.documentElement;
+            const willBeDark = !root.classList.contains('dark');
+
+            window.setTimeout(() => {
+                root.classList.toggle('dark', willBeDark);
+                localStorage.theme = willBeDark ? 'dark' : 'light';
+
+                this.isDark = willBeDark;
+            }, 90);
         },
     };
 }

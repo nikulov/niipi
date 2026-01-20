@@ -131,10 +131,7 @@
 
 @layer components {
     .menu-link {
-        @apply relative flex flex-row items-center tracking-[2px] font-century change-theme
-        text-text dark:text-text-dark
-        hover:text-accent-add
-        uppercase cursor-pointer;
+        @apply relative flex flex-row items-center tracking-[2px] font-century text-text dark:text-text-dark hover:text-accent-add uppercase cursor-pointer;
     }
 
     .menu-link-btn {
@@ -151,7 +148,7 @@
 
 
     .card-wrapper {
-        @apply relative p-8 max-w-full md:max-w-[368px] w-full h-full pb-13 overflow-hidden change-theme
+        @apply relative p-8 max-w-full md:max-w-[368px] w-full h-full pb-13 overflow-hidden
         border border-primary dark:border-accent-dark
         ;
 
@@ -367,7 +364,7 @@
     }
 
     .rich-editor ol p {
-        @apply mb-0;
+        @apply mb-0 ;
     }
 
     .rich-editor table {
@@ -482,10 +479,6 @@
 @utility grid-layout-col {
     grid-column: var(--col-span, span 1 / span 1);
     min-width: 0;
-}
-
-@utility change-theme {
-    @apply transition-colors duration-150 ease-in-out;
 }
 
 

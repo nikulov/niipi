@@ -46,7 +46,7 @@
         
         @include('includes.header')
         
-        <main class="grow max-w-1600 w-full mx-auto bg-background-light dark:bg-background-dark">
+        <main class="grow max-w-1600 w-full mx-auto bg-background-light dark:bg-background-dark ">
             
             <div class="container max-w-1600 w-full h-full to-top-white border-y border-accent">
                 @yield('top_section')
@@ -71,5 +71,23 @@
     @if(!empty($settings?->code_body_bottom))
         {!! $settings->code_body_bottom!!}
     @endif
+    
+    <div
+            x-data="{ show: false }"
+            x-on:theme-fade.window="
+            show = true;
+            setTimeout(() => show = false, 260);"
+            x-show="show"
+            class="fixed inset-0 z-[9999] pointer-events-none bg-primary/30 dark:bg-back/30"
+            
+            x-transition:enter="transition-opacity ease-out duration-100"
+            x-transition:enter-start="opacity-0"
+            x-transition:enter-end="opacity-100"
+            
+            x-transition:leave="transition-opacity ease-out duration-160"
+            x-transition:leave-start="opacity-100"
+            x-transition:leave-end="opacity-0"
+    ></div>
+
 </body>
 </html>

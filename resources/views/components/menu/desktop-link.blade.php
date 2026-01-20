@@ -5,16 +5,11 @@
 
 @if ($href === '#' || $href === '')
     
-    <button
-            type="button"
-            {{ $attributes->class([
-                'w-full menu-link relative group menu-link-btn z-20 cursor-default',
-            ]) }}
-    >
+    <span class="menu-link cursor-default group-hover:text-accent-add">
         
         {{ $slot }}
         
-    </button>
+    </span>
     
 @else
     
@@ -23,7 +18,8 @@
             {{ $attributes->class([
                 'menu-link',
                 'menu-link-active' => trim(url()->current(), '/') === trim(url($href), '/'),
-            ]) }}>
+            ]) }}
+    >
         
         {{ $slot }}
         
