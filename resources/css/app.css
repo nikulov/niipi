@@ -42,7 +42,7 @@
 
 @media (max-width: 767px) {
     :root {
-        --spacing-inner-section-x: 12px; /* mobile */
+        --spacing-inner-section-x: 24px; /* mobile */
     }
 }
 
