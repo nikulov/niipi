@@ -3,6 +3,8 @@
 @import 'swiper/css/navigation';
 @import 'swiper/css/pagination';
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 @source '../**/*.blade.php';
@@ -14,16 +16,19 @@
     --font-kosugi: "Kosugi", sans-serif;
 
     --color-primary: #2F4A5F;
+    --color-primary-dark: #2F4A5F;
     --color-primary-700: #4B5764;
     --color-accent: #5B8EAE;
+    --color-accent-dark: #5B8EAE;
     --color-accent-add: #60C0C3;
+    --color-accent-add-dark: #60C0C3;
     --color-text: #323232;
-    --color-muted: #647489;
-    --color-muted-300: #98A2B1;
+    --color-text-dark: #FFFFFF;
+    --color-white-dark: #EEF3FF;
     --color-border: #5B8EAE;
-    --color-surface: #F8F7F7;
-    --color-surface-2: #F1F1F2;
-    --color-background-dark: #2F4A5F;
+    --color-border-dark: #5B8EAE;
+    --color-background-dark: #2E3546;
+    --color-background-dark-add: #4A5058;
     --color-background-light: #F8F7F7;
 
 
@@ -126,15 +131,14 @@
 
 @layer components {
     .menu-link {
-        @apply relative flex flex-row items-center tracking-[2px] font-century text-text transition-colors uppercase cursor-pointer;
+        @apply relative flex flex-row items-center tracking-[2px] font-century change-theme
+        text-text dark:text-text-dark
+        hover:text-accent-add
+        uppercase cursor-pointer;
     }
 
     .menu-link-btn {
         @apply flex flex-row;
-    }
-
-    .menu-link:hover {
-        @apply text-accent-add;
     }
 
     .menu-link-active {
@@ -147,8 +151,8 @@
 
 
     .card-wrapper {
-        @apply relative p-8 max-w-full md:max-w-[368px] w-full h-full pb-13 overflow-hidden
-        border border-primary
+        @apply relative p-8 max-w-full md:max-w-[368px] w-full h-full pb-13 overflow-hidden change-theme
+        border border-primary dark:border-accent-dark
         ;
 
         clip-path: polygon(
@@ -283,7 +287,7 @@
     }
 
     .acc-item-bg-info {
-        @apply bg-[#F8F7F7];
+        @apply bg-background-light;
     }
 
     .acc-dots-white {
@@ -480,6 +484,9 @@
     min-width: 0;
 }
 
+@utility change-theme {
+    @apply transition-colors duration-150 ease-in-out;
+}
 
 
 

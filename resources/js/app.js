@@ -104,9 +104,30 @@ function initToTopThemeBySection() {
     window.addEventListener('load', start);
 }
 
+function themeToggle() {
+    return {
+        isDark: document.documentElement.classList.contains('dark'),
+
+        toggle() {
+            this.isDark = !this.isDark;
+
+            if (this.isDark) {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+                document.documentElement.style.colorScheme = 'dark';
+            } else {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+                document.documentElement.style.colorScheme = 'light';
+            }
+        },
+    };
+}
+
 document.addEventListener('alpine:init', () => {
     Alpine.data('imageGalleryModal', imageGalleryModal);
     Alpine.data('initToTopButton', initToTopButton);
+    Alpine.data('themeToggle', themeToggle)
 
     initToTopThemeBySection()
 });
