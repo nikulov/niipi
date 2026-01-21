@@ -1,6 +1,6 @@
 @extends('layout.base')
 
-@section('page.title', $page -> title ?? 'TEST')
+@section('page.title', $page->title ?? 'TEST')
 
 @section('top_section')
     {!! $renderer->renderSection($page, 'top') !!}

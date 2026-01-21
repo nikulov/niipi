@@ -1,31 +1,21 @@
-<nav class="bg-[url('/resources/images/layout/menu_bg.png')] bg-white dark:bg-background-dark bg-blend-multiply  px-inner-section-x flex bg-center bg-no-repeat min-h-30 justify-center items-end max-w-1600 w-full m-auto">
-    <div class="container mx-auto max-w-1290 w-full pb-6">
-        <div class="relative flex justify-end lg:justify-center items-end">
-            
-            <div class="flex items-center absolute left-0">
-                <a href="{{ route('home') }}"
-                   class="">
-                    <x-logo class="w-40 h-12 fill-[#5B8EAE] dark:fill-accent-add "/>
+<nav
+    class="dark:bg-background-dark px-inner-section-x m-auto flex min-h-30 w-full max-w-1600 items-end justify-center bg-white bg-[url('/resources/images/layout/menu_bg.png')] bg-center bg-no-repeat bg-blend-multiply"
+>
+    <div class="container mx-auto w-full max-w-1290 pb-6">
+        <div class="relative flex items-end justify-end lg:justify-center">
+            <div class="absolute left-0 flex items-center">
+                <a href="{{ route('home') }}" class="">
+                    <x-logo class="dark:fill-accent-add h-12 w-40 fill-[#5B8EAE]" />
                 </a>
             </div>
-            
-            <x-menu.top/>
-            
-            <div class="flex items-center space-x-4 absolute right-6">
-                <button
-                        type="button"
-                        x-data="themeToggle"
-                        @click="toggle"
-                        class="cursor-pointer"
-                >
-                    <x-icon.icon-switcher-color class="w-6 h-6 fill-accent dark:fill-accent-add-dark"/>
+
+            <x-menu.top />
+
+            <div class="absolute right-6 flex items-center space-x-4">
+                <button type="button" x-data="themeToggle" @click="toggle" class="cursor-pointer">
+                    <x-icon.icon-switcher-color class="fill-accent dark:fill-accent-add-dark h-6 w-6" />
                 </button>
-                
-                {{--                <a href="#" class="text-gray-400 hover:text-pink-500 transition-colors duration-200">--}}
-                {{--                   <x-icon.icon-search />--}}
-                {{--                </a>--}}
             </div>
-        
         </div>
     </div>
 </nav>

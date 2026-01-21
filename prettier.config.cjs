@@ -12,7 +12,7 @@ module.exports = {
             files: '*.blade.php',
             options: {
                 parser: 'blade',
-                printWidth: 180,
+                printWidth: 140,
             },
         },
     ],

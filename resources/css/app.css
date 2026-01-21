@@ -11,31 +11,29 @@
 @source '../**/*.js';
 
 @theme {
-    --font-carlito: "Carlito", sans-serif;
-    --font-century: "Century Gothic", sans-serif;
-    --font-kosugi: "Kosugi", sans-serif;
+    --font-carlito: 'Carlito', sans-serif;
+    --font-century: 'Century Gothic', sans-serif;
+    --font-kosugi: 'Kosugi', sans-serif;
 
-    --color-primary: #2F4A5F;
-    --color-primary-dark: #2F4A5F;
-    --color-primary-700: #4B5764;
-    --color-accent: #5B8EAE;
-    --color-accent-dark: #5B8EAE;
-    --color-accent-add: #60C0C3;
-    --color-accent-add-dark: #60C0C3;
+    --color-primary: #2f4a5f;
+    --color-primary-dark: #2f4a5f;
+    --color-primary-700: #4b5764;
+    --color-accent: #5b8eae;
+    --color-accent-dark: #5b8eae;
+    --color-accent-add: #60c0c3;
+    --color-accent-add-dark: #60c0c3;
     --color-text: #323232;
-    --color-text-dark: #FFFFFF;
-    --color-white-dark: #EEF3FF;
-    --color-border: #5B8EAE;
-    --color-border-dark: #5B8EAE;
-    --color-background-dark: #2E3546;
-    --color-background-dark-add: #4A5058;
-    --color-background-light: #F8F7F7;
-
+    --color-text-dark: #ffffff;
+    --color-white-dark: #eef3ff;
+    --color-border: #5b8eae;
+    --color-border-dark: #5b8eae;
+    --color-background-dark: #2e3546;
+    --color-background-dark-add: #4a5058;
+    --color-background-light: #f8f7f7;
 
     --container-1600: 1600px;
     --container-1290: 1290px;
     --container-1242: 1242px;
-
 
     --spacing-inner-section-y: 56px;
     --spacing-after-title: 24px;
@@ -86,9 +84,7 @@
     font-style: normal;
 }
 
-
 @layer base {
-
     html {
         @apply leading-none;
     }
@@ -98,19 +94,19 @@
     }
 
     h1 {
-        @apply font-century text-2xl md:text-4xl font-bold md:leading-[50.4px] uppercase whitespace-pre-wrap;
+        @apply font-century text-2xl font-bold whitespace-pre-line uppercase md:text-4xl md:leading-[50.4px];
     }
 
     h2 {
-        @apply font-century text-[22px] md:text-[27px] leading-[37.8px] font-bold uppercase whitespace-pre-wrap;
+        @apply font-century text-[22px] leading-[37.8px] font-bold whitespace-pre-line uppercase md:text-[27px];
     }
 
     h3 {
-        @apply font-century text-[18px] md:text-[21px] leading-[29.4px] font-bold uppercase whitespace-pre-wrap;
+        @apply font-century text-[18px] leading-[29.4px] font-bold whitespace-pre-line uppercase md:text-[21px];
     }
 
     blockquote {
-        @apply pl-7 border-l-3 border-accent text-justify bg-background-light relative;
+        @apply border-accent bg-background-light relative border-l-3 pl-7 text-justify;
     }
 
     blockquote span {
@@ -118,21 +114,19 @@
     }
 
     blockquote span::before {
-        content: "“";
-        @apply text-4xl leading-none absolute -left-4.5 -top-[5px] text-accent;
+        content: '“';
+        @apply text-accent absolute -top-1.25 -left-4.5 text-4xl leading-none;
     }
 
     blockquote span::after {
-        content: "”";
-        @apply text-4xl leading-none absolute -right-5 -bottom-3.5 text-accent;
+        content: '”';
+        @apply text-accent absolute -right-5 -bottom-3.5 text-4xl leading-none;
     }
-
 }
 
 @layer components {
     .menu-link {
-        @apply relative flex flex-row items-center tracking-[2px] font-century text-text dark:text-text-dark hover:text-accent-add transition-colors duration-100
-        hover:[text-shadow:0.04em_0_currentColor,-0.04em_0_currentColor] uppercase cursor-pointer;
+        @apply font-century text-text dark:text-text-dark hover:text-accent-add relative flex cursor-pointer flex-row items-center tracking-[2px] uppercase transition-colors duration-100 hover:[text-shadow:0.04em_0_currentColor,-0.04em_0_currentColor];
     }
 
     .menu-link-btn {
@@ -140,76 +134,65 @@
     }
 
     .menu-link-active {
-        @apply text-accent transition-colors duration-200
-        [text-shadow:0.04em_0_currentColor,-0.04em_0_currentColor];
+        @apply text-accent transition-colors duration-200 [text-shadow:0.04em_0_currentColor,-0.04em_0_currentColor];
     }
 
     .menu-link-mobile {
-        @apply relative block text-text text-center transition-colors uppercase w-full h-full py-6 cursor-pointer z-20;
+        @apply text-text relative z-20 block h-full w-full cursor-pointer py-6 text-center uppercase transition-colors;
     }
 
-
     .card-wrapper {
-        @apply relative p-8 max-w-full md:max-w-[368px] w-full h-full pb-13 overflow-hidden
-        border border-primary dark:border-accent-dark
-        ;
+        @apply border-primary dark:border-accent-dark relative h-full w-full max-w-full overflow-hidden border p-8 pb-13 md:max-w-92;
 
         clip-path: polygon(
-                6px 0,
-                100% 0,
-                100% 100%,
-                100% calc(100% - 30px),
-                calc(100% - 111px) calc(100% - 30px),
-                calc(100% - 141px) 100%,
-                0 100%,
-                0 6px
-        )
-
+            6px 0,
+            100% 0,
+            100% 100%,
+            100% calc(100% - 30px),
+            calc(100% - 111px) calc(100% - 30px),
+            calc(100% - 141px) 100%,
+            0 100%,
+            0 6px
+        );
     }
 
     /* START BTN colors */
     .btn {
-        @apply relative inline-flex border items-center justify-center
-        w-[201px] h-[49px] min-w-[201px] min-h-[49px] transition-all duration-300;
+        @apply relative inline-flex h-12.25 min-h-12.25 w-50.25 min-w-50.25 items-center justify-center border transition-all duration-300;
 
         clip-path: polygon(
-                8px 0,
-                100% 0,
-                100% calc(100% - 8px),
-                calc(100% - 8px) 100%,
-                0 100%,
-                0 8px
+            8px 0,
+            100% 0,
+            100% calc(100% - 8px),
+            calc(100% - 8px) 100%,
+            0 100%,
+            0 8px
         );
     }
 
     .btn-corner {
-        @apply absolute bottom-0 right-0 flex items-center justify-center
-        w-[136px] h-[26px] z-10 border overflow-hidden transition-all duration-300;
+        @apply absolute right-0 bottom-0 z-10 flex h-6.5 w-34 items-center justify-center overflow-hidden border transition-all duration-300;
 
         clip-path: polygon(
-                26px 0,
-                100% 0,
-                100% calc(100% - 8px),
-                calc(100% - 8px) 100%,
-                0 100%,
-                0 100%
+            26px 0,
+            100% 0,
+            100% calc(100% - 8px),
+            calc(100% - 8px) 100%,
+            0 100%,
+            0 100%
         );
     }
 
     .btn-corner-color {
-        @apply
-        bg-primary border-primary
-        hover:border-accent hover:bg-accent
-        group-hover:border-accent group-hover:bg-accent;
+        @apply bg-primary border-primary hover:border-accent hover:bg-accent group-hover:border-accent group-hover:bg-accent;
     }
 
-
     .btn-div {
-        @apply absolute inset-0 w-full h-full transition-all duration-300;
+        @apply absolute inset-0 h-full w-full transition-all duration-300;
     }
 
     .btn-text {
-        @apply text-btn-main relative z-10 transition-all duration-300 text-center;
+        @apply text-btn-main relative z-10 text-center transition-all duration-300;
     }
 
     .btn-primary-text {
@@ -217,13 +200,7 @@
     }
 
     .btn-primary-bg {
-        @apply
-        border-primary bg-primary
-        dark:border-accent dark:bg-accent
-        hover:border-accent hover:bg-accent
-        group-hover:border-accent group-hover:bg-accent
-        dark:hover:border-accent dark:hover:bg-[#7BA2BA]
-        dark:group-hover:border-accent dark:group-hover:bg-[#7BA2BA];
+        @apply border-primary bg-primary dark:border-accent dark:bg-accent hover:border-accent hover:bg-accent group-hover:border-accent group-hover:bg-accent dark:hover:border-accent dark:group-hover:border-accent dark:group-hover:bg-[#7BA2BA] dark:hover:bg-[#7BA2BA];
     }
 
     .btn-secondary-text {
@@ -231,10 +208,7 @@
     }
 
     .btn-secondary-bg {
-        @apply
-        border-accent bg-accent
-        hover:border-accent hover:bg-[#7BA2BA]
-        group-hover:border-accent group-hover:bg-[#7BA2BA];
+        @apply border-accent bg-accent hover:border-accent group-hover:border-accent group-hover:bg-[#7BA2BA] hover:bg-[#7BA2BA];
     }
 
     .btn-accent-text {
@@ -242,10 +216,7 @@
     }
 
     .btn-accent-bg {
-        @apply
-        border-accent-add bg-accent-add
-        hover:border-[#9DDEE0] hover:bg-[#9DDEE0]
-        group-hover:border-[#9DDEE0] group-hover:bg-[#9DDEE0];
+        @apply border-accent-add bg-accent-add group-hover:border-[#9DDEE0] group-hover:bg-[#9DDEE0] hover:border-[#9DDEE0] hover:bg-[#9DDEE0];
     }
 
     .btn-transparent-text {
@@ -253,10 +224,7 @@
     }
 
     .btn-transparent-bg {
-        @apply
-        border-primary bg-white
-        hover:border-primary hover:bg-[#CBDEEA]
-        group-hover:border-b-primary group-hover:bg-[#CBDEEA];
+        @apply border-primary hover:border-primary group-hover:border-b-primary bg-white group-hover:bg-[#CBDEEA] hover:bg-[#CBDEEA];
     }
 
     /* END BTN colors */
@@ -281,17 +249,15 @@
     }
 
     .acc-item-bg-question {
-        @apply bg-[#FAFDFF] dark:bg-[#69717D]
-        border-b border-[#DEDEDE] dark:border-accent/50;
+        @apply dark:border-accent/50 border-b border-[#DEDEDE] bg-[#FAFDFF] dark:bg-[#69717D];
     }
 
     .acc-item-bg-plus {
-        @apply bg-[#F5F7FD] dark:bg-[#636E7D]
-        border-b border-[#DEDEDE] dark:border-accent/50;
+        @apply dark:border-accent/50 border-b border-[#DEDEDE] bg-[#F5F7FD] dark:bg-[#636E7D];
     }
 
     .acc-item-bg-info {
-        @apply bg-background-light dark:bg-[#5B6574] border-b border-[#DEDEDE] dark:border-accent/50;
+        @apply bg-background-light dark:border-accent/50 border-b border-[#DEDEDE] dark:bg-[#5B6574];
     }
 
     .acc-dots-white {
@@ -303,7 +269,7 @@
     }
 
     .acc-dark {
-        @apply bg-[#FAFDFF] dark:bg-background-dark dark:text-text-dark;
+        @apply dark:bg-background-dark dark:text-text-dark bg-[#FAFDFF];
     }
 
     .acc-white {
@@ -323,27 +289,35 @@
     }
 
     .swiper-pagination-bullet {
-        @apply w-3! h-3! opacity-100! bg-accent! hover:bg-accent-add!;
-        -webkit-mask: url('/resources/images/layout/slider-bullet-empty.svg') center/contain no-repeat;
-        mask: url('/resources/images/layout/slider-bullet-empty.svg') center/contain no-repeat;
+        @apply bg-accent! hover:bg-accent-add! h-3! w-3! opacity-100!;
+        -webkit-mask: url('/resources/images/layout/slider-bullet-empty.svg')
+            center/contain no-repeat;
+        mask: url('/resources/images/layout/slider-bullet-empty.svg')
+            center/contain no-repeat;
     }
 
     .swiper-pagination-bullet-active {
         @apply bg-accent-add!;
-        -webkit-mask: url('/resources/images/layout/slider-bullet.svg') center/contain no-repeat;
-        mask: url('/resources/images/layout/slider-bullet.svg') center/contain no-repeat;
+        -webkit-mask: url('/resources/images/layout/slider-bullet.svg')
+            center/contain no-repeat;
+        mask: url('/resources/images/layout/slider-bullet.svg') center/contain
+            no-repeat;
     }
 
     .js-slider-prev {
         @apply bg-accent! hover:bg-accent-add!;
-        -webkit-mask: url('/resources/images/layout/slider-left-arrow.svg') center/contain no-repeat;
-        mask: url('/resources/images/layout/slider-left-arrow.svg') center/contain no-repeat;
+        -webkit-mask: url('/resources/images/layout/slider-left-arrow.svg')
+            center/contain no-repeat;
+        mask: url('/resources/images/layout/slider-left-arrow.svg')
+            center/contain no-repeat;
     }
 
     .js-slider-next {
         @apply bg-accent! hover:bg-accent-add!;
-        -webkit-mask: url('/resources/images/layout/slider-right-arrow.svg') center/contain no-repeat;
-        mask: url('/resources/images/layout/slider-right-arrow.svg') center/contain no-repeat;
+        -webkit-mask: url('/resources/images/layout/slider-right-arrow.svg')
+            center/contain no-repeat;
+        mask: url('/resources/images/layout/slider-right-arrow.svg')
+            center/contain no-repeat;
     }
 
     .js-gallery-slider-thumbs .swiper-slide-thumb-active {
@@ -351,7 +325,7 @@
     }
 
     .js-gallery-slider-thumbs .swiper-slide-thumb-active {
-        @apply opacity-100 border-1 border-accent;
+        @apply border-accent border-1 opacity-100;
     }
 
     .rich-editor ul {
@@ -371,20 +345,20 @@
     }
 
     .rich-editor ol p {
-        @apply mb-0 ;
+        @apply mb-0;
     }
 
     .rich-editor table {
-        @apply w-full mt-4 mb-4 border-collapse;
+        @apply mt-4 mb-4 w-full border-collapse;
     }
 
     .rich-editor th,
     .rich-editor td {
-        @apply  border border-gray-200 p-3 align-top;
+        @apply border border-gray-200 p-3 align-top;
     }
 
     .rich-editor th {
-        @apply font-bold text-left bg-gray-300;
+        @apply bg-gray-300 text-left font-bold;
     }
 
     .rich-editor tbody tr:nth-child(even) td {
@@ -395,13 +369,12 @@
     .rich-editor th p {
         @apply mb-0;
     }
+
     .dark .rich-editor {
         --table-border: oklch(0.4 0 0);
         --table-head-bg: oklch(0.25 0 0);
         --table-row-alt: oklch(0.22 0 0);
     }
-
-
 }
 
 @utility px-inner-section-x {
@@ -446,7 +419,7 @@
 }
 
 @utility text-accordion-title {
-    @apply font-carlito text-[16px] leading-[22.4px] tracking-[0.04em] font-bold uppercase;
+    @apply font-carlito text-[16px] leading-[22.4px] font-bold tracking-[0.04em] uppercase;
 }
 
 @utility text-footer-title {
@@ -489,6 +462,3 @@
     min-width: 0;
 }
 /*end rich editor*/
-
-
-
