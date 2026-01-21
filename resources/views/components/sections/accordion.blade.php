@@ -67,8 +67,9 @@
                             
                             <div class="flex flex-wrap md:flex-nowrap items-start flex-col gap-0">
                                 <div class="flex flex-raw gap-4">
-                                    <div class="min-w-[26px] min-h-[26px] w-7 h-7 icon-{{$item['type']}} bg-no-repeat bg-center"></div>
-                               
+                                    <x-other.accordion-item-icon type="{{$item['type']}}"
+                                                                 class="w-7 h-7 fill-primary dark:fill-accent-add-dark"
+                                    />
                                     <p class="text-big text-text dark:text-white-dark font-bold">{{$item['data']['title']}}</p>
                                 </div>
                                 <div class="pl-11 text-normal text-text dark:text-white-dark">{!! $item['data']['description'] !!}</div>

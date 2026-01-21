@@ -131,7 +131,8 @@
 
 @layer components {
     .menu-link {
-        @apply relative flex flex-row items-center tracking-[2px] font-century text-text dark:text-text-dark hover:text-accent-add uppercase cursor-pointer;
+        @apply relative flex flex-row items-center tracking-[2px] font-century text-text dark:text-text-dark hover:text-accent-add transition-colors duration-100
+        hover:[text-shadow:0.04em_0_currentColor,-0.04em_0_currentColor] uppercase cursor-pointer;
     }
 
     .menu-link-btn {
@@ -139,7 +140,8 @@
     }
 
     .menu-link-active {
-        @apply text-accent font-bold;
+        @apply text-accent transition-colors duration-200
+        [text-shadow:0.04em_0_currentColor,-0.04em_0_currentColor];
     }
 
     .menu-link-mobile {
