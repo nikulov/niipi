@@ -1,16 +1,18 @@
 {
   "resources/css/app.css": {
-    "file": "assets/app-Dy4ybHvT.css",
+    "file": "assets/app-DnCGy9iX.css",
     "src": "resources/css/app.css",
     "isEntry": true,
+    "name": "app",
     "names": [
       "app.css"
     ]
   },
   "resources/css/filament/admin/theme.css": {
-    "file": "assets/theme-DjlgPnje.css",
+    "file": "assets/theme-CpI0Qzg9.css",
     "src": "resources/css/filament/admin/theme.css",
     "isEntry": true,
+    "name": "theme",
     "names": [
       "theme.css"
     ]
@@ -116,7 +118,7 @@
     "src": "resources/images/layout/waves-mobile.png"
   },
   "resources/js/app.js": {
-    "file": "assets/app-DyT7mcuw.js",
+    "file": "assets/app-v4DDxN0D.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true
