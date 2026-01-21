@@ -465,6 +465,7 @@
     background-image: url('/resources/images/layout/acc-arrow-white.svg');
 }
 
+/*start for rich editor*/
 @utility color {
     &[data-color] {
         color: var(--color);
@@ -487,6 +488,7 @@
     grid-column: var(--col-span, span 1 / span 1);
     min-width: 0;
 }
+/*end rich editor*/
 
 
 
