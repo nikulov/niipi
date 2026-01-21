@@ -9,6 +9,7 @@
         "format:check": "prettier --check ."
     },
     "devDependencies": {
+        "@tailwindcss/language-server": "^0.14.29",
         "@tailwindcss/vite": "^4.1.15",
         "axios": "^1.11.0",
         "concurrently": "^9.0.1",
