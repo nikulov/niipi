@@ -281,17 +281,17 @@
     }
 
     .acc-item-bg-question {
-        @apply bg-[#FAFDFF] dark:bg-[#636b76]
+        @apply bg-[#FAFDFF] dark:bg-[#69717D]
         border-b border-[#DEDEDE] dark:border-accent/50;
     }
 
     .acc-item-bg-plus {
-        @apply bg-[#F5F7FD] dark:bg-[#5b6574]
+        @apply bg-[#F5F7FD] dark:bg-[#636E7D]
         border-b border-[#DEDEDE] dark:border-accent/50;
     }
 
     .acc-item-bg-info {
-        @apply bg-background-light dark:bg-[#5c6570] border-b border-[#DEDEDE] dark:border-accent/50;
+        @apply bg-background-light dark:bg-[#5B6574] border-b border-[#DEDEDE] dark:border-accent/50;
     }
 
     .acc-dots-white {

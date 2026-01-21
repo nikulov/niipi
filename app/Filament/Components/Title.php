@@ -29,9 +29,6 @@ final class Title
                     ->options([
                         'h2' => __('panel.heading') . ' 2',
                         'h3' => __('panel.heading') . ' 3',
-                        'h4' => __('panel.heading') . ' 4',
-                        'h5' => __('panel.heading') . ' 5',
-                        'h6' => __('panel.heading') . ' 6',
                     ])
                     ->required()
                     ->columnSpan(6),
