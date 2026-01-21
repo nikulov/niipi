@@ -24,7 +24,6 @@ class FooterForm
                         [
                             'h2',
                             'h3',
-                            'textColor',
                             'highlight',
                             'horizontalRule',
                             'alignStart',

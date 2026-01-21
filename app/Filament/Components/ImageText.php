@@ -54,7 +54,6 @@ final class ImageText
                         [
                             'h2',
                             'h3',
-                            'textColor',
                             'highlight',
                             'horizontalRule',
                             'alignStart',
