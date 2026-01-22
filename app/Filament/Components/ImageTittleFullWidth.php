@@ -21,7 +21,7 @@ final class ImageTittleFullWidth
         return Block::make(self::key())->label(__('panel.image_tittle_full_width'))
             ->columnSpanFull()
             ->schema([
-                FileUpload::make('iconUrl')->label(__(key: 'panel.icon'))
+                FileUpload::make('iconUrl')->label(__(key: 'panel.icon') . ' (' . __('panel.svg') . ')')
                     ->columnSpan(12)
                     ->preserveFilenames()
                     ->disk('public')
@@ -30,6 +30,7 @@ final class ImageTittleFullWidth
                     ->image()
                     ->imageEditor()
                     ->imageEditorAspectRatios([null, '16:9'])
+                    ->acceptedFileTypes(['image/svg+xml'])
                     ->required(),
                 TextInput::make('iconAlt')->label(__(key: 'panel.icon_alt'))
                     ->required()
