@@ -28,7 +28,6 @@ final class TextFull
                         [
                             'h2',
                             'h3',
-                            'textColor',
                             'highlight',
                             'horizontalRule',
                             'alignStart',
@@ -41,11 +40,5 @@ final class TextFull
                         ['undo', 'redo'],
                     ])
             ]);
-    }
-    
-    /** Blade view for frontend */
-    public static function view(): string
-    {
-        return 'components.sections.text-full';
     }
 }

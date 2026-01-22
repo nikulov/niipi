@@ -9,17 +9,25 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 final class ProjectsQuery
 {
-    public function list(int $perPageOrLimit = 4, ?array $categoryIds = null, bool $paginate = false): Collection|LengthAwarePaginator
-    {
+    public function list(
+        int $perPageOrLimit = 4,
+        ?array $categoryIds = null,
+        bool $paginate = false,
+        string $pageName = 'page'
+    ): Collection|LengthAwarePaginator {
         $query = Project::query()
             ->with('categories')
-            ->where('status', ProjectStatus::Published)
+            ->where('status', ProjectStatus::Published->value)
             ->orderByDesc('published_at');
         
         if ($categoryIds && $categoryIds !== []) {
             $query->whereHas('categories', fn ($q) => $q->whereIn('categories.id', $categoryIds));
         }
         
-        return $paginate ? $query->paginate($perPageOrLimit)->withQueryString() : $query->limit($perPageOrLimit)->get();
+        if (!$paginate) {
+            return $query->limit($perPageOrLimit)->get();
+        }
+        
+        return $query->paginate($perPageOrLimit, ['*'], $pageName)->withQueryString();
     }
 }

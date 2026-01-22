@@ -44,4 +44,51 @@ class Category extends Model
     {
         return $query->where('type', CategoryType::Projects);
     }
+    
+    protected static function booted(): void
+    {
+        $flush = function (): void {
+            foreach (self::cacheTags() as $tags) {
+                cache()->tags($tags)->flush();
+            }
+        };
+        
+        static::saved($flush);
+        static::deleted($flush);
+    }
+    
+    private static function cacheTags(): array
+    {
+        return [
+            ['news', 'categories'],
+            ['projects', 'categories'],
+        ];
+    }
+    
+    public static function typeToRelation(): array
+    {
+        return [
+            CategoryType::Posts->value => 'posts',
+            CategoryType::Projects->value => 'projects',
+        ];
+    }
+    
+    public function getItemsCountAttribute(): int
+    {
+        $map = self::typeToRelation();
+        
+        $type = $this->type instanceof CategoryType
+            ? $this->type->value
+            : (string) $this->type;
+        
+        $relation = $map[$type] ?? null;
+        
+        if (! $relation) {
+            return 0;
+        }
+        
+        $countField = $relation . '_count';
+        
+        return (int) ($this->{$countField} ?? 0);
+    }
 }

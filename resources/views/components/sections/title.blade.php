@@ -7,6 +7,7 @@
 )
 
 <{{$type}}
-        class="max-w-1242 w-full mx-auto my-inner-section-y px-inner-section-x text-primary whitespace-pre-wrap"
+        class="max-w-1242 w-full mx-auto my-inner-section-y px-inner-section-x
+            text-primary dark:text-accent-add-dark  whitespace-pre-wrap"
         style="text-align: {{$position}}"
 >{{$title}}</{{$type}}>

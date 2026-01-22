@@ -1,7 +1,7 @@
 <x-layout.section-full bg-image-url="{{$data['bgImageUrl']}}">
-    <h2 class="text-white">{{$data['title']}}</h2>
+    <h2 class="text-white dark:text-accent-add-dark">{{$data['title']}}</h2>
     
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-y-10 gap-x-32">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-y-15 md:gap-y-10 gap-x-32">
         @foreach($cards as $card)
         <div class="relative w-full flex flex-col">
             
@@ -12,7 +12,7 @@
                 </div>
                 
                 <div class="flex flex-col">
-                    <p class="mt-5 text-normal uppercase text-white line-clamp-3">
+                    <p class="mt-5 text-normal uppercase text-white dark:text-white-dark line-clamp-3">
                         {{$card['title']}}
                     </p>
                 </div>
@@ -22,5 +22,5 @@
         @endforeach
     </div>
     
-    <x-buttons.btn url="{{$data['btnUrl']}}" text="{{$data['btnLabel']}}" type="btn-secondary" class="self-end"/>
+    <x-buttons.btn url="{{$data['btnUrl']}}" text="{{$data['btnLabel']}}" type="btn-secondary" class="self-center md:self-end"/>
 </x-layout.section-full>

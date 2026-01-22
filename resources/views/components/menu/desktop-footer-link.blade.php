@@ -5,6 +5,6 @@
 
 <a href="{{$href}}"
    @if($blank) target="_blank" rel="noopener noreferrer" @endif
-       class="text-white hover:underline">
+       class="text-white dark:text-white-dark hover:underline">
     {{ $slot }}
 </a>

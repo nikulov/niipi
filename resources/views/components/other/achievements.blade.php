@@ -4,11 +4,11 @@
     'description' => 'Успешной работы в области градостроительства'
 ])
 
-<div class="flex flex-col gap-2">
-    <div class="border-b border-primary min-w-[270px]">
-        <span class="text-achievements-sec text-primary">&gt; </span>
-        <span class="text-achievements text-primary">{{$amount}}</span>
-        <span class="pl-2 text-achievements-sec text-primary text-xl">{{$text}}</span>
+<div class="flex flex-col gap-2 w-full md:w-[270px]">
+    <div class="border-b border-primary dark:border-text-dark">
+        <span class="text-achievements-sec text-primary dark:text-text-dark">&gt; </span>
+        <span class="text-achievements text-primary dark:text-text-dark">{{$amount}}</span>
+        <span class="pl-2 text-achievements-sec text-primary dark:text-text-dark text-xl">{{$text}}</span>
     </div>
-    <p class="text-big pt-1 text-primary leading-5 tracking-[1px]">{{$description}}</p>
+    <p class="text-big pt-1 text-primary dark:text-text-dark leading-5 tracking-[1px]">{{$description}}</p>
 </div>

@@ -54,7 +54,6 @@ final class AccordionLight
                                 [
                                     'h2',
                                     'h3',
-                                    'textColor',
                                     'highlight',
                                     'horizontalRule',
                                     'alignStart',
@@ -69,11 +68,5 @@ final class AccordionLight
                     ]),
             
             ]);
-    }
-    
-    /** Blade view for frontend */
-    public static function view(): string
-    {
-        return 'components.sections.accordion-light';
     }
 }

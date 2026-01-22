@@ -52,7 +52,7 @@
 
 <section class="relative max-w-1242 w-full mx-auto my-inner-section-y px-inner-section-x">
     
-    <h2 class="mb-after-title text-primary">{{$accordions['title']}}</h2>
+    <h2 class="mb-after-title text-primary dark:text-accent-add-dark">{{$accordions['title']}}</h2>
     <div class="space-y-4">
         
         @foreach($accordions['accordions'] as $accordion)
@@ -67,7 +67,8 @@
                 />
                 
                 <x-other.accordion-description>
-                    <x-other.accordion-item-description class="text-normal !flex-col">
+                    <x-other.accordion-item-description
+                            class="text-normal text-text dark:text-text-dark flex-col! bg-background-light dark:bg-background-dark-add">
                         
                         {!! $accordion['item'] !!}
                     

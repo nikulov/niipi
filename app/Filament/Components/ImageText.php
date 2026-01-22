@@ -54,7 +54,6 @@ final class ImageText
                         [
                             'h2',
                             'h3',
-                            'textColor',
                             'highlight',
                             'horizontalRule',
                             'alignStart',
@@ -67,11 +66,5 @@ final class ImageText
                         ['undo', 'redo'],
                     ])
             ])->columns(24);
-    }
-    
-    /** Blade view for frontend */
-    public static function view(): string
-    {
-        return 'components.sections.image-text';
     }
 }

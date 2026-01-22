@@ -26,6 +26,11 @@ class CreatePost extends CreateRecord
         return $data;
     }
     
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
+    }
+    
     private function appendDefaultMainBlock(array $state): array
     {
         if (empty($state)) {
@@ -36,5 +41,10 @@ class CreatePost extends CreateRecord
             ...$state,
             ...CategoryList::getDefaultBlock(),
         ];
+    }
+    
+    protected function afterSave(): void
+    {
+        cache()->tags(['news', 'categories'])->flush();
     }
 }

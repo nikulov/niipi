@@ -19,16 +19,14 @@ final class CategoryListRenderer implements BlockRenderer
             return  '';
         }
         
-        $categories = [
-           'categories' => $model->categories()
-               ->orderBy('name')
-               ->pluck('name')
-               ->toArray()
-        ];
+        $categories = $model->categories()
+            ->orderBy('name')
+            ->pluck('name', 'slug')
+            ->toArray();
         
-        $categories = implode(', ', $categories['categories']);
-        
-        return view('components.sections.category-list', compact('categories'))->render();
+        return view('components.sections.category-list', [
+            'categories' => $categories,
+        ])->render();
     }
     
 }

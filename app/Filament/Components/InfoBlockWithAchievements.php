@@ -67,15 +67,8 @@ final class InfoBlockWithAchievements
                     ->visibility('public')
                     ->image()
                     ->imageEditor()
-                    ->imageEditorAspectRatios([null, '16:9'])
-                    ->required(),
+                    ->imageEditorAspectRatios([null, '16:9']),
             
             ]);
-    }
-    
-    /** Blade view for frontend */
-    public static function view(): string
-    {
-        return 'components.sections.info-block-with-achievements';
     }
 }

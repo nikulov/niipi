@@ -2,7 +2,7 @@
     'menuItems' => [],
 ])
 
-<div class="md:hidden relative w-full h-auto"
+<div class="relative w-full h-auto"
      x-data="{
         menuOpen: false,
         scrollY: 0,
@@ -77,7 +77,7 @@
         
         <div class="flex flex-col justify-center">
             
-            <div class="flex items-center justify-center space-x-8 bg-white/30">
+            <div class="flex items-center justify-center space-x-8 bg-white/60">
                 <ul class="w-full flex flex-col justify-center items-center space-x-6 px-inner-section-x"
                     x-data="{ openIndex: null }"
                 >
@@ -85,9 +85,7 @@
                     @foreach($menuItems as $i => $item)
                         
                         @php($hasChildren = !empty($item['children']))
-                        
-                        
-                        
+                    
                         <li class="relative group flex flex-row justify-center items-center w-full m-0 border-b border-white last:border-0"
                             @if($hasChildren)
                                 @click="openIndex = openIndex === {{ $i }} ? null : {{ $i }}"
@@ -99,13 +97,6 @@
                                     blank="{{$item['blank']}}"
                             >
                                 {{$item['label']}}
-                                
-                                @if($hasChildren)
-                                    <p class="font-carlito text-text ml-1.5 -translate-y-2"
-                                       :class="openIndex === {{$i}} ? 'text-accent-add' : '' "
-                                    >+</p>
-                                @endif
-                            
                             </x-menu.mobile-link>
                         </li>
                         

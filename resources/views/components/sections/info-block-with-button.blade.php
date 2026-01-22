@@ -10,8 +10,8 @@
         <div class="flex flex-row flex-wrap md:flex-nowrap gap-10">
             
             <div class="w-full md:w-3/4">
-                <h2 class="mb-after-title text-primary">{{$title}}</h2>
-                <div class="rich-editor text-normal">
+                <h2 class="mb-after-title text-primary dark:text-accent-add-dark">{{$title}}</h2>
+                <div class="rich-editor text-normal dark:text-text-dark">
                     {!!$description!!}
                 </div>
             </div>

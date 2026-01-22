@@ -19,12 +19,6 @@ final class CategoryList
             ->columnSpanFull();
     }
     
-    /** Blade view for frontend */
-    public static function view(): string
-    {
-        return 'components.sections.category-list';
-    }
-    
     public static function getDefaultBlock(): array
     {
         return

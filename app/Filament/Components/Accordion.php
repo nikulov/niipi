@@ -120,7 +120,6 @@ final class Accordion
                     [
                         'h2',
                         'h3',
-                        'textColor',
                         'highlight',
                         'horizontalRule',
                         'alignStart',
@@ -139,11 +138,5 @@ final class Accordion
             UrlInput::make('btnUrl')->label(__('panel.btn_url'))
                 ->columnSpan(12),
         ];
-    }
-    
-    /** Blade view for frontend */
-    public static function view(): string
-    {
-        return 'components.sections.accordion';
     }
 }

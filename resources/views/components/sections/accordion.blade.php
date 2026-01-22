@@ -44,7 +44,7 @@
 
 <section class="max-w-1242 w-full mx-auto my-inner-section-y px-inner-section-x">
     
-    <h2 class="mb-after-title text-primary">{{$accordions['title']}}</h2>
+    <h2 class="mb-after-title text-primary dark:text-accent-add-dark">{{$accordions['title']}}</h2>
     <div class="space-y-4">
         
         @foreach($accordions['accordions'] as $accordion)
@@ -65,18 +65,21 @@
                     <x-other.accordion-description>
                         <x-other.accordion-item-description class="acc-item-bg-{{$item['type']}}">
                             
-                            <div class="flex flex-wrap md:flex-nowrap items-center flex-row gap-8">
-                                <div class="min-w-[26px] min-h-[26px] w-7 h-7 icon-{{$item['type']}} bg-no-repeat bg-center"></div>
-                                <div>
-                                    <p class="pb-2 text-big text-text font-bold">{{$item['data']['title']}}</p>
-                                    <p class="text-normal text-text">{!! $item['data']['description'] !!}</p>
+                            <div class="flex flex-wrap md:flex-nowrap items-start flex-col gap-0">
+                                <div class="flex flex-raw gap-4">
+                                    <x-other.accordion-item-icon type="{{$item['type']}}"
+                                                                 class="w-7 h-7 fill-primary dark:fill-accent-add-dark"
+                                    />
+                                    <p class="text-big text-text dark:text-white-dark font-bold">{{$item['data']['title']}}</p>
                                 </div>
+                                <div class="pl-11 text-normal text-text dark:text-white-dark">{!! $item['data']['description'] !!}</div>
                             </div>
                             
                             @if(isset($item['data']['btnUrl']))
                                 <x-buttons.btn url="{{$item['data']['btnUrl']}}"
                                                text="{{$item['data']['btnLabel']}}"
                                                type="btn-transparent"
+                                               class="mx-auto md:mx-0 md:ml-auto"
                                 />
                             @endif
                         

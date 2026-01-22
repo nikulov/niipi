@@ -32,21 +32,15 @@ final class ProjectsFull
                     ->multiple()
                     ->preload()
                     ->default(Category::query()
-                        ->where('type', 'projects')
+                        ->projects()
                         ->pluck('id', 'name')
                         ->all())
                     ->options(Category::query()
-                        ->where('type', 'projects')
+                        ->projects()
                         ->orderBy('name')
                         ->pluck('name', 'id')
                         ->toArray())
                     ->columnSpan(10),
             ]);
-    }
-    
-    /** Blade view for frontend */
-    public static function view(): string
-    {
-        return 'components.sections.projects-full';
     }
 }

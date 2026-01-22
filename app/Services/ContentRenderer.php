@@ -41,6 +41,10 @@ class ContentRenderer
                 continue;
             }
             
+            if (method_exists($model, 'isSectionOptionBlock') && $model->isSectionOptionBlock($blockType)) {
+                continue;
+            }
+            
             $rendererClass = BlockRenderRegistry::for($blockType);
             
             if (!$rendererClass) {
