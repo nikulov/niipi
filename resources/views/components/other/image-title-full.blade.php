@@ -6,7 +6,7 @@
             url('{{ public_asset($imageUrl) }}');
     "
 >
-    <x-icon.icon-left-top-image class="absolute z-10 h-[300px] w-[104px] -translate-x-3.5 fill-white/70 md:-translate-x-8" />
+    <x-icon.icon-left-top-image class="absolute z-10 h-75 w-26 -translate-x-3.5 fill-white/70 md:-translate-x-8" />
 
     <div
         class="absolute top-0 left-0 h-full w-full bg-[url('/resources/images/layout/bg-mask-top-image.png')] bg-cover bg-center md:bg-left"
