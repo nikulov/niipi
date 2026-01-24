@@ -26,10 +26,6 @@ class CreatePost extends CreateRecord
         return $data;
     }
     
-    protected function getRedirectUrl(): string
-    {
-        return $this->getResource()::getUrl('index');
-    }
     
     private function appendDefaultMainBlock(array $state): array
     {

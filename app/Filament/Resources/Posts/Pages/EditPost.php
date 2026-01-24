@@ -5,11 +5,8 @@ namespace App\Filament\Resources\Posts\Pages;
 use App\Filament\Resources\Posts\PostResource;
 use Filament\Actions\Action;
 use Filament\Actions\DeleteAction;
-use Filament\Actions\ViewAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
-use Filament\Actions;
-use http\Message\Body;
 
 class EditPost extends EditRecord
 {
@@ -38,10 +35,6 @@ class EditPost extends EditRecord
             ]);
     }
     
-    protected function getRedirectUrl(): string
-    {
-        return $this->getResource()::getUrl('index');
-    }
     
     protected function afterSave(): void
     {
