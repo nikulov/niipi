@@ -11,9 +11,9 @@
 
             <x-menu.top />
 
-            <div class="absolute right-6 flex items-center space-x-4">
+            <div class="absolute right-10 flex items-center space-x-4 lg:right-0">
                 <button type="button" x-data="themeToggle" @click="toggle" class="cursor-pointer">
-                    <x-icon.icon-switcher-color class="fill-accent dark:fill-accent-add-dark h-6 w-6" />
+                    <x-icon.icon-switcher-theme />
                 </button>
             </div>
         </div>
