@@ -206,11 +206,11 @@
     }
 
     .btn-transparent-text {
-        @apply text-primary;
+        @apply text-primary dark:text-text-dark;
     }
 
     .btn-transparent-bg {
-        @apply border-primary hover:border-primary group-hover:border-b-primary bg-white group-hover:bg-[#CBDEEA] hover:bg-[#CBDEEA];
+        @apply border-primary hover:border-primary group-hover:border-b-primary bg-white group-hover:bg-[#CBDEEA] hover:bg-[#CBDEEA] dark:bg-[#5B8EAE] group-hover:dark:bg-[#CBDEEA];
     }
 
     /* END BTN colors */
@@ -235,15 +235,15 @@
     }
 
     .acc-item-bg-question {
-        @apply dark:border-accent/50 border-b border-[#DEDEDE] bg-[#FAFDFF] dark:bg-[#69717D];
+        @apply dark:border-accent/50 border-b border-[#DEDEDE] bg-[#FAFDFF] dark:bg-[#6A7687];
     }
 
     .acc-item-bg-plus {
-        @apply dark:border-accent/50 border-b border-[#DEDEDE] bg-[#F5F7FD] dark:bg-[#636E7D];
+        @apply dark:border-accent/50 border-b border-[#DEDEDE] bg-[#F5F7FD] dark:bg-[#647183];
     }
 
     .acc-item-bg-info {
-        @apply bg-background-light dark:border-accent/50 border-b border-[#DEDEDE] dark:bg-[#5B6574];
+        @apply bg-background-light dark:border-accent/50 border-b border-[#DEDEDE] dark:bg-[#596679];
     }
 
     .acc-dots-white {
@@ -349,7 +349,7 @@
     }
 
     .rich-editor .grid-layout {
-        justify-items: center;
+        @apply flex! flex-row flex-wrap justify-center lg:grid!;
     }
 
     .dark .rich-editor {
