@@ -306,6 +306,10 @@
         @apply border-accent border opacity-100;
     }
 
+    .rich-editor h2 {
+        @apply text-primary dark:text-accent-add-dark;
+    }
+
     .rich-editor ul {
         @apply list-disc pl-3.5;
     }
@@ -316,6 +320,10 @@
 
     .rich-editor p {
         @apply mb-4;
+    }
+
+    .rich-editor :where(p:empty)::before {
+        content: '\00a0';
     }
 
     .rich-editor ol {
@@ -348,8 +356,12 @@
         @apply mb-0;
     }
 
+    .rich-editor .lead {
+        @apply indent-6;
+    }
+
     .rich-editor .grid-layout {
-        @apply flex! flex-row flex-wrap justify-center lg:grid!;
+        @apply flex! flex-row flex-wrap justify-center justify-items-center lg:grid!;
     }
 
     .dark .rich-editor {

@@ -30,10 +30,13 @@ final class TextFull
                             'h3',
                             'highlight',
                             'horizontalRule',
+                            'lead',
                             'alignStart',
                             'alignCenter',
                             'alignEnd',
-                            'grid'
+                            'alignJustify',
+                            'grid',
+                            'gridDelete'
                         ],
                         ['blockquote', 'codeBlock', 'bulletList', 'orderedList'],
                         ['table', 'attachFiles'],
