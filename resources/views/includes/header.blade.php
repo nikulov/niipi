@@ -11,9 +11,14 @@
 
             <x-menu.top />
 
-            <div class="absolute right-6 flex items-center space-x-4">
-                <button type="button" x-data="themeToggle" @click="toggle" class="cursor-pointer">
-                    <x-icon.icon-switcher-color class="fill-accent dark:fill-accent-add-dark h-6 w-6" />
+            <div class="absolute right-10 flex items-center space-x-4 lg:right-0">
+                <button type="button" x-data="themeToggle" @click="toggle" class="group cursor-pointer">
+                    <x-icon.icon-switcher-theme />
+                    <div
+                        class="text-white-dark dark:text-primary absolute bottom-full left-1/2 mb-2.5 w-38 -translate-x-32.5 rounded bg-[#2e3445] px-3 py-1 text-xs opacity-0 transition-opacity duration-200 group-hover:opacity-100 dark:bg-[#EFF0F2]"
+                    >
+                        {{ __('изменить тему сайта') }}
+                    </div>
                 </button>
             </div>
         </div>

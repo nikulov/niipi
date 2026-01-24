@@ -8,11 +8,11 @@ function imageGalleryModal() {
         currentAlt: '',
 
         init() {
-            this.$watch('isOpen', value => {
+            this.$watch('isOpen', (value) => {
                 document.body.classList.toggle('overflow-hidden', value);
             });
 
-            document.addEventListener('keydown', event => {
+            document.addEventListener('keydown', (event) => {
                 if (event.key === 'Escape' && this.isOpen) {
                     this.close();
                 }
@@ -29,8 +29,8 @@ function imageGalleryModal() {
             this.isOpen = false;
             this.currentSrc = '';
             this.currentAlt = '';
-        }
-    }
+        },
+    };
 }
 
 function initToTopButton() {
@@ -53,9 +53,9 @@ function initToTopButton() {
         scrollTop() {
             window.scrollTo({
                 top: 0,
-                behavior: 'smooth'
+                behavior: 'smooth',
             });
-        }
+        },
     };
 }
 
@@ -74,10 +74,7 @@ function initToTopThemeBySection() {
         const prev = wrap.style.pointerEvents;
         wrap.style.pointerEvents = 'none';
 
-        const el = document.elementFromPoint(
-            rect.left + rect.width / 2,
-            rect.top + rect.height / 2
-        );
+        const el = document.elementFromPoint(rect.left + rect.width / 2, rect.top + rect.height / 2);
 
         wrap.style.pointerEvents = prev;
 
@@ -116,7 +113,7 @@ function themeToggle() {
 
             window.setTimeout(() => {
                 root.classList.toggle('dark', willBeDark);
-                localStorage.theme = willBeDark ? 'dark' : 'light';
+                localStorage.themeSite = willBeDark ? 'dark' : 'light';
 
                 this.isDark = willBeDark;
             }, 90);
@@ -127,9 +124,7 @@ function themeToggle() {
 document.addEventListener('alpine:init', () => {
     Alpine.data('imageGalleryModal', imageGalleryModal);
     Alpine.data('initToTopButton', initToTopButton);
-    Alpine.data('themeToggle', themeToggle)
+    Alpine.data('themeToggle', themeToggle);
 
-    initToTopThemeBySection()
+    initToTopThemeBySection();
 });
-
-

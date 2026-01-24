@@ -9,6 +9,7 @@ use App\Services\NewsQuery;
 use App\Services\ProjectsQuery;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -97,24 +98,6 @@ final class NewsFull extends Component
         return $this->categoriesCache ??= $this->getCategories();
     }
     
-    public function getCategoryItemsProperty(): Collection
-    {
-        $categories = $this->categories();
-        $totalPostsCount = (int) $categories->sum('posts_count');
-        
-        return collect([
-            [
-                'slug' => null,
-                'name' => 'Все',
-                'count' => $totalPostsCount,
-            ],
-            ...$categories->map(fn ($cat) => [
-                'slug' => $cat->slug,
-                'name' => $cat->name,
-                'count' => (int) $cat->posts_count,
-            ])->all(),
-        ]);
-    }
     
     private function getCards(NewsQuery $newsQuery, Collection $categories): LengthAwarePaginator
     {
@@ -134,7 +117,10 @@ final class NewsFull extends Component
         $categories = $this->getCategories();
         $cards = $this->getCards($newsQuery, $categories);
         
-        $totalProjectsCount = $categories->sum('posts_count');
+        $totalProjectsCount = DB::table('category_post')
+            ->whereIn('category_id', $categories->pluck('id'))
+            ->distinct()
+            ->count('post_id');
         
         $categoryItems = collect([
             [

@@ -8,6 +8,7 @@ use App\Presenters\Blocks\ProjectsFullPresenter;
 use App\Services\ProjectsQuery;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -27,6 +28,8 @@ final class ProjectsFull extends Component
     protected $queryString = [
         'category' => ['except' => null, 'as' => 'projectsCategory'],
     ];
+    
+    private ?Collection $categoriesCache = null;
     
     public function mount(int $limit = 10, ?array $categoryIds = null, ?string $componentKey = null): void
     {
@@ -109,7 +112,10 @@ final class ProjectsFull extends Component
         $categories = $this->getCategories();
         $cards = $this->getCards($projectsQuery, $categories);
         
-        $totalProjectsCount = $categories->sum('projects_count');
+        $totalProjectsCount = DB::table('category_project')
+            ->whereIn('category_id', $categories->pluck('id'))
+            ->distinct()
+            ->count('project_id');
         
         $categoryItems = collect([
             [

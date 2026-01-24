@@ -160,27 +160,13 @@
     .btn {
         @apply relative inline-flex h-12.25 min-h-12.25 w-50.25 min-w-50.25 items-center justify-center border transition-all duration-300;
 
-        clip-path: polygon(
-            8px 0,
-            100% 0,
-            100% calc(100% - 8px),
-            calc(100% - 8px) 100%,
-            0 100%,
-            0 8px
-        );
+        clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
     }
 
     .btn-corner {
         @apply absolute right-0 bottom-0 z-10 flex h-6.5 w-34 items-center justify-center overflow-hidden border transition-all duration-300;
 
-        clip-path: polygon(
-            26px 0,
-            100% 0,
-            100% calc(100% - 8px),
-            calc(100% - 8px) 100%,
-            0 100%,
-            0 100%
-        );
+        clip-path: polygon(26px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 100%);
     }
 
     .btn-corner-color {
@@ -220,11 +206,11 @@
     }
 
     .btn-transparent-text {
-        @apply text-primary;
+        @apply text-primary dark:text-text-dark;
     }
 
     .btn-transparent-bg {
-        @apply border-primary hover:border-primary group-hover:border-b-primary bg-white group-hover:bg-[#CBDEEA] hover:bg-[#CBDEEA];
+        @apply border-primary hover:border-primary group-hover:border-b-primary bg-white group-hover:bg-[#CBDEEA] hover:bg-[#CBDEEA] dark:bg-[#5B8EAE] group-hover:dark:bg-[#CBDEEA];
     }
 
     /* END BTN colors */
@@ -249,15 +235,15 @@
     }
 
     .acc-item-bg-question {
-        @apply dark:border-accent/50 border-b border-[#DEDEDE] bg-[#FAFDFF] dark:bg-[#69717D];
+        @apply dark:border-accent/50 border-b border-[#DEDEDE] bg-[#FAFDFF] dark:bg-[#6A7687];
     }
 
     .acc-item-bg-plus {
-        @apply dark:border-accent/50 border-b border-[#DEDEDE] bg-[#F5F7FD] dark:bg-[#636E7D];
+        @apply dark:border-accent/50 border-b border-[#DEDEDE] bg-[#F5F7FD] dark:bg-[#647183];
     }
 
     .acc-item-bg-info {
-        @apply bg-background-light dark:border-accent/50 border-b border-[#DEDEDE] dark:bg-[#5B6574];
+        @apply bg-background-light dark:border-accent/50 border-b border-[#DEDEDE] dark:bg-[#596679];
     }
 
     .acc-dots-white {
@@ -290,34 +276,26 @@
 
     .swiper-pagination-bullet {
         @apply bg-accent! hover:bg-accent-add! h-3! w-3! opacity-100!;
-        -webkit-mask: url('/resources/images/layout/slider-bullet-empty.svg')
-            center/contain no-repeat;
-        mask: url('/resources/images/layout/slider-bullet-empty.svg')
-            center/contain no-repeat;
+        -webkit-mask: url('/resources/images/layout/slider-bullet-empty.svg') center/contain no-repeat;
+        mask: url('/resources/images/layout/slider-bullet-empty.svg') center/contain no-repeat;
     }
 
     .swiper-pagination-bullet-active {
         @apply bg-accent-add!;
-        -webkit-mask: url('/resources/images/layout/slider-bullet.svg')
-            center/contain no-repeat;
-        mask: url('/resources/images/layout/slider-bullet.svg') center/contain
-            no-repeat;
+        -webkit-mask: url('/resources/images/layout/slider-bullet.svg') center/contain no-repeat;
+        mask: url('/resources/images/layout/slider-bullet.svg') center/contain no-repeat;
     }
 
     .js-slider-prev {
         @apply bg-accent! hover:bg-accent-add!;
-        -webkit-mask: url('/resources/images/layout/slider-left-arrow.svg')
-            center/contain no-repeat;
-        mask: url('/resources/images/layout/slider-left-arrow.svg')
-            center/contain no-repeat;
+        -webkit-mask: url('/resources/images/layout/slider-left-arrow.svg') center/contain no-repeat;
+        mask: url('/resources/images/layout/slider-left-arrow.svg') center/contain no-repeat;
     }
 
     .js-slider-next {
         @apply bg-accent! hover:bg-accent-add!;
-        -webkit-mask: url('/resources/images/layout/slider-right-arrow.svg')
-            center/contain no-repeat;
-        mask: url('/resources/images/layout/slider-right-arrow.svg')
-            center/contain no-repeat;
+        -webkit-mask: url('/resources/images/layout/slider-right-arrow.svg') center/contain no-repeat;
+        mask: url('/resources/images/layout/slider-right-arrow.svg') center/contain no-repeat;
     }
 
     .js-gallery-slider-thumbs .swiper-slide-thumb-active {
@@ -325,11 +303,11 @@
     }
 
     .js-gallery-slider-thumbs .swiper-slide-thumb-active {
-        @apply border-accent border-1 opacity-100;
+        @apply border-accent border opacity-100;
     }
 
     .rich-editor ul {
-        @apply list-disc pl-6;
+        @apply list-disc pl-3.5;
     }
 
     .rich-editor a {
@@ -337,7 +315,7 @@
     }
 
     .rich-editor p {
-        @apply mb-4 indent-6;
+        @apply mb-4;
     }
 
     .rich-editor ol {
@@ -368,6 +346,10 @@
     .rich-editor td p,
     .rich-editor th p {
         @apply mb-0;
+    }
+
+    .rich-editor .grid-layout {
+        @apply flex! flex-row flex-wrap justify-center lg:grid!;
     }
 
     .dark .rich-editor {
