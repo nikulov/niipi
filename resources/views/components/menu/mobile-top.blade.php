@@ -92,7 +92,7 @@
                                 @endif
                                 :class="openIndex === {{ $i }} ? 'border-b-0' : ''"
                             >
-                                <x-menu.mobile-link href="{{$item['href']}}" blank="{{$item['blank']}}">
+                                <x-menu.mobile-link href="{{$hasChildren ? '' : $item['href']}}" blank="{{$item['blank']}}">
                                     {{ $item["label"] }}
                                 </x-menu.mobile-link>
                             </li>

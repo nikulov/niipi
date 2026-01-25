@@ -1,6 +1,6 @@
 {
   "resources/css/app.css": {
-    "file": "assets/app-DgXxXvqn.css",
+    "file": "assets/app-CB5op6ex.css",
     "src": "resources/css/app.css",
     "isEntry": true,
     "name": "app",
@@ -48,6 +48,10 @@
   "resources/images/icon/icon-info.svg": {
     "file": "assets/icon-info-BBKZkWvF.svg",
     "src": "resources/images/icon/icon-info.svg"
+  },
+  "resources/images/icon/icon-plan.svg": {
+    "file": "assets/icon-plan-DQHA22h8.svg",
+    "src": "resources/images/icon/icon-plan.svg"
   },
   "resources/images/icon/icon-plus.svg": {
     "file": "assets/icon-plus-BINYnpoG.svg",

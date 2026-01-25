@@ -10,7 +10,7 @@
             <li
                 class="group after:text-accent dark:after:text-accent-add-dark after: relative mr-4 flex flex-row items-center after:ml-4 after:content-['//'] last:after:hidden"
             >
-                <x-menu.desktop-link href="{{$item['href']}}" blank="{{$item['blank']}}">
+                <x-menu.desktop-link href="{{$hasChildren ? '' : $item['href']}}" blank="{{$item['blank']}}">
                     {{ $item['label'] }}
                 </x-menu.desktop-link>
 
