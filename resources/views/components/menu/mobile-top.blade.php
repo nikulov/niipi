@@ -50,12 +50,12 @@
         x-transition:leave="transition duration-300 ease-in"
         x-transition:leave-start="translate-y-0"
         x-transition:leave-end="-translate-y-full"
-        class="bg-background-dark fixed inset-0 z-50 transform touch-pan-y overflow-y-auto overscroll-contain bg-[url('/resources/images/layout/waves-mobile.png')] bg-cover bg-center"
+        class="bg-background-dark fixed inset-0 z-50 transform touch-pan-y overflow-y-auto overscroll-contain bg-[url('/resources/images/layout/waves-mobile.png')] bg-cover bg-center bg-blend-multiply"
     >
         <div class="px-inner-section-x flex flex-row items-end justify-between py-12">
             <div class="flex items-center">
                 <a href="{{ route("home") }}" class="">
-                    <x-logo class="h-12 w-40 fill-white" />
+                    <x-logo class="dark:fill-accent-add-dark h-12 w-40 fill-white" />
                 </a>
             </div>
 
@@ -66,7 +66,7 @@
                 x-transition
                 :class="menuOpen ? 'opacity-100 translate-y-0! pointer-events-auto' : ''"
             >
-                <x-icon.icon-arrow-down class="h-6 w-6 rotate-180 fill-white" />
+                <x-icon.icon-arrow-down class="dark:fill-accent-add-dark h-6 w-6 rotate-180 fill-white" />
             </button>
         </div>
 
