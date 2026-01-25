@@ -5,6 +5,7 @@ namespace App\Blocks;
 use App\Blocks\Contracts\BlockRenderer;
 use App\Blocks\Renderers\AccordionLightRenderer;
 use App\Blocks\Renderers\AccordionRenderer;
+use App\Blocks\Renderers\ButtonRenderer;
 use App\Blocks\Renderers\CardsBlockWithButtonRenderer;
 use App\Blocks\Renderers\CategoryListRenderer;
 use App\Blocks\Renderers\GalleryRenderer;
@@ -30,6 +31,7 @@ final class BlockRenderRegistry
         return [
             AccordionRenderer::key() => AccordionRenderer::class,
             AccordionLightRenderer::key() => AccordionLightRenderer::class,
+            ButtonRenderer::key() => ButtonRenderer::class,
             CardsBlockWithButtonRenderer::key() => CardsBlockWithButtonRenderer::class,
             CategoryListRenderer::key() => CategoryListRenderer::class,
             GalleryRenderer::key() => GalleryRenderer::class,

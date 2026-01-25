@@ -210,7 +210,7 @@
     }
 
     .btn-transparent-bg {
-        @apply border-primary hover:border-primary group-hover:border-b-primary bg-white group-hover:bg-[#CBDEEA] hover:bg-[#CBDEEA] dark:bg-[#5B8EAE] group-hover:dark:bg-[#CBDEEA];
+        @apply border-primary hover:border-primary group-hover:border-b-primary bg-white group-hover:bg-[#CBDEEA] hover:bg-[#CBDEEA] dark:bg-[#5B8EAE] group-hover:dark:bg-[#4a7591] hover:dark:bg-[#4a7591];
     }
 
     /* END BTN colors */
