@@ -1,5 +1,8 @@
 @props(['url' => '#'])
 
-<a href="{{$url}}" class="flex flex-col gap-2 justify-center items-center w-22 aspect-square bg-primary/60">
-    {{$slot}}
+<a
+    href="{{ $url }}"
+    class="flex aspect-square w-22 flex-col items-center justify-center gap-2 bg-[url('/resources/images/icon/icon-plan.svg')]"
+>
+    {{ $slot }}
 </a>

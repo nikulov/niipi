@@ -54,7 +54,7 @@ return [
     'post_saved_successfully'=> 'Новость успешно сохранена',
     'post_created_successfully' => 'Новость успешно создана',
     'settings' => 'Настройки',
-    'open_page_in_new_tab' => 'Открыть страницу в новой вкладке',
+    'open_page_in_new_tab' => 'В новой вкладке',
     'left' => 'Слева',
     'right' => 'Справа',
     'center' => 'По центру',
@@ -161,5 +161,11 @@ return [
     'edit_page' => 'Редактировать страницу',
     'delete_page' => 'Удалить страницу',
     'services_block' => 'Услуги карточки',
+    'position' => 'Расположение',
+    'primary' => 'Основная',
+    'secondary' => 'Дополнительная',
+    'accent' => 'Акцентная',
+    'accent_additional' => 'Акцентная доп.',
+    'btn' => 'Кнопка',
     
 ];

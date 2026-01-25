@@ -1,6 +1,6 @@
 {
   "resources/css/app.css": {
-    "file": "assets/app-C-nAB8LP.css",
+    "file": "assets/app-CB5op6ex.css",
     "src": "resources/css/app.css",
     "isEntry": true,
     "name": "app",
@@ -49,6 +49,10 @@
     "file": "assets/icon-info-BBKZkWvF.svg",
     "src": "resources/images/icon/icon-info.svg"
   },
+  "resources/images/icon/icon-plan.svg": {
+    "file": "assets/icon-plan-DQHA22h8.svg",
+    "src": "resources/images/icon/icon-plan.svg"
+  },
   "resources/images/icon/icon-plus.svg": {
     "file": "assets/icon-plus-BINYnpoG.svg",
     "src": "resources/images/icon/icon-plus.svg"
@@ -72,6 +76,10 @@
   "resources/images/layout/bg-mask-top-image.png": {
     "file": "assets/bg-mask-top-image-CWdMpriO.png",
     "src": "resources/images/layout/bg-mask-top-image.png"
+  },
+  "resources/images/layout/bg-mobile-menu.png": {
+    "file": "assets/bg-mobile-menu-DNxaxPZr.png",
+    "src": "resources/images/layout/bg-mobile-menu.png"
   },
   "resources/images/layout/bg_footer.jpg": {
     "file": "assets/bg_footer-Dp9i8rA3.jpg",
@@ -112,10 +120,6 @@
   "resources/images/layout/slider-right-arrow.svg": {
     "file": "assets/slider-right-arrow-DUp2B9EE.svg",
     "src": "resources/images/layout/slider-right-arrow.svg"
-  },
-  "resources/images/layout/waves-mobile.png": {
-    "file": "assets/waves-mobile-DofZzzyD.png",
-    "src": "resources/images/layout/waves-mobile.png"
   },
   "resources/js/app.js": {
     "file": "assets/app-wtTDRK4A.js",

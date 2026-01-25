@@ -138,6 +138,12 @@ return [
     'edit_page' => 'Edit page',
     'delete_page' => 'Delete page',
     'services_block' => 'Services block',
+    'position' => 'Position',
+    'primary' => 'Primary',
+    'secondary' => 'Secondary',
+    'accent' => 'Accent',
+    'accent_additional' => 'Accent additional',
+    'btn' => 'Button',
     
     
 ];
