@@ -50,7 +50,7 @@
         x-transition:leave="transition duration-300 ease-in"
         x-transition:leave-start="translate-y-0"
         x-transition:leave-end="-translate-y-full"
-        class="bg-background-dark fixed inset-0 z-50 transform touch-pan-y overflow-y-auto overscroll-contain bg-[url('/resources/images/layout/waves-mobile.png')] bg-cover bg-center bg-blend-multiply"
+        class="dark:bg-background-dark bg-accent fixed inset-0 z-50 transform touch-pan-y overflow-y-auto overscroll-contain bg-[url('/resources/images/layout/bg-mobile-menu.png')] bg-cover bg-center bg-blend-multiply"
     >
         <div class="px-inner-section-x flex flex-row items-end justify-between py-12">
             <div class="flex items-center">
