@@ -1,6 +1,26 @@
 {
+  "public/fonts/Carlito-Bold.ttf": {
+    "file": "assets/Carlito-Bold-CEbRJbFG.ttf",
+    "src": "public/fonts/Carlito-Bold.ttf"
+  },
+  "public/fonts/Carlito-Regular.ttf": {
+    "file": "assets/Carlito-Regular-CIOplWD0.ttf",
+    "src": "public/fonts/Carlito-Regular.ttf"
+  },
+  "public/fonts/Kosugi-Regular.ttf": {
+    "file": "assets/Kosugi-Regular-BeDDOMUR.ttf",
+    "src": "public/fonts/Kosugi-Regular.ttf"
+  },
+  "public/fonts/centurygothic.ttf": {
+    "file": "assets/centurygothic-BOrGIO_o.ttf",
+    "src": "public/fonts/centurygothic.ttf"
+  },
+  "public/fonts/centurygothic_bold.ttf": {
+    "file": "assets/centurygothic_bold-BbKWdxWh.ttf",
+    "src": "public/fonts/centurygothic_bold.ttf"
+  },
   "resources/css/app.css": {
-    "file": "assets/app-CB5op6ex.css",
+    "file": "assets/app-BVhOUNNp.css",
     "src": "resources/css/app.css",
     "isEntry": true,
     "name": "app",
@@ -16,26 +36,6 @@
     "names": [
       "theme.css"
     ]
-  },
-  "resources/fonts/Carlito-Bold.ttf": {
-    "file": "assets/Carlito-Bold-CEbRJbFG.ttf",
-    "src": "resources/fonts/Carlito-Bold.ttf"
-  },
-  "resources/fonts/Carlito-Regular.ttf": {
-    "file": "assets/Carlito-Regular-CIOplWD0.ttf",
-    "src": "resources/fonts/Carlito-Regular.ttf"
-  },
-  "resources/fonts/Kosugi-Regular.ttf": {
-    "file": "assets/Kosugi-Regular-BeDDOMUR.ttf",
-    "src": "resources/fonts/Kosugi-Regular.ttf"
-  },
-  "resources/fonts/centurygothic.ttf": {
-    "file": "assets/centurygothic-BOrGIO_o.ttf",
-    "src": "resources/fonts/centurygothic.ttf"
-  },
-  "resources/fonts/centurygothic_bold.ttf": {
-    "file": "assets/centurygothic_bold-BbKWdxWh.ttf",
-    "src": "resources/fonts/centurygothic_bold.ttf"
   },
   "resources/images/icon/icon-dots-dark.svg": {
     "file": "assets/icon-dots-dark-DpuXVWfg.svg",

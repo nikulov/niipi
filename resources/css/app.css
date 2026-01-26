@@ -51,37 +51,42 @@
 
 @font-face {
     font-family: 'Carlito';
-    src: url('/fonts/Carlito-Bold.ttf') format('truetype');
+    src: url('/public/fonts/Carlito-Regular.ttf') format('truetype');
     font-weight: 400;
     font-style: normal;
+    font-display: swap;
 }
 
 @font-face {
     font-family: 'Carlito';
-    src: url('/fonts/Carlito-Regular.ttf') format('truetype');
+    src: url('/public/fonts/Carlito-Bold.ttf') format('truetype');
     font-weight: 700;
     font-style: normal;
+    font-display: swap;
 }
 
 @font-face {
     font-family: 'Century Gothic';
-    src: url('/fonts/centurygothic.ttf') format('truetype');
+    src: url('/public/fonts/centurygothic.ttf') format('truetype');
     font-weight: 400;
     font-style: normal;
+    font-display: swap;
 }
 
 @font-face {
     font-family: 'Century Gothic';
-    src: url('/fonts/centurygothic_bold.ttf') format('truetype');
+    src: url('/public/fonts/centurygothic_bold.ttf') format('truetype');
     font-weight: 700;
     font-style: normal;
+    font-display: swap;
 }
 
 @font-face {
     font-family: 'Kosugi';
-    src: url('/fonts/Kosugi-Regular.ttf') format('truetype');
+    src: url('/public/fonts/Kosugi-Regular.ttf') format('truetype');
     font-weight: 400;
     font-style: normal;
+    font-display: swap;
 }
 
 @layer base {
