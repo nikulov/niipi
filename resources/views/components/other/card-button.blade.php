@@ -17,9 +17,9 @@
         <h3 class="text-primary dark:text-accent-add-dark relative z-10 mb-3">{{ $cardTitle }}</h3>
         <p class="text-normal dark:text-text-dark relative z-10">{{ $cardDescription }}</p>
 
-        <div class="bg-primary dark:bg-accent absolute right-0 bottom-7.25 z-30 h-px w-full max-w-27.5"></div>
+        <div class="bg-primary dark:bg-accent card-wrapper-shadow absolute right-0 bottom-7.25 z-30 h-px w-full max-w-27.5"></div>
         <div
-            class="border-primary dark:border-accent absolute right-25.75 bottom-3.25 z-30 h-px min-h-px w-11.5 min-w-11.5 -rotate-45 border-b"
+            class="border-primary dark:border-accent card-wrapper-shadow absolute right-25.75 bottom-3.25 z-30 h-px min-h-px w-11.5 min-w-11.5 -rotate-45 border-b"
         ></div>
     </div>
     <x-buttons.btn-corner url="{{$btnUrl}}" label="{{$btnLabel}}" />

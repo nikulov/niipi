@@ -147,7 +147,7 @@
     }
 
     .card-wrapper {
-        @apply border-primary dark:border-accent-dark relative h-full w-full max-w-full overflow-hidden border p-8 pb-13 md:max-w-92;
+        @apply border-primary dark:border-accent-dark relative h-full w-full max-w-full overflow-hidden border p-8 pb-13 [box-shadow:inset_0_0_0_0.02em_var(--color-primary)] md:max-w-92;
 
         clip-path: polygon(
             6px 0,
@@ -159,6 +159,10 @@
             0 100%,
             0 6px
         );
+    }
+
+    .card-wrapper-shadow {
+        @apply [box-shadow:0_0_0_0.02em_var(--color-primary)] dark:[box-shadow:0_0_0_0.02em_var(--color-accent-dark)];
     }
 
     /* START BTN colors */
