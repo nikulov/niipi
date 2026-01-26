@@ -7,6 +7,7 @@ use App\Filament\Components\AccordionLight;
 use App\Filament\Components\BgForMainSection;
 use App\Filament\Components\Button;
 use App\Filament\Components\CardsBlockWithButton;
+use App\Filament\Components\CardsBlockWithImageTitle;
 use App\Filament\Components\CategoryList;
 use App\Filament\Components\Gallery;
 use App\Filament\Components\ImageFull;
@@ -34,6 +35,7 @@ final class BlockRegistry
             BgForMainSection::block(),
             Button::block(),
             CardsBlockWithButton::block(),
+            CardsBlockWithImageTitle::block(),
             CategoryList::block(),
             Gallery::block(),
             ImageFull::block(),
@@ -67,6 +69,7 @@ final class BlockRegistry
             BgForMainSection::block(),
             Button::block(),
             CardsBlockWithButton::block(),
+            CardsBlockWithImageTitle::block(),
             CategoryList::block(),
             Gallery::block(),
             ImageFull::block(),

@@ -7,6 +7,7 @@ use App\Blocks\Renderers\AccordionLightRenderer;
 use App\Blocks\Renderers\AccordionRenderer;
 use App\Blocks\Renderers\ButtonRenderer;
 use App\Blocks\Renderers\CardsBlockWithButtonRenderer;
+use App\Blocks\Renderers\CardsBlockWithImageTitleRenderer;
 use App\Blocks\Renderers\CategoryListRenderer;
 use App\Blocks\Renderers\GalleryRenderer;
 use App\Blocks\Renderers\ImageFullRenderer;
@@ -21,6 +22,7 @@ use App\Blocks\Renderers\ProjectsFullRenderer;
 use App\Blocks\Renderers\SliderFullWidthRenderer;
 use App\Blocks\Renderers\TextFullRenderer;
 use App\Blocks\Renderers\TitleRenderer;
+use App\Filament\Components\CardsBlockWithImageTitle;
 
 
 final class BlockRenderRegistry
@@ -33,6 +35,7 @@ final class BlockRenderRegistry
             AccordionLightRenderer::key() => AccordionLightRenderer::class,
             ButtonRenderer::key() => ButtonRenderer::class,
             CardsBlockWithButtonRenderer::key() => CardsBlockWithButtonRenderer::class,
+            CardsBlockWithImageTitleRenderer::key() => CardsBlockWithImageTitleRenderer::class,
             CategoryListRenderer::key() => CategoryListRenderer::class,
             GalleryRenderer::key() => GalleryRenderer::class,
             ImageFullRenderer::key() => ImageFullRenderer::class,
