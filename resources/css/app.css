@@ -51,35 +51,35 @@
 
 @font-face {
     font-family: 'Carlito';
-    src: url('/resources/fonts/Carlito-Bold.ttf') format('ttf');
+    src: url('/fonts/Carlito-Bold.ttf') format('truetype');
     font-weight: 400;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'Carlito';
-    src: url('/resources/fonts/Carlito-Regular.ttf') format('ttf');
+    src: url('/fonts/Carlito-Regular.ttf') format('truetype');
     font-weight: 700;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'Century Gothic';
-    src: url('/resources/fonts/centurygothic.ttf') format('ttf');
+    src: url('/fonts/centurygothic.ttf') format('truetype');
     font-weight: 400;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'Century Gothic';
-    src: url('/resources/fonts/centurygothic_bold.ttf') format('ttf');
+    src: url('/fonts/centurygothic_bold.ttf') format('truetype');
     font-weight: 700;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'Kosugi';
-    src: url('/resources/fonts/Kosugi-Regular.ttf') format('ttf');
+    src: url('/fonts/Kosugi-Regular.ttf') format('truetype');
     font-weight: 400;
     font-style: normal;
 }
