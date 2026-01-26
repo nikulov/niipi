@@ -46,7 +46,7 @@
         <div class="flex min-h-screen flex-col justify-between">
             @include('includes.header')
 
-            <main class="bg-background-light dark:bg-background-dark mx-auto w-full max-w-1600 grow">
+            <main class="bg-background-light dark:bg-background-dark mx-auto w-full max-w-1600">
                 <div class="to-top-white border-accent container h-full w-full max-w-1600 border-y">
                     @yield('top_section')
                 </div>
