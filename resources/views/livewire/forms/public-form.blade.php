@@ -9,18 +9,15 @@
         <form wire:submit.prevent="submit" class="space-y-6">
             @foreach ($viewData['fields'] as $field)
                 <div class="space-y-2">
-                    <label class="block text-sm font-medium text-gray-700">
+                    <x-form.label required="{{$field['required']}}">
                         {{ $field['label'] }}
-                        @if ($field['required'])
-                            <span class="text-red-500">*</span>
-                        @endif
-                    </label>
+                    </x-form.label>
 
                     @if (in_array($field['type'], ['text', 'email', 'phone'], true))
                         <input
                             type="{{ $field['inputType'] }}"
                             wire:model.defer="{{ $field['wireModel'] }}"
-                            class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none"
+                            class="border-b-primary focus:border-accent w-full border-b px-3 py-2 text-sm focus:outline-none"
                         />
                     @endif
 
@@ -28,14 +25,14 @@
                         <textarea
                             wire:model.defer="{{ $field['wireModel'] }}"
                             rows="4"
-                            class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none"
+                            class="border-b-primary focus:border-accent w-full border-b px-3 py-2 text-sm focus:outline-none"
                         ></textarea>
                     @endif
 
                     @if ($field['type'] === 'select')
                         <select
                             wire:model.defer="{{ $field['wireModel'] }}"
-                            class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none"
+                            class="border-b-primary focus:border-accent w-full border-b px-3 py-2 text-sm focus:outline-none"
                         >
                             <option value="">—</option>
                             @foreach ($field['options'] as $opt)
@@ -50,7 +47,7 @@
                                 type="checkbox"
                                 wire:model.defer="{{ $field['wireModel'] }}"
                                 value="1"
-                                class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                                class="text-primary border-primary h-4 w-4 rounded"
                             />
                             <span class="text-sm text-gray-600">
                                 {{ $field['label'] }}
@@ -67,7 +64,7 @@
                     @endif
 
                     @error($field['errorKey'])
-                        <p class="text-sm text-red-600">
+                        <p class="text-sm text-red-800">
                             {{ $message }}
                         </p>
                     @enderror
@@ -75,11 +72,16 @@
             @endforeach
 
             <div class="pt-4">
-                <button
-                    type="submit"
-                    class="inline-flex items-center justify-center rounded-md bg-blue-600 px-6 py-2.5 text-sm font-medium text-white hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none"
-                >
-                    {{ $viewData['submitLabel'] }}
+                <button type="submit" class="btn-primary group btn btn-primary-bg cursor-pointer no-underline focus:outline-none">
+                    <div
+                        class="btn-primary-bg absolute top-0.75 -left-0.75 h-px min-h-px w-3 min-w-3 -rotate-45 border-b transition-all duration-300"
+                    ></div>
+
+                    <span class="btn-primary-text btn-text">{{ $viewData['submitLabel'] }}</span>
+
+                    <div
+                        class="btn-primary-bg absolute -right-0.75 bottom-0.75 h-px min-h-px w-3 min-w-3 -rotate-45 border-b transition-all duration-300"
+                    ></div>
                 </button>
             </div>
         </form>

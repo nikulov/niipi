@@ -4,11 +4,17 @@
     'type' => 'btn-primary',
 ])
 
-<a href="/{{$url}}" {{ $attributes->class("group btn no-underline {$type}-bg") }}
+<a
+    href="/{{ $url }}"
+    {{ $attributes->class("group btn no-underline {$type}-bg") }}
 >
-    <div class="absolute top-[3px] left-[-3px] -rotate-45 min-w-3 w-3 min-h-px h-px border-b {{$type}}-bg transition-all duration-300"></div>
-    
-    <span class="{{$type}}-text btn-text">{{$text}}</span>
-    
-    <div class="absolute bottom-[3px] right-[-3px] -rotate-45 min-w-3 w-3 min-h-px h-px border-b {{$type}}-bg transition-all duration-300"></div>
+    <div
+        class="{{ $type }}-bg absolute top-0.75 -left-0.75 h-px min-h-px w-3 min-w-3 -rotate-45 border-b transition-all duration-300"
+    ></div>
+
+    <span class="{{ $type }}-text btn-text">{{ $text }}</span>
+
+    <div
+        class="{{ $type }}-bg absolute -right-0.75 bottom-0.75 h-px min-h-px w-3 min-w-3 -rotate-45 border-b transition-all duration-300"
+    ></div>
 </a>
