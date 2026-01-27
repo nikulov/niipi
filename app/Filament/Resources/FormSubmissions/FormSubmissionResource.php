@@ -19,8 +19,12 @@ class FormSubmissionResource extends Resource
     protected static ?string $model = FormSubmission::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
-
-    protected static ?string $recordTitleAttribute = 'FormSubmission';
+    
+    protected static ?string $recordTitleAttribute = 'Заявки';
+    
+    protected static ?string $navigationLabel = 'Заявки';
+    
+    protected static string|null|\UnitEnum $navigationGroup = 'Формы';
 
     public static function form(Schema $schema): Schema
     {

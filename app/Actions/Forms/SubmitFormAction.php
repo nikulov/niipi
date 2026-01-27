@@ -9,7 +9,8 @@ use App\Services\Forms\SubmissionCreator;
 use App\Services\Forms\SubmissionDataNormalizer;
 use App\Services\Forms\SubmissionFilesStorer;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Validation\ValidationException;
+use App\Enums\FormSubmissionStatus;
+use App\Jobs\SendFormSubmissionEmails;
 
 final class SubmitFormAction
 {
@@ -31,7 +32,7 @@ final class SubmitFormAction
         
         $normalizedData = $this->normalizer->normalize($form, $validated);
         
-        return DB::transaction(function () use ($form, $normalizedData, $validated, $ip, $userAgent) {
+        $submission = DB::transaction(function () use ($form, $normalizedData, $validated, $ip, $userAgent) {
             $submission = $this->creator->create($form, $normalizedData, $ip, $userAgent);
             
             $uploads = $validated['uploads'] ?? [];
@@ -40,5 +41,13 @@ final class SubmitFormAction
             
             return $submission;
         });
+        
+        $submission->update([
+            'status' => FormSubmissionStatus::Processing,
+        ]);
+        
+        SendFormSubmissionEmails::dispatch($submission->id);
+        
+        return $submission;
     }
 }

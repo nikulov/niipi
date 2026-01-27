@@ -2,6 +2,7 @@
 
 namespace App\Services\Forms;
 
+use App\Enums\FormSubmissionStatus;
 use App\Models\Form;
 use App\Models\FormSubmission;
 
@@ -11,7 +12,7 @@ final class SubmissionCreator
     {
         return FormSubmission::create([
             'form_id' => $form->id,
-            'status' => 'new',
+            'status' => FormSubmissionStatus::New,
             'data' => $data,
             'ip' => $ip,
             'user_agent' => $userAgent,
