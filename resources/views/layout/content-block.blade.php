@@ -36,5 +36,7 @@
                 class="absolute top-1/2 right-2 hidden h-2.5 w-40 -translate-y-1/2 bg-[url('/resources/images/layout/item-bottom-right-content.svg')] bg-no-repeat md:block"
             ></div>
         </div>
+    
     </div>
+
 </div>
