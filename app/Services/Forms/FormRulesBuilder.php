@@ -25,7 +25,10 @@ final class FormRulesBuilder
             $extra = is_array($field->rules) ? array_values($field->rules) : [];
             
             if ($field->type === 'file') {
-                $rules[$keyUpload] = array_merge($base, $this->fileRules($field->extra, $extra));
+                $cfg = is_array($field->extra) ? $field->extra : [];
+                $fileRules = $this->buildFileRules($field->name, $cfg, (bool) $field->required, $extra);
+                
+                $rules = array_merge($rules, $fileRules);
                 continue;
             }
             
@@ -52,23 +55,60 @@ final class FormRulesBuilder
         return $rules;
     }
     
-    private function fileRules($extra, array $extraRules): array
+    private function buildFileRules(string $name, array $cfg, bool $required, array $extraRules): array
     {
-        $rules = ['file'];
+        $multiple = (bool) ($cfg['multiple'] ?? false);
+        $maxFiles = $multiple ? max(1, (int) ($cfg['max_files'] ?? 1)) : 1;
+        $maxSizeKb = max(1, (int) ($cfg['max_size_kb'] ?? 5120));
         
-        $rules = array_merge($rules, $extraRules);
-        
-        $mimes = Arr::get($extra, 'mimes');
-        if (is_array($mimes) && count($mimes) > 0) {
-            $rules[] = 'mimes:' . implode(',', $mimes);
+        $mimes = [];
+        $raw = $cfg['accept_mimes'] ?? [];
+        if (is_array($raw)) {
+            foreach ($raw as $m) {
+                if (is_string($m) && $m !== '') {
+                    $mimes[] = $m;
+                }
+            }
         }
         
-        $maxKb = Arr::get($extra, 'max_kb');
-        if (is_numeric($maxKb)) {
-            $rules[] = 'max:' . (int) $maxKb;
+        $mimetypesRule = count($mimes) ? ('mimetypes:' . implode(',', $mimes)) : null;
+        
+        if (! $multiple) {
+            $rules = [];
+            $rules[] = $required ? 'required' : 'nullable';
+            $rules[] = 'file';
+            if ($mimetypesRule) {
+                $rules[] = $mimetypesRule;
+            }
+            $rules[] = 'max:' . $maxSizeKb;
+            
+            // allow extra custom rules from admin (rare but keep)
+            $rules = array_merge($rules, $extraRules);
+            
+            return [
+                "uploads.$name" => $rules,
+            ];
         }
         
-        return $rules;
+        $container = [];
+        $container[] = $required ? 'required' : 'nullable';
+        $container[] = 'array';
+        $container[] = 'max:' . $maxFiles;
+        
+        $each = [];
+        $each[] = 'file';
+        if ($mimetypesRule) {
+            $each[] = $mimetypesRule;
+        }
+        $each[] = 'max:' . $maxSizeKb;
+        
+        // extra rules apply to each file
+        $each = array_merge($each, $extraRules);
+        
+        return [
+            "uploads.$name" => $container,
+            "uploads.$name.*" => $each,
+        ];
     }
     
     private function optionValues($options): array

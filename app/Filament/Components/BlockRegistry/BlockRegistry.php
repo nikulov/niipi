@@ -9,6 +9,7 @@ use App\Filament\Components\Button;
 use App\Filament\Components\CardsBlockWithButton;
 use App\Filament\Components\CardsBlockWithImageTitle;
 use App\Filament\Components\CategoryList;
+use App\Filament\Components\Form;
 use App\Filament\Components\Gallery;
 use App\Filament\Components\ImageFull;
 use App\Filament\Components\ImageText;
@@ -37,6 +38,7 @@ final class BlockRegistry
             CardsBlockWithButton::block(),
             CardsBlockWithImageTitle::block(),
             CategoryList::block(),
+            Form::block(),
             Gallery::block(),
             ImageFull::block(),
             ImageText::block(),
@@ -71,6 +73,7 @@ final class BlockRegistry
             CardsBlockWithButton::block(),
             CardsBlockWithImageTitle::block(),
             CategoryList::block(),
+            Form::block(),
             Gallery::block(),
             ImageFull::block(),
             ImageText::block(),

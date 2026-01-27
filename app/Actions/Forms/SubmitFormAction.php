@@ -11,6 +11,8 @@ use App\Services\Forms\SubmissionFilesStorer;
 use Illuminate\Support\Facades\DB;
 use App\Enums\FormSubmissionStatus;
 use App\Jobs\SendFormSubmissionEmails;
+use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Validation\ValidationException;
 
 final class SubmitFormAction
 {
@@ -23,6 +25,20 @@ final class SubmitFormAction
     
     public function handle(Form $form, array $data, array $uploads, ?string $ip, ?string $userAgent): FormSubmission
     {
+        $key = sprintf(
+            'forms:%d:%s',
+            $form->id,
+            $ip ?: 'no-ip'
+        );
+        
+        if (RateLimiter::tooManyAttempts($key, 5)) {
+            throw ValidationException::withMessages([
+                'form' => __('panel.too_many_attempts'),
+            ]);
+        }
+        
+        RateLimiter::hit($key, 300);
+        
         $rules = $this->rulesBuilder->build($form);
         
         $validated = validator(

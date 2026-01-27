@@ -9,6 +9,7 @@ use App\Blocks\Renderers\ButtonRenderer;
 use App\Blocks\Renderers\CardsBlockWithButtonRenderer;
 use App\Blocks\Renderers\CardsBlockWithImageTitleRenderer;
 use App\Blocks\Renderers\CategoryListRenderer;
+use App\Blocks\Renderers\FormRenderer;
 use App\Blocks\Renderers\GalleryRenderer;
 use App\Blocks\Renderers\ImageFullRenderer;
 use App\Blocks\Renderers\ImageTextRenderer;
@@ -37,6 +38,7 @@ final class BlockRenderRegistry
             CardsBlockWithButtonRenderer::key() => CardsBlockWithButtonRenderer::class,
             CardsBlockWithImageTitleRenderer::key() => CardsBlockWithImageTitleRenderer::class,
             CategoryListRenderer::key() => CategoryListRenderer::class,
+            FormRenderer::key() => FormRenderer::class,
             GalleryRenderer::key() => GalleryRenderer::class,
             ImageFullRenderer::key() => ImageFullRenderer::class,
             ImageTextRenderer::key() => ImageTextRenderer::class,

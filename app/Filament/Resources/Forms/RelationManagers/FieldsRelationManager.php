@@ -8,10 +8,13 @@ use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\CodeEditor;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Schemas\Components\Group;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
@@ -66,6 +69,7 @@ class FieldsRelationManager extends RelationManager
                         ? json_encode($state, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT)
                         : $state
                     ),
+            
             ])->columnSpan(12),
             
             
@@ -98,6 +102,16 @@ class FieldsRelationManager extends RelationManager
                     ->language(CodeEditor\Enums\Language::Json)
                     ->helperText(__('panel.extra_help'))
                     ->visible(fn(callable $get) => $get('type') === 'file')
+                    ->default([
+                        'multiple' => true,
+                        'max_files' => 5,
+                        'max_size_kb' => 5120,
+                        'accept_mimes' => [
+                            'application/pdf',
+                            'image/jpeg',
+                            'image/png',
+                        ],
+                    ])
                     ->json()
                     ->dehydrateStateUsing(fn($state) => is_string($state) ? json_decode($state, true) : $state)
                     ->formatStateUsing(fn($state) => is_array($state)
