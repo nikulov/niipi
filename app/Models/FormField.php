@@ -12,6 +12,7 @@ final class FormField extends Model
         'type',
         'name',
         'label',
+        'placeholder',
         'required',
         'is_enabled',
         'sort',
