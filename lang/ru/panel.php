@@ -211,6 +211,9 @@ return [
     'forms_list' => 'Список форм',
     'submissions_list' => 'Список заявок',
     'subheading' => 'Подзаголовок',
+    'yes' => 'Да',
+    'no' => 'Нет',
+    'field_placeholder' => 'Плейсхолдер поля',
     
 
 ];

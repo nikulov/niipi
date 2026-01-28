@@ -189,5 +189,8 @@ return [
     'forms_list' => 'Forms list',
     'submissions_list' => 'Submissions list',
     'subheading' => 'Subheading',
+    'yes' => 'Yes',
+    'no' => 'No',
+    'field_placeholder' => 'Field placeholder',
     
 ];
