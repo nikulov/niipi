@@ -13,31 +13,27 @@
 @endphp
 
 <div
-    class="dark:bg-background-dark border-accent dark:border-accent-add-dark relative flex w-full max-w-full flex-col items-center justify-center border bg-white pb-4 md:max-w-92"
+    class="dark:bg-background-dark items-top relative flex w-full max-w-91 flex-col justify-start bg-white bg-[url('/resources/images/layout/card-wave.png')] bg-cover bg-no-repeat pb-10.5 bg-blend-multiply md:max-w-92"
 >
     <a href="{{ $isPdf ? '' : $cardUrl }}" class="relative flex flex-col items-center justify-center">
         @if ($isPdf)
-            <a href="{{ $fileUrl }}" download class="dark:bg-background-dark mb-auto block bg-white">
-                <div class="border-border dark:border-border-dark overflow-hidden border">
-                    <iframe src="{{ $fileUrl }}#view=FitH" class="h-56 w-full" loading="lazy"></iframe>
-                </div>
-
-                <div class="mt-3 flex items-center justify-between">
-                    <span class="text-accent text-sm underline">Скачать</span>
+            <a href="{{ $fileUrl }}" download class="mb-auto block h-full w-full">
+                <div class="border-border dark:border-border-dark h-full overflow-hidden border">
+                    <iframe src="{{ $fileUrl }}#view=FitH" class="h-full w-full" loading="lazy"></iframe>
                 </div>
             </a>
         @else
-            <img src="{{ $fileUrl }}" alt="{{ $imageAlt ?? '' }}" class="h-auto w-full object-cover" loading="lazy" />
+            <img src="{{ $fileUrl }}" alt="{{ $imageAlt ?? '' }}" class="h-auto max-h-65 w-full object-cover object-top" loading="lazy" />
         @endif
 
         @if ($cardTitle)
-            <p class="text-primary text-big dark:text-white-dark relative z-10 mt-3 mb-2">
+            <p class="text-primary text-big dark:text-white-dark relative z-10 mt-4.5 px-8 text-center font-bold whitespace-pre-line">
                 {{ $cardTitle }}
             </p>
         @endif
 
         @if ($cardDescription)
-            <p class="text-normal dark:text-text-dark relative z-10">
+            <p class="text-text text-medium relative z-10 px-8 text-center whitespace-pre-line dark:text-[#A7C1D2]">
                 {{ $cardDescription }}
             </p>
         @endif

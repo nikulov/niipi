@@ -24,7 +24,7 @@
     --color-accent-add-dark: #60c0c3;
     --color-text: #323232;
     --color-text-dark: #ffffff;
-    --color-white-dark: #eef3ff;
+    --color-white-dark: #e4e4e4;
     --color-border: #5b8eae;
     --color-border-dark: #5b8eae;
     --color-background-dark: #2e3546;
@@ -390,7 +390,11 @@
 }
 
 @utility text-normal {
-    @apply font-carlito text-[16px] leading-[22.4px];
+    @apply font-carlito text-[16px] leading-[22.4px] tracking-[0.2px];
+}
+
+@utility text-medium {
+    @apply font-carlito text-[14px] leading-[20.4px] tracking-[0.2px];
 }
 
 @utility text-small {
