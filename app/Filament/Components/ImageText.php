@@ -6,6 +6,7 @@ use Filament\Forms\Components\Builder\Block;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Group;
 
@@ -22,6 +23,17 @@ final class ImageText
         return Block::make(self::key())->label(__('panel.image_text'))
             ->columnSpanFull()
             ->schema([
+                
+                Textarea::make('title')->label(__('panel.heading'))
+                    ->rows(2)
+                    ->columnSpanFull()
+                    ->trim(),
+            
+                Textarea::make('subtitle')->label(__('panel.subheading'))
+                    ->rows(2)
+                    ->columnSpanFull()
+                    ->trim(),
+                
                 FileUpload::make('url')->label(__(key: 'panel.image'))
                     ->columnSpan(12)
                     ->preserveFilenames()

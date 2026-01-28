@@ -21,12 +21,27 @@ class PageResource extends Resource
     protected static ?string $model = Page::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::DocumentText;
-
-    protected static ?string $recordTitleAttribute = 'Страницы';
     
-    protected static ?string $navigationLabel = 'Страницы';
     
-    protected static string|null|\UnitEnum $navigationGroup = 'Страницы';
+    public static function getModelLabel(): string
+    {
+        return __('panel.page');
+    }
+    
+    public static function getPluralModelLabel(): string
+    {
+        return __('panel.pages');
+    }
+    
+    public static function getNavigationLabel(): string
+    {
+        return __('panel.pages_list');
+    }
+    
+    public static function getNavigationGroup(): ?string
+    {
+        return __('panel.pages');
+    }
 
     public static function form(Schema $schema): Schema
     {

@@ -24,7 +24,7 @@
     --color-accent-add-dark: #60c0c3;
     --color-text: #323232;
     --color-text-dark: #ffffff;
-    --color-white-dark: #eef3ff;
+    --color-white-dark: #e4e4e4;
     --color-border: #5b8eae;
     --color-border-dark: #5b8eae;
     --color-background-dark: #2e3546;
@@ -51,35 +51,35 @@
 
 @font-face {
     font-family: 'Carlito';
-    src: url('/resources/fonts/Carlito-Bold.ttf') format('ttf');
+    src: url('/public/fonts/Carlito-Regular.ttf') format('truetype');
     font-weight: 400;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'Carlito';
-    src: url('/resources/fonts/Carlito-Regular.ttf') format('ttf');
+    src: url('/public/fonts/Carlito-Bold.ttf') format('truetype');
     font-weight: 700;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'Century Gothic';
-    src: url('/resources/fonts/centurygothic.ttf') format('ttf');
+    src: url('/public/fonts/centurygothic.ttf') format('truetype');
     font-weight: 400;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'Century Gothic';
-    src: url('/resources/fonts/centurygothic_bold.ttf') format('ttf');
+    src: url('/public/fonts/centurygothic_bold.ttf') format('truetype');
     font-weight: 700;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'Kosugi';
-    src: url('/resources/fonts/Kosugi-Regular.ttf') format('ttf');
+    src: url('/public/fonts/Kosugi-Regular.ttf') format('truetype');
     font-weight: 400;
     font-style: normal;
 }
@@ -142,7 +142,7 @@
     }
 
     .card-wrapper {
-        @apply border-primary dark:border-accent-dark relative h-full w-full max-w-full overflow-hidden border p-8 pb-13 md:max-w-92;
+        @apply border-primary dark:border-accent-dark relative h-full w-full max-w-full border p-8 pb-13 [box-shadow:inset_0_0_0_0.02em_var(--color-primary)] md:max-w-92;
 
         clip-path: polygon(
             6px 0,
@@ -154,6 +154,10 @@
             0 100%,
             0 6px
         );
+    }
+
+    .card-wrapper-shadow {
+        @apply [box-shadow:0_0_0_0.02em_var(--color-primary)] dark:[box-shadow:0_0_0_0.02em_var(--color-accent-dark)];
     }
 
     /* START BTN colors */
@@ -364,10 +368,14 @@
         @apply flex! flex-row flex-wrap justify-center justify-items-center lg:grid!;
     }
 
-    .dark .rich-editor {
+    .rich-editor {
         --table-border: oklch(0.4 0 0);
         --table-head-bg: oklch(0.25 0 0);
         --table-row-alt: oklch(0.22 0 0);
+    }
+
+    .placeholder {
+        @apply placeholder:text-[#7E7E7E] dark:placeholder:text-[#E0E0E0]/50;
     }
 }
 
@@ -377,15 +385,19 @@
 }
 
 @utility text-big {
-    @apply font-carlito text-[18px] leading-[25.2px];
+    @apply font-carlito text-[18px] leading-[25.2px] tracking-[0.2px];
 }
 
 @utility text-normal {
-    @apply font-carlito text-[16px] leading-[22.4px];
+    @apply font-carlito text-[16px] leading-[22.4px] tracking-[0.2px];
+}
+
+@utility text-medium {
+    @apply font-carlito text-[14px] leading-[20.4px] tracking-[0.2px];
 }
 
 @utility text-small {
-    @apply font-carlito text-[12px] leading-[16.8px];
+    @apply font-carlito text-[12px] leading-[16.8px] tracking-[0.2px];
 }
 
 @utility text-menu {

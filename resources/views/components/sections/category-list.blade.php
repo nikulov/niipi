@@ -1,16 +1,18 @@
 @php($basePath = request()->segment(1))
 
-<div class="w-full max-w-1242 mx-auto my-inner-section-y px-inner-section-x">
-    <div class="w-full border-t border-accent pb-2"></div>
-    <span class="pr-1 text-accent text-small uppercase font-bold">Категории: </span>
-    
-    @foreach($categories as $slug => $category)
-        <a  href="{{ '/' . $basePath . '?' . $basePath .'Category=' . urlencode($slug) }}"
-            class="text-accent hover:text-accent-add text-small underline"
+<div class="my-inner-section-y px-inner-section-x mx-auto w-full max-w-1242">
+    <div class="border-accent w-full border-t pb-2"></div>
+    <span class="text-accent text-medium pr-1 font-bold uppercase">Категории:</span>
+
+    @foreach ($categories as $slug => $category)
+        <a
+            href="{{ '/' . $basePath . '?' . $basePath . 'Category=' . urlencode($slug) }}"
+            class="text-accent hover:text-accent-add text-medium underline"
         >
-            {{$category}}
+            {{ $category }}
         </a>
-        @if(! $loop->last)<span class="text-accent text-small">, </span> @endif
+        @if (! $loop->last)
+            <span class="text-accent text-medium">,</span>
+        @endif
     @endforeach
-    
 </div>

@@ -6,6 +6,6 @@
     'blank' => false,
 ])
 
-<div class="px-inner-section-x py-inner-section-y justify-{{ $btnPosition }} flex flex-row">
+<section class="px-inner-section-x my-inner-section-y justify-{{ $btnPosition }} container mx-auto flex max-w-1242 flex-row">
     <x-buttons.btn url="{{$btnUrl}}" text="{{$btnLabel}}" type="{{$btnType}}" blank="{{$blank}}" />
-</div>
+</section>

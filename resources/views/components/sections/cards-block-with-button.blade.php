@@ -44,7 +44,7 @@
 
     <div class="flex flex-row flex-wrap justify-center gap-9.25 xl:justify-start">
         @foreach ($cards as $card)
-            <x-other.small-card-button
+            <x-other.card-button
                 btn-url="{{$card['cardBtnUrl']}}"
                 btn-label="{{$card['cardBtnLabel']}}"
                 card-title="{{$card['cardTitle']}}"

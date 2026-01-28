@@ -1,5 +1,5 @@
 <nav
-    class="dark:bg-background-dark px-inner-section-x m-auto flex min-h-30 w-full max-w-1600 items-end justify-center bg-white bg-[url('/resources/images/layout/menu_bg.png')] bg-center bg-no-repeat bg-blend-multiply"
+    class="dark:bg-background-dark px-inner-section-x mx-auto flex min-h-30 w-full max-w-1600 items-end justify-center bg-white bg-[url('/resources/images/layout/menu_bg.png')] bg-center bg-no-repeat bg-blend-multiply"
 >
     <div class="container mx-auto w-full max-w-1290 pb-6">
         <div class="relative flex items-end justify-end lg:justify-center">

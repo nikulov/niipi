@@ -8,7 +8,7 @@
         <button
             type="button"
             wire:click="setCategory({{ $item['slug'] ? "'{$item['slug']}'" : 'null' }})"
-            class="{{ $item['slug'] ? 'pl-8 before:content-[""] transition-colors duration-250 before:absolute before:-left-px before:w-1 before:h-5 before:bg-[url("/resources/images/layout/acc-dots-dark.svg")] dark:before:bg-[url("/resources/images/layout/acc-dots-white.svg")]' : '' }} {{ $active === $item['slug'] ? 'text-accent dark:text-accent-add-dark [text-shadow:0.03em_0_currentColor,-0.03em_0_currentColor]' : 'text-primary dark:text-accent-add-dark' }} relative cursor-pointer uppercase hover:text-[#5B8EAE] hover:[text-shadow:0.02em_0_currentColor,-0.02em_0_currentColor]"
+            class="{{ $active === $item['slug'] ? 'text-accent [text-shadow:0.03em_0_currentColor,-0.03em_0_currentColor] dark:text-[#56bcc3]' : 'text-[#80909d] dark:text-[#839c9d]' }} relative cursor-pointer transition-colors duration-250 hover:text-[#5B8EAE] hover:[text-shadow:0.02em_0_currentColor,-0.02em_0_currentColor]"
         >
             {{ $item['name'] }}
             <span class="opacity-60">[{{ $item['count'] }}]</span>
