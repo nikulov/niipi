@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Forms\Schemas;
 
 use Filament\Forms\Components\KeyValue;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Group;
@@ -16,8 +17,9 @@ class FormForm
             ->components([
                 Group::make()->schema([
                     
-                    Toggle::make('is_active')->label(__('panel.is_active'))
-                        ->default(true),
+                    Textarea::make('title')->label(__('panel.heading'))
+                        ->rows(2)
+                        ->trim(),
                     
                     TextInput::make('name')->label(__('panel.name'))
                         ->required()
@@ -38,9 +40,14 @@ class FormForm
                 
                 Group::make()->schema([
                     
+                    Toggle::make('is_active')->label(__('panel.is_active'))
+                        ->default(true),
+                    
+                    Toggle::make('is_modal')->label(__('panel.is_modal'))
+                        ->default(true),
+                    
                     KeyValue::make('settings')->label(__('panel.settings'))
                     ->default([
-                        'layout' => 'modal',
                         'submit_label' => 'Send',
                         'success_message' => 'Message sent successfully!'
                     ]),
