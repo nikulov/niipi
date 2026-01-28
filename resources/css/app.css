@@ -386,7 +386,7 @@
 }
 
 @utility text-big {
-    @apply font-carlito text-[18px] leading-[25.2px];
+    @apply font-carlito text-[18px] leading-[25.2px] tracking-[0.2px];
 }
 
 @utility text-normal {
@@ -398,7 +398,7 @@
 }
 
 @utility text-small {
-    @apply font-carlito text-[12px] leading-[16.8px];
+    @apply font-carlito text-[12px] leading-[16.8px] tracking-[0.2px];
 }
 
 @utility text-menu {
