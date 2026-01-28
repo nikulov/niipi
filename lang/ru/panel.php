@@ -210,6 +210,7 @@ return [
     'forms' => 'Формы',
     'forms_list' => 'Список форм',
     'submissions_list' => 'Список заявок',
+    'subheading' => 'Подзаголовок',
     
 
 ];

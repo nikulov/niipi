@@ -188,7 +188,6 @@ return [
     'forms' => 'Forms',
     'forms_list' => 'Forms list',
     'submissions_list' => 'Submissions list',
-    
-    
+    'subheading' => 'Subheading',
     
 ];
