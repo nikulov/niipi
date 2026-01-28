@@ -9,7 +9,9 @@
 <input
     type="{{ $field['inputType'] ?? 'text' }}"
     wire:model.defer="{{ $field['wireModel'] }}"
-    class="border-b-primary focus:border-accent w-full border-b px-3 py-2 text-sm focus:outline-none"
+    @if(!empty($field['placeholder'] ?? null)) placeholder="{{ $field['placeholder'] }}" @endif
+    @if (!empty($field['required'] ?? null)) required aria-required="true" @endif
+    class="border-b-primary placeholder dark:border-b-accent-dark dark:focus:border-b-accent-add-dark focus:border-b-accent text-text dark:text-white-dark w-full border-b px-3 py-2 text-sm focus:outline-none"
 />
 
 @error($field['errorKey'])
