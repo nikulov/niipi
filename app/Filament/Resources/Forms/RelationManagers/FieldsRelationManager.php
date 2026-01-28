@@ -7,19 +7,19 @@ use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\CodeEditor;
+use Filament\Forms\Components\Hidden;
+use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Schemas\Components\Group;
-use Filament\Schemas\Components\Section;
-use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class FieldsRelationManager extends RelationManager
 {
@@ -45,17 +45,60 @@ class FieldsRelationManager extends RelationManager
                     ->reactive()
                     ->disabled(fn(?Model $record) => filled($record)),
                 
-                TextInput::make('label')->label(__('panel.field_label'))
-                    ->required()
-                    ->maxLength(255)
+                TextInput::make('label_text')->label(__('panel.field_label'))
+                    ->trim()
+                    ->visible(fn (callable $get) => ! in_array($get('type'), ['checkbox', 'radio'], true))
+                    ->required(fn (callable $get) => ! in_array($get('type'), ['checkbox', 'radio'], true))
+                    ->dehydrated(fn (callable $get) => ! in_array($get('type'), ['checkbox', 'radio'], true))
                     ->live(onBlur: true)
-                    ->afterStateUpdated(function (callable $set, $state) {
-                        $set('name', \Str::slug($state, '_'));
+                    ->afterStateUpdated(function (callable $set, $state): void {
+                        $set('label', $state);
+                    })
+                    ->afterStateHydrated(function (callable $set, ?Model $record): void {
+                        if (! $record) {
+                            return;
+                        }
+                        
+                        if (! in_array($record->type, ['checkbox', 'radio'], true)) {
+                            $set('label_text', $record->label);
+                            $set('label', $record->label);
+                        }
                     }),
+                
+                RichEditor::make('label_md')->label(__('panel.field_label'))
+                    ->visible(fn (callable $get) => in_array($get('type'), ['checkbox', 'radio'], true))
+                    ->required(fn (callable $get) => in_array($get('type'), ['checkbox', 'radio'], true))
+                    ->dehydrated(fn (callable $get) => in_array($get('type'), ['checkbox', 'radio'], true))
+                    ->live(onBlur: true)
+                    ->afterStateUpdated(function (callable $set, $state): void {
+                        $set('label', $state);
+                    })
+                    ->afterStateHydrated(function (callable $set, ?Model $record): void {
+                        if (! $record) {
+                            return;
+                        }
+                        
+                        if (in_array($record->type, ['checkbox', 'radio'], true)) {
+                            $set('label_md', $record->label);
+                            $set('label', $record->label);
+                        }
+                    })
+                    ->toolbarButtons([['bold', 'link']]),
+                
+                Hidden::make('label')
+                    ->dehydrated(true)
+                    ->required(),
+                
+                TextInput::make('placeholder')->label(__('panel.field_placeholder'))
+                    ->maxLength(255)
+                    ->visible(fn(callable $get) => in_array($get('type'), ['text', 'email', 'phone', 'textarea'], true)
+                    ),
                 
                 TextInput::make('name')->label(__('panel.field_name'))
                     ->required()
-                    ->regex('/^[a-zA-Z][a-zA-Z0-9_]*$/')
+                    ->maxLength(255)
+                    ->trim()
+                    ->regex('/^[a-z][a-z0-9_]*$/')
                     ->helperText(__('panel.field_name_help')),
                 
                 
@@ -133,10 +176,18 @@ class FieldsRelationManager extends RelationManager
             ->defaultSort('sort')
             ->columns([
                 
-                TextColumn::make('label')->label(__('panel.label')),
+                TextColumn::make('label')->label(__('panel.label'))
+                    ->html()
+                    ->wrap()
+                    ->formatStateUsing(function ($state) {
+                        $text = trim(preg_replace('/\s+/', ' ', strip_tags((string) $state)));
+                        return Str::limit($text, 16);
+                    }),
                 
                 TextColumn::make('name')->label(__('panel.name'))
                     ->copyable()
+                    ->limit(10)
+                    ->wrap()
                     ->icon('heroicon-o-document-duplicate'),
                 
                 TextColumn::make('type')->label(__('panel.type'))
