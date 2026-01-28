@@ -8,14 +8,47 @@
     $accept = $cfg['acceptAttr'] ?? null;
 @endphp
 
-<input
-    type="file"
-    wire:model="{{ $field['wireModel'] }}"
-    @if ($multiple) multiple @endif
-    @if (is_string($accept) && $accept !== '') accept="{{ $accept }}" @endif
-    class="block w-full text-sm text-gray-600 file:mr-4 file:rounded-md file:border-0 file:bg-gray-100 file:px-4 file:py-2 file:text-sm file:font-medium hover:file:bg-gray-200"
-/>
+<div
+    x-data="{
+        files: [],
+        updateFiles(event) {
+            this.files = Array.from(event.target.files || [])
+        },
+    }"
+    class="flex flex-col gap-2"
+>
+    <div class="flex flex-wrap items-center gap-3">
+        <label class="cursor-pointer">
+            <div class="text-text min-w-34 border border-gray-300 bg-gray-200 px-3 py-2 select-none">
+                {{ __('page.choose_file') }}
+                @if ($field['required'])
+                    <span class="text-[#B45171]">*</span>
+                @endif
+            </div>
+
+            <input
+                type="file"
+                wire:model="{{ $field['wireModel'] }}"
+                @if ($multiple) multiple @endif
+                @if (is_string($accept) && $accept !== '') accept="{{ $accept }}" @endif
+                @if (!empty($field['required'] ?? null)) required aria-required="true" @endif
+                class="hidden"
+                @change="updateFiles($event)"
+            />
+        </label>
+
+        <span class="text-text dark:text-white-dark text-sm" x-show="files.length === 0">
+            {{ __('page.no_file') }}
+        </span>
+
+        <span
+            x-show="files.length > 0"
+            class="text-text dark:text-white-dark text-sm"
+            x-text="files.map((file) => file.name).join(', ')"
+        ></span>
+    </div>
+</div>
 
 @error($field['errorKey'])
-    <p class="text-sm text-red-800">{{ $message }}</p>
+    <p class="text-sm text-red-800 dark:text-red-400">{{ $message }}</p>
 @enderror
