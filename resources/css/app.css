@@ -54,7 +54,6 @@
     src: url('/public/fonts/Carlito-Regular.ttf') format('truetype');
     font-weight: 400;
     font-style: normal;
-    font-display: swap;
 }
 
 @font-face {
@@ -62,7 +61,6 @@
     src: url('/public/fonts/Carlito-Bold.ttf') format('truetype');
     font-weight: 700;
     font-style: normal;
-    font-display: swap;
 }
 
 @font-face {
@@ -70,7 +68,6 @@
     src: url('/public/fonts/centurygothic.ttf') format('truetype');
     font-weight: 400;
     font-style: normal;
-    font-display: swap;
 }
 
 @font-face {
@@ -78,7 +75,6 @@
     src: url('/public/fonts/centurygothic_bold.ttf') format('truetype');
     font-weight: 700;
     font-style: normal;
-    font-display: swap;
 }
 
 @font-face {
@@ -86,7 +82,6 @@
     src: url('/public/fonts/Kosugi-Regular.ttf') format('truetype');
     font-weight: 400;
     font-style: normal;
-    font-display: swap;
 }
 
 @layer base {
@@ -373,10 +368,14 @@
         @apply flex! flex-row flex-wrap justify-center justify-items-center lg:grid!;
     }
 
-    .dark .rich-editor {
+    .rich-editor {
         --table-border: oklch(0.4 0 0);
         --table-head-bg: oklch(0.25 0 0);
         --table-row-alt: oklch(0.22 0 0);
+    }
+
+    .placeholder {
+        @apply placeholder:text-[#7E7E7E] dark:placeholder:text-[#E0E0E0]/50;
     }
 }
 
