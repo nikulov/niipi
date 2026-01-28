@@ -20,7 +20,7 @@
     "src": "public/fonts/centurygothic_bold.ttf"
   },
   "resources/css/app.css": {
-    "file": "assets/app-CN5eqJ3A.css",
+    "file": "assets/app-DACNUvw2.css",
     "src": "resources/css/app.css",
     "isEntry": true,
     "name": "app",
@@ -29,7 +29,7 @@
     ]
   },
   "resources/css/filament/admin/theme.css": {
-    "file": "assets/theme-CpI0Qzg9.css",
+    "file": "assets/theme-wOlXW0WE.css",
     "src": "resources/css/filament/admin/theme.css",
     "isEntry": true,
     "name": "theme",
@@ -84,6 +84,10 @@
   "resources/images/layout/bg_footer.jpg": {
     "file": "assets/bg_footer-Dp9i8rA3.jpg",
     "src": "resources/images/layout/bg_footer.jpg"
+  },
+  "resources/images/layout/card-wave.png": {
+    "file": "assets/card-wave-BFNq-aNj.png",
+    "src": "resources/images/layout/card-wave.png"
   },
   "resources/images/layout/item-bottom-left-content.svg": {
     "file": "assets/item-bottom-left-content-BdKsF26o.svg",
