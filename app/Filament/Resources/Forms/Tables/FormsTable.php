@@ -5,6 +5,8 @@ namespace App\Filament\Resources\Forms\Tables;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Support\Enums\IconPosition;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
@@ -52,6 +54,8 @@ class FormsTable
                     ->url(fn($record) => route('filament.admin.resources.form-submissions.index',
                         ['tableFilters[form_id][value]' => $record->id,]))
                     ->sortable()
+                    ->icon(Heroicon::ArrowTopRightOnSquare)
+                    ->iconPosition(IconPosition::After)
                     ->alignCenter(),
                 
                 TextColumn::make('created_at')->label(__('panel.created_at'))

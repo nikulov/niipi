@@ -18,13 +18,27 @@ class FormSubmissionResource extends Resource
 {
     protected static ?string $model = FormSubmission::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::Square3Stack3d;
     
-    protected static ?string $recordTitleAttribute = 'Заявки';
+    public static function getModelLabel(): string
+    {
+        return __('panel.submission');
+    }
     
-    protected static ?string $navigationLabel = 'Заявки';
+    public static function getPluralModelLabel(): string
+    {
+        return __('panel.submissions');
+    }
     
-    protected static string|null|\UnitEnum $navigationGroup = 'Формы';
+    public static function getNavigationLabel(): string
+    {
+        return __('panel.submissions_list');
+    }
+    
+    public static function getNavigationGroup(): ?string
+    {
+        return __('panel.forms');
+    }
 
     public static function form(Schema $schema): Schema
     {

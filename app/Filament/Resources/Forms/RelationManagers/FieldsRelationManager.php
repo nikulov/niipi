@@ -30,7 +30,7 @@ class FieldsRelationManager extends RelationManager
         return $schema->components([
             Group::make()->schema([
                 
-                Select::make('type')->label(__('panel.type'))
+                Select::make('type')->label(__('panel.field_type'))
                     ->options([
                         'text' => __('panel.text'),
                         'email' => __('panel.email'),
@@ -45,7 +45,7 @@ class FieldsRelationManager extends RelationManager
                     ->reactive()
                     ->disabled(fn(?Model $record) => filled($record)),
                 
-                TextInput::make('label')->label(__('panel.label'))
+                TextInput::make('label')->label(__('panel.field_label'))
                     ->required()
                     ->maxLength(255)
                     ->live(onBlur: true)
@@ -53,7 +53,7 @@ class FieldsRelationManager extends RelationManager
                         $set('name', \Str::slug($state, '_'));
                     }),
                 
-                TextInput::make('name')->label(__('panel.name'))
+                TextInput::make('name')->label(__('panel.field_name'))
                     ->required()
                     ->regex('/^[a-zA-Z][a-zA-Z0-9_]*$/')
                     ->helperText(__('panel.field_name_help')),

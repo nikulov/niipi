@@ -68,7 +68,7 @@ return [
     'bottom_section' => 'Bottom section',
     'category_saved_successfully' => 'Category updated successfully',
     'page_saved_successfully' => 'Page updated successfully',
-    'post_saved_successfully'=> 'Post updated successfully',
+    'post_saved_successfully' => 'Post updated successfully',
     'post_created_successfully' => 'Post created successfully',
     'add_top_block' => 'Add block to top section',
     'add_main_block' => 'Add block to main section',
@@ -166,5 +166,29 @@ return [
     'mime_type' => 'MIME type',
     'size' => 'Size',
     'download' => 'Download',
+    'status_handled' => 'Handled',
+    'options' => 'Options',
+    'recipient_admin_email' => 'Recipient admin email',
+    'required' => 'Required',
+    'is_active' => 'Active',
+    'field_name_help' => 'Value will be saved in database as "name" attribute',
+    'validation_rules' => 'Validation rules',
+    'rules_help' => 'Additional validation rules in JSON array format.
+                    Example: ["min:3","max:255","regex:/^[a-z0-9_]+$/i"]
+                    Do not include "required" here — it is controlled by the Required toggle.',
+    'field_type' => 'Field type',
+    'field_label' => 'Field label',
+    'field_name' => 'Field name',
+    'resend_email' => 'Resend email',
+    'display_type' => 'Display type',
+    'submissions_count' => 'Submissions count',
+    'fields' => 'Fields',
+    'pages' => 'Pages',
+    'pages_list' => 'Pages list',
+    'forms' => 'Forms',
+    'forms_list' => 'Forms list',
+    'submissions_list' => 'Submissions list',
+    
+    
     
 ];

@@ -14,7 +14,7 @@ enum FormSubmissionStatus: string
         return match ($this) {
             self::New => __('panel.status_new'),
             self::Processing => __('panel.status_processing'),
-            self::Sent => __('panel.status_sent'),
+            self::Sent => __('panel.status_handled'),
             self::Failed => __('panel.status_failed'),
         };
     }
