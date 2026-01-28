@@ -30,10 +30,10 @@ class FormsTable
                     ->sortable()
                     ->copyable(),
                 
-                TextColumn::make('settings.layout')->label(__('panel.display_type'))
-                    ->state(fn($record) => data_get($record->settings, 'layout'))
+                TextColumn::make('is_modal')->label(__('panel.display_type'))
                     ->badge()
-                    ->placeholder('—'),
+                    ->formatStateUsing(fn ($state) => $state ? 'Modal' : 'Inline')
+                    ->color(fn ($state) => (int) $state ? 'primary' : 'gray'),
                 
                 TextColumn::make('fields_list')->label(__('panel.fields'))
                     ->state(function ($record) {
