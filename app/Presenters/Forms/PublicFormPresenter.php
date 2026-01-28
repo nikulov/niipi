@@ -13,8 +13,8 @@ final class PublicFormPresenter
         return [
             'id' => (int) $form->id,
             'slug' => (string) $form->slug,
-            'title' => (string) $form->name,
-            'layout' => (string) ($settings['layout'] ?? 'modal'),
+            'title' => (string) $form->title,
+            'isModal' => (bool) $form->is_modal,
             'submitLabel' => (string) ($settings['submit_label'] ?? 'Submit'),
             'successMessage' => (string) ($settings['success_message'] ?? 'Thank you! Your message has been sent.'),
             'fields' => $this->presentFields($form),
@@ -39,6 +39,7 @@ final class PublicFormPresenter
                 'type' => (string) $field->type,
                 'name' => (string) $field->name,
                 'label' => (string) $field->label,
+                'placeholder' => (string) $field->placeholder,
                 'required' => (bool) $field->required,
                 'wireModel' => $isFile ? "uploads.{$field->name}" : "data.{$field->name}",
                 'errorKey' => $isFile ? "uploads.{$field->name}" : "data.{$field->name}",

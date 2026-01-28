@@ -18,14 +18,11 @@ final class PublicForm extends Component
     public array $data = [];
     public array $uploads = [];
     public bool $submitted = false;
-    
-    public string $layout = 'modal';
     public ?string $componentKey = null;
     public string $website = '';
     
-    public function mount(int $formId, string $layout = 'modal', ?string $componentKey = null): void
+    public function mount(int $formId, ?string $componentKey = null): void
     {
-        $this->layout = in_array($layout, ['inline', 'modal'], true) ? $layout : 'modal';
         $this->componentKey = $componentKey;
         
         $this->form = Form::query()
