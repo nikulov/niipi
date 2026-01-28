@@ -6,11 +6,11 @@ use App\Enums\FormSubmissionStatus;
 use App\Jobs\SendFormSubmissionEmails;
 use App\Presenters\Forms\FormSubmissionPresenter;
 use Filament\Actions\Action;
-use Filament\Forms\Components\Select;
 use Filament\Infolists\Components\RepeatableEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
+use Filament\Support\Icons\Heroicon;
 
 class FormSubmissionForm
 {
@@ -32,14 +32,15 @@ class FormSubmissionForm
                         ->state(fn($record) => $record?->created_at?->format('d.m.Y H:i') ?? '—')
                         ->columnSpan(6),
                     
-                    Select::make('status')->label(__('panel.status'))
-                        ->options(FormSubmissionStatus::options())
-                        ->required()
+                    TextEntry::make('status')->label(__('panel.status'))
+                        ->badge()
+                        ->formatStateUsing(fn (FormSubmissionStatus $state) => $state->label())
+                        ->color(fn (FormSubmissionStatus $state) => $state->color())
                         ->columnSpan(6),
                     
-                    Action::make('resend')->label(__('panel.resend'))
-                        ->icon('heroicon-o-paper-airplane')
-                        ->color('primary')
+                    Action::make('resend')->label(__('panel.resend_email'))
+                        ->icon(Heroicon::AtSymbol)
+                        ->color('warning')
                         ->action(function ($record) {
                             $record->update([
                                 'status' => FormSubmissionStatus::Processing,
@@ -100,6 +101,7 @@ class FormSubmissionForm
                             
                             Action::make('download')->label(__('panel.download'))
                                 ->icon('heroicon-o-arrow-down-tray')
+                                ->color('gray')
                                 ->url(function ($record) {
                                     if (!$record?->disk || !$record?->path) {
                                         return null;
