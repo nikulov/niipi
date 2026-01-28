@@ -5,6 +5,7 @@ namespace App\Actions\Forms;
 use App\Models\Form;
 use App\Models\FormSubmission;
 use App\Services\Forms\FormRulesBuilder;
+use App\Services\Forms\FormValidationAttributesBuilder;
 use App\Services\Forms\SubmissionCreator;
 use App\Services\Forms\SubmissionDataNormalizer;
 use App\Services\Forms\SubmissionFilesStorer;
@@ -18,6 +19,7 @@ final class SubmitFormAction
 {
     public function __construct(
         private readonly FormRulesBuilder $rulesBuilder,
+        private readonly FormValidationAttributesBuilder $attributesBuilder,
         private readonly SubmissionDataNormalizer $normalizer,
         private readonly SubmissionCreator $creator,
         private readonly SubmissionFilesStorer $filesStorer,
@@ -41,9 +43,13 @@ final class SubmitFormAction
         
         $rules = $this->rulesBuilder->build($form);
         
+        $attributes = $this->attributesBuilder->build($form);
+        
         $validated = validator(
             ['data' => $data, 'uploads' => $uploads],
-            $rules
+            $rules,
+            [],
+            $attributes
         )->validate();
         
         $normalizedData = $this->normalizer->normalize($form, $validated);
