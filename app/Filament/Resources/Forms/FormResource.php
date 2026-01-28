@@ -20,13 +20,27 @@ class FormResource extends Resource
 {
     protected static ?string $model = Form::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::DocumentCheck;
     
-    protected static ?string $recordTitleAttribute = 'Формы';
+    public static function getModelLabel(): string
+    {
+        return __('panel.form');
+    }
     
-    protected static ?string $navigationLabel = 'Формы';
+    public static function getPluralModelLabel(): string
+    {
+        return __('panel.forms');
+    }
     
-    protected static string|null|\UnitEnum $navigationGroup = 'Формы';
+    public static function getNavigationLabel(): string
+    {
+        return __('panel.forms_list');
+    }
+    
+    public static function getNavigationGroup(): ?string
+    {
+        return __('panel.forms');
+    }
 
     public static function form(Schema $schema): Schema
     {
@@ -54,9 +68,9 @@ class FormResource extends Resource
         ];
     }
     
-//    public static function getEloquentQuery(): Builder
-//    {
-//        return parent::getEloquentQuery()
-//            ->withCount(['fields', 'submissions']);
-//    }
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->withCount(['fields', 'submissions']);
+    }
 }
