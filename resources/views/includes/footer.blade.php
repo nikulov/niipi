@@ -1,5 +1,5 @@
 <footer
-    class="to-top-white px-inner-section-x m-auto flex w-full max-w-1600 items-end justify-center bg-[#5B8EAE] bg-[url('/resources/images/layout/bg_footer.jpg')] bg-cover bg-center bg-no-repeat bg-blend-multiply lg:min-h-32 dark:bg-[#2F4A5F] dark:bg-[url('/resources/images/layout/bg_footer.jpg')]"
+    class="to-top-white px-inner-section-x mx-auto flex w-full max-w-1600 items-end justify-center bg-[#5B8EAE] bg-[url('/resources/images/layout/bg_footer.jpg')] bg-cover bg-center bg-no-repeat bg-blend-multiply lg:min-h-32 dark:bg-[#2F4A5F] dark:bg-[url('/resources/images/layout/bg_footer.jpg')]"
 >
     <div class="mx-auto w-full max-w-1290 lg:px-0 lg:py-14">
         <div class="hidden flex-col gap-10 lg:flex lg:flex-row lg:items-start lg:justify-between">
