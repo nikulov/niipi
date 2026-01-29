@@ -128,10 +128,6 @@ class ProjectForm
                             ->trim()
                             ->maxLength(500),
                         
-                        Textarea::make('meta_keywords')->label(__('panel.meta_keywords'))
-                            ->columnSpan(6)
-                            ->trim()
-                            ->maxLength(2000),
                         Textarea::make('meta_description')->label(__('panel.meta_description'))
                             ->columnSpan(12)
                             ->trim(),
