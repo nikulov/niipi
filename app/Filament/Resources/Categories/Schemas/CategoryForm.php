@@ -20,10 +20,12 @@ class CategoryForm
     {
         return $schema
             ->components([
+                
                 Fieldset::make('general')->label(__('panel.general'))
                     ->columns(12)
                     ->columnSpanFull()
                     ->schema([
+                        
                         TextInput::make('name')->label(__('panel.name'))
                             ->columnSpan(6)
                             ->required()
@@ -50,27 +52,30 @@ class CategoryForm
                             ->dehydrated()
                             ->unique(Category::class, 'slug', ignoreRecord: true)
                             ->maxLength(255),
+                        
                         Select::make('type')->label(__('panel.type'))
                             ->required()
                             ->columnSpan(6)
                             ->options(CategoryType::class),
+                        
                         Select::make('status')->label(__('panel.status'))
                             ->required()
                             ->columnSpan(6)
                             ->options(CategoryStatus::class),
                     ]),
+                
                 Fieldset::make('seo')->label(__('SEO'))
                     ->columns(12)
                     ->columnSpanFull()
                     ->schema([
+                        
                         TextInput::make('meta_title')->label(__('panel.meta_title'))
-                        ->columnSpan(6)
-                        ->maxLength(500),
-                        Textarea::make('meta_keywords')->label(__('panel.meta_keywords'))
-                        ->columnSpan(6)
-                        ->maxLength(2000),
+                            ->columnSpan(6)
+                            ->maxLength(500),
+                        
                         Textarea::make('meta_description')->label(__('panel.meta_description'))
-                        ->columnSpan(12),
+                            ->columnSpan(12)
+                            ->autosize(),
                     ])
             ]);
     }

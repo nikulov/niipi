@@ -11,7 +11,7 @@
         <label class="inline-flex cursor-pointer items-center gap-2">
             <input
                 type="radio"
-                wire:model.defer="{{ $field['wireModel'] }}"
+                wire:model="{{ $field['wireModel'] }}"
                 value="{{ $opt['value'] ?? '' }}"
                 @if (! empty($field["required"] ?? null) && $loop->first) required aria-required="true" @endif
                 class="peer sr-only"

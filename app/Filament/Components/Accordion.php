@@ -27,20 +27,26 @@ final class Accordion
         return Block::make(self::key())->label(__('panel.accordion'))
             ->columnSpanFull()
             ->schema([
+                
                 Group::make([
+                    
                     Textarea::make('title')->label(__(key: 'panel.title'))
                         ->maxLength(255)
+                        ->autosize()
                         ->trim()
                         ->columnSpan(20),
+                    
                     Select::make('type')->label(__(key: 'panel.type'))
                         ->required()
+                        ->columnSpan(4)
                         ->default('white')
                         ->options([
                             'white' => __('panel.white'),
                             'dark' => __('panel.dark'),
-                        ])
-                        ->columnSpan(4),
+                        ]),
+                    
                 ])->columnSpanFull()->columns(24),
+                
                 CustomRepeater::make('accordions')->label('')
                     ->deleteAction(
                         fn(Action $action) => $action->requiresConfirmation(),
@@ -59,16 +65,19 @@ final class Accordion
                     ->schema([
                         
                         Group::make([
+                            
                             TextInput::make('point')->label(__(key: 'panel.point'))
                                 ->columnSpan(4)
                                 ->trim()
                                 ->maxLength(20),
+                            
                             TextInput::make('itemTitle')->label(__('panel.title'))
                                 ->columnSpan(12)
                                 ->trim()
                                 ->maxLength(255)
                                 ->required()
                                 ->live(onBlur: true),
+                            
                             TextInput::make('itemDescription')->label(__(key: 'panel.description'))
                                 ->columnSpan(8)
                                 ->trim()
@@ -76,6 +85,7 @@ final class Accordion
                         ])
                             ->columnSpanFull()
                             ->columns(24),
+                        
                         Builder::make('items')->label(__(key: 'panel.body'))
                             ->columnSpanFull()
                             ->deleteAction(
@@ -85,14 +95,17 @@ final class Accordion
                             ->reorderableWithButtons()
                             ->cloneable()
                             ->schema([
+                                
                                 Block::make('question')->label(__('panel.question'))
                                     ->columnSpanFull()
                                     ->schema(self::getBlocks())
                                     ->columns(24),
+                                
                                 Block::make('plus')->label(__('panel.plus'))
                                     ->columnSpanFull()
                                     ->schema(self::getBlocks())
                                     ->columns(24),
+                                
                                 Block::make('info')->label(__('panel.info'))
                                     ->columnSpanFull()
                                     ->schema(self::getBlocks())
@@ -112,6 +125,7 @@ final class Accordion
                 ->trim()
                 ->maxLength(255)
                 ->columnSpanFull(),
+            
             RichEditor::make('description')->label(__('panel.description'))
                 ->columnSpanFull()
                 ->required()
@@ -131,10 +145,12 @@ final class Accordion
                     ['table', 'attachFiles'],
                     ['undo', 'redo'],
                 ]),
+            
             TextInput::make('btnLabel')->label(__('panel.btn_label'))
                 ->maxLength(255)
                 ->trim()
                 ->columnSpan(12),
+            
             UrlInput::make('btnUrl')->label(__('panel.btn_url'))
                 ->columnSpan(12),
         ];

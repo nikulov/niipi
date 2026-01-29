@@ -7,7 +7,7 @@
 </x-form.label>
 
 <textarea
-    wire:model.defer="{{ $field['wireModel'] }}"
+    wire:model="{{ $field['wireModel'] }}"
     rows="{{ $field['rows'] ?? 4 }}"
     @if(!empty($field['placeholder'] ?? null)) placeholder="{{ $field['placeholder'] }}" @endif
     @if (!empty($field['required'] ?? null)) required aria-required="true" @endif

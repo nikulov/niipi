@@ -8,5 +8,5 @@
     class="mt-inner-section-y px-inner-section-x text-primary dark:text-accent-add-dark mx-auto w-full max-w-1242"
     style="text-align: {{ $position }}"
 >
-    {{ $title }}
+    {!! nl2br(e($title)) !!}
 </{{ $type }}>

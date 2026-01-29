@@ -36,6 +36,7 @@ class ProjectForm
                         Textarea::make('title')->label(__('panel.title'))
                             ->required()
                             ->trim()
+                            ->autosize()
                             ->columnSpan(24)
                             ->maxLength(500)
                             ->live(onBlur: true)
@@ -51,6 +52,7 @@ class ProjectForm
                         Textarea::make('description')->label(__('panel.excerpt_project'))
                             ->required()
                             ->trim()
+                            ->autosize()
                             ->columnSpan(24)
                             ->maxLength(1000),
                         
@@ -130,6 +132,7 @@ class ProjectForm
                         
                         Textarea::make('meta_description')->label(__('panel.meta_description'))
                             ->columnSpan(12)
+                            ->autosize()
                             ->trim(),
                     ]),
                 

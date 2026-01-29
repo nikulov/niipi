@@ -20,11 +20,13 @@ final class Title
         return Block::make(self::key())->label(__('panel.title_label'))
             ->columnSpanFull()
             ->schema([
+                
                 Textarea::make('title')->label(__('panel.heading'))
-                    ->rows(2)
+                    ->autosize()
                     ->columnSpanFull()
                     ->trim()
                     ->required(),
+                
                 Select::make('type')->label(__('panel.heading_size'))
                     ->options([
                         'h2' => __('panel.heading') . ' 2',
@@ -32,6 +34,7 @@ final class Title
                     ])
                     ->required()
                     ->columnSpan(6),
+                
                 Select::make('position')->label(__('panel.position_title'))
                     ->default('left')
                     ->options([
@@ -41,6 +44,7 @@ final class Title
                     ])
                     ->required()
                     ->columnSpan(6),
+                
             ])->columns(12);
     }
 }

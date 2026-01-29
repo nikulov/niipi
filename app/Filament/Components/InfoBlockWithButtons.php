@@ -6,6 +6,7 @@ namespace App\Filament\Components;
 use App\Filament\Forms\Components\UrlInput;
 use Filament\Forms\Components\Builder\Block;
 use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 
 
@@ -22,17 +23,22 @@ final class InfoBlockWithButtons
         return Block::make(self::key())->label(__('panel.info_block_with_btn'))
             ->columnSpanFull()
             ->schema([
-                TextInput::make('title')->label(__(key: 'panel.title'))
+                
+                Textarea::make('title')->label(__(key: 'panel.title'))
                     ->columnSpanFull()
+                    ->autosize()
                     ->required(),
+                
                 RichEditor::make('description')->label(__(key: 'panel.text'))
                     ->required()
                     ->columnSpanFull()
                     ->extraFieldWrapperAttributes(['class' => 'mb-4']),
+                
                 TextInput::make('btnLabel')->label(__(key: 'panel.btn_label'))
                     ->required()
                     ->live(onBlur: true)
                     ->columnSpanFull(),
+                
                 UrlInput::make('btnUrl')->label(__(key: 'panel.btn_url'))
                     ->columnSpanFull()
                     ->required(),

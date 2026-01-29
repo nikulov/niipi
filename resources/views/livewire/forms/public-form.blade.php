@@ -1,7 +1,7 @@
 @php($isModal = (bool) ($viewData["isModal"] ?? false))
 
 <section
-    class="px-inner-section-x py-inner-section-y relative mx-auto w-full max-w-1242"
+    class="px-inner-section-x my-inner-section-y relative mx-auto w-full max-w-1242"
     @if ($isModal)
         x-data="{
             open: false,
@@ -53,7 +53,7 @@
                             <form wire:submit.prevent="submit" class="w-full space-y-6">
                                 <div class="absolute top-auto -left-2500 h-px w-px overflow-hidden" aria-hidden="true">
                                     <label for="website">Website</label>
-                                    <input id="website" type="text" wire:model.defer="website" autocomplete="off" tabindex="-1" />
+                                    <input id="website" type="text" wire:model="website" autocomplete="off" tabindex="-1" />
                                 </div>
 
                                 @foreach ($viewData["fields"] as $field)

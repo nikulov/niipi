@@ -2,7 +2,7 @@
     'urls' => ['gallery/posts/default/image-2-1766065371.jpg', 'gallery/posts/default/image-3-1766065371.jpg', 'gallery/posts/default/umg-1766065371.jpg', 'gallery/posts/default/main-slider-01-v2-3-1766065371.jpg', 'gallery/posts/default/standart-1766065371.jpg', 'gallery/posts/default/gpzu-1766065371.jpg', 'gallery/posts/default/kuzmina-aa-kazanysh-1-1766065371.jpeg'],
 ])
 
-<div
+<section
     x-data="{
         open: false,
         startIndex: 0,
@@ -92,4 +92,4 @@
             </div>
         </div>
     </div>
-</div>
+</section>

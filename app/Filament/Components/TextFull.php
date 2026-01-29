@@ -20,6 +20,7 @@ final class TextFull
         return Block::make(self::key())->label(__('panel.text_full_label'))
             ->columnSpanFull()
             ->schema([
+                
                 RichEditor::make('textFull')->label(__('panel.paragraph'))
                     ->required()
                     ->toolbarButtons([

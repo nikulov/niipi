@@ -19,6 +19,7 @@ class FormForm
                     
                     Textarea::make('title')->label(__('panel.heading'))
                         ->rows(2)
+                        ->autosize()
                         ->trim(),
                     
                     TextInput::make('name')->label(__('panel.name'))

@@ -1,4 +1,4 @@
-<div
+<section
     class="px-inner-section-x relative mx-auto flex min-h-74 max-w-1600 flex-col justify-end overflow-hidden bg-cover bg-right"
     style="
         background-image:
@@ -18,7 +18,9 @@
     <div class="mx-auto flex w-full max-w-1290 flex-row flex-wrap items-end justify-start gap-10 py-16">
         <img src="{{ public_asset($iconUrl) }}" class="z-10 hidden max-w-30 pb-2.5 lg:block" alt="{{ $iconAlt }}" />
         <a @if(!empty($url)) href="{{ $url }}" @endif class="z-10">
-            <h1 class="@if(!empty($url)) hover:text-[#CBDEEA] @endif text-white">{!! $title !!}</h1>
+            <h1 class="@if(!empty($url)) hover:text-[#CBDEEA] @endif text-white">
+                {!! nl2br(e($title)) !!}
+            </h1>
         </a>
     </div>
-</div>
+</section>

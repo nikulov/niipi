@@ -25,12 +25,12 @@ final class ImageText
             ->schema([
                 
                 Textarea::make('title')->label(__('panel.heading'))
-                    ->rows(2)
+                    ->autosize()
                     ->columnSpanFull()
                     ->trim(),
             
                 Textarea::make('subtitle')->label(__('panel.subheading'))
-                    ->rows(2)
+                    ->autosize()
                     ->columnSpanFull()
                     ->trim(),
                 

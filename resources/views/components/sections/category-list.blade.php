@@ -1,6 +1,6 @@
 @php($basePath = request()->segment(1))
 
-<div class="my-inner-section-y px-inner-section-x mx-auto w-full max-w-1242">
+<section class="my-inner-section-y px-inner-section-x mx-auto w-full max-w-1242">
     <div class="border-accent w-full border-t pb-2"></div>
     <span class="text-accent text-medium pr-1 font-bold uppercase">Категории:</span>
 
@@ -15,4 +15,4 @@
             <span class="text-accent text-medium">,</span>
         @endif
     @endforeach
-</div>
+</section>

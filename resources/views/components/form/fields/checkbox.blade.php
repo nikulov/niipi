@@ -5,7 +5,7 @@
 <label class="inline-flex cursor-pointer items-center gap-2">
     <input
         type="checkbox"
-        wire:model.defer="{{ $field['wireModel'] }}"
+        wire:model="{{ $field['wireModel'] }}"
         @if (!empty($field['required'] ?? null)) required aria-required="true" @endif
         class="peer sr-only"
     />
