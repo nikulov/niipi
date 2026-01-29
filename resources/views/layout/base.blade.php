@@ -5,7 +5,16 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="csrf-token" content="{{ csrf_token() }}" />
         <meta name="description" content="{{ $meta['description'] ?? ($settings->description ?? '') }}" />
-        <link rel="icon" href="{{ public_asset('/images/favicon.ico') }}" sizes="any" />
+
+        <link rel="icon" type="image/svg+xml" href="{{ public_asset('/images/favicon/favicon.svg') }}" />
+        <link rel="icon" type="image/png" sizes="32x32" href="{{ public_asset('/images/favicon/favicon-32x32.png') }}" />
+        <link rel="icon" type="image/png" sizes="16x16" href="{{ public_asset('/images/favicon/favicon-16x16.png') }}" />
+        <link rel="apple-touch-icon" sizes="180x180" href="{{ public_asset('/images/favicon/apple-touch-icon.png') }}" />
+        <link rel="manifest" href="{{ public_asset('/images/favicon/site.webmanifest') }}" />
+        <link rel="icon" href="{{ public_asset('/images/favicon/favicon.ico') }}" />
+
+        <meta name="theme-color" content="#f0eff1" media="(prefers-color-scheme: light)" />
+        <meta name="theme-color" content="#2c3140" media="(prefers-color-scheme: dark)" />
 
         <title>@yield('page.title', $settings->title ?? config('app.name'))</title>
 
@@ -22,20 +31,20 @@
 
         {!! $settings->code_header ?? '' !!}
     </head>
-    <body class="font-inter text-text mx-auto max-w-1600 antialiased">
+    <body class="font-inter text-text mx-auto antialiased">
         {!! $settings->code_body_top ?? '' !!}
 
         <div class="flex min-h-screen flex-col">
             @include('includes.header')
 
-            <main class="bg-background-light dark:bg-background-dark mx-auto w-full flex-1">
-                <div class="to-top-white border-accent container h-full w-full border-y">
+            <main class="bg-background-light dark:bg-background-dark mx-auto w-full max-w-1600 flex-1">
+                <div class="to-top-white border-accent container h-full w-full max-w-1600 border-y">
                     @yield('top_section')
                 </div>
 
                 @include('layout.content-block')
 
-                <div class="to-top-white container mt-16 h-full w-full">
+                <div class="to-top-white container mt-16 h-full w-full max-w-1600">
                     @yield('bottom_section')
                 </div>
             </main>
