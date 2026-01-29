@@ -18,7 +18,7 @@
     <a href="{{ $isPdf ? '' : $cardUrl }}" class="relative flex flex-col items-center justify-center">
         @if ($isPdf)
             <a href="{{ $fileUrl }}" download class="mb-auto block h-full w-full">
-                <div class="border-border dark:border-border-dark h-full overflow-hidden border">
+                <div class="h-full overflow-hidden">
                     <iframe src="{{ $fileUrl }}#view=FitH" class="h-full w-full" loading="lazy"></iframe>
                 </div>
             </a>

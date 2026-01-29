@@ -19,7 +19,15 @@
         "
     @endif
 >
-    <div @class([$isModal ? "fixed inset-0 z-50 w-full bg-black/50" : "contents"]) @if ($isModal)x-cloak x-show="open"@endif>
+    <div
+        @class([$isModal ? "fixed inset-0 z-50 w-full bg-black/50" : "contents"])
+        @if ($isModal)
+            x-cloak
+            x-show="open"
+            x-trap.noscroll="open"
+            @keydown.escape.window="close()"
+        @endif
+    >
         <div @class([$isModal ? "absolute inset-0 flex w-full items-end p-4 sm:items-center sm:justify-center" : ""])>
             <div @class([$isModal ? "bg-background-light dark:bg-background-dark relative w-full max-w-225" : ""])>
                 <x-layout.main-section-border>
@@ -35,7 +43,7 @@
                                 <strong class="text-big block text-center font-medium">
                                     {{ $viewData["successMessage"] }}
                                 </strong>
-                                <x-buttons.btn-add type="" label="Закрыть" class="mx-auto mt-6" />
+                                <x-buttons.btn-add @click="close" type="" label="Закрыть" class="mx-auto mt-6" />
                             </div>
                         @else
                             @if (! empty($viewData["title"]) ?? null)
