@@ -6,30 +6,6 @@
     class="relative flex h-auto w-full items-end"
     x-data="{
         menuOpen: false,
-        scrollY: 0,
-        init() {
-            this.$watch('menuOpen', (v) => {
-                if (v) {
-                    this.scrollY = window.scrollY
-
-                    document.body.style.position = 'fixed'
-                    document.body.style.top = `-${this.scrollY}px`
-                    document.body.style.left = '0'
-                    document.body.style.right = '0'
-                    document.body.style.width = '100%'
-                    document.body.style.overflow = 'hidden'
-                } else {
-                    document.body.style.position = ''
-                    document.body.style.top = ''
-                    document.body.style.left = ''
-                    document.body.style.right = ''
-                    document.body.style.width = ''
-                    document.body.style.overflow = ''
-
-                    window.scrollTo(0, this.scrollY)
-                }
-            })
-        },
     }"
     @keydown.escape.window="menuOpen = false"
 >
@@ -44,6 +20,7 @@
     <div
         x-cloak
         x-show="menuOpen"
+        x-trap.noscroll="open"
         x-transition:enter="transition duration-400 ease-out"
         x-transition:enter-start="-translate-y-full"
         x-transition:enter-end="translate-y-0 "
