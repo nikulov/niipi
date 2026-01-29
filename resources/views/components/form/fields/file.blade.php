@@ -17,13 +17,14 @@
     }"
     class="flex flex-col gap-2"
 >
+    <x-form.label required="{{$field['required']}}">
+        {{ $field['label'] }}
+    </x-form.label>
+
     <div class="flex flex-wrap items-center gap-3">
         <label class="cursor-pointer">
             <div class="text-text min-w-34 border border-gray-300 bg-gray-200 px-3 py-2 select-none">
                 {{ __('page.choose_file') }}
-                @if ($field['required'])
-                    <span class="text-[#B45171]">*</span>
-                @endif
             </div>
 
             <input
