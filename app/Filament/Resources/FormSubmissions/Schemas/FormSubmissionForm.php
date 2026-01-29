@@ -11,6 +11,7 @@ use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
+use Illuminate\Support\Str;
 
 class FormSubmissionForm
 {
@@ -66,7 +67,12 @@ class FormSubmissionForm
                             
                             TextEntry::make('label')->label(__('panel.field'))
                                 ->hiddenLabel()
-                                ->columnSpan(4),
+                                ->columnSpan(4)
+                                ->html()
+                                ->formatStateUsing(function ($state) {
+                                    $text = trim(preg_replace('/\s+/', ' ', strip_tags((string) $state)));
+                                    return Str::limit($text, 16);
+                                }),
                             
                             TextEntry::make('value')->label(__('panel.value'))
                                 ->hiddenLabel()
