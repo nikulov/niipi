@@ -14,6 +14,8 @@
 
         <title>@yield('page.title', $settings->title ?? config('app.name'))</title>
 
+        <link rel="icon" href="{{ public_asset('/images/favicon.ico') }}" sizes="any" />
+
         <script>
             document.documentElement.classList.toggle(
                 'dark',
