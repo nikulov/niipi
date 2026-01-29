@@ -2,13 +2,7 @@
     "menuItems" => [],
 ])
 
-<div
-    class="relative flex h-auto w-full items-end"
-    x-data="{
-        menuOpen: false,
-    }"
-    @keydown.escape.window="menuOpen = false"
->
+<div class="relative flex h-auto w-full items-end" x-data="{ menuOpen: false }" @keydown.escape.window="menuOpen = false">
     <button
         type="button"
         class="text-accent hover:text-accent-add cursor-pointer transition-colors duration-200 focus:outline-none"
@@ -20,7 +14,7 @@
     <div
         x-cloak
         x-show="menuOpen"
-        x-trap.noscroll="open"
+        x-trap.noscroll="menuOpen"
         x-transition:enter="transition duration-400 ease-out"
         x-transition:enter-start="-translate-y-full"
         x-transition:enter-end="translate-y-0 "
