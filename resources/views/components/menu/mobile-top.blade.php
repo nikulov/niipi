@@ -14,7 +14,7 @@
     <div
         x-cloak
         x-show="menuOpen"
-        x-trap.noscroll="menuOpen"
+        x-trap.noscroll.noautofocus="menuOpen"
         x-transition:enter="transition duration-400 ease-out"
         x-transition:enter-start="-translate-y-full"
         x-transition:enter-end="translate-y-0 "
