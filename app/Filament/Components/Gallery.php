@@ -20,6 +20,7 @@ final class Gallery
         return Block::make(self::key())->label(__('panel.gallery_label'))
             ->columnSpanFull()
             ->schema([
+                
                 FileUpload::make('urls')->label(__('panel.choose_images'))
                     ->required()
                     ->multiple()

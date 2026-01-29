@@ -8,6 +8,7 @@ use Filament\Actions\Action;
 use Filament\Forms\Components\Builder\Block;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 
 
@@ -24,12 +25,17 @@ final class InfoBlockWithAchievements
         return Block::make(self::key())->label(__('panel.info_block_with_achievements'))
             ->columnSpanFull()
             ->schema([
-                TextInput::make('title')->label(__(key: 'panel.title'))
+                
+                Textarea::make('title')->label(__(key: 'panel.title'))
+                    ->autosize()
+                    ->trim()
                     ->required(),
+                
                 RichEditor::make('description')->label(__(key: 'panel.text'))
                     ->required()
                     ->columnSpanFull()
                     ->extraFieldWrapperAttributes(['class' => 'mb-4']),
+                
                 CustomRepeater::make('achievements')->label(__(key: 'panel.achievements'))
                     ->maxItems(6)
                     ->grid(2)
@@ -58,6 +64,7 @@ final class InfoBlockWithAchievements
                             ->required()
                             ->columnSpan(12),
                     ]),
+                
                 FileUpload::make('imageUrl')->label(__(key: 'panel.add_background_image'))
                     ->columnSpanFull()
                     ->preserveFilenames()

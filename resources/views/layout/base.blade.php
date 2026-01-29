@@ -1,20 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="scroll-smooth">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="csrf-token" content="{{ csrf_token() }}" />
+        <meta name="description" content="{{ $meta['description'] ?? ($settings->description ?? '') }}" />
 
-        @isset($meta['description'])
-            <meta name="description" content="{{ $meta['description'] }}" />
-        @endisset
+        <link rel="icon" type="image/svg+xml" href="{{ public_asset('/images/favicon/favicon.svg') }}" />
+        <link rel="icon" type="image/png" sizes="32x32" href="{{ public_asset('/images/favicon/favicon-32x32.png') }}" />
+        <link rel="icon" type="image/png" sizes="16x16" href="{{ public_asset('/images/favicon/favicon-16x16.png') }}" />
+        <link rel="apple-touch-icon" sizes="180x180" href="{{ public_asset('/images/favicon/apple-touch-icon.png') }}" />
+        <link rel="manifest" href="{{ public_asset('/images/favicon/site.webmanifest') }}" />
+        <link rel="icon" href="{{ public_asset('/images/favicon/favicon.ico') }}" />
 
-        @isset($meta['keywords'])
-            <meta name="keywords" content="{{ $meta['keywords'] }}" />
-        @endisset
+        <meta name="theme-color" content="#f0eff1" media="(prefers-color-scheme: light)" />
+        <meta name="theme-color" content="#2c3140" media="(prefers-color-scheme: dark)" />
 
         <title>@yield('page.title', $settings->title ?? config('app.name'))</title>
-
-        <link rel="icon" href="{{ public_asset('/images/favicon.ico') }}" sizes="any" />
 
         <script>
             document.documentElement.classList.toggle(
@@ -24,26 +26,13 @@
             );
         </script>
 
-        <style>
-            [x-cloak] {
-                display: none !important;
-            }
-        </style>
-
+        @livewireStyles
         @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-        @livewireStyles
-
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-
-        @if (! empty($settings?->code_header))
-            {!! $settings->code_header !!}
-        @endif
+        {!! $settings->code_header ?? '' !!}
     </head>
-    <body class="font-inter text-text antialiased">
-        @if (! empty($settings?->code_body_top))
-            {!! $settings->code_body_top !!}
-        @endif
+    <body class="font-inter text-text mx-auto antialiased">
+        {!! $settings->code_body_top ?? '' !!}
 
         <div class="flex min-h-screen flex-col">
             @include('includes.header')
@@ -67,9 +56,7 @@
 
         @livewireScripts
 
-        @if (! empty($settings?->code_body_bottom))
-            {!! $settings->code_body_bottom !!}
-        @endif
+        {!! $settings->code_body_bottom ?? '' !!}
 
         <div
             x-data="{ show: false }"
@@ -78,6 +65,7 @@
                 setTimeout(() => (show = false), 260)
             "
             x-show="show"
+            x-cloak
             class="bg-primary/30 dark:bg-primary/30 pointer-events-none fixed inset-0 z-9999 mx-auto max-w-1600"
             x-transition:enter="transition-opacity duration-100 ease-out"
             x-transition:enter-start="opacity-0"

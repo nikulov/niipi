@@ -24,10 +24,13 @@ final class CardsBlockWithButton
         return Block::make(self::key())->label(__('panel.services_block'))
             ->columnSpanFull()
             ->schema([
+                
                 Textarea::make('title')->label(__(key: 'panel.title'))
                     ->maxLength(255)
+                    ->autosize()
                     ->trim()
                     ->columnSpanFull(),
+                
                 CustomRepeater::make('cards')->label('')
                     ->grid(3)
                     ->hiddenLabel()
@@ -39,26 +42,35 @@ final class CardsBlockWithButton
                     ->addActionLabel(__(key: 'panel.add_card'))
                     ->columnSpanFull()
                     ->schema([
+                        
                         Textarea::make('cardTitle')->label(__(key: 'panel.title'))
                             ->live(onBlur: true)
+                            ->autosize()
                             ->trim()
                             ->required(),
+                        
                         Textarea::make('cardDescription')->label(__(key: 'panel.description'))
                             ->required()
+                            ->autosize()
                             ->trim(),
+                        
                         TextInput::make('cardBtnLabel')->label(__(key: 'panel.btn_label'))
                             ->default(__(key: 'panel.more_details'))
                             ->required()
                             ->trim(),
+                        
                         UrlInput::make('cardBtnUrl')->label(__(key: 'panel.btn_url'))
                             ->placeholder(__(key: 'panel.url_placeholder'))
                             ->required(),
                     ]),
+                
                 TextInput::make('btnLabel')->label(__(key: 'panel.btn_label'))
                     ->columnSpan(12)
                     ->trim(),
+                
                 UrlInput::make('btnUrl')->label(__(key: 'panel.btn_url'))
                     ->columnSpan(12),
+                
             ])->columns(24);
     }
 }

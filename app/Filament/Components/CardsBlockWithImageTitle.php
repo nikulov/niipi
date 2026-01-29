@@ -29,6 +29,7 @@ final class CardsBlockWithImageTitle
                 Textarea::make('title')->label(__(key: 'panel.title'))
                     ->maxLength(255)
                     ->trim()
+                    ->autosize()
                     ->columnSpanFull(),
                 
                 CustomRepeater::make('cards')->label('')
@@ -69,9 +70,11 @@ final class CardsBlockWithImageTitle
                             ->columnSpanFull(),
                         Textarea::make('cardTitle')->label(__(key: 'panel.title'))
                             ->live(onBlur: true)
+                            ->autosize()
                             ->trim(),
                         
                         Textarea::make('cardDescription')->label(__(key: 'panel.description'))
+                            ->autosize()
                             ->trim(),
                         
                         UrlInput::make('cardUrl')->label(__(key: 'panel.btn_url'))

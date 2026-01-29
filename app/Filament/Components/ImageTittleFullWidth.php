@@ -21,6 +21,7 @@ final class ImageTittleFullWidth
         return Block::make(self::key())->label(__('panel.image_tittle_full_width'))
             ->columnSpanFull()
             ->schema([
+                
                 FileUpload::make('iconUrl')->label(__(key: 'panel.icon') . ' (' . __('panel.svg') . ')')
                     ->columnSpan(12)
                     ->preserveFilenames()
@@ -32,16 +33,20 @@ final class ImageTittleFullWidth
                     ->imageEditorAspectRatios([null, '16:9'])
                     ->acceptedFileTypes(['image/svg+xml'])
                     ->required(),
+                
                 TextInput::make('iconAlt')->label(__(key: 'panel.icon_alt'))
                     ->required()
                     ->trim()
                     ->columnSpan(12),
+                
                 Textarea::make('title')->label(__(key: 'panel.title'))
                     ->columnSpan(24)
+                    ->autosize()
                     ->maxLength(255)
                     ->trim()
                     ->required()
                     ->live(onBlur: true),
+                
                 FileUpload::make('imageUrl')->label(__(key: 'panel.image'))
                     ->columnSpanFull()
                     ->preserveFilenames()
@@ -53,10 +58,12 @@ final class ImageTittleFullWidth
                     ->imageEditor()
                     ->imageEditorAspectRatios([null, '16:9'])
                     ->required(),
+                
                 TextInput::make('imageAlt')->label(__(key: 'panel.image_alt'))
                     ->required()
                     ->trim()
                     ->columnSpanFull(),
+                
             ])->columns(24);
     }
 }

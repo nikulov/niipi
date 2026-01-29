@@ -19,6 +19,7 @@ final class BgForMainSection
         return Block::make(self::key())->label(__('panel.bg_for_main_section'))
             ->columnSpanFull()
             ->schema([
+                
                 FileUpload::make('bgForMainSection')->label(__(key: 'panel.image'))
                     ->columnSpanFull()
                     ->preserveFilenames()
@@ -30,6 +31,7 @@ final class BgForMainSection
                     ->imageEditor()
                     ->imageEditorAspectRatios([null, '16:9'])
                     ->required(),
+                
             ])->columns(24);
     }
 }

@@ -12,11 +12,15 @@
 
 <section class="my-inner-section-y px-inner-section-x mx-auto w-full max-w-1242">
     @if ($title)
-        <h2 class="text-primary dark:text-accent-add-dark">{{ $title }}</h2>
+        <h2 class="text-primary dark:text-accent-add-dark">
+            {!! nl2br(e($title)) !!}
+        </h2>
     @endif
 
     @if ($subtitle)
-        <h3 class="text-text dark:text-white-dark mb-8">{{ $subtitle }}</h3>
+        <h3 class="text-text dark:text-white-dark mb-8">
+            {!! nl2br(e($subtitle)) !!}
+        </h3>
     @endif
 
     <div class="grid w-full grid-cols-1 items-start gap-12 md:grid-cols-3">

@@ -1,5 +1,7 @@
 <x-layout.section-full bg-image-url="{{$data['bgImageUrl']}}">
-    <h2 class="dark:text-accent-add-dark text-white">{{ $data['title'] }}</h2>
+    <h2 class="dark:text-accent-add-dark text-white">
+        {!! nl2br(e($data['title'])) !!}
+    </h2>
 
     <div class="grid grid-cols-1 gap-x-32 gap-y-15 md:grid-cols-2 md:gap-y-10">
         @foreach ($cards as $card)

@@ -39,7 +39,9 @@
 
 <section class="my-inner-section-y px-inner-section-x container mx-auto flex w-full max-w-1242 flex-col">
     @if ($title)
-        <h2 class="mb-after-title text-primary dark:text-accent-add-dark">{{ $title }}</h2>
+        <h2 class="mb-after-title text-primary dark:text-accent-add-dark">
+            {!! nl2br(e($title)) !!}
+        </h2>
     @endif
 
     <div class="flex flex-row flex-wrap justify-center gap-9.25 xl:justify-start">

@@ -1,10 +1,11 @@
 @props([
     'type' => '',
-    'isOpen' => 'false',
+    'isOpen' => false,
 ])
 
 <div
-    x-data="{ open: {{ $isOpen ? 'true' : 'false' }} }"
+    x-cloak
+    x-data="{ open: @js($isOpen), loaded: false }"
     class="border-primary dark:border-accent-dark relative min-w-70 overflow-hidden border [clip-path:polygon(8px_0,100%_0,100%_calc(100%-8px),calc(100%-8px)_100%,0_100%,0_8px)]"
 >
     <div

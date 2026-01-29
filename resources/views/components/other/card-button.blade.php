@@ -8,7 +8,7 @@
 <div class="relative w-full max-w-full md:max-w-92">
     <div class="card-wrapper dark:bg-background-dark bg-white">
         <div
-            class="bg-primary dark:bg-accent absolute top-0 left-0 h-1.5 w-full"
+            class="bg-primary dark:bg-accent absolute -top-px -left-0.5 h-1.5 w-[calc(100%+2px)]"
             style="clip-path: polygon(6px 0, 100% 0, 100% 100%, 100% 100%, 0 100%, 0 6px)"
         ></div>
 

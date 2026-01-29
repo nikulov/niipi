@@ -40,10 +40,10 @@
 ])
 
 <section class="my-inner-section-y px-inner-section-x mx-auto w-full max-w-1242">
-    <h2 class="mb-after-title text-primary dark:text-accent-add-dark">{{ $accordions['title'] }}</h2>
+    <h2 class="mb-after-title text-primary dark:text-accent-add-dark">{!! nl2br(e($accordions['title'])) !!}</h2>
     <div class="space-y-4">
         @foreach ($accordions['accordions'] as $accordion)
-            <x-other.accordion-item type="{{$accordions['type']}}" is-open="{{false}}">
+            <x-other.accordion-item type="{{$accordions['type']}}" :is-open="false">
                 <x-other.accordion-button
                     point="{{$accordion['point']}}"
                     item-title="{{$accordion['itemTitle']}}"

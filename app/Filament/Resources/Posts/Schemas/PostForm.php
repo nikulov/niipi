@@ -37,6 +37,7 @@ class PostForm
                         Textarea::make('title')->label(__('panel.title'))
                             ->required()
                             ->trim()
+                            ->autosize()
                             ->columnSpan(24)
                             ->maxLength(500)
                             ->live(onBlur: true)
@@ -52,6 +53,7 @@ class PostForm
                         Textarea::make('description')->label(__('panel.excerpt'))
                             ->required()
                             ->trim()
+                            ->autosize()
                             ->columnSpan(24)
                             ->maxLength(1000),
                         
@@ -129,12 +131,9 @@ class PostForm
                             ->trim()
                             ->maxLength(500),
                         
-                        Textarea::make('meta_keywords')->label(__('panel.meta_keywords'))
-                            ->columnSpan(6)
-                            ->trim()
-                            ->maxLength(2000),
                         Textarea::make('meta_description')->label(__('panel.meta_description'))
                             ->columnSpan(12)
+                            ->autosize()
                             ->trim(),
                     ]),
                 

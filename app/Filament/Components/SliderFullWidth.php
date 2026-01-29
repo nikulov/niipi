@@ -24,6 +24,7 @@ final class SliderFullWidth
         return Block::make(self::key())->label(__('panel.slider_full_width'))
             ->columnSpanFull()
             ->schema([
+                
                 CustomRepeater::make('sliders')->label('')
                     ->deleteAction(
                         fn(Action $action) => $action->requiresConfirmation(),
@@ -43,9 +44,11 @@ final class SliderFullWidth
                         
                         Textarea::make('title')->label(__(key: 'panel.title'))
                             ->required()
+                            ->autosize()
                             ->columnSpanFull()
                             ->trim()
                             ->live(onBlur: true),
+                        
                         UrlInput::make('url')->label(__(key: 'panel.title_url'))
                         ->columnSpanFull(),
                         

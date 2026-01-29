@@ -44,6 +44,7 @@
 
         <span
             x-show="files.length > 0"
+            x-cloak
             class="text-text dark:text-white-dark text-sm"
             x-text="files.map((file) => file.name).join(', ')"
         ></span>

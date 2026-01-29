@@ -23,11 +23,13 @@ final class NewsFull
             ->columnSpanFull()
             ->columns(12)
             ->schema([
+                
                 TextInput::make('limit')->label(__(key: 'panel.limit_per_page'))
                     ->columnSpan(2)
                     ->numeric()
                     ->default(10)
                     ->required(),
+                
                 Select::make('categoryIds')->label(__('panel.category'))
                     ->multiple()
                     ->preload()

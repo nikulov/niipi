@@ -1,3 +1,4 @@
+@import url('https://fonts.bunny.net/css?family=inter:300,400,500,600,700&display=swap');
 @import 'tailwindcss';
 @import 'swiper/css';
 @import 'swiper/css/navigation';
@@ -36,17 +37,18 @@
     --container-1242: 1242px;
 
     --spacing-inner-section-y: 56px;
+    --spacing-inner-section-x: 32px; /* desktop */
     --spacing-after-title: 24px;
 }
 
-:root {
-    --spacing-inner-section-x: 32px; /* desktop */
-}
-
-@media (max-width: 767px) {
+@media (max-width: 768px) {
     :root {
         --spacing-inner-section-x: 24px; /* mobile */
     }
+}
+
+[x-cloak] {
+    display: none !important;
 }
 
 @font-face {
@@ -94,15 +96,15 @@
     }
 
     h1 {
-        @apply font-century text-2xl font-bold whitespace-pre-line uppercase md:text-4xl md:leading-[50.4px];
+        @apply font-century text-2xl font-bold uppercase md:text-4xl md:leading-[50.4px];
     }
 
     h2 {
-        @apply font-century text-[22px] leading-[37.8px] font-bold whitespace-pre-line uppercase md:text-[27px];
+        @apply font-century text-[22px] leading-[37.8px] font-bold uppercase md:text-[27px];
     }
 
     h3 {
-        @apply font-century text-[18px] leading-[29.4px] font-bold whitespace-pre-line uppercase md:text-[21px];
+        @apply font-century text-[18px] leading-[29.4px] font-bold uppercase md:text-[21px];
     }
 
     blockquote {
@@ -125,6 +127,10 @@
 }
 
 @layer components {
+    h3.mt-inner-section-y + section.my-inner-section-y {
+        @apply mt-6!;
+    }
+
     .menu-link {
         @apply font-century text-text dark:text-text-dark hover:text-accent-add relative flex cursor-pointer flex-row items-center tracking-[2px] uppercase transition-colors duration-250 hover:[text-shadow:0.02em_0_currentColor,-0.02em_0_currentColor];
     }

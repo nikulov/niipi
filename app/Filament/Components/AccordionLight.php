@@ -23,8 +23,12 @@ final class AccordionLight
         return Block::make(self::key())->label(__('panel.accordion-light'))
             ->columnSpanFull()
             ->schema([
-                TextInput::make('title')->label(__(key: 'panel.title'))
+                
+                Textarea::make('title')->label(__(key: 'panel.title'))
+                    ->trim()
+                    ->autosize()
                     ->maxLength(500),
+                
                 CustomRepeater::make('accordions')->label('')
                     ->deleteAction(
                         fn(Action $action) => $action->requiresConfirmation(),
@@ -41,11 +45,14 @@ final class AccordionLight
                     ->collapsed()
                     ->reorderable()
                     ->schema([
+                        
                         Textarea::make('itemTitle2')->label(__('panel.title'))
                             ->columnSpanFull()
+                            ->autosize()
                             ->maxLength(255)
                             ->required()
                             ->live(onBlur: true),
+                        
                         RichEditor::make('item')->label(__('panel.content'))
                             ->columnSpanFull()
                             ->required()

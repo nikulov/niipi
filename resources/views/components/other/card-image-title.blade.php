@@ -15,7 +15,7 @@
 <div
     class="dark:bg-background-dark items-top relative flex w-full max-w-91 flex-col justify-start bg-white bg-[url('/resources/images/layout/card-wave.png')] bg-cover bg-no-repeat pb-10.5 bg-blend-multiply md:max-w-92"
 >
-    <a href="{{ $isPdf ? '' : $cardUrl }}" class="relative flex flex-col items-center justify-center">
+    <a @if(!$isPdf && $cardUrl) href="{{ $cardUrl }}" @endif class="relative flex flex-col items-center justify-center">
         @if ($isPdf)
             <a href="{{ $fileUrl }}" download class="mb-auto block h-full w-full">
                 <div class="h-full overflow-hidden">
