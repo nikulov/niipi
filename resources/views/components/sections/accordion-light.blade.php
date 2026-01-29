@@ -1,23 +1,20 @@
 @props([
-    'accordions' =>
-    [
+    'accordions' => [
         'title' => 'КАКИЕ МАТЕРИАЛЫ ВЫ ПОЛУЧИТЕ',
         'type' => 'dark',
-        'accordions' =>
-        [
-            
+        'accordions' => [
             [
-            'itemTitle2' => 'Утверждаемая часть',
-            'item'=> ' Положение о территориальном планировании
+                'itemTitle2' => 'Утверждаемая часть',
+                'item' => ' Положение о территориальном планировании
                         Карта границ населенных пунктов
                         Карта функциональных зон муниципального образования
                         Приложение. Сведения о границах населенных пунктов',
             ],
-        
+
             [
                 'itemTitle2' => 'Материалы по обоснованию',
 
-                'item'=> '<article>
+                'item' => '<article>
             <h3 class="text-big font-bold text-text">
                 ТОМ 1. Планировочная и инженерно-транспортная организация территории. Социально-экономическое обоснование
             </h3>
@@ -44,39 +41,29 @@
                 </ul>
             </div>
         </article>',
-                
             ],
         ],
-    ]
+    ],
 ])
 
-<section class="relative max-w-1242 w-full mx-auto my-inner-section-y px-inner-section-x">
-    
-    <h2 class="mb-after-title text-primary dark:text-accent-add-dark">{{$accordions['title']}}</h2>
+<section class="my-inner-section-y px-inner-section-x relative mx-auto w-full max-w-1242">
+    <h2 class="mb-after-title text-primary dark:text-accent-add-dark">{{ $accordions['title'] }}</h2>
     <div class="space-y-4">
-        
-        @foreach($accordions['accordions'] as $accordion)
-            
+        @foreach ($accordions['accordions'] as $accordion)
             <x-other.accordion-item
-                    type="{{$accordions['type']}}"
-                    is-open="{{$loop->first && $accordions['type'] === 'dark'}}"
+                type="{{$accordions['type']}}"
+                :is-open="$loop->first && $accordions['type'] === 'dark' && $loop->count > 1"
             >
-                <x-other.accordion-button
-                        item-title="{{$accordion['itemTitle2']}}"
-                        type="{{$accordions['type']}}"
-                />
-                
+                <x-other.accordion-button item-title="{{$accordion['itemTitle2']}}" type="{{$accordions['type']}}" />
+
                 <x-other.accordion-description>
                     <x-other.accordion-item-description
-                            class="text-normal text-text dark:text-text-dark flex-col! bg-background-light dark:bg-background-dark-add">
-                        
+                        class="text-normal text-text dark:text-text-dark bg-background-light dark:bg-background-dark-add flex-col!"
+                    >
                         {!! $accordion['item'] !!}
-                    
                     </x-other.accordion-item-description>
                 </x-other.accordion-description>
             </x-other.accordion-item>
-        
         @endforeach
-        
     </div>
 </section>
