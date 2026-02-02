@@ -192,5 +192,10 @@ return [
     'yes' => 'Yes',
     'no' => 'No',
     'field_placeholder' => 'Field placeholder',
+    'textarea' => 'Textarea',
+    'file'     => 'File',
+    'select'   => 'Select',
+    'checkbox' => 'Checkbox',
+    'radio'    => 'Radio Button',
     
 ];
