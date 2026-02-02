@@ -54,6 +54,8 @@ class FooterForm
                             FileUpload::make('iconUrl')->label(__(key: 'panel.icon') . ' (' . __('panel.svg') . ')')
                                 ->columnSpan(8)
                                 ->preserveFilenames()
+                                ->downloadable()
+                                ->openable()
                                 ->moveFiles()
                                 ->disk('public')
                                 ->directory('images/footer')

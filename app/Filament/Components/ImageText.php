@@ -37,6 +37,8 @@ final class ImageText
                 FileUpload::make('url')->label(__(key: 'panel.image'))
                     ->columnSpan(12)
                     ->preserveFilenames()
+                    ->downloadable()
+                    ->openable()
                     ->moveFiles()
                     ->disk('public')
                     ->directory('images')

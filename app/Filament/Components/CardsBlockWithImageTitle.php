@@ -48,6 +48,8 @@ final class CardsBlockWithImageTitle
                             ->columnSpanFull()
                             ->preserveFilenames()
                             ->moveFiles()
+                            ->downloadable()
+                            ->openable()
                             ->maxFiles(1)
                             ->maxSize(2048)
                             ->disk('public')

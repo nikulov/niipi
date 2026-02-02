@@ -68,6 +68,8 @@ final class InfoBlockWithAchievements
                 FileUpload::make('imageUrl')->label(__(key: 'panel.add_background_image'))
                     ->columnSpanFull()
                     ->preserveFilenames()
+                    ->downloadable()
+                    ->openable()
                     ->moveFiles()
                     ->disk('public')
                     ->directory('images')

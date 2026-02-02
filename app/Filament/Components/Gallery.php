@@ -24,6 +24,8 @@ final class Gallery
                 FileUpload::make('urls')->label(__('panel.choose_images'))
                     ->required()
                     ->multiple()
+                    ->downloadable()
+                    ->openable()
                     ->getUploadedFileNameForStorageUsing(
                         fn($file) => str(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME))
                             ->slug()
