@@ -12,7 +12,6 @@ final class PublicFormPresenter
         
         return [
             'id' => (int) $form->id,
-            'slug' => (string) $form->slug,
             'title' => (string) $form->title,
             'isModal' => (bool) $form->is_modal,
             'submitLabel' => (string) ($settings['submit_label'] ?? 'Submit'),

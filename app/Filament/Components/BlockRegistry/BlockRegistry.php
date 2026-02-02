@@ -16,11 +16,13 @@ use App\Filament\Components\ImageText;
 use App\Filament\Components\ImageTittleFullWidth;
 use App\Filament\Components\InfoBlockWithAchievements;
 use App\Filament\Components\InfoBlockWithButtons;
+use App\Filament\Components\ModalBlock;
 use App\Filament\Components\NewsBlock;
 use App\Filament\Components\NewsFull;
 use App\Filament\Components\ProjectsBlock;
 use App\Filament\Components\ProjectsFull;
 use App\Filament\Components\SliderFullWidth;
+use App\Filament\Components\TabsBlock;
 use App\Filament\Components\TextFull;
 use App\Filament\Components\Title;
 use Filament\Forms\Components\Builder\Block;
@@ -45,6 +47,7 @@ final class BlockRegistry
             ImageTittleFullWidth::block(),
             InfoBlockWithAchievements::block(),
             InfoBlockWithButtons::block(),
+            ModalBlock::block(),
             NewsBlock::block(),
             NewsFull::block(),
             ProjectsBlock::block(),
@@ -79,14 +82,16 @@ final class BlockRegistry
             ImageText::block(),
             InfoBlockWithAchievements::block(),
             InfoBlockWithButtons::block(),
+            ModalBlock::block(),
             NewsBlock::block(),
             NewsFull::block(),
             ProjectsBlock::block(),
             ProjectsFull::block(),
+            TabsBlock::block(),
             TextFull::block(),
             Title::block(),
         ])
-            ->sortBy(fn ($block) => (string) $block->getLabel())
+            ->sortBy(fn($block) => (string)$block->getLabel())
             ->values()
             ->all();
     }
@@ -97,5 +102,62 @@ final class BlockRegistry
             NewsBlock::block(),
             ProjectsBlock::block(),
         ];
+    }
+    
+    public static function tabs(): array
+    {
+        return collect([
+            Accordion::block(),
+            AccordionLight::block(),
+            BgForMainSection::block(),
+            Button::block(),
+            CardsBlockWithButton::block(),
+            CardsBlockWithImageTitle::block(),
+            CategoryList::block(),
+            Form::block(),
+            Gallery::block(),
+            ImageFull::block(),
+            ImageText::block(),
+            InfoBlockWithAchievements::block(),
+            InfoBlockWithButtons::block(),
+            NewsBlock::block(),
+            NewsFull::block(),
+            ProjectsBlock::block(),
+            ProjectsFull::block(),
+            TextFull::block(),
+            Title::block(),
+        ])
+            ->sortBy(fn($block) => (string)$block->getLabel())
+            ->values()
+            ->all();
+    }
+    
+    public static function modal(): array
+    {
+        return collect([
+            Accordion::block(),
+            AccordionLight::block(),
+            BgForMainSection::block(),
+            Button::block(),
+            CardsBlockWithButton::block(),
+            CardsBlockWithImageTitle::block(),
+            CategoryList::block(),
+            Form::block(),
+            Gallery::block(),
+            ImageFull::block(),
+            ImageText::block(),
+            InfoBlockWithAchievements::block(),
+            InfoBlockWithButtons::block(),
+            NewsBlock::block(),
+            NewsFull::block(),
+            ProjectsBlock::block(),
+            ProjectsFull::block(),
+            TabsBlock::block(),
+            TextFull::block(),
+            Title::block(),
+        ])
+            ->sortBy(fn($block) => (string)$block->getLabel())
+            ->values()
+            ->all();
     }
 }

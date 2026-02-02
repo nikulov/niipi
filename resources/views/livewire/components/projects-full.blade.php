@@ -9,27 +9,9 @@
     <div class="flex flex-col gap-x-32 gap-y-15">
         @foreach ($cards as $card)
             <article class="relative grid w-full gap-6 md:grid-cols-2">
-                <div>
-                    <img src="{{ $card['thumbnail'] }}" alt="" class="h-45 w-full object-cover md:h-90" />
-                </div>
+                <x-other.thumbnail-full card-url="{{ $card['url'] }}" card-thumbnail="{{ $card['thumbnail'] }}" />
 
-                <div class="flex flex-col">
-                    <h3 class="text-primary dark:text-white-dark pb-1 whitespace-normal">
-                        {{ $card['title'] }}
-                    </h3>
-
-                    <p class="text-normal text-text dark:text-white-dark mt-5 line-clamp-4">
-                        {{ $card['description'] }}
-                    </p>
-
-                    <div class="mt-auto flex items-end justify-between gap-4 pt-6">
-                        <span class="text-small text-accent">
-                            {{ $card['publishedAt'] }}
-                        </span>
-
-                        <x-buttons.btn-more url="{{ $card['url']}}" text="подробнее" class="text-accent-add hover:text-[#9DDEE0]" />
-                    </div>
-                </div>
+                <x-other.card-full :card="$card" />
             </article>
         @endforeach
 

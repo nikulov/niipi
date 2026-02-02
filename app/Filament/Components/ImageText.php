@@ -58,7 +58,9 @@ final class ImageText
                         ])
                         ->required(),
                 ])->columnSpan(12),
+                
                 RichEditor::make('content')->label(__(key: 'panel.content'))
+                    ->resizableImages()
                     ->required()
                     ->columnSpan(24)
                     ->toolbarButtons([

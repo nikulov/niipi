@@ -10,16 +10,13 @@ final class Form extends Model
     protected $fillable = [
         'title',
         'name',
-        'slug',
         'recipient_admin_email',
         'is_active',
-        'is_modal',
         'settings',
     ];
     
     protected $casts = [
         'is_active' => 'bool',
-        'is_modal' => 'bool',
         'settings' => 'array',
     ];
     

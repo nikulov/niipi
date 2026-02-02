@@ -21,19 +21,10 @@ class FormsTable
                     ->withCount('submissions');
             })
             ->columns([
+                
                 TextColumn::make('name')->label(__('panel.name'))
                     ->searchable()
                     ->sortable(),
-                
-                TextColumn::make('slug')->label(__('panel.slug'))
-                    ->searchable()
-                    ->sortable()
-                    ->copyable(),
-                
-                TextColumn::make('is_modal')->label(__('panel.display_type'))
-                    ->badge()
-                    ->formatStateUsing(fn ($state) => $state ? 'Modal' : 'Inline')
-                    ->color(fn ($state) => (int) $state ? 'primary' : 'gray'),
                 
                 TextColumn::make('fields_list')->label(__('panel.fields'))
                     ->state(function ($record) {

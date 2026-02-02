@@ -26,15 +26,10 @@ class FormForm
                         ->required()
                         ->maxLength(255),
                     
-                    TextInput::make('slug')->label(__('panel.slug'))
-                        ->required()
-                        ->unique(ignoreRecord: true)
-                        ->maxLength(255),
-                    
                     TextInput::make('recipient_admin_email')->label(__('panel.recipient_admin_email'))
                         ->email()
                         ->required()
-                        ->default('')
+                        ->default('admin@niipigrad.ru')
                         ->maxLength(255),
                     
                 ])->columnSpan(12),
@@ -44,17 +39,12 @@ class FormForm
                     Toggle::make('is_active')->label(__('panel.is_active'))
                         ->default(true),
                     
-                    Toggle::make('is_modal')->label(__('panel.is_modal'))
-                        ->default(true),
-                    
                     KeyValue::make('settings')->label(__('panel.settings'))
                     ->default([
-                        'submit_label' => 'Send',
-                        'success_message' => 'Message sent successfully!'
+                        'submit_label' => 'Отправить',
+                        'success_message' => 'Сообщение отправлено! Спасибо за обращение.'
                     ]),
                     
-                  
-                
                 ])->columnSpan(12),
             
             

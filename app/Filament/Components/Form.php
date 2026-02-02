@@ -26,15 +26,6 @@ final class Form
                     ->searchable()
                     ->columnSpan(8)
                     ->required(),
-                
-                Select::make('layout')->label(__('panel.layout'))
-                    ->columnSpan(8)
-                    ->options([
-                        'inline' => __('panel.inline'),
-                        'modal' => __('panel.modal'),
-                    ])
-                    ->default('modal')
-                    ->required(),
             ]);
     }
 }

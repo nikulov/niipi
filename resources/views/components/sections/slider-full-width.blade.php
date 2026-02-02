@@ -43,7 +43,7 @@
     </div>
     <div class="absolute bottom-2 inline-flex flex-row items-center justify-between gap-4">
         <button type="button" class="js-slider-prev js-main-slider-prev z-20 h-10 w-10 cursor-pointer"></button>
-        <div class="js-main-slider-pagination z-20 flex items-center justify-center"></div>
+        <div class="js-main-slider-pagination z-20 flex items-center justify-center gap-1.5"></div>
         <button type="button" class="js-slider-next js-main-slider-next z-20 h-10 w-10 cursor-pointer"></button>
     </div>
 </section>

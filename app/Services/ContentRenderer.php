@@ -23,21 +23,30 @@ class ContentRenderer
     
     public function renderSection(HasBlockSections $model, string $section): HtmlString
     {
-        $html = $this->renderBlocksForSection($model, $section);
-        return new HtmlString($html);
-    }
-    
-    private function renderBlocksForSection(HasBlockSections $model, string $section): string
-    {
         $blocks = $model->getBlocksForSection($section);
         
+        return new HtmlString(
+            $this->renderBlocksArray($blocks, $model, $section)
+        );
+    }
+    
+    public function renderBlocks(array $blocks, HasBlockSections $model, ?string $section = null, int $indexOffset = 0): HtmlString
+    {
+        
+        return new HtmlString(
+            $this->renderBlocksArray($blocks, $model, $section, $indexOffset)
+        );
+    }
+    
+    private function renderBlocksArray(array $blocks, HasBlockSections $model, ?string $section = null, int $indexOffset = 0): string
+    {
         $htmlBlocks = [];
         
         foreach ($blocks as $index => $block) {
             $blockType = $block['type'] ?? null;
             $blockData = (array) ($block['data'] ?? []);
             
-            if (!$blockType) {
+            if (! $blockType) {
                 continue;
             }
             
@@ -47,7 +56,7 @@ class ContentRenderer
             
             $rendererClass = BlockRenderRegistry::for($blockType);
             
-            if (!$rendererClass) {
+            if (! $rendererClass) {
                 Log::warning('Unknown block type', [
                     'section' => $section,
                     'type' => $blockType,
@@ -57,7 +66,7 @@ class ContentRenderer
             }
             
             try {
-                $htmlBlocks[] = app($rendererClass)->render($blockData, $model, (int) $index);
+                $htmlBlocks[] = app($rendererClass)->render($blockData, $model, (int) $index + $indexOffset);
             } catch (\Throwable $e) {
                 Log::error('Render failed', [
                     'section' => $section,
@@ -71,9 +80,6 @@ class ContentRenderer
         return implode("\n", array_filter($htmlBlocks));
     }
     
-    /**
-     * Ключ кэша: зависит от страницы, языка, версий блоков и секции.
-     */
     private function makeCacheKey(HasBlockSections $model, string $section): string
     {
         $updatedAt = $model->getRenderUpdatedAtTimestamp();

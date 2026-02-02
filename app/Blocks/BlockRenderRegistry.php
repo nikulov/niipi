@@ -16,11 +16,13 @@ use App\Blocks\Renderers\ImageTextRenderer;
 use App\Blocks\Renderers\ImageTittleFullWidthRenderer;
 use App\Blocks\Renderers\InfoBlockWithAchievementsRenderer;
 use App\Blocks\Renderers\InfoBlockWithButtonsRenderer;
+use App\Blocks\Renderers\ModalBlockRenderer;
 use App\Blocks\Renderers\NewsBlockRenderer;
 use App\Blocks\Renderers\NewsFullRenderer;
 use App\Blocks\Renderers\ProjectsBlockRenderer;
 use App\Blocks\Renderers\ProjectsFullRenderer;
 use App\Blocks\Renderers\SliderFullWidthRenderer;
+use App\Blocks\Renderers\TabsBlockRenderer;
 use App\Blocks\Renderers\TextFullRenderer;
 use App\Blocks\Renderers\TitleRenderer;
 use App\Filament\Components\CardsBlockWithImageTitle;
@@ -45,11 +47,13 @@ final class BlockRenderRegistry
             ImageTittleFullWidthRenderer::key() => ImageTittleFullWidthRenderer::class,
             InfoBlockWithAchievementsRenderer::key() => InfoBlockWithAchievementsRenderer::class,
             InfoBlockWithButtonsRenderer::key() => InfoBlockWithButtonsRenderer::class,
+            ModalBlockRenderer::key() => ModalBlockRenderer::class,
             NewsBlockRenderer::key() => NewsBlockRenderer::class,
             NewsFullRenderer::key() => NewsFullRenderer::class,
             ProjectsBlockRenderer::key() => ProjectsBlockRenderer::class,
             ProjectsFullRenderer::key() => ProjectsFullRenderer::class,
             SliderFullWidthRenderer::key() => SliderFullWidthRenderer::class,
+            TabsBlockRenderer::key() => TabsBlockRenderer::class,
             TextFullRenderer::key() => TextFullRenderer::class,
             TitleRenderer::key() => TitleRenderer::class,
             

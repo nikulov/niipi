@@ -54,6 +54,7 @@ final class AccordionLight
                             ->live(onBlur: true),
                         
                         RichEditor::make('item')->label(__('panel.content'))
+                            ->resizableImages()
                             ->columnSpanFull()
                             ->required()
                             ->toolbarButtons([
