@@ -379,6 +379,10 @@
         --table-row-alt: oklch(0.22 0 0);
     }
 
+    .rich-editor p > img {
+        @apply inline-block!;
+    }
+
     .placeholder {
         @apply placeholder:text-[#7E7E7E] dark:placeholder:text-[#E0E0E0]/50;
     }
