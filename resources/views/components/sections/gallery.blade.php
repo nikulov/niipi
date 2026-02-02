@@ -39,7 +39,8 @@
         x-show="open"
         x-transition.opacity
         x-cloak
-        class="fixed inset-0 z-50 flex items-center justify-center bg-black/80"
+        x-trap.noscroll="open"
+        class="fixed inset-0 z-60 flex items-center justify-center bg-black/80"
         @click.self="close()"
         @keydown.escape.window="close()"
     >
