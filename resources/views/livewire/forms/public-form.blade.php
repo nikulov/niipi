@@ -3,7 +3,7 @@
         @if ($submitted)
             <div class="text-text dark:text-white-dark flex flex-col items-center justify-center p-6">
                 <strong class="text-big block text-center font-medium">
-                    {{ $viewData['successMessage'] }}
+                    {!! $viewData['successMessage'] !!}
                 </strong>
             </div>
         @else
