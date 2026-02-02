@@ -1,5 +1,5 @@
 <section class="px-inner-section-x my-inner-section-y relative mx-auto w-full max-w-1242">
-    <div class="bg-background-light dark:bg-background-dark mx-auto max-w-225">
+    <div class="mx-auto max-w-225">
         @if ($submitted)
             <div class="text-text dark:text-white-dark flex flex-col items-center justify-center p-6">
                 <strong class="text-big block text-center font-medium">
