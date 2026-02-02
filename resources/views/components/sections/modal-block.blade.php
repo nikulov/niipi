@@ -47,7 +47,7 @@
                         </div>
 
                         @if ($title)
-                            <h2 class="text-primary dark:text-accent-add-dark mb-6">
+                            <h2 class="text-primary dark:text-accent-add-dark pt-inner-section-y mb-6">
                                 {{ $title }}
                             </h2>
                         @endif
