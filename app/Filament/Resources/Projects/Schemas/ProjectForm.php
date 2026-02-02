@@ -96,6 +96,8 @@ class ProjectForm
                         
                         FileUpload::make('thumbnail')->label(__('panel.thumbnail'))
                             ->columnSpan(16)
+                            ->downloadable()
+                            ->openable()
                             ->getUploadedFileNameForStorageUsing(
                                 fn($file) => str(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME))
                                     ->slug()

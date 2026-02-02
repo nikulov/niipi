@@ -55,6 +55,8 @@ final class SliderFullWidth
                         FileUpload::make('iconUrl')->label(__(key: 'panel.icon'))
                             ->columnSpan(12)
                             ->preserveFilenames()
+                            ->downloadable()
+                            ->openable()
                             ->disk('public')
                             ->directory('images')
                             ->visibility('public')
@@ -70,6 +72,8 @@ final class SliderFullWidth
                         
                         FileUpload::make('bgImageUrl')->label(__(key: 'panel.image'))
                             ->preserveFilenames()
+                            ->downloadable()
+                            ->openable()
                             ->disk('public')
                             ->directory('images')
                             ->visibility('public')

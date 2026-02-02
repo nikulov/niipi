@@ -23,6 +23,8 @@ final class ImageFull
                 
                 FileUpload::make('url')->label(__(key: 'panel.image'))
                     ->columnSpanFull()
+                    ->downloadable()
+                    ->openable()
                     ->preserveFilenames()
                     ->moveFiles()
                     ->disk('public')

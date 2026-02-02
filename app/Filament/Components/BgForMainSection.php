@@ -24,6 +24,8 @@ final class BgForMainSection
                     ->columnSpanFull()
                     ->preserveFilenames()
                     ->moveFiles()
+                    ->downloadable()
+                    ->openable()
                     ->disk('public')
                     ->directory('images')
                     ->visibility('public')

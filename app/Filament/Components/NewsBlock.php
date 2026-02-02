@@ -50,6 +50,8 @@ final class NewsBlock
                 FileUpload::make('bgImageUrl')->label(__(key: 'panel.bg_image'))
                     ->columnSpan(12)
                     ->preserveFilenames()
+                    ->downloadable()
+                    ->openable()
                     ->disk('public')
                     ->directory('images')
                     ->visibility('public')

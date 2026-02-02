@@ -14,8 +14,8 @@ final class PublicFormPresenter
             'id' => (int) $form->id,
             'title' => (string) $form->title,
             'isModal' => (bool) $form->is_modal,
-            'submitLabel' => (string) ($settings['submit_label'] ?? 'Submit'),
-            'successMessage' => (string) ($settings['success_message'] ?? 'Thank you! Your message has been sent.'),
+            'submitLabel' => (string) ($settings['submit_label'] ?? __('panel.send')),
+            'successMessage' => (string) ($form->success_message ?? ''),
             'fields' => $this->presentFields($form),
         ];
     }
