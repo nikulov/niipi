@@ -22,6 +22,7 @@ final class TextFull
             ->schema([
                 
                 RichEditor::make('textFull')->label(__('panel.paragraph'))
+                    ->resizableImages()
                     ->required()
                     ->toolbarButtons([
                         ['bold', 'italic', 'underline', 'strike', 'subscript', 'superscript', 'link'],
