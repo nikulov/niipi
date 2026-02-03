@@ -6,135 +6,100 @@ use App\Enums\PostStatus;
 use App\Models\Category;
 use App\Presenters\Blocks\NewsFullPresenter;
 use App\Services\NewsQuery;
-use App\Services\ProjectsQuery;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\DB;
-use Livewire\Component;
-use Livewire\WithPagination;
 
-final class NewsFull extends Component
+final class NewsFull extends AbstractContentFull
 {
-    use WithPagination;
-    
-    public int $limit = 10;
-    
-    /** @var array<int>|null */
-    public ?array $categoryIds = null;
-    
-    public ?string $category = null;
-    
-    public ?string $componentKey = null;
-    
     protected $queryString = [
         'category' => ['except' => null, 'as' => 'newsCategory'],
     ];
-    
-    private ?Collection $categoriesCache = null;
-    
-    public function mount(int $limit = 10, ?array $categoryIds = null, ?string $componentKey = null): void
+
+    protected function buildCategoriesQuery(?array $ids): Builder
     {
-        $this->limit = $limit;
-        $this->categoryIds = is_array($categoryIds) ? array_values($categoryIds) : null;
-        $this->componentKey = $componentKey;
-        
-        $this->normalizeCategory();
+        return Category::query()
+            ->posts()
+            ->when(
+                is_array($ids),
+                fn ($q) => $q->whereIn('id', $ids)
+            )
+            ->withCount([
+                'posts as posts_count' => fn ($q) =>
+                $q->where('status', PostStatus::Published->value),
+            ]);
+    }
+
+    protected function getCacheKey(): string
+    {
+        return 'news.categories';
+    }
+
+    protected function getCacheTags(): array
+    {
+        return ['news', 'categories'];
+    }
+
+    protected function getCountColumn(): string
+    {
+        return 'posts_count';
+    }
+
+    protected function getPivotTable(): string
+    {
+        return 'category_post';
+    }
+
+    protected function getPivotForeignKey(): string
+    {
+        return 'post_id';
+    }
+
+    protected function queryString(): array
+    {
+        return $this->queryString;
     }
     
-    public function getPageName(): string
+    protected function getContentTable(): string
     {
-        return $this->componentKey
-            ? 'page_' . md5($this->componentKey)
-            : 'page';
+        return 'posts';
     }
     
-    public function setCategory(?string $slug): void
+    protected function getContentPrimaryKey(): string
     {
-        $this->category = $slug ?: null;
-        $this->normalizeCategory();
-        $this->resetPage($this->getPageName());
+        return 'id';
     }
     
-    private function normalizeCategory(): void
+    protected function getStatusColumn(): string
     {
-        if (!$this->category) {
-            return;
-        }
-        
-        if (!$this->categories()->contains('slug', $this->category)) {
-            $this->category = null;
-        }
+        return 'status';
     }
     
-    private function getCategories(): Collection
+    protected function getPublishedStatusValue(): string|int
     {
-        $ids = is_array($this->categoryIds) && count($this->categoryIds) > 0
-            ? array_values($this->categoryIds)
-            : null;
-        
-        $cacheKey = 'news.categories:' . md5(json_encode($ids));
-        
-        return cache()
-            ->tags(['news', 'categories'])
-            ->remember($cacheKey, 600, function () use ($ids) {
-                return Category::query()
-                    ->posts()
-                    ->when(
-                        is_array($ids),
-                        fn ($q) => $q->whereIn('id', $ids)
-                    )
-                    ->withCount([
-                        'posts as posts_count' => fn ($q) =>
-                        $q->where('status', PostStatus::Published->value),
-                    ])
-                    ->having('posts_count', '>', 0)
-                    ->orderBy('name')
-                    ->get(['id', 'name', 'slug']);
-            });
+        return PostStatus::Published->value;
     }
-    
-    private function categories(): Collection
-    {
-        return $this->categoriesCache ??= $this->getCategories();
-    }
-    
-    
+
     private function getCards(NewsQuery $newsQuery, Collection $categories): LengthAwarePaginator
     {
         $selectedId = $this->category
             ? $categories->firstWhere('slug', $this->category)?->id
             : null;
-        
+
         $filterIds = $selectedId ? [$selectedId] : $this->categoryIds;
-        
+
         return $newsQuery
             ->list($this->limit, $filterIds, true, $this->getPageName())
             ->through(fn ($post) => NewsFullPresenter::make($post));
     }
-    
+
     public function render(NewsQuery $newsQuery)
     {
         $categories = $this->getCategories();
         $cards = $this->getCards($newsQuery, $categories);
-        
-        $totalProjectsCount = DB::table('category_post')
-            ->whereIn('category_id', $categories->pluck('id'))
-            ->distinct()
-            ->count('post_id');
-        
-        $categoryItems = collect([
-            [
-                'slug' => null,
-                'name' => 'Все',
-                'count' => $totalProjectsCount,
-            ],
-            ...$categories->map(fn ($cat) => [
-                'slug' => $cat->slug,
-                'name' => $cat->name,
-                'count' => $cat->posts_count,
-            ])->all(),
-        ]);
-        
+        $totalCount = $this->getTotalCount($categories);
+        $categoryItems = $this->buildCategoryItems($categories, $totalCount);
+
         return view('livewire.components.news-full', [
             'categories' => $categories,
             'cards' => $cards,

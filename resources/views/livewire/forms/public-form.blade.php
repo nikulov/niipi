@@ -13,7 +13,7 @@
 
             <form wire:submit.prevent="submit" class="w-full space-y-6">
                 <div class="absolute top-auto -left-2500 h-px w-px overflow-hidden" aria-hidden="true">
-                    <label for="website">Website</label>
+                    <label for="website" aria-hidden="true">{{ __('panel.website') }}</label>
                     <input id="website" type="text" wire:model="website" autocomplete="off" tabindex="-1" />
                 </div>
 

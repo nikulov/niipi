@@ -30,6 +30,6 @@ final class FormSubmission extends Model
     
     public function files(): HasMany
     {
-        return $this->hasMany(FormSubmissionFile::class);
+        return $this->hasMany(FormSubmissionFile::class, 'form_submission_id');
     }
 }

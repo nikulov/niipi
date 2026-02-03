@@ -40,9 +40,4 @@ final class Form extends Model
     {
         return $this->hasMany(FormSubmission::class)->latest();
     }
-    
-    public function files(): HasMany
-    {
-        return $this->hasMany(FormSubmissionFile::class, 'form_submission_id');
-    }
 }

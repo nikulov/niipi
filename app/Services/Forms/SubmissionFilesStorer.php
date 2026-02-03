@@ -29,9 +29,13 @@ final class SubmissionFilesStorer
             $files = $multiple ? (is_array($value) ? $value : [$value]) : [$value];
             
             $disk = (string) Arr::get($cfg, 'disk', 'public');
-            
+
             // Prefer slug if you want stable path; here keep your current logic
             $dir = (string) Arr::get($cfg, 'dir', "forms/{$form->id}/{$submission->id}");
+
+            // Sanitize path to prevent directory traversal attacks
+            $dir = str_replace(['..', '\\'], '', $dir);
+            $dir = ltrim($dir, '/');
             
             foreach ($files as $upload) {
                 if (! $upload) {

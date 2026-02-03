@@ -2,7 +2,7 @@
 
 <section class="my-inner-section-y px-inner-section-x mx-auto w-full max-w-1242">
     <div class="border-accent w-full border-t pb-2"></div>
-    <span class="text-accent text-medium pr-1 font-bold uppercase">Категории:</span>
+    <span class="text-accent text-medium pr-1 font-bold uppercase">{{ __('page.categories') }}:</span>
 
     @foreach ($categories as $slug => $category)
         <a

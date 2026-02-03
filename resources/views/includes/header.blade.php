@@ -17,7 +17,7 @@
                     <div
                         class="text-white-dark dark:text-primary absolute bottom-full left-1/2 mb-2.5 w-38 -translate-x-32.5 rounded bg-[#2e3445] px-3 py-1 text-xs opacity-0 transition-opacity duration-200 group-hover:opacity-100 dark:bg-[#EFF0F2]"
                     >
-                        {{ __('изменить тему сайта') }}
+                        {{ __('page.change_site_theme') }}
                     </div>
                 </button>
             </div>

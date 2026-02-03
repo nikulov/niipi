@@ -7,6 +7,7 @@ use App\Contracts\HasMeta;
 use App\Enums\ProjectStatus;
 use App\Filament\Components\ImageTittleFullWidth;
 use App\Models\Concerns\HasSectionOptions;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
@@ -35,6 +36,13 @@ class Project extends Model implements HasBlockSections, HasMeta
         'published_at' => 'datetime',
         'status' => ProjectStatus::class,
     ];
+
+    public function scopePublished(Builder $query): Builder
+    {
+        return $query
+            ->where('status', ProjectStatus::Published->value)
+            ->where('published_at', '<=', now());
+    }
     
     public function categories(): BelongsToMany
     {
