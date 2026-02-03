@@ -29,7 +29,7 @@ final class TabsBlock
                     ->defaultItems(2)
                     ->reorderable()
                     ->collapsible()
-                    ->itemLabel(fn (array $state): string => $state['title'] ?? 'Tab')
+                    ->itemLabel(fn (array $state): string => $state['title'] ?? __('panel.tab'))
                     ->schema([
                         
                         TextInput::make('title')->label(__(key: 'panel.title'))
