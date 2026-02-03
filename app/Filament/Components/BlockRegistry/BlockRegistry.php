@@ -25,6 +25,7 @@ use App\Filament\Components\SliderFullWidth;
 use App\Filament\Components\TabsBlock;
 use App\Filament\Components\TextFull;
 use App\Filament\Components\Title;
+use App\Filament\Components\YandexMap;
 use Filament\Forms\Components\Builder\Block;
 
 final class BlockRegistry
@@ -55,6 +56,7 @@ final class BlockRegistry
             SliderFullWidth::block(),
             TextFull::block(),
             Title::block(),
+            YandexMap::block(),
         ];
     }
     
@@ -90,6 +92,7 @@ final class BlockRegistry
             TabsBlock::block(),
             TextFull::block(),
             Title::block(),
+            YandexMap::block(),
         ])
             ->sortBy(fn($block) => (string)$block->getLabel())
             ->values()
@@ -126,6 +129,7 @@ final class BlockRegistry
             ProjectsFull::block(),
             TextFull::block(),
             Title::block(),
+            YandexMap::block(),
         ])
             ->sortBy(fn($block) => (string)$block->getLabel())
             ->values()
@@ -155,6 +159,7 @@ final class BlockRegistry
             TabsBlock::block(),
             TextFull::block(),
             Title::block(),
+            YandexMap::block(),
         ])
             ->sortBy(fn($block) => (string)$block->getLabel())
             ->values()

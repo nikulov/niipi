@@ -25,6 +25,7 @@ use App\Blocks\Renderers\SliderFullWidthRenderer;
 use App\Blocks\Renderers\TabsBlockRenderer;
 use App\Blocks\Renderers\TextFullRenderer;
 use App\Blocks\Renderers\TitleRenderer;
+use App\Blocks\Renderers\YandexMapRenderer;
 use App\Filament\Components\CardsBlockWithImageTitle;
 
 
@@ -56,8 +57,7 @@ final class BlockRenderRegistry
             TabsBlockRenderer::key() => TabsBlockRenderer::class,
             TextFullRenderer::key() => TextFullRenderer::class,
             TitleRenderer::key() => TitleRenderer::class,
-            
-            
+            YandexMapRenderer::key() => YandexMapRenderer::class,
         ];
     }
     
