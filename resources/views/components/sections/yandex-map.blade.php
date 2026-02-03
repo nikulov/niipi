@@ -4,7 +4,9 @@
     async function initMap() {
         await ymaps3.ready;
 
-        const { YMap, YMapDefaultSchemeLayer, YMapDefaultFeaturesLayer, YMapMarker, YMapControls } = ymaps3;
+        const { YMap, YMapDefaultSchemeLayer, YMapDefaultFeaturesLayer, YMapControls, YMapMarker } = ymaps3;
+
+        await ymaps3.import('@yandex/ymaps3-default-ui-theme');
         const { YMapZoomControl, YMapGeolocationControl } = await ymaps3.import('@yandex/ymaps3-controls@0.0.1');
         const { YMapOpenMapsButton } = await ymaps3.import('@yandex/ymaps3-controls-extra@0.0.1');
 
@@ -6597,29 +6599,29 @@
                             none: 'vegetation',
                         },
                         stylers: {
-                            visibility: 'on',
+                            visibility: 'off',
                         },
                     },
                 ],
             }),
         );
+
         map.addChild(new YMapDefaultFeaturesLayer());
 
+        //элемент маркера
         const markerElement = document.createElement('img');
-        markerElement.src = 'https://stage.niipigrad.ru/storage/images/maptag.png'; // Укажи ссылку на иконку
-        markerElement.style.minWidth = '60px'; // Размер иконки
-        markerElement.style.minHeight = '60px';
+        markerElement.src = 'https://stage.niipigrad.ru/storage/images/maptag.png';
+        markerElement.style.minWidth = '60px';
+        markerElement.style.maxHeight = '60px';
         markerElement.style.position = 'relative';
         markerElement.style.cursor = 'pointer';
-        markerElement.style.transform = 'translate(-50%, -100%)'; // Чтобы кончик иконки смотрел точно в точку
+        markerElement.style.transform = 'translate(-50%, -100%)';
 
-        // Обработчик клика (построение маршрута)
         markerElement.onclick = () => {
             const routeUrl = `https://yandex.ru/maps/?rtext=~${targetCoords[1]}%2C${targetCoords[0]}&rtt=auto`;
             window.open(routeUrl, '_blank');
         };
 
-        // Добавляем созданный элемент на карту через YMapMarker
         const customMarker = new YMapMarker(
             {
                 coordinates: targetCoords,
@@ -6629,7 +6631,6 @@
 
         map.addChild(customMarker);
 
-        // --- УПРАВЛЕНИЕ ---
         const rightControls = new YMapControls({ position: 'right' });
         rightControls.addChild(new YMapZoomControl());
         rightControls.addChild(new YMapGeolocationControl());
@@ -6643,6 +6644,6 @@
     initMap();
 </script>
 
-<section class="px-inner-section-x py-inner-section-y w-full max-w-1242">
-    <div id="map" style="height: 400px"></div>
+<section class="px-inner-section-x py-inner-section-y mx-auto w-full max-w-1242">
+    <div id="map" style="height: 500px"></div>
 </section>
