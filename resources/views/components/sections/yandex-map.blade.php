@@ -6,7 +6,6 @@
 
         const { YMap, YMapDefaultSchemeLayer, YMapDefaultFeaturesLayer, YMapControls, YMapMarker } = ymaps3;
 
-        await ymaps3.import('@yandex/ymaps3-default-ui-theme');
         const { YMapZoomControl, YMapGeolocationControl } = await ymaps3.import('@yandex/ymaps3-controls@0.0.1');
         const { YMapOpenMapsButton } = await ymaps3.import('@yandex/ymaps3-controls-extra@0.0.1');
 
