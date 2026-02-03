@@ -80,7 +80,7 @@ final class PublicForm extends Component
                 $this->form,
                 $this->data,
                 $uploads,
-                request()->ip(),
+                request()->getClientIp(),
                 request()->userAgent(),
             );
             
