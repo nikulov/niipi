@@ -6,9 +6,9 @@
     <div class="grid grid-cols-1 gap-x-32 gap-y-20 md:grid-cols-2 md:gap-y-10">
         @foreach ($cards as $card)
             <article class="relative w-full">
-                <h3 class="line-clamp-2 border-b border-b-white pb-1 whitespace-normal text-white normal-case">
+                <p class="text-normal line-clamp-2 border-b border-b-white pb-1 font-bold whitespace-normal text-white normal-case">
                     {{ $card['title'] }}
-                </h3>
+                </p>
 
                 <p class="text-normal mt-5 line-clamp-4 text-white">
                     {{ $card['description'] }}

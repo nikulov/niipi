@@ -6,6 +6,7 @@ use App\Blocks\Contracts\HasBlockSections;
 use App\Contracts\HasMeta;
 use App\Enums\PageStatus;
 use App\Models\Concerns\HasSectionOptions;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 
@@ -33,6 +34,13 @@ class Page extends Model implements HasBlockSections, HasMeta
         'bottom_section' => 'array',
         'published_at' => 'datetime',
     ];
+
+    public function scopePublished(Builder $query): Builder
+    {
+        return $query
+            ->where('status', PageStatus::Published->value)
+            ->where('published_at', '<=', now());
+    }
     
     public function setSlugAttribute(?string $value): void
     {

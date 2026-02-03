@@ -14,7 +14,10 @@ final class ContentController extends Controller
     {
         $slug = $this->normalizePageSlug($slug);
         
-        $model = Page::query()->where('slug', $slug)->firstOrFail();
+        $model = Page::query()
+            ->published()
+            ->where('slug', $slug)
+            ->firstOrFail();
         
         return view('layout.page', [
             'page' => $model,
@@ -26,7 +29,10 @@ final class ContentController extends Controller
     
     public function post(ContentRenderer $renderer, string $slug)
     {
-        $model = Post::query()->where('slug', $slug)->firstOrFail();
+        $model = Post::query()
+            ->published()
+            ->where('slug', $slug)
+            ->firstOrFail();
         
         return view('layout.page', [
             'page' => $model,
@@ -38,7 +44,10 @@ final class ContentController extends Controller
     
     public function project(ContentRenderer $renderer, string $slug)
     {
-        $model = Project::query()->where('slug', $slug)->firstOrFail();
+        $model = Project::query()
+            ->published()
+            ->where('slug', $slug)
+            ->firstOrFail();
         
         return view('layout.page', [
             'page' => $model,
