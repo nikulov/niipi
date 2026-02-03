@@ -236,5 +236,6 @@ return [
     'modal_id' => 'Modal ID',
     'tab' => 'Tab',
     'title_url' => 'Title URL',
+    'yandex-map' => 'Yandex Map',
     
 ];

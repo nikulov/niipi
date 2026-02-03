@@ -21,15 +21,21 @@
             )
             this.open = false
         },
+        onFormSubmitted(event) {
+            if (! event.detail || ! event.detail.componentKey) {
+                return
+            }
+
+            const match = Array.from(
+                this.$el.querySelectorAll('[data-form-key]'),
+            ).some((el) => el.dataset.formKey === event.detail.componentKey)
+
+            if (match) {
+                this.close()
+            }
+        },
     }"
-    x-on:form-submitted.window='
-        $event.detail &&
-            $event.detail.componentKey &&
-            $el.querySelector(
-                "[data-form-key=\"" + $event.detail.componentKey + "\"]",
-            ) &&
-            close()
-    '
+    x-on:form-submitted.window="onFormSubmitted($event)"
     x-init="
         sync()
         window.addEventListener('hashchange', () => sync())
@@ -47,15 +53,15 @@
                 class="{{ $widthFull ? 'max-w-1290' : 'max-w-228' }} bg-background-light dark:bg-background-dark relative mx-auto mt-10 w-full"
             >
                 <x-layout.main-section-border>
-                    <div class="px-inner-section-x to-top-dark relative flow-root">
+                    <div class="to-top-dark relative flow-root">
                         <div @click.prevent="close" class="cursor-pointer">
                             <x-icon.icon-close-cross
-                                class="fill-accent-add dark:fill-accent-add-dark top-inner-section-y absolute right-10 h-6 w-6"
+                                class="fill-accent-add dark:fill-accent-add-dark top-inner-section-y absolute right-10 z-100 h-6 w-6"
                             />
                         </div>
 
                         @if ($title)
-                            <h2 class="text-primary dark:text-accent-add-dark pt-inner-section-y mb-6">
+                            <h2 class="text-primary dark:text-accent-add-dark px-inner-section-x pt-inner-section-y mb-6">
                                 {{ $title }}
                             </h2>
                         @endif
