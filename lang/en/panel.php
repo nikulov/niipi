@@ -36,7 +36,7 @@ return [
     'image_upload' => 'Image upload',
     'updated_at' => 'Updated at',
     'created_at' => 'Created at',
-    'news_list' => 'New\'s list',
+    'news_list' => 'News list',
     'alt_text' => 'Alt text',
     'choose_image' => 'Choose image',
     'choose_images' => 'Choose images',
@@ -197,5 +197,14 @@ return [
     'select'   => 'Select',
     'checkbox' => 'Checkbox',
     'radio'    => 'Radio Button',
+    'all' => 'All',
+    'too_many_attempts' => 'Too many attempts. Please try again in :seconds seconds.',
+    'send' => 'Send',
+    'select_options' => 'Select options',
+    'change_theme' => 'Change site theme',
+    'website' => 'Website',
+    'email_subject' => 'Email subject',
+    'modal_id' => 'Modal ID',
+    'title_url' => 'Title URL',
     
 ];
