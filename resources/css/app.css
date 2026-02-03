@@ -379,7 +379,7 @@
         --table-row-alt: oklch(0.22 0 0);
     }
 
-    .rich-editor p > img {
+    .rich-editor p img {
         @apply inline-block!;
     }
 

@@ -22,6 +22,14 @@
             this.open = false
         },
     }"
+    x-on:form-submitted.window='
+        $event.detail &&
+            $event.detail.componentKey &&
+            $el.querySelector(
+                "[data-form-key=\"" + $event.detail.componentKey + "\"]",
+            ) &&
+            close()
+    '
     x-init="
         sync()
         window.addEventListener('hashchange', () => sync())

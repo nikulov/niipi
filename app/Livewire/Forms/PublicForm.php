@@ -23,7 +23,7 @@ final class PublicForm extends Component
     
     public function mount(int $formId, ?string $componentKey = null): void
     {
-        $this->componentKey = $componentKey;
+        $this->componentKey = $componentKey ?: ('form:' . $formId);
         
         $this->form = Form::query()
             ->whereKey($formId)
@@ -87,6 +87,8 @@ final class PublicForm extends Component
             $this->submitted = true;
             
             $this->reset(['data', 'uploads', 'website']);
+
+            $this->dispatch('form-submitted', componentKey: $this->componentKey);
             
         } catch (ValidationException $e) {
             throw $e;
