@@ -6643,6 +6643,6 @@
     initMap();
 </script>
 
-<section class="px-inner-section-x py-inner-section-y mx-auto w-full max-w-1242">
+<section class="px-inner-section-x my-inner-section-y mx-auto w-full max-w-1242">
     <div id="map" style="height: 500px"></div>
 </section>

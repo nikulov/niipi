@@ -370,7 +370,7 @@
     }
 
     .rich-editor .grid-layout {
-        @apply flex! flex-row flex-wrap justify-center justify-items-center lg:grid!;
+        @apply flex! flex-row flex-wrap lg:grid!;
     }
 
     .rich-editor {
