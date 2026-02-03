@@ -89,7 +89,7 @@ class SubmitFormActionTest extends TestCase
         );
 
         $this->assertSame(FormSubmissionStatus::Processing, $submission->status);
-        $data = $submission->data;
+        $data = $submission->getAttribute('data');
         ksort($data);
         $this->assertSame(
             [
