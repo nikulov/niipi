@@ -193,8 +193,9 @@ return [
     'is_active' => 'Active',
     'field_name_help' => 'Value will be saved in database as "name" attribute',
     'validation_rules' => 'Validation rules',
-    'rules_help' => 'Additional validation rules in JSON array format.
-                    Example: ["min:3","max:255","regex:/^[a-z0-9_]+$/i"]
+    'rules_help' => 'Additional validation rules. Format: JSON object.
+                    Example: {"min:3":"","max:255":"","regex:/^[a-z0-9_]+$/i":"Only latin letters and digits"}
+                    Empty value uses the default message.
                     Do not include "required" here — it is controlled by the Required toggle.',
     'field_type' => 'Field type',
     'field_label' => 'Field label',

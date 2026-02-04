@@ -111,7 +111,6 @@ class FormForm
                                 
                                 TextInput::make('user_mail_subject')->label(__('panel.email_subject'))
                                     ->trim()
-                                    ->default('{{ field.email }}')
                                     ->required(fn (Get $get): bool => (bool) $get('send_user_mail'))
                                     ->maxLength(255),
                                 
