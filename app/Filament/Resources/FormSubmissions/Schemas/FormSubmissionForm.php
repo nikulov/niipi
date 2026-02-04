@@ -35,8 +35,8 @@ class FormSubmissionForm
                     
                     TextEntry::make('status')->label(__('panel.status'))
                         ->badge()
-                        ->formatStateUsing(fn (FormSubmissionStatus $state) => $state->label())
-                        ->color(fn (FormSubmissionStatus $state) => $state->color())
+                        ->formatStateUsing(fn (FormSubmissionStatus $state) => $state->getLabel())
+                        ->color(fn (FormSubmissionStatus $state) => $state->getColor())
                         ->columnSpan(6),
                     
                     Action::make('resend')->label(__('panel.resend_email'))

@@ -237,5 +237,5 @@ return [
     'tab' => 'Tab',
     'title_url' => 'Title URL',
     'yandex-map' => 'Yandex Map',
-    
+    'form_name' => 'Form name',
 ];

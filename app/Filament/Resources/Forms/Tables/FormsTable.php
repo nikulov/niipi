@@ -22,6 +22,10 @@ class FormsTable
             })
             ->columns([
                 
+                TextColumn::make('id')->label(__('panel.id'))
+                    ->toggleable(isToggledHiddenByDefault: true)
+                    ->sortable(),
+                
                 TextColumn::make('name')->label(__('panel.name'))
                     ->searchable()
                     ->sortable(),
@@ -42,8 +46,17 @@ class FormsTable
                     ->toggleable(),
                 
                 TextColumn::make('submissions_count')->label(__('panel.submissions_count'))
-                    ->url(fn($record) => route('filament.admin.resources.form-submissions.index',
-                        ['tableFilters[form_id][value]' => $record->id,]))
+                    ->url(fn ($record) => route('filament.admin.resources.form-submissions.index', [
+                        'filters' => [
+                            'form' => [
+                                'name' => [
+                                    'values' => [
+                                        $record->id,
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ]))
                     ->sortable()
                     ->icon(Heroicon::ArrowTopRightOnSquare)
                     ->iconPosition(IconPosition::After)
