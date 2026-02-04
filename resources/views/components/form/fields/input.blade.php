@@ -15,5 +15,5 @@
 />
 
 @error($field['errorKey'])
-    <p class="text-sm text-red-800">{{ $message }}</p>
+    <p class="text-sm text-[#ed6262]">{{ $message }}</p>
 @enderror
