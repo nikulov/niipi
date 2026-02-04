@@ -41,14 +41,14 @@ final class SubmitFormAction
         
         RateLimiter::hit($key, 300);
         
-        $rules = $this->rulesBuilder->build($form);
+        [$rules, $messages] = $this->rulesBuilder->build($form);
         
         $attributes = $this->attributesBuilder->build($form);
         
         $validated = validator(
             ['data' => $data, 'uploads' => $uploads],
             $rules,
-            [],
+            $messages,
             $attributes
         )->validate();
         

@@ -3,11 +3,17 @@
 namespace App\Filament\Resources\FormSubmissions\Tables;
 
 use App\Enums\FormSubmissionStatus;
+use App\Models\FormSubmission;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Forms\Components\DatePicker;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Enums\FiltersLayout;
+use Filament\Tables\Filters\Filter;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class FormSubmissionsTable
 {
@@ -17,19 +23,18 @@ class FormSubmissionsTable
             ->columns([
                 TextColumn::make('status')->label(__('panel.status'))
                     ->badge()
-                    ->color(fn (FormSubmissionStatus $state) => $state->color())
-                    ->formatStateUsing(fn (FormSubmissionStatus $state) => $state->label())
+                    ->color(fn (FormSubmissionStatus $state) => $state->getColor())
+                    ->formatStateUsing(fn (FormSubmissionStatus $state) => $state->getLabel())
                     ->sortable(),
                 
                 TextColumn::make('id')->label(__('panel.id'))
                     ->toggleable(isToggledHiddenByDefault: true)
                     ->sortable(),
                 
-                TextColumn::make('data_first_two')->label(__('panel.data'))
+                TextColumn::make('data_first_one')->label(__('panel.data'))
                     ->state(function ($record) {
                         $data = is_array($record->data) ? $record->data : [];
                         
-                        $values = [];
                         foreach ($data as $value) {
                             if ($value === null) {
                                 continue;
@@ -39,13 +44,12 @@ class FormSubmissionsTable
                                 continue;
                             }
                             
-                            $values[] = is_scalar($value) ? (string) $value : json_encode($value, JSON_UNESCAPED_UNICODE);
-                            if (count($values) >= 2) {
-                                break;
-                            }
+                            return is_scalar($value)
+                                ? (string) $value
+                                : json_encode($value, JSON_UNESCAPED_UNICODE);
                         }
                         
-                        return count($values) ? implode(' · ', $values) : '—';
+                        return '—';
                     })
                     ->wrap()
                     ->toggleable(),
@@ -57,7 +61,14 @@ class FormSubmissionsTable
                         
                         return is_string($email) && $email !== '' ? $email : '—';
                     })
-                    ->searchable(),
+                    ->searchable(
+                        query: function ($query, string $search): void {
+                            $query->where(function ($q) use ($search) {
+                                $q->where('data->email', 'like', "%{$search}%")
+                                    ->orWhere('data->user_email', 'like', "%{$search}%");
+                            });
+                        }
+                    ),
                 
                 TextColumn::make('data_phone')->label(__('panel.phone'))
                     ->state(function ($record) {
@@ -66,7 +77,16 @@ class FormSubmissionsTable
                         
                         return is_string($phone) && $phone !== '' ? $phone : '—';
                     })
-                    ->toggleable(),
+                    ->toggleable()
+                    ->searchable(
+                        query: function ($query, string $search): void {
+                            $query->where(function ($q) use ($search) {
+                                $q->where('data->phone', 'like', "%{$search}%")
+                                    ->orWhere('data->tel', 'like', "%{$search}%")
+                                    ->orWhere('data->telephone', 'like', "%{$search}%");
+                            });
+                        }
+                    ),
                 
                 TextColumn::make('form.name')->label(__('panel.form'))
                     ->sortable()
@@ -78,8 +98,42 @@ class FormSubmissionsTable
             ])
             ->defaultSort('created_at', 'desc')
             ->filters([
-                //
-            ])
+                SelectFilter::make('status')->label(__('panel.status'))
+                    ->columnSpan(3)
+                    ->options(FormSubmissionStatus::class)
+                    ->multiple()
+                    ->preload(),
+                SelectFilter::make('form.name')->label(__('panel.form_name'))
+                    ->columnSpan(3)
+                    ->relationship('form', 'name')
+                    ->multiple()
+                    ->preload(),
+                Filter::make('created_at')
+                    ->schema([
+                        DatePicker::make('created_from')->label(__('panel.created_from'))
+                            ->columnSpan(3)
+                            ->maxDate(now())
+                            ->minDate(fn() => FormSubmission::min('created_at')),
+                        DatePicker::make('created_until')->label(__('panel.created_until'))
+                            ->columnSpan(3)
+                            ->maxDate(now()),
+                    ])
+                    ->columns(6)
+                    ->columnSpan(6)
+                    ->query(function (Builder $query, array $data): Builder {
+                        return $query
+                            ->when(
+                                $data['created_from'],
+                                fn(Builder $query, $date): Builder => $query->whereDate('created_at', '>=', $date),
+                            )
+                            ->when(
+                                $data['created_until'],
+                                fn(Builder $query, $date): Builder => $query->whereDate('created_at', '<=', $date),
+                            );
+                    })
+            
+            ], layout: FiltersLayout::AboveContent)->deferFilters(false)
+            ->filtersFormColumns(12)
             ->recordActions([
                 EditAction::make(),
             ])
