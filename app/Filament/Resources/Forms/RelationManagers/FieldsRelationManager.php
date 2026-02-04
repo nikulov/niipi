@@ -131,6 +131,7 @@ class FieldsRelationManager extends RelationManager
                 CodeEditor::make('rules')->label(__('panel.validation_rules'))
                     ->language(CodeEditor\Enums\Language::Json)
                     ->helperText(__('panel.rules_help'))
+                    ->hidden(fn (callable $get) => $get('type') === 'file')
                     ->visible(fn(callable $get) => !in_array($get('type'), ['checkbox', 'radio'], true))
                     ->json()
                     ->dehydrateStateUsing(fn($state) => is_string($state) ? json_decode($state, true) : $state)
