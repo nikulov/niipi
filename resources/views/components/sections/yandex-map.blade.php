@@ -1,4 +1,4 @@
-<script src="https://api-maps.yandex.ru/v3/?apikey=930f3098-738f-44df-aa43-bd688bee246e&lang=ru_RU"></script>
+<script src="https://api-maps.yandex.ru/v3/?apikey=06480b2c-3d5a-4c1e-8f99-c278db1d6daa&lang=ru_RU"></script>
 
 <script>
     async function initMap() {
