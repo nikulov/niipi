@@ -219,7 +219,7 @@
     }
 
     .btn-transparent-bg {
-        @apply border-primary hover:border-primary group-hover:border-b-primary bg-white group-hover:bg-[#CBDEEA] hover:bg-[#CBDEEA] dark:bg-[#5B8EAE] group-hover:dark:bg-[#4a7591] hover:dark:bg-[#4a7591];
+        @apply border-primary hover:border-primary group-hover:border-b-primary bg-white group-hover:bg-[#CBDEEA] hover:bg-[#CBDEEA] dark:border-[#364051] dark:bg-[#364051] dark:group-hover:border-[#3c4859] group-hover:dark:bg-[#3c4859] dark:hover:border-[#3c4859] hover:dark:bg-[#3c4859];
     }
 
     /* END BTN colors */
@@ -244,15 +244,15 @@
     }
 
     .acc-item-bg-question {
-        @apply dark:border-accent/50 border-b border-[#DEDEDE] bg-[#FAFDFF] dark:bg-[#6A7687];
+        @apply dark:border-accent/50 border-b border-[#DEDEDE] bg-[#FAFDFF] dark:bg-[#5d6879];
     }
 
     .acc-item-bg-plus {
-        @apply dark:border-accent/50 border-b border-[#DEDEDE] bg-[#F5F7FD] dark:bg-[#647183];
+        @apply dark:border-accent/50 border-b border-[#DEDEDE] bg-[#F5F7FD] dark:bg-[#556072];
     }
 
     .acc-item-bg-info {
-        @apply bg-background-light dark:border-accent/50 border-b border-[#DEDEDE] dark:bg-[#596679];
+        @apply bg-background-light dark:border-accent/50 border-b border-[#DEDEDE] dark:bg-[#4c586a];
     }
 
     .acc-dots-white {
