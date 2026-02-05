@@ -65,12 +65,13 @@
                                 <div class="text-normal text-text dark:text-white-dark md:pl-11">{!! $item['data']['description'] !!}</div>
                             </div>
 
-                            @if (isset($item['data']['btnUrl']))
+                            @if (isset($item['data']['btnUrl']) && isset($item['data']['btnLabel']))
                                 <x-buttons.btn
                                     url="{{$item['data']['btnUrl']}}"
                                     text="{{$item['data']['btnLabel']}}"
                                     type="btn-transparent"
                                     class="mx-auto md:mx-0 md:ml-auto"
+                                    :blank="$item['data']['blank']"
                                 />
                             @endif
                         </x-other.accordion-item-description>

@@ -12,6 +12,7 @@ use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Group;
 
 final class Accordion
@@ -149,10 +150,15 @@ final class Accordion
             TextInput::make('btnLabel')->label(__('panel.btn_label'))
                 ->maxLength(255)
                 ->trim()
-                ->columnSpan(12),
+                ->columnSpan(8),
             
             UrlInput::make('btnUrl')->label(__('panel.btn_url'))
-                ->columnSpan(12),
+                ->columnSpan(10),
+            
+            Toggle::make('blank')->label(__(key: 'panel.open_page_in_new_tab'))
+                ->inline(false)
+                ->default(false)
+                ->columnSpan(6),
         ];
     }
 }
