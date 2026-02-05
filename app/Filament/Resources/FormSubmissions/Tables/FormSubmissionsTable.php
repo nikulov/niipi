@@ -92,6 +92,10 @@ class FormSubmissionsTable
             
             ], layout: FiltersLayout::AboveContent)->deferFilters(false)
             ->filtersFormColumns(12)
+            ->persistFiltersInSession()
+            ->reorderableColumns()
+            ->persistSearchInSession()
+            ->persistSortInSession()
             ->recordActions([
                 EditAction::make(),
             ])
