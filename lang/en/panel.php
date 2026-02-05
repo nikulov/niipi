@@ -243,5 +243,6 @@ return [
     'person' => 'Individual',
     'company' => 'Legal entity',
     'common' => 'Common',
+    'new_today' => 'New today',
     
 ];
