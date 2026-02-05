@@ -20,7 +20,7 @@
     "src": "public/fonts/centurygothic_bold.ttf"
   },
   "resources/css/app.css": {
-    "file": "assets/app-rXqEW4uI.css",
+    "file": "assets/app-C45iHucU.css",
     "src": "resources/css/app.css",
     "isEntry": true,
     "name": "app",
@@ -29,7 +29,7 @@
     ]
   },
   "resources/css/filament/admin/theme.css": {
-    "file": "assets/theme-DbeZVCkT.css",
+    "file": "assets/theme-BMM7TojO.css",
     "src": "resources/css/filament/admin/theme.css",
     "isEntry": true,
     "name": "theme",
