@@ -26,7 +26,7 @@ class SubmissionsStats extends StatsOverviewWidget
                     Stat::make(__('panel.status_processing'),
                         
                         FormSubmission::query()
-                            ->whereDate('status', 'failed')
+                            ->whereDate('status', 'processing')
                             ->count()
                     )->color('warning'),
                     
