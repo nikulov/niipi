@@ -222,7 +222,7 @@ return [
     'field_type' => 'Выберите тип поля формы',
     'field_label' => 'Наименование поля на странице',
     'field_name' => 'Название переменной поля',
-    'resend_email' => 'Отправить email',
+    'resend_email' => 'Отправить email повторно',
     'display_type' => 'Тип отображения',
     'submissions_count' => 'Количество заявок',
     'fields' => 'Поля',
