@@ -2,10 +2,11 @@
 
 namespace App\Filament\Resources\Forms\Schemas;
 
+use App\Enums\FormApplicantType;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\KeyValue;
 use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
@@ -29,6 +30,11 @@ class FormForm
                     Toggle::make('is_active')->label(__('panel.is_active'))
                         ->default(true),
                     
+                    Select::make('applicant_type')->label(__('panel.applicant_type'))
+                        ->options(FormApplicantType::class)
+                        ->required()
+                        ->default(FormApplicantType::All->value),
+                
                 ])->columnSpan(12),
                 
                 Group::make()->schema([
@@ -88,18 +94,18 @@ class FormForm
                                 TextInput::make('recipient_admin_email')->label(__('panel.recipient_admin_email'))
                                     ->email()
                                     ->default('admin@niipigrad.ru')
-                                    ->required(fn (Get $get): bool => (bool) $get('send_admin_mail'))
+                                    ->required(fn(Get $get): bool => (bool)$get('send_admin_mail'))
                                     ->maxLength(255),
                                 
                                 TextInput::make('admin_mail_subject')->label(__('panel.email_subject'))
                                     ->trim()
                                     ->default('Новый заказ')
-                                    ->required(fn (Get $get): bool => (bool) $get('send_admin_mail'))
+                                    ->required(fn(Get $get): bool => (bool)$get('send_admin_mail'))
                                     ->maxLength(255),
                                 
                                 MarkdownEditor::make('admin_mail_body_md')->label(__('panel.email_body'))
                                     ->columnSpanFull()
-                                    ->required(fn (Get $get): bool => (bool) $get('send_admin_mail')),
+                                    ->required(fn(Get $get): bool => (bool)$get('send_admin_mail')),
                             
                             ])->columnSpan(24),
                         
@@ -111,12 +117,12 @@ class FormForm
                                 
                                 TextInput::make('user_mail_subject')->label(__('panel.email_subject'))
                                     ->trim()
-                                    ->required(fn (Get $get): bool => (bool) $get('send_user_mail'))
+                                    ->required(fn(Get $get): bool => (bool)$get('send_user_mail'))
                                     ->maxLength(255),
                                 
                                 MarkdownEditor::make('user_mail_body_md')
                                     ->label(__('panel.email_body'))
-                                    ->required(fn (Get $get): bool => (bool) $get('send_user_mail'))
+                                    ->required(fn(Get $get): bool => (bool)$get('send_user_mail'))
                                     ->columnSpanFull(),
                                 
                                 FileUpload::make('user_mail_attachments')->label(__('panel.user_mail_attachments'))
@@ -137,7 +143,7 @@ class FormForm
                                     ])
                                     ->maxFiles(5)
                                     ->maxSize(10240) // 10 MB
-                                    ->disabled(fn (Get $get): bool => ! (bool) $get('send_user_mail')),
+                                    ->disabled(fn(Get $get): bool => !(bool)$get('send_user_mail')),
                             
                             ])->columnSpan(24),
                     ])->columnSpanFull(),

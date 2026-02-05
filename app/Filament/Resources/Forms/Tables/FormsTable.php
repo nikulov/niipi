@@ -30,6 +30,10 @@ class FormsTable
                     ->searchable()
                     ->sortable(),
                 
+                TextColumn::make('applicant_type')->label(__('panel.applicant_type'))
+                    ->badge()
+                    ->sortable(),
+                
                 TextColumn::make('fields_list')->label(__('panel.fields'))
                     ->state(function ($record) {
                         return $record->fields

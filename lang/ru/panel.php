@@ -261,6 +261,10 @@ return [
     'title_url' => 'URL заголовка',
     'yandex-map' => 'Яндекс карта',
     'form_name' => 'Название формы',
+    'applicant_type' => 'Тип заявителя',
+    'person' => 'Физ. лицо',
+    'company' => 'Юр. лицо',
+    'common' => 'Общая',
     
 
 ];
