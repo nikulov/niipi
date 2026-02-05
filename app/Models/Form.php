@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\FormApplicantType;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
@@ -19,6 +20,7 @@ final class Form extends Model
         'user_mail_body_md',
         'user_mail_attachments',
         'is_active',
+        'applicant_type',
         'settings',
         'success_message'
     ];
@@ -29,6 +31,7 @@ final class Form extends Model
         'send_admin_mail' => 'bool',
         'send_user_mail' => 'bool',
         'user_mail_attachments' => 'array',
+        'applicant_type' => FormApplicantType::class,
     ];
     
     public function fields(): HasMany

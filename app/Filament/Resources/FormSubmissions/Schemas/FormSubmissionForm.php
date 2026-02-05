@@ -40,7 +40,9 @@ class FormSubmissionForm
                         ->columnSpan(6),
                     
                     Action::make('resend')->label(__('panel.resend_email'))
-                        ->icon(Heroicon::AtSymbol)
+                        ->extraAttributes([
+                            'class' => 'min-w-[180px]',
+                        ])
                         ->color('warning')
                         ->action(function ($record) {
                             $record->update([

@@ -222,7 +222,7 @@ return [
     'field_type' => 'Выберите тип поля формы',
     'field_label' => 'Наименование поля на странице',
     'field_name' => 'Название переменной поля',
-    'resend_email' => 'Отправить email',
+    'resend_email' => 'Отправить email повторно',
     'display_type' => 'Тип отображения',
     'submissions_count' => 'Количество заявок',
     'fields' => 'Поля',
@@ -261,6 +261,11 @@ return [
     'title_url' => 'URL заголовка',
     'yandex-map' => 'Яндекс карта',
     'form_name' => 'Название формы',
+    'applicant_type' => 'Тип заявителя',
+    'person' => 'Физ. лицо',
+    'company' => 'Юр. лицо',
+    'common' => 'Общая',
+    'new_today' => 'Новые сегодня',
     
 
 ];

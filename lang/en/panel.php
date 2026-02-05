@@ -239,4 +239,10 @@ return [
     'title_url' => 'Title URL',
     'yandex-map' => 'Yandex Map',
     'form_name' => 'Form name',
+    'applicant_type' => 'Applicant type',
+    'person' => 'Individual',
+    'company' => 'Legal entity',
+    'common' => 'Common',
+    'new_today' => 'New today',
+    
 ];

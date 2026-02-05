@@ -50,10 +50,7 @@
     <h2 class="mb-after-title text-primary dark:text-accent-add-dark">{!! nl2br(e($accordions['title'])) !!}</h2>
     <div class="space-y-4">
         @foreach ($accordions['accordions'] as $accordion)
-            <x-other.accordion-item
-                type="{{$accordions['type']}}"
-                :is-open="$loop->first && $accordions['type'] === 'dark' && $loop->count > 1"
-            >
+            <x-other.accordion-item type="{{$accordions['type']}}">
                 <x-other.accordion-button item-title="{{$accordion['itemTitle2']}}" type="{{$accordions['type']}}" />
 
                 <x-other.accordion-description>
