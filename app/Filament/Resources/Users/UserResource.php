@@ -2,11 +2,13 @@
 
 namespace App\Filament\Resources\Users;
 
+use App\Enums\UserRole;
 use App\Filament\Resources\Users\Pages\CreateUser;
 use App\Filament\Resources\Users\Pages\EditUser;
 use App\Filament\Resources\Users\Pages\ListUsers;
 use App\Filament\Resources\Users\Schemas\UserForm;
 use App\Filament\Resources\Users\Tables\UsersTable;
+use App\Filament\Support\RoleAccessResource;
 use App\Models\User;
 use BackedEnum;
 use Filament\Resources\Resource;
@@ -16,6 +18,13 @@ use Filament\Tables\Table;
 
 class UserResource extends Resource
 {
+    use RoleAccessResource;
+    
+    protected static function allowedRoles(): array
+    {
+        return [UserRole::Admin, UserRole::Viewer];
+    }
+    
     protected static ?string $model = User::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::UserGroup;

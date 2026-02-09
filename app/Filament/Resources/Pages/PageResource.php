@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Pages;
 
+use App\Enums\UserRole;
 use App\Filament\Resources\Pages\Pages\CreatePage;
 use App\Filament\Resources\Pages\Pages\EditPage;
 use App\Filament\Resources\Pages\Pages\ListPages;
@@ -9,6 +10,7 @@ use App\Filament\Resources\Pages\Pages\ViewPage;
 use App\Filament\Resources\Pages\Schemas\PageForm;
 use App\Filament\Resources\Pages\Schemas\PageInfolist;
 use App\Filament\Resources\Pages\Tables\PagesTable;
+use App\Filament\Support\RoleAccessResource;
 use App\Models\Page;
 use BackedEnum;
 use Filament\Resources\Resource;
@@ -18,6 +20,13 @@ use Filament\Tables\Table;
 
 class PageResource extends Resource
 {
+    use RoleAccessResource;
+    
+    protected static function allowedRoles(): array
+    {
+        return [UserRole::Admin, UserRole::Viewer];
+    }
+    
     protected static ?string $model = Page::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::DocumentText;

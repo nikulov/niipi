@@ -2,12 +2,11 @@
 
 namespace App\Filament\Resources\Footers;
 
-use App\Filament\Resources\Footers\Pages\CreateFooter;
+use App\Enums\UserRole;
 use App\Filament\Resources\Footers\Pages\EditFooter;
-use App\Filament\Resources\Footers\Pages\ListFooters;
 use App\Filament\Resources\Footers\Schemas\FooterForm;
 use App\Filament\Resources\Footers\Tables\FootersTable;
-use App\Filament\Resources\Menus\Pages\EditMenu;
+use App\Filament\Support\RoleAccessResource;
 use App\Models\Footer;
 use BackedEnum;
 use Filament\Resources\Resource;
@@ -17,6 +16,12 @@ use Filament\Tables\Table;
 
 class FooterResource extends Resource
 {
+    use RoleAccessResource;
+    protected static function allowedRoles(): array
+    {
+        return [UserRole::Admin];
+    }
+    
     protected static ?string $model = Footer::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;

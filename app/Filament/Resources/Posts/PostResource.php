@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Posts;
 
+use App\Enums\UserRole;
 use App\Filament\Resources\Posts\Pages\CreatePost;
 use App\Filament\Resources\Posts\Pages\EditPost;
 use App\Filament\Resources\Posts\Pages\ListPosts;
@@ -9,6 +10,7 @@ use App\Filament\Resources\Posts\Pages\ViewPost;
 use App\Filament\Resources\Posts\Schemas\PostForm;
 use App\Filament\Resources\Posts\Schemas\PostInfolist;
 use App\Filament\Resources\Posts\Tables\PostsTable;
+use App\Filament\Support\RoleAccessResource;
 use App\Models\Post;
 use BackedEnum;
 use Filament\Resources\Resource;
@@ -18,6 +20,13 @@ use Filament\Tables\Table;
 
 class PostResource extends Resource
 {
+    use RoleAccessResource;
+    
+    protected static function allowedRoles(): array
+    {
+        return [UserRole::Admin, UserRole::Editor, UserRole::Viewer];
+    }
+    
     protected static ?string $model = Post::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::DocumentText;

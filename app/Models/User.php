@@ -16,7 +16,6 @@ use Illuminate\Auth\Notifications\VerifyEmail;
 
 class User extends Authenticatable implements FilamentUser, MustVerifyEmailContract
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable, MustVerifyEmailTrait;
     
     protected $fillable = [

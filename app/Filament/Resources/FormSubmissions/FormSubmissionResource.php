@@ -2,11 +2,13 @@
 
 namespace App\Filament\Resources\FormSubmissions;
 
+use App\Enums\UserRole;
 use App\Filament\Resources\FormSubmissions\Pages\CreateFormSubmission;
 use App\Filament\Resources\FormSubmissions\Pages\EditFormSubmission;
 use App\Filament\Resources\FormSubmissions\Pages\ListFormSubmissions;
 use App\Filament\Resources\FormSubmissions\Schemas\FormSubmissionForm;
 use App\Filament\Resources\FormSubmissions\Tables\FormSubmissionsTable;
+use App\Filament\Support\RoleAccessResource;
 use App\Models\FormSubmission;
 use BackedEnum;
 use Filament\Resources\Resource;
@@ -16,6 +18,13 @@ use Filament\Tables\Table;
 
 class FormSubmissionResource extends Resource
 {
+    use RoleAccessResource;
+    
+    protected static function allowedRoles(): array
+    {
+        return [UserRole::Admin, UserRole::Viewer];
+    }
+    
     protected static ?string $model = FormSubmission::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::Square3Stack3d;

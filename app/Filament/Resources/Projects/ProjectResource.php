@@ -2,11 +2,13 @@
 
 namespace App\Filament\Resources\Projects;
 
+use App\Enums\UserRole;
 use App\Filament\Resources\Projects\Pages\CreateProject;
 use App\Filament\Resources\Projects\Pages\EditProject;
 use App\Filament\Resources\Projects\Pages\ListProjects;
 use App\Filament\Resources\Projects\Schemas\ProjectForm;
 use App\Filament\Resources\Projects\Tables\ProjectsTable;
+use App\Filament\Support\RoleAccessResource;
 use App\Models\Project;
 use BackedEnum;
 use Filament\Resources\Resource;
@@ -16,6 +18,13 @@ use Filament\Tables\Table;
 
 class ProjectResource extends Resource
 {
+    use RoleAccessResource;
+    
+    protected static function allowedRoles(): array
+    {
+        return [UserRole::Admin, UserRole::Editor, UserRole::Viewer];
+    }
+    
     protected static ?string $model = Project::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::Briefcase;
