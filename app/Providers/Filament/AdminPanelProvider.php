@@ -2,6 +2,9 @@
 
 namespace App\Providers\Filament;
 
+use App\Enums\UserRole;
+use App\Filament\Resources\Posts\PostResource;
+use App\Filament\Resources\Projects\ProjectResource;
 use Filament\Enums\ThemeMode;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
@@ -30,6 +33,19 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+            ->passwordReset()
+            ->emailVerification()
+            ->emailChangeVerification()
+            ->profile()
+            ->loginRouteSlug('login')
+            ->passwordResetRoutePrefix('password-reset')
+            ->passwordResetRequestRouteSlug('request')
+            ->passwordResetRouteSlug('reset')
+            ->emailVerificationRoutePrefix('email-verification')
+            ->emailVerificationPromptRouteSlug('prompt')
+            ->emailVerificationRouteSlug('verify')
+            ->emailChangeVerificationRoutePrefix('email-change-verification')
+            ->emailChangeVerificationRouteSlug('verify')
             ->defaultThemeMode(ThemeMode::System)
             ->globalSearch(false)
             ->viteTheme('resources/css/filament/admin/theme.css')

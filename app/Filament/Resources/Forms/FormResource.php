@@ -2,12 +2,14 @@
 
 namespace App\Filament\Resources\Forms;
 
+use App\Enums\UserRole;
 use App\Filament\Resources\Forms\Pages\CreateForm;
 use App\Filament\Resources\Forms\Pages\EditForm;
 use App\Filament\Resources\Forms\Pages\ListForms;
 use App\Filament\Resources\Forms\RelationManagers\FieldsRelationManager;
 use App\Filament\Resources\Forms\Schemas\FormForm;
 use App\Filament\Resources\Forms\Tables\FormsTable;
+use App\Filament\Support\RoleAccessResource;
 use App\Models\Form;
 use BackedEnum;
 use Filament\Resources\Resource;
@@ -18,6 +20,13 @@ use Illuminate\Database\Eloquent\Builder;
 
 class FormResource extends Resource
 {
+    use RoleAccessResource;
+    
+    protected static function allowedRoles(): array
+    {
+        return [UserRole::Admin, UserRole::Viewer];
+    }
+    
     protected static ?string $model = Form::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::DocumentCheck;

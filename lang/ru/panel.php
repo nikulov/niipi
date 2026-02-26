@@ -266,6 +266,20 @@ return [
     'company' => 'Юр. лицо',
     'common' => 'Общая',
     'new_today' => 'Новые сегодня',
-    
+    'password' => 'Пароль',
+    'password_confirmation' => 'Подтверждение пароля',
+    'password_requirements_short' => '8+ символов, A–Z/a–z, 0–9, спецсимвол.',
+    'leave_blank_to_keep_password' => 'Оставьте пустым, чтобы не менять пароль.',
+    'role' => 'Роль',
+    'admin' => 'Администратор',
+    'editor' => 'Редактор',
+    'viewer' => 'Наблюдатель',
+    'email_verified_at' => 'Email подтверждён',
+    'send_verification_email' => 'Отправить письмо с подтверждением email',
+    'verification_email_sent' => 'Письмо с подтверждением отправлено',
+    'verification_email_failed' => 'Не удалось отправить письмо',
+    'user_name' => 'Имя пользователя',
+    'user' => 'Пользователь',
+    'users' => 'Пользователи',
 
 ];

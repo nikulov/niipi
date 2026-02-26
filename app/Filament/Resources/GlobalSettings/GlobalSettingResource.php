@@ -2,10 +2,12 @@
 
 namespace App\Filament\Resources\GlobalSettings;
 
+use App\Enums\UserRole;
 use App\Filament\Resources\GlobalSettings\Pages\EditGlobalSetting;
 use App\Filament\Resources\GlobalSettings\Schemas\GlobalSettingForm;
 use App\Filament\Resources\GlobalSettings\Schemas\GlobalSettingInfolist;
 use App\Filament\Resources\GlobalSettings\Tables\GlobalSettingsTable;
+use App\Filament\Support\RoleAccessResource;
 use App\Models\GlobalSetting;
 use BackedEnum;
 use Filament\Resources\Resource;
@@ -15,6 +17,13 @@ use Filament\Tables\Table;
 
 class GlobalSettingResource extends Resource
 {
+    use RoleAccessResource;
+    
+    protected static function allowedRoles(): array
+    {
+        return [UserRole::Admin];
+    }
+    
     protected static ?string $model = GlobalSetting::class;
     
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedCog6Tooth;

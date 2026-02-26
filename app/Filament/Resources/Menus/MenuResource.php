@@ -2,13 +2,12 @@
 
 namespace App\Filament\Resources\Menus;
 
-use App\Filament\Resources\Menus\Pages\CreateMenu;
+use App\Enums\UserRole;
 use App\Filament\Resources\Menus\Pages\EditMenu;
-use App\Filament\Resources\Menus\Pages\ListMenus;
-use App\Filament\Resources\Menus\Pages\ViewMenu;
 use App\Filament\Resources\Menus\Schemas\MenuForm;
 use App\Filament\Resources\Menus\Schemas\MenuInfolist;
 use App\Filament\Resources\Menus\Tables\MenusTable;
+use App\Filament\Support\RoleAccessResource;
 use App\Models\Menu;
 use BackedEnum;
 use Filament\Resources\Resource;
@@ -18,6 +17,13 @@ use Filament\Tables\Table;
 
 class MenuResource extends Resource
 {
+    use RoleAccessResource;
+    
+    protected static function allowedRoles(): array
+    {
+        return [UserRole::Admin];
+    }
+    
     protected static ?string $model = Menu::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::Bars3;
