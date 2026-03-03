@@ -106,7 +106,7 @@ class ProjectForm
                                     ->toString()
                             )
                             ->moveFiles()
-                            ->default('gallery/projects/default/temp-image-dark2-1766411627.jpg')
+                            ->default('gallery/projects/default/default-project-1772545332.png')
                             ->disk('public')
                             ->directory('gallery/projects/default')
                             ->visibility('public')
