@@ -6609,7 +6609,7 @@
 
         //элемент маркера
         const markerElement = document.createElement('img');
-        markerElement.src = 'https://stage.niipigrad.ru/storage/images/maptag.png';
+        markerElement.src = '/storage/images/maptag.png';
         markerElement.style.minWidth = '60px';
         markerElement.style.maxHeight = '60px';
         markerElement.style.position = 'relative';
