@@ -56,6 +56,10 @@
 
         @livewireScripts
 
+        @unless (request()->cookie('cookie_consent'))
+            @include('includes.cookie-consent')
+        @endunless
+
         {!! $settings->code_body_bottom ?? '' !!}
 
         <div
