@@ -78,13 +78,17 @@ final class FormEmailTemplateRenderer
             $field[$fieldName] = $urls->implode("\n");
         }
 
-        $filesListMd = $files->map(function ($f) {
-            $name = $f->original_name ?? 'file';
+        $filesList = $files->map(function ($f) {
+            $name = (string) ($f->original_name ?? 'file');
             $url = $f->url;
 
-            return $url
-                ? "- {$name}: {$url}"
-                : "- {$name}";
+            if (! $url) {
+                return '- '.$name;
+            }
+
+            $mdName = str_replace(['\\', '[', ']'], ['\\\\', '\\[', '\\]'], $name);
+
+            return '- ['.$mdName.']('.$url.')';
         })->implode("\n");
 
         return [
@@ -97,8 +101,8 @@ final class FormEmailTemplateRenderer
                 'created_at' => optional($submission->created_at)?->format('d.m.Y H:i'),
                 'status' => $submission->status?->value ?? (string) $submission->status,
             ],
-            'field' => $field,      // {{ field.email }}, {{ field.cv }} (file → URL)
-            'files' => $filesListMd, // {{ files }}
+            'field' => $field,    // {{ field.email }}, {{ field.cv }} (file → URL)
+            'files' => $filesList, // {{ files }}
         ];
     }
 }
