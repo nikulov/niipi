@@ -13,7 +13,7 @@
         {{ $card['description'] }}
     </p>
 
-    <div class="mt-auto flex items-end justify-between gap-4 pt-6">
+    <div class="mt-auto flex items-end justify-end gap-4 pt-6">
         <x-buttons.btn-more url="{{ $card['url'] }}" text="подробнее" class="text-accent-add hover:text-[#5B8EAE]" />
     </div>
 </div>
