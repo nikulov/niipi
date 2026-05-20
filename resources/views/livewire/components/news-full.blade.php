@@ -11,7 +11,7 @@
             <article class="relative grid w-full gap-6 md:grid-cols-2">
                 <x-other.thumbnail-full card-url="{{ $card['url'] }}" card-thumbnail="{{ $card['thumbnail'] }}" />
 
-                <x-other.card-full :card="$card" />
+                <x-other.card-news-full :card="$card" />
             </article>
         @endforeach
 

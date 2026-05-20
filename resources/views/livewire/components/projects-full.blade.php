@@ -1,4 +1,4 @@
-<div id="news-block" class="my-inner-section-y px-inner-section-x relative mx-auto w-full max-w-1242">
+<div id="projects-block" class="my-inner-section-y px-inner-section-x relative mx-auto w-full max-w-1242">
     @if ($categoryItems->count() > 1)
         {{-- Mobile --}}
         <x-other.categories-select :items="$categoryItems" :active="$activeCategory" />
@@ -11,12 +11,12 @@
             <article class="relative grid w-full gap-6 md:grid-cols-2">
                 <x-other.thumbnail-full card-url="{{ $card['url'] }}" card-thumbnail="{{ $card['thumbnail'] }}" />
 
-                <x-other.card-full :card="$card" />
+                <x-other.card-projects-full :card="$card" />
             </article>
         @endforeach
 
         <div class="mt-5">
-            {{ $cards->links('livewire::tailwind', data: ['scrollTo' => '#news-block']) }}
+            {{ $cards->links('livewire::tailwind', data: ['scrollTo' => '#projects-block']) }}
         </div>
     </div>
 </div>
