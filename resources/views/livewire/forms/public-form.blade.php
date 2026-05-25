@@ -19,14 +19,14 @@
                 <input id="website" type="text" wire:model="website" autocomplete="off" tabindex="-1" />
             </div>
 
-            @foreach ($viewData['fields'] as $field)
+            @foreach (($viewData['fields'] ?? []) as $field)
                 <div class="relative w-full space-y-2">
                     <x-dynamic-component :component="$field['component']" :field="$field" />
                 </div>
             @endforeach
 
             <div class="flex justify-center pt-4">
-                <x-buttons.btn-add type="submit" label="{{$viewData['submitLabel']}}" class="mx-auto" />
+                <x-buttons.btn-add type="submit" label="{{ $viewData['submitLabel'] ?? __('panel.send') }}" class="mx-auto" />
             </div>
         </form>
     </div>
