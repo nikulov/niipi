@@ -2,7 +2,6 @@
 
 namespace App\Livewire\Components;
 
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -23,9 +22,13 @@ abstract class AbstractContentFull extends Component
     public ?string $componentKey = null;
 
     private ?Collection $categoriesCache = null;
+
     abstract protected function getContentTable(): string;
+
     abstract protected function getContentPrimaryKey(): string;
+
     abstract protected function getStatusColumn(): string;
+
     abstract protected function getPublishedStatusValue(): string|int;
 
     public function mount(int $limit = 10, ?array $categoryIds = null, ?string $componentKey = null): void
@@ -40,7 +43,7 @@ abstract class AbstractContentFull extends Component
     public function getPageName(): string
     {
         return $this->componentKey
-            ? 'page_' . md5($this->componentKey)
+            ? 'page_'.md5($this->componentKey)
             : 'page';
     }
 
@@ -53,22 +56,29 @@ abstract class AbstractContentFull extends Component
 
     private function normalizeCategory(): void
     {
-        if (!$this->category) {
+        if (! $this->category) {
             return;
         }
 
-        if (!$this->categories()->contains('slug', $this->category)) {
+        if (! $this->categories()->contains('slug', $this->category)) {
             $this->category = null;
         }
     }
 
     protected function getCategories(): Collection
     {
-        $ids = is_array($this->categoryIds) && count($this->categoryIds) > 0
-            ? array_values($this->categoryIds)
+        $ids = is_array($this->categoryIds)
+            ? array_values(array_filter(
+                array_map(fn ($v) => is_numeric($v) ? (int) $v : null, $this->categoryIds),
+                fn ($v) => is_int($v) && $v > 0
+            ))
             : null;
 
-        $cacheKey = $this->getCacheKey() . ':' . md5(json_encode($ids));
+        if ($ids === [] || $ids === null) {
+            $ids = null;
+        }
+
+        $cacheKey = $this->getCacheKey().':'.md5(json_encode($ids));
 
         return cache()
             ->tags($this->getCacheTags())
@@ -100,29 +110,29 @@ abstract class AbstractContentFull extends Component
             ])->all(),
         ]);
     }
-    
+
     protected function getTotalCount(Collection $categories): int
     {
         $categoryIds = $categories->pluck('id')->values();
-        
+
         if ($categoryIds->isEmpty()) {
             return 0;
         }
-        
+
         $pivot = $this->getPivotTable();
         $fk = $this->getPivotForeignKey();
-        
+
         $contentTable = $this->getContentTable();
         $contentPk = $this->getContentPrimaryKey();
         $statusCol = $this->getStatusColumn();
         $published = $this->getPublishedStatusValue();
-        
+
         return DB::table($pivot)
-            ->join($contentTable, $contentTable . '.' . $contentPk, '=', $pivot . '.' . $fk)
-            ->whereIn($pivot . '.category_id', $categoryIds)
-            ->where($contentTable . '.' . $statusCol, '=', $published)
+            ->join($contentTable, $contentTable.'.'.$contentPk, '=', $pivot.'.'.$fk)
+            ->whereIn($pivot.'.category_id', $categoryIds)
+            ->where($contentTable.'.'.$statusCol, '=', $published)
             ->distinct()
-            ->count($pivot . '.' . $fk);
+            ->count($pivot.'.'.$fk);
     }
 
     /**
