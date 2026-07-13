@@ -1,0 +1,12 @@
+# Перед коммитом
+
+- [ ] Прогнал `vendor/bin/sail bin pint --dirty --format agent` (если менял PHP).
+- [ ] Прогнал `vendor/bin/sail npm run format` (если менял Blade/CSS/JS).
+- [ ] Прогнал релевантные тесты: `vendor/bin/sail artisan test --compact --filter=...`.
+- [ ] Не удалил и не отключил существующие тесты без явного разрешения.
+- [ ] Ассеты собираются: `vendor/bin/sail npm run build` при изменениях фронтенда.
+- [ ] Обновил `.ai/`, если задача принесла новое знание — сущность, паттерн, соглашение, решение, файл-переезд, workflow-шаг, рецепт. См. правило в `~/.claude/CLAUDE.md`.
+- [ ] Сообщение коммита без упоминаний Claude/Anthropic.
+- [ ] Секреты (`.env*`, ключи) не попали в коммит — `git status` перед `git add`.
+- [ ] Миграции протестированы: `sail artisan migrate` и `migrate:rollback` (если реалистично).
+- [ ] Если менял блок — обновил и рендерер, и Filament BlockRegistry, и шаблон.
