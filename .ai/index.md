@@ -17,6 +17,10 @@
 - [decisions.md](decisions.md) — принятые архитектурные решения
 - [checklists/before-commit.md](checklists/before-commit.md) — перед коммитом
 
+## Планы работ
+- [plans/plan.md](plans/plan.md) — индекс планов
+- [plans/tests.md](plans/tests.md) — покрытие тестами: инвентаризация и бэклог
+
 ## Рецепты
 - [skills/add-block.md](skills/add-block.md) — новый блочный тип
 - [skills/add-filament-resource.md](skills/add-filament-resource.md) — Filament v4 ресурс
