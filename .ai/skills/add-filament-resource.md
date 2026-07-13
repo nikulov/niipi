@@ -22,9 +22,18 @@ app/Filament/Resources/{Models}/
 
 - `use App\Filament\Support\RoleAccessResource;` и реализовать
   `protected static function allowedRoles(): array` со списком `UserRole`.
+  Без trait'а — ресурс виден всем (баг безопасности).
+  Реальная роль-матрица — см. [patterns/role-access-resource.md](../patterns/role-access-resource.md).
+- Отдельно завести политику `App\Policies\{Model}Policy extends BasePolicy`
+  (автоподхват по конвенции). См. [patterns/base-policy.md](../patterns/base-policy.md).
 - `protected static string|BackedEnum|null $navigationIcon = Heroicon::DocumentText;`
   — иконка через enum `Filament\Support\Icons\Heroicon`.
-- `getModelLabel()` / `getPluralModelLabel()` — локализованные строки через `__('panel.*')`.
+- `getModelLabel()` / `getPluralModelLabel()` / `getNavigationLabel()` —
+  локализованные строки через `__('panel.*')`.
+- `getNavigationGroup()` — одна из групп, зашитых в
+  `AdminPanelProvider::navigationGroups`: `Публикации`, `Страницы`,
+  `Формы`, `Настройки` (**русские строки, не через `__()`**).
+- `protected static ?int $navigationSort = N;` — порядок внутри группы.
 
 ## Форма и таблица
 - Форма — статический метод `PostForm::configure(Schema $schema)`, возвращает

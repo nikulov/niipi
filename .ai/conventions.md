@@ -31,9 +31,35 @@
   подкаталоге.
 
 ## Формы
-- Публичные — Livewire-компонент `PublicForm` под управлением Filament-конфига `Form`.
-- Логика отправки — `App\Actions\Forms\*`.
+- Публичные — Livewire-компонент `PublicForm` под управлением модели `Form`.
+- Отправка — `App\Actions\Forms\SubmitFormAction` (rate-limit 5/300с/IP,
+  внутри валидация через `FormRulesBuilder`, файлы через `SubmissionFilesStorer`,
+  email через асинхронный `SendFormSubmissionEmails` job).
 - Файлы вложений — модель `FormSubmissionFile`.
+- Специализированные сервисы — `app/Services/Forms/` (по одному классу
+  на ответственность, оркестратор — Action).
+
+## Авторизация
+- Видимость ресурса в админке — trait `App\Filament\Support\RoleAccessResource`
+  + `allowedRoles()`.
+- Права на действия — политики `App\Policies\*Policy` наследуют `BasePolicy`
+  (Admin bypass через `before()`).
+- Политики автоподхватываются по конвенции `App\Policies\{Model}Policy`;
+  массив `$policies` в `AuthServiceProvoider` — легаси, не работает.
+
+## Presenter / Composer
+- Тяжёлые данные для view выносятся в `App\Presenters\{Blocks|Forms}\*` —
+  плоские массивы или объекты для Blade.
+- Данные, шаримые в много шаблонов — через `App\View\Composers\*` в
+  `AppServiceProvider::boot()` (`View::composer(...)`).
+
+## Кэш
+- Драйвер должен поддерживать теги (Valkey). Использование:
+  `cache()->tags([...])->remember(key, ttl, fn)`.
+- Модели контента флашат теги в `booted()` (см.
+  [patterns/cache-flush-on-save.md](patterns/cache-flush-on-save.md)).
+- Single-row сущности (`Footer`, `GlobalSetting`) — `Cache::rememberForever`
+  + `Cache::forget` в `saved`/`deleted`.
 
 ## Миграции
 - Именование Laravel-стандарт: `YYYY_MM_DD_HHMMSS_action_on_table.php`.

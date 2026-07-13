@@ -39,4 +39,13 @@ protected $casts = [
 ## Trait HasSectionOptions
 `App\Models\Concerns\HasSectionOptions` — общая механика для «блоков-настроек»,
 не входящих в основную последовательность (например, `BgForMainSection`).
-`ContentRenderer` пропускает их через `isSectionOptionBlock($blockType)`.
+Подключается во все три модели: `Page`, `Post`, `Project`.
+
+- Список «настроечных» типов возвращает `sectionOptionBlockTypes()` —
+  сейчас: `['bg-for-main-section']`.
+- `isSectionOptionBlock($blockType)` — `ContentRenderer` использует, чтобы
+  такие блоки не рендерить.
+- `getSectionOption(string $section, string $blockType, string $key)` —
+  достаёт значение из первого совпадающего блока в секции.
+- Публичный хелпер `getBgForMainSection(): ?string` — читается в
+  `ContentController` и прокидывается во view.

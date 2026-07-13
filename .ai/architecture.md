@@ -12,30 +12,47 @@
 
 ## Точки входа
 - `bootstrap/app.php` — сборка приложения. Регистрирует `app/helpers.php`.
-  Cookie `cookie_consent` исключён из encryptCookies.
+  Cookie `cookie_consent` исключён из encryptCookies. Health-check: `/up`.
+- `bootstrap/providers.php` — три провайдера: `AppServiceProvider`,
+  `AuthServiceProvoider` (sic), `Filament\AdminPanelProvider`.
 - `routes/web.php`:
   - `/` → `ContentController@page`
   - `/news/{slug}` → `ContentController@post`
   - `/projects/{slug}` → `ContentController@project`
   - `/{slug}` (кроме `admin|api|login|register`) → `ContentController@page`
   - `/login` → редирект на `/admin/login`
-- Filament регистрируется через провайдер в `app/Providers/Filament/`.
+- Filament регистрируется через `App\Providers\Filament\AdminPanelProvider`
+  (панель `admin`, path `/admin`). Автопоиск `Resources`/`Pages`/`Widgets`.
+  `navigationGroups` — жёстко зашитые русские строки
+  (`Публикации`, `Страницы`, `Формы`, `Настройки`).
 
 ## Слои и папки (app/)
 - `Models/` — Eloquent-модели. Concerns в `Models/Concerns/`.
-- `Http/Controllers/` — тонкие контроллеры (`ContentController`, `MenuController`).
+- `Http/Controllers/` — тонкие контроллеры. Живые: `ContentController`.
+  `MenuController` — пустой класс, не имеет роутов (кандидат на удаление).
 - `Livewire/` — компоненты (`Components/`, `Forms/`).
-- `Filament/` — админка (Resources, Forms, Components, Support, Widgets).
+- `Filament/` — админка (`Resources/`, `Forms/Components/`, `Components/` —
+  Block-компоненты, `Support/RoleAccessResource.php`, `Widgets/SubmissionsStats.php`).
 - `Blocks/` — рендер блочного контента:
   - `BlockRenderRegistry.php` — реестр
   - `Renderers/` — по одному классу на тип блока
-  - `Contracts/` — интерфейсы
+  - `Contracts/` — интерфейсы (`BlockRenderer`, `HasBlockSections`)
 - `Services/` — доменные сервисы (`ContentRenderer`, `NewsQuery`,
-  `ProjectsQuery`, `Forms/`).
-- `Actions/Forms/` — Action-классы для форм.
+  `ProjectsQuery`, `Forms/*`).
+- `Actions/Forms/SubmitFormAction.php` — оркестратор отправки формы (rate-limit,
+  валидация, сохранение, диспатч job писем).
+- `Presenters/Blocks/` (карточки News/Projects) и `Presenters/Forms/`
+  (public form + submission) — тонкие DTO/адаптеры для view.
 - `Enums/` — статусы и типы (см. [domain.md](domain.md)).
-- `Providers/` — сервис-провайдеры, включая Filament.
-- `Observers/`, `Policies/`, `Presenters/`, `Mail/`, `Jobs/`, `View/`, `Contracts/`.
+- `Providers/` — сервис-провайдеры, включая Filament. `AuthServiceProvoider`
+  (sic) — с опечаткой в имени, `$policies` массив не используется
+  (Laravel 12 подхватывает политики по конвенции).
+- `Observers/` — `PostObserver`, `PageObserver`, `ProjectObserver`: авто-
+  выставляют `published_at = now()` при первой публикации.
+- `Policies/` — все наследуют `BasePolicy` (Admin bypass через `before()`).
+- `View/Composers/FooterComposer.php` — шарит `$footer` в `includes.footer`.
+- `Contracts/HasMeta.php` — SEO-мета в контроллере.
+- `Mail/`, `Jobs/SendFormSubmissionEmails.php` — асинхронная отправка писем.
 
 ## Рендер блочного контента
 Модели Page/Post/Project хранят набор блоков. `Services\ContentRenderer` +

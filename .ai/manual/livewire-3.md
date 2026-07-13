@@ -34,3 +34,8 @@ Livewire-блоки используются как рендереры неко�
 Livewire-шаблоны компилятся в `storage/framework/views/*.php`. Директива
 `@source '../../storage/framework/views/*.php'` в `resources/css/app.css`
 даёт Tailwind шанс увидеть используемые классы после сборки.
+
+## Тесты Livewire
+Компонентные тесты живут в `tests/Feature/Livewire/`
+(`NewsFullTest`, `ProjectsFullTest`, `PublicFormTest`). Использовать
+`Livewire::test(Component::class, [...])->set(...)->call('submit')`.

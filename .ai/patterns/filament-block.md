@@ -47,7 +47,19 @@ final class Title
   `->columnSpan(6)`.
 - **Всё локализуется** через `__('panel.*')`.
 - **Класс `final`** — от него не наследуются.
-- **Регистрация** — в `app/Filament/Components/BlockRegistry/BlockRegistry.php`:
-  - `all()` — обязательно
-  - `topSection()` / `mainSection()` / `bottomSection()` — если блок допустим
-    только в конкретной секции
+- **Регистрация** — в `app/Filament/Components/BlockRegistry/BlockRegistry.php`.
+  Есть следующие статические методы:
+  - `all()` — полный список для общих мест.
+  - `topSection()` — блоки, допустимые в верхней секции
+    (сейчас: `ImageTittleFullWidth`, `SliderFullWidth`).
+  - `mainSection()` — основная секция (большинство блоков).
+  - `bottomSection()` — низ (`NewsBlock`, `ProjectsBlock`).
+  - `tabs()` — блоки, доступные **внутри** `TabsBlock` как вложенные.
+  - `modal()` — блоки, доступные **внутри** `ModalBlock` как вложенные.
+
+  Новый блок обычно добавлять в `all()` **и** в `mainSection()`. В `tabs()` /
+  `modal()` — если предполагается вкладывать в Tabs/Modal.
+
+- **BgForMainSection** — особый блок-настройка (`isSectionOptionBlock`), не
+  рендерится через `BlockRenderRegistry`; данные достаются через
+  `HasSectionOptions::getSectionOption()`. Пример — [../patterns/has-block-sections.md](has-block-sections.md).

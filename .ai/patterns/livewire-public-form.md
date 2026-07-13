@@ -47,5 +47,16 @@ Form::query()
 ```
 
 ## Валидация
-Правила формируются на основе `FormField::validation`. Ошибки — через
-`ValidationException` (import из `Illuminate\Validation\ValidationException`).
+Правила формируются в `App\Services\Forms\FormRulesBuilder` на основе:
+- `FormField::rules` (assoc-массив `правило => сообщение` или список правил)
+- `FormField::extra` (для `type=file` — `multiple`, `max_files`, `max_size_kb`, `accept_mimes`)
+- `FormField::required`, `FormField::type` (`text`/`email`/`select`/`radio`/`checkbox`/`file`)
+
+Ошибки — через `ValidationException` (import из
+`Illuminate\Validation\ValidationException`).
+
+## Защита от спама
+- **Honeypot** `website` — см. выше.
+- **RateLimiter** в `SubmitFormAction::handle()`: `forms:{form_id}:{ip}` — 5 попыток
+  за 300 секунд, дальше `ValidationException` с ключом `form`
+  и сообщением `panel.too_many_attempts`.

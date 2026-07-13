@@ -5,9 +5,14 @@
 
 ## Модели
 - `App\Models\Form` — конфиг формы (title, applicant_type, success_message,
-  user_mail_attachments, is_active).
-- `App\Models\FormField` — поле (type, name, label longtext, default, sort,
-  is_enabled, options, validation).
+  user_mail_attachments, is_active, settings json, mail-настройки).
+- `App\Models\FormField` — поле:
+  - `type`, `name`, `label` (longtext), `placeholder`
+  - `required` (bool), `is_enabled` (bool), `sort`
+  - `options` (json array — с ключами `value`, `label`, опционально `default`)
+  - `rules` (json — assoc `правило => сообщение` или список правил)
+  - `extra` (json — для `type=file`: `multiple`, `max_files`, `max_size_kb`,
+    `accept_mimes[]`)
 
 ## Где живёт логика
 - Публичный компонент — `app/Livewire/Forms/PublicForm.php`.
@@ -22,8 +27,9 @@
    их дефолты).
 2. **Presenter**: если типу нужны дополнительные данные для рендера — расширить
    `PublicFormPresenter::present()`.
-3. **Валидация**: правила должны формироваться внутри `SubmitFormAction` /
-   `PublicForm::submit()` на основе `FormField::validation`.
+3. **Валидация**: правила формируются в `App\Services\Forms\FormRulesBuilder`
+   на основе `FormField::rules` и `FormField::extra`. Если для типа нужна
+   особая логика — расширить билдер (не `SubmitFormAction`, он оркестратор).
 4. **Filament-конфиг поля**: тип поля выбирается в админке. Обновить схему
    ресурса `app/Filament/Resources/Forms/Schemas/` + RelationManager полей.
 5. **Дефолты**: если тип — «пред-выбираемый» (select/radio/checkbox), убедись,

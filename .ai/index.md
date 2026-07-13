@@ -29,7 +29,8 @@
 - [patterns/filament-block.md](patterns/filament-block.md) — Filament Block-компонент
 - [patterns/enum-with-color-label.md](patterns/enum-with-color-label.md) — enum-статус для Filament
 - [patterns/cache-flush-on-save.md](patterns/cache-flush-on-save.md) — теговый флаш кэша
-- [patterns/role-access-resource.md](patterns/role-access-resource.md) — доступ по ролям
+- [patterns/role-access-resource.md](patterns/role-access-resource.md) — видимость ресурса по ролям
+- [patterns/base-policy.md](patterns/base-policy.md) — политики + Admin bypass
 - [patterns/livewire-public-form.md](patterns/livewire-public-form.md) — публичная форма на Livewire
 
 ## Заметки по фреймворкам

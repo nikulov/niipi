@@ -46,8 +46,15 @@ vendor/bin/sail npm run format
 - Mailpit — перехват писем в dev (доступен через веб-интерфейс порта Mailpit)
 
 ## Деплой
-- Staging: скрипт `deploy-stage.sh` из ветки `staging`.
+- Staging: скрипт `deploy-stage.sh` из ветки `staging`. Target:
+  `/var/www/niipi-stage`.
 - Prod: скрипт `deploy-prod.sh` из ветки `main`.
+- Стратегия: releases-каталог + симлинк `current`, хранит 5 последних релизов.
+- Пост-шаги на сервере: `composer install --no-dev --optimize-autoloader`,
+  `migrate --force`, `config:cache`, `route:cache`, `view:cache`,
+  `filament:optimize`, `filament:cache-components`, `queue:restart`,
+  `systemctl reload php8.4-fpm`.
+- Локально эти команды **не запускать** — они предназначены для CI/CD-пути.
 
 ## Коммиты
 - Ветвление: `staging` — ежедневная разработка, `main` — прод.
