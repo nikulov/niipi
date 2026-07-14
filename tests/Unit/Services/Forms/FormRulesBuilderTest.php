@@ -27,7 +27,7 @@ class FormRulesBuilderTest extends TestCase
             'label' => 'Name',
             'required' => true,
             'is_enabled' => true,
-            'rules' => ['min:3'],
+            'rules' => ['min:3' => 'Слишком коротко'],
         ]);
 
         FormField::create([
@@ -62,7 +62,7 @@ class FormRulesBuilderTest extends TestCase
         ]);
 
         $builder = new FormRulesBuilder();
-        $rules = $builder->build($form);
+        [$rules, $messages] = $builder->build($form);
 
         $this->assertSame(['required', 'min:3'], $rules['data.name']);
         $this->assertSame(['nullable', 'email'], $rules['data.email']);
@@ -71,6 +71,8 @@ class FormRulesBuilderTest extends TestCase
         $this->assertSame('required', $rules['data.category'][0]);
         $inRule = collect($rules['data.category'])->first(fn ($rule) => $rule instanceof In);
         $this->assertNotNull($inRule);
+
+        $this->assertSame('Слишком коротко', $messages['data.name.min']);
     }
 
     public function test_build_rules_for_file_fields(): void
@@ -92,7 +94,6 @@ class FormRulesBuilderTest extends TestCase
                 'max_size_kb' => 256,
                 'accept_mimes' => ['application/pdf'],
             ],
-            'rules' => ['mimes:pdf'],
         ]);
 
         FormField::create([
@@ -108,14 +109,14 @@ class FormRulesBuilderTest extends TestCase
                 'max_size_kb' => 100,
                 'accept_mimes' => ['image/png'],
             ],
-            'rules' => ['dimensions:min_width=10'],
+            'rules' => ['dimensions:min_width=10' => 'слишком узко'],
         ]);
 
         $builder = new FormRulesBuilder();
-        $rules = $builder->build($form);
+        [$rules, $messages] = $builder->build($form);
 
         $this->assertSame(
-            ['required', 'file', 'mimetypes:application/pdf', 'max:256', 'mimes:pdf'],
+            ['required', 'file', 'mimetypes:application/pdf', 'max:256'],
             $rules['uploads.resume']
         );
 
@@ -124,5 +125,7 @@ class FormRulesBuilderTest extends TestCase
             ['file', 'mimetypes:image/png', 'max:100', 'dimensions:min_width=10'],
             $rules['uploads.photos.*']
         );
+
+        $this->assertSame('слишком узко', $messages['data.photos.dimensions']);
     }
 }

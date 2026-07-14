@@ -39,89 +39,123 @@
 
 ## Падающие тесты — починить в первую очередь
 
-Не менять тест — чинить реализацию. Реализация должна соответствовать
-описанному в тесте контракту.
+Реализация — источник истины. Тест приводится к текущему поведению
+реализации (см. memory `feedback_fix_tests_not_impl`).
 
-- [ ] **`FormEmailTemplateRenderer::renderBodyText`** — `{{ files }}` должен
-  подставлять пары `имя + URL` (тест ждёт полный URL в тексте).
-  Файл: `app/Services/Forms/FormEmailTemplateRenderer.php`.
-  Симптом: `Expected: "Files:\n- file.pdf" to contain "http://example.com/file.pdf"`.
-- [ ] **`FormRulesBuilder::build`** — ожидаемые ключи `data.name` и
-  `uploads.resume` не генерятся (`Undefined array key`).
-  Файл: `app/Services/Forms/FormRulesBuilder.php`.
-  Уточнить: под каким префиксом билдер сейчас складывает правила
-  (`fields.*` вместо `data.*`?) и привести к контракту `data.<name>` /
-  `uploads.<name>`.
+- [x] **`FormEmailTemplateRenderer` — {{ files }}**.
+  Тест раньше делал `setAttribute('url', ...)`, но accessor `url` в
+  `FormSubmissionFile` считает URL из `disk`+`path` и preset игнорирует.
+  Fix: тест теперь ставит `disk = public`, использует `Storage::fake` и
+  сверяется с `Storage::disk('public')->url(...)`.
+- [x] **`FormRulesBuilder`**.
+  `build()` возвращает кортеж `[rules, messages]`, а не только массив
+  правил; extra-rules воспринимаются только в assoc-форме
+  `['min:3' => 'сообщение']`; `mimes:*` и `mimetypes:*` фильтруются
+  из extras файловых полей (auto-mimetypes из `accept_mimes` покрывает).
+  Fix: тест деструктурирует результат, использует assoc-форму правил,
+  убрал `mimes:pdf`-ожидание, дополнительно проверяет `messages`.
 
-DoD секции: `vendor/bin/sail artisan test --compact` — 0 failed.
+DoD секции: `vendor/bin/sail artisan test --compact` — 0 failed. ✅
+(79 passed на 2026-07-13).
 
 ## Что покрыть (по приоритету)
 
 ### P0 — безопасность и доступ
 
-- [ ] **`Filament/Support/RoleAccessResource`** — `shouldRegisterNavigation()`
+- [x] **`Filament/Support/RoleAccessResource`** — `shouldRegisterNavigation()`
   и `canViewAny()` для комбинаций `Admin / Editor / Viewer /
   неавторизован` × `allowedRoles = [Admin] / [Admin,Editor] / [Admin,Editor,Viewer]`.
-- [ ] **Policies** (13 файлов, `tests/Unit/Policies/*Test.php`). На каждую:
-  - Admin bypass через `BasePolicy::before()`.
-  - `viewAny/view/create/update/delete/restore/forceDelete` для Editor и Viewer.
-  - Гость → false.
-  Общий helper: `withUserOfRole(UserRole $r)` в `TestCase`.
-- [ ] **`BasePolicy`** — тест хелперов `isEditor`, `isViewer`,
-  `isEditorOrViewer` + `before()` c Admin.
+  `tests/Unit/Filament/Support/RoleAccessResourceTest.php` — 4 теста.
+- **Policies** (13 файлов, `tests/Unit/Policies/*Test.php`). На каждую:
+  - Admin bypass через `BasePolicy::before()` (через `Gate::forUser`).
+  - `viewAny/view/create/update/delete/deleteAny` для Editor и Viewer.
+  - `forceDelete/forceDeleteAny` не тестируем — в реализации type-hint
+    `Post $post` (копипаста), TypeError на других моделях. См. отдельный
+    пункт в бэклоге ниже.
+  - Хелпер `TestCase::userOfRole(UserRole $r)` создаёт пользователя.
+  - [x] CategoryPolicy — Group A (viewAny/view = E+V; create/update = E; delete = false)
+  - [x] PostPolicy — Group A
+  - [x] ProjectPolicy — Group A
+  - [x] FormPolicy — Group B (viewAny/view = V; всё остальное false)
+  - [x] FormFieldPolicy — Group B
+  - [x] FormSubmissionPolicy — Group B
+  - [x] FormSubmissionFilePolicy — Group B
+  - [x] PagePolicy — Group B
+  - [x] UserPolicy — Group B
+  - [x] FooterPolicy — Group C (всё false, Admin через before)
+  - [x] GlobalSettingPolicy — Group C
+  - [x] MenuPolicy — Group C
+- [ ] Отдельный ридми/issue: `forceDelete(User, Post $post)` во всех
+  полиси кроме PostPolicy — некорректный type-hint (копипаста). Кандидат
+  на правку в отдельной задаче.
+- [x] **`BasePolicy`** — тест хелперов `isEditor`, `isViewer`,
+  `isEditorOrViewer` + `before()` c Admin. Test-double `BasePolicyDouble`
+  открывает protected-хелперы наружу.
 
 ### P1 — публичный контент и блоки
 
-- [ ] **20 отсутствующих рендереров блоков** (`tests/Unit/Blocks/Renderers/`):
+- [x] **17 рендереров блоков** (`tests/Unit/Blocks/Renderers/`):
   Accordion, AccordionLight, Button, CardsBlockWithButton,
   CardsBlockWithImageTitle, CategoryList, Gallery, ImageFull, ImageText,
   ImageTittleFullWidth, InfoBlockWithAchievements, InfoBlockWithButtons,
   SliderFullWidth, TabsBlock, TextFull, Title, YandexMap.
-  Что тестируем в каждом:
-  - `type()` — идентификатор из реестра.
-  - `view()` — путь blade-шаблона существует.
-  - `data(array $block)` — на голом массиве возвращает ожидаемый DTO/массив
-    (учитывая дефолты, missing keys, URL для картинок через `public_asset`).
-  - Для `HasBlockSections`-рендереров (если применяется) — распределение
-    по секциям.
-  Шаблон: см. существующий `NewsBlockRendererTest`.
-- [ ] **`Livewire/Components/AbstractContentFull`** — прямой тест
-  (сейчас покрыт только через наследников). Пагинация, фильтр по
-  категории, пустое состояние.
-- [ ] **`Services/ContentRenderer`** — расширить: неизвестный тип блока
-  (не в реестре) → пропуск/лог, а не исключение (проверить текущее
-  поведение и зафиксировать).
+  На каждый: `key()`, `version()`, `render()` возвращает строку.
+  Для renderer'ов с логикой (Accordion, TabsBlock, CategoryList) —
+  доп. проверки трансформации/branching.
+  Общий стаб — `Tests\Support\StubHasBlockSections`.
+- [x] **`Livewire/Components/AbstractContentFull`** — прямой тест
+  `getPageName()` (с/без componentKey), `mount()` — нормализация
+  categoryIds и дефолты. Минимальный конкретный подкласс
+  `AbstractContentFullDouble` без DB. Остальные ветки (пагинация,
+  фильтр по категории) остаются в Feature-тестах наследников.
+- [x] **`Services/ContentRenderer`** — расширил тесты:
+  - Уже покрыто: unknown-тип → лог warning, option-block пропускается,
+    text-full рендерится, отсутствующий type пропускается.
+  - Добавлен тест: исключение внутри рендерера → лог error, конвейер
+    продолжает рендерить остальные блоки (bind `TitleRenderer` на
+    падающий stub).
 
 ### P2 — модели-хелперы и глобальный слой
 
-- [ ] **`Models/Concerns/HasSectionOptions`** — извлечение блока
-  `bg-for-main-section` и вычисление `sectionOption(...)`.
-- [ ] **`helpers.php` — `public_asset()`** — 3 кейса: относительный путь
-  → Storage URL, абсолютный `http(s)://`, пустая строка.
-- [ ] **`View/Composers/FooterComposer`** — шарит `$footer` из
-  `Footer::cachedData()`, кэш инвалидируется наблюдателем (если есть).
-- [ ] **`View/Components/Menu/DesktopFooter`, `Menu/Top`** — рендерятся
-  без ошибок с минимальным набором данных.
+- [x] **`Models/Concerns/HasSectionOptions`** — `isSectionOptionBlock`,
+  `getSectionOption` (первый матч), `getBgForMainSection`. Test-holder
+  реализует `HasBlockSections`.
+- [x] **`helpers.php` — `public_asset()`** — null/'', http/https/абсолютный
+  путь возвращаются как есть, относительный → Storage disk 'public'.
+- [x] **`View/Composers/FooterComposer`** — шарит `$footer` из
+  `Footer::cachedData()`; null при отсутствии записи. Инвалидация кэша
+  через `booted()` не тестируется отдельно — покрыта тестом модели.
+- [x] **`View/Components/Menu/DesktopFooter`, `Menu/Top`** — `menuItems`
+  инициализируется (массив), `render()` возвращает нужный view.
 
 ### P3 — Filament (админка)
 
-- [ ] **`Filament/Widgets/SubmissionsStats`** — счётчики соответствуют
-  `FormSubmissionStatus`.
-- [ ] **`Filament/Forms/Components/UrlInput`** — префикс, кнопка открытия
-  ссылки, значение при dehydrate.
+- [x] **`Filament/Widgets/SubmissionsStats`** — счётчики
+  `new_today`/`processing`/`failed` из `FormSubmission`. Test-double
+  открывает `getStats()`; парсим Section через `getDefaultChildComponents()`
+  (не нужен container).
+- [x] **`Filament/Forms/Components/UrlInput`** — `normalize()` (5 веток:
+  blank / http(s) / domain-like / leading slash / bare path); `setUp()`
+  задаёт `prefix` и `maxLength`. Suffix Action не тестируется отдельно —
+  требует Filament schema-контекст.
 - [ ] **`Filament/Forms/Components/CustomRepeater`** — нумерация меток.
-- [ ] **Ресурс-smoke (13 ресурсов)** — на каждую пару Create/Edit/List:
-  страница открывается для авторизованного `Admin`, недоступна для гостя.
-  Через Livewire::test + Filament::testing helpers.
-- [ ] **Filament/Components/BlockRegistry** — набор блоков в каждой
-  секции (`topSection`, `mainSection`, `bottomSection`, `tabs`, `modal`)
-  соответствует реестру рендереров.
+  Требует полного Filament schema/Livewire контекста для
+  `parent::getItemLabel($key)`. Тест-double тут бесполезен (дублирует
+  production-логику). Отложено до появления Livewire-тестов с формой.
+- [x] **Filament/Components/BlockRegistry** — `all/topSection/mainSection/
+  bottomSection/tabs/modal` содержат ожидаемые ключи блоков (сравнение
+  по `Block::getName()`). Проверены исключения (tabs без tabs-block).
+- [x] **Ресурс-smoke (10 ресурсов, не 13)** — `tests/Feature/Filament/ResourceAccessTest.php`:
+  `#[DataProvider]` по индекс-URL для categories, footers, form-submissions,
+  forms, global-settings, menus, pages, posts, projects, users; guest → 302
+  `/admin/login`, admin → 200.
 
 ### P4 — Enums (низкая ценность, но быстро)
 
-- [ ] По одному тесту на enum (8 файлов), проверка `label()`, `color()`,
-  `icon()` там где определены; полнота кейсов
-  (`self::cases()` → все обработаны).
+- [x] По одному тесту на enum (8 файлов) в `tests/Unit/Enums/`. На каждый:
+  итерация по `self::cases()` вызывает `getLabel()`/`getColor()`/`getIcon()` —
+  match() бросил бы `UnhandledMatchError` при пропущенном case. Где есть
+  `options()` — проверяем состав ключей.
 
 ## Definition of done
 

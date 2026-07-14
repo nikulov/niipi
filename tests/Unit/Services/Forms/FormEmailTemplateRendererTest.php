@@ -8,6 +8,7 @@ use App\Models\FormSubmission;
 use App\Models\FormSubmissionFile;
 use App\Services\Forms\FormEmailTemplateRenderer;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class FormEmailTemplateRendererTest extends TestCase
@@ -44,6 +45,8 @@ class FormEmailTemplateRendererTest extends TestCase
 
     public function test_renders_files_list_in_body(): void
     {
+        Storage::fake('public');
+
         $submission = new FormSubmission([
             'form_id' => 1,
             'status' => FormSubmissionStatus::New,
@@ -53,18 +56,19 @@ class FormEmailTemplateRendererTest extends TestCase
 
         $file = new FormSubmissionFile([
             'field_name' => 'file',
+            'disk' => 'public',
             'path' => 'forms/1/11/file.pdf',
             'original_name' => 'file.pdf',
         ]);
-        $file->setAttribute('url', 'http://example.com/file.pdf');
 
         $submission->setRelation('files', collect([$file]));
 
         $renderer = new FormEmailTemplateRenderer();
+        $expectedUrl = Storage::disk('public')->url('forms/1/11/file.pdf');
 
         $text = $renderer->renderBodyText($submission, "Files:\n{{ files }}");
         $this->assertStringContainsString('file.pdf', $text);
-        $this->assertStringContainsString('http://example.com/file.pdf', $text);
+        $this->assertStringContainsString($expectedUrl, $text);
 
         $html = $renderer->renderBodyHtml($submission, "**Files**\n\n{{ files }}");
         $this->assertStringContainsString('<strong>Files</strong>', $html);
