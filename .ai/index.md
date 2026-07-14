@@ -20,6 +20,8 @@
 ## Планы работ
 - [plans/plan.md](plans/plan.md) — индекс планов
 - [plans/tests.md](plans/tests.md) — покрытие тестами: инвентаризация и бэклог
+- [plans/bugs.md](plans/bugs.md) — баги и cleanup из deep-review (детали и трассы)
+- [plans/bugs-checklist.md](plans/bugs-checklist.md) — чек-лист по багам
 
 ## Рецепты
 - [skills/add-block.md](skills/add-block.md) — новый блочный тип
