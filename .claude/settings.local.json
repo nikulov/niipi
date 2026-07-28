@@ -5,11 +5,8 @@
       "Grep",
       "Glob",
 
-      "Write(.claude/**)",
       "Edit(.claude/**)",
-      "Write(.ai/**)",
       "Edit(.ai/**)",
-      "Write(tests/**)",
       "Edit(tests/**)",
 
       "Bash(ls)",
