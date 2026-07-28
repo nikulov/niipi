@@ -7,6 +7,7 @@ use App\Contracts\HasMeta;
 use App\Enums\ProjectStatus;
 use App\Filament\Components\ImageTittleFullWidth;
 use App\Models\Concerns\HasSectionOptions;
+use App\Models\Concerns\TracksMediaUsage;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -14,6 +15,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class Project extends Model implements HasBlockSections, HasMeta
 {
     use HasSectionOptions;
+    use TracksMediaUsage;
+
     protected $fillable = [
         'title',
         'description',
@@ -28,7 +31,7 @@ class Project extends Model implements HasBlockSections, HasMeta
         'main_section',
         'bottom_section',
     ];
-    
+
     protected $casts = [
         'top_section' => 'array',
         'main_section' => 'array',
@@ -43,12 +46,12 @@ class Project extends Model implements HasBlockSections, HasMeta
             ->where('status', ProjectStatus::Published->value)
             ->where('published_at', '<=', now());
     }
-    
+
     public function categories(): BelongsToMany
     {
         return $this->belongsToMany(Category::class, 'category_project');
     }
-    
+
     public function getBlocksForSection(?string $section): array
     {
         $map = [
@@ -56,32 +59,32 @@ class Project extends Model implements HasBlockSections, HasMeta
             'main' => 'main_section',
             'bottom' => 'bottom_section',
         ];
-        
+
         if ($section === null) {
             return array_merge(
-                (array)($this->top_section ?? []),
-                (array)($this->main_section ?? []),
-                (array)($this->bottom_section ?? [])
+                (array) ($this->top_section ?? []),
+                (array) ($this->main_section ?? []),
+                (array) ($this->bottom_section ?? [])
             );
         }
-        
-        if (!isset($map[$section])) {
+
+        if (! isset($map[$section])) {
             return [];
         }
-        
-        return (array)($this->{$map[$section]} ?? []);
+
+        return (array) ($this->{$map[$section]} ?? []);
     }
-    
+
     public function getRenderCacheId(): string
     {
-        return 'project:' . $this->getKey();
+        return 'project:'.$this->getKey();
     }
-    
+
     public function getRenderUpdatedAtTimestamp(): int
     {
         return optional($this->updated_at)->timestamp ?? 0;
     }
-    
+
     public static function getDefaultBlock(): array
     {
         return
@@ -89,7 +92,7 @@ class Project extends Model implements HasBlockSections, HasMeta
                 [
                     'type' => ImageTittleFullWidth::key(),
                     'data' => [
-                        'title' => "ПРОЕКТЫ",
+                        'title' => 'ПРОЕКТЫ',
                         'iconAlt' => 'icon',
                         'iconUrl' => 'images/Group104.svg',
                         'imageAlt' => 'image',
@@ -98,7 +101,7 @@ class Project extends Model implements HasBlockSections, HasMeta
                 ],
             ];
     }
-    
+
     public function meta(): array
     {
         return [
@@ -107,7 +110,7 @@ class Project extends Model implements HasBlockSections, HasMeta
             'keywords' => $this->meta_keywords,
         ];
     }
-    
+
     protected static function booted(): void
     {
         $flush = function (): void {
@@ -115,11 +118,11 @@ class Project extends Model implements HasBlockSections, HasMeta
                 cache()->tags($tags)->flush();
             }
         };
-        
+
         static::saved($flush);
         static::deleted($flush);
     }
-    
+
     private static function cacheTags(): array
     {
         return [
