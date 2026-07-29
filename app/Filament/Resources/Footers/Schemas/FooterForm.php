@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Footers\Schemas;
 
 use App\Filament\Forms\Components\CustomRepeater;
+use App\Filament\Forms\Components\MediaPickerAction;
 use App\Filament\Forms\Components\UrlInput;
 use Filament\Actions\Action;
 use Filament\Forms\Components\FileUpload;
@@ -29,19 +30,19 @@ class FooterForm
                             'alignStart',
                             'alignCenter',
                             'alignEnd',
-                            'grid'
+                            'grid',
                         ],
                         ['blockquote', 'codeBlock', 'bulletList', 'orderedList'],
                         ['table', 'attachFiles'],
                         ['undo', 'redo'],
                     ]),
-                
+
                 CustomRepeater::make('social_data')->label(__(key: 'panel.social'))
                     ->deleteAction(
-                        fn(Action $action) => $action->requiresConfirmation(),
+                        fn (Action $action) => $action->requiresConfirmation(),
                     )
                     ->maxItems(20)
-                    ->itemLabel(fn(array $state): string => $state['title'] ?? __('panel.social_icon'))
+                    ->itemLabel(fn (array $state): string => $state['title'] ?? __('panel.social_icon'))
                     ->reorderableWithButtons()
                     ->cloneable()
                     ->addActionLabel(__(key: 'panel.add_social_icon'))
@@ -51,7 +52,7 @@ class FooterForm
                     ->reorderable()
                     ->schema([
                         Group::make([
-                            FileUpload::make('iconUrl')->label(__(key: 'panel.icon') . ' (' . __('panel.svg') . ')')
+                            FileUpload::make('iconUrl')->label(__(key: 'panel.icon').' ('.__('panel.svg').')')
                                 ->columnSpan(8)
                                 ->preserveFilenames()
                                 ->downloadable()
@@ -63,13 +64,14 @@ class FooterForm
                                 ->image()
                                 ->imageEditor()
                                 ->acceptedFileTypes(['image/svg+xml'])
-                                ->required(),
+                                ->required()
+                                ->hintAction(MediaPickerAction::make('iconUrl', acceptedMimeTypes: ['image/svg+xml'])),
                             UrlInput::make('url')->label(__('panel.url'))
                                 ->columnSpan(16)
                                 ->required()
                                 ->prefix(false),
                         ])->columns(24)->columnSpanFull(),
-                    ])
+                    ]),
             ])->columns(24);
     }
 }

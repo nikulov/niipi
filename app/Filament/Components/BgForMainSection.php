@@ -2,9 +2,9 @@
 
 namespace App\Filament\Components;
 
+use App\Filament\Forms\Components\MediaPickerAction;
 use Filament\Forms\Components\Builder\Block;
 use Filament\Forms\Components\FileUpload;
-
 
 final class BgForMainSection
 {
@@ -12,14 +12,14 @@ final class BgForMainSection
     {
         return 'bg-for-main-section';
     }
-    
+
     /** Build Filament Block */
     public static function block(): Block
     {
         return Block::make(self::key())->label(__('panel.bg_for_main_section'))
             ->columnSpanFull()
             ->schema([
-                
+
                 FileUpload::make('bgForMainSection')->label(__(key: 'panel.image'))
                     ->columnSpanFull()
                     ->preserveFilenames()
@@ -32,8 +32,9 @@ final class BgForMainSection
                     ->image()
                     ->imageEditor()
                     ->imageEditorAspectRatios([null, '16:9'])
-                    ->required(),
-                
+                    ->required()
+                    ->hintAction(MediaPickerAction::make('bgForMainSection', imagesOnly: true)),
+
             ])->columns(24);
     }
 }

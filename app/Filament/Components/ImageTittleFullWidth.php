@@ -2,11 +2,11 @@
 
 namespace App\Filament\Components;
 
+use App\Filament\Forms\Components\MediaPickerAction;
 use Filament\Forms\Components\Builder\Block;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
-
 
 final class ImageTittleFullWidth
 {
@@ -14,15 +14,15 @@ final class ImageTittleFullWidth
     {
         return 'image-tittle-full-width';
     }
-    
+
     /** Build Filament Block */
     public static function block(): Block
     {
         return Block::make(self::key())->label(__('panel.image_tittle_full_width'))
             ->columnSpanFull()
             ->schema([
-                
-                FileUpload::make('iconUrl')->label(__(key: 'panel.icon') . ' (' . __('panel.svg') . ')')
+
+                FileUpload::make('iconUrl')->label(__(key: 'panel.icon').' ('.__('panel.svg').')')
                     ->columnSpan(12)
                     ->preserveFilenames()
                     ->downloadable()
@@ -34,13 +34,14 @@ final class ImageTittleFullWidth
                     ->imageEditor()
                     ->imageEditorAspectRatios([null, '16:9'])
                     ->acceptedFileTypes(['image/svg+xml'])
-                    ->required(),
-                
+                    ->required()
+                    ->hintAction(MediaPickerAction::make('iconUrl', acceptedMimeTypes: ['image/svg+xml'])),
+
                 TextInput::make('iconAlt')->label(__(key: 'panel.icon_alt'))
                     ->required()
                     ->trim()
                     ->columnSpan(12),
-                
+
                 Textarea::make('title')->label(__(key: 'panel.title'))
                     ->columnSpan(24)
                     ->autosize()
@@ -48,7 +49,7 @@ final class ImageTittleFullWidth
                     ->trim()
                     ->required()
                     ->live(onBlur: true),
-                
+
                 FileUpload::make('imageUrl')->label(__(key: 'panel.image'))
                     ->columnSpanFull()
                     ->preserveFilenames()
@@ -61,13 +62,14 @@ final class ImageTittleFullWidth
                     ->image()
                     ->imageEditor()
                     ->imageEditorAspectRatios([null, '16:9'])
-                    ->required(),
-                
+                    ->required()
+                    ->hintAction(MediaPickerAction::make('imageUrl', imagesOnly: true)),
+
                 TextInput::make('imageAlt')->label(__(key: 'panel.image_alt'))
                     ->required()
                     ->trim()
                     ->columnSpanFull(),
-                
+
             ])->columns(24);
     }
 }

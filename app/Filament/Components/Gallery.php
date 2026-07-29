@@ -1,11 +1,10 @@
 <?php
 
-
 namespace App\Filament\Components;
 
+use App\Filament\Forms\Components\MediaPickerAction;
 use Filament\Forms\Components\Builder\Block;
 use Filament\Forms\Components\FileUpload;
-
 
 final class Gallery
 {
@@ -13,24 +12,24 @@ final class Gallery
     {
         return 'gallery';
     }
-    
+
     /** Build Filament Block */
     public static function block(): Block
     {
         return Block::make(self::key())->label(__('panel.gallery_label'))
             ->columnSpanFull()
             ->schema([
-                
+
                 FileUpload::make('urls')->label(__('panel.choose_images'))
                     ->required()
                     ->multiple()
                     ->downloadable()
                     ->openable()
                     ->getUploadedFileNameForStorageUsing(
-                        fn($file) => str(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME))
+                        fn ($file) => str(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME))
                             ->slug()
                             ->limit(25)
-                            ->append('-' . time() . '.' . $file->getClientOriginalExtension())
+                            ->append('-'.time().'.'.$file->getClientOriginalExtension())
                             ->toString()
                     )
                     ->moveFiles()
@@ -49,7 +48,8 @@ final class Gallery
                     ->reorderable()
                     ->minFiles(2)
                     ->maxFiles(20)
-                    ->maxSize(2048), // 2MB
+                    ->maxSize(2048) // 2MB
+                    ->hintAction(MediaPickerAction::make('urls', imagesOnly: true, multiple: true, maxSize: 2048)),
             ]);
     }
 }

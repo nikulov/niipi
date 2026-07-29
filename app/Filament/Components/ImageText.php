@@ -2,6 +2,7 @@
 
 namespace App\Filament\Components;
 
+use App\Filament\Forms\Components\MediaPickerAction;
 use Filament\Forms\Components\Builder\Block;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
@@ -16,24 +17,24 @@ final class ImageText
     {
         return 'image-text';
     }
-    
+
     /** Build Filament Block */
     public static function block(): Block
     {
         return Block::make(self::key())->label(__('panel.image_text'))
             ->columnSpanFull()
             ->schema([
-                
+
                 Textarea::make('title')->label(__('panel.heading'))
                     ->autosize()
                     ->columnSpanFull()
                     ->trim(),
-            
+
                 Textarea::make('subtitle')->label(__('panel.subheading'))
                     ->autosize()
                     ->columnSpanFull()
                     ->trim(),
-                
+
                 FileUpload::make('url')->label(__(key: 'panel.image'))
                     ->columnSpan(12)
                     ->preserveFilenames()
@@ -46,8 +47,9 @@ final class ImageText
                     ->image()
                     ->imageEditor()
                     ->imageEditorAspectRatios([null, '16:9'])
-                    ->required(),
-                Group::make ([
+                    ->required()
+                    ->hintAction(MediaPickerAction::make('url', imagesOnly: true)),
+                Group::make([
                     TextInput::make('alt')->label(__(key: 'panel.image_alt'))
                         ->required()
                         ->trim()
@@ -60,7 +62,7 @@ final class ImageText
                         ])
                         ->required(),
                 ])->columnSpan(12),
-                
+
                 RichEditor::make('content')->label(__(key: 'panel.content'))
                     ->resizableImages()
                     ->required()
@@ -75,12 +77,12 @@ final class ImageText
                             'alignStart',
                             'alignCenter',
                             'alignEnd',
-                            'grid'
+                            'grid',
                         ],
                         ['blockquote', 'codeBlock', 'bulletList', 'orderedList'],
                         ['table', 'attachFiles'],
                         ['undo', 'redo'],
-                    ])
+                    ]),
             ])->columns(24);
     }
 }
