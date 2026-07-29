@@ -4,8 +4,7 @@
 
 ## Active
 
-- [Медиа-менеджер](media-manager/README.md) — каталог `media_files` +
-  автотрекинг usages + Filament-ресурс + модальный пикер.
+_(пусто)_
 
 ## Wrapping up
 
@@ -13,7 +12,8 @@ _(пусто)_
 
 ## Archive
 
-_(пусто)_
+- [Медиа-менеджер](archived/media-manager.md) — каталог `media_files`, автотрекинг
+  usages, Filament-ресурс, пикер во все `FileUpload`. Merged 2026-07-29.
 
 ## Планы
 
