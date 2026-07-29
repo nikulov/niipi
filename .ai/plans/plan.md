@@ -9,12 +9,13 @@
 
 ## Wrapping up
 
-- [Блок «Якорь»](anchor-block/README.md) — код + 9 тестов готовы (261 passed);
-  осталась ручная проверка в браузере (дубль между секциями, дубль через Tabs,
-  `#test` в URL).
+_(пусто)_
 
 ## Archive
 
+- [Блок «Якорь»](archived/anchor-block.md) — служебный блок контент-билдера:
+  пустой `<div id="…">` для хеш-ссылок, уникальность slug через всю форму
+  (включая Tabs/Modal), доступен во всех 6 секциях. Committed 2026-07-29 (`16b2c55`).
 - [Медиа-менеджер](archived/media-manager.md) — каталог `media_files`, автотрекинг
   usages, Filament-ресурс, пикер во все `FileUpload`. Merged 2026-07-29.
 
