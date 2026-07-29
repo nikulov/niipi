@@ -4,6 +4,7 @@ namespace App\Filament\Components\BlockRegistry;
 
 use App\Filament\Components\Accordion;
 use App\Filament\Components\AccordionLight;
+use App\Filament\Components\Anchor;
 use App\Filament\Components\BgForMainSection;
 use App\Filament\Components\Button;
 use App\Filament\Components\CardsBlockWithButton;
@@ -36,6 +37,7 @@ final class BlockRegistry
         return [
             Accordion::block(),
             AccordionLight::block(),
+            Anchor::block(),
             BgForMainSection::block(),
             Button::block(),
             CardsBlockWithButton::block(),
@@ -59,20 +61,22 @@ final class BlockRegistry
             YandexMap::block(),
         ];
     }
-    
+
     public static function topSection(): array
     {
         return [
+            Anchor::block(),
             ImageTittleFullWidth::block(),
             SliderFullWidth::block(),
         ];
     }
-    
+
     public static function mainSection(): array
     {
         return collect([
             Accordion::block(),
             AccordionLight::block(),
+            Anchor::block(),
             BgForMainSection::block(),
             Button::block(),
             CardsBlockWithButton::block(),
@@ -94,24 +98,26 @@ final class BlockRegistry
             Title::block(),
             YandexMap::block(),
         ])
-            ->sortBy(fn($block) => (string)$block->getLabel())
+            ->sortBy(fn ($block) => (string) $block->getLabel())
             ->values()
             ->all();
     }
-    
+
     public static function bottomSection(): array
     {
         return [
+            Anchor::block(),
             NewsBlock::block(),
             ProjectsBlock::block(),
         ];
     }
-    
+
     public static function tabs(): array
     {
         return collect([
             Accordion::block(),
             AccordionLight::block(),
+            Anchor::block(),
             BgForMainSection::block(),
             Button::block(),
             CardsBlockWithButton::block(),
@@ -131,16 +137,17 @@ final class BlockRegistry
             Title::block(),
             YandexMap::block(),
         ])
-            ->sortBy(fn($block) => (string)$block->getLabel())
+            ->sortBy(fn ($block) => (string) $block->getLabel())
             ->values()
             ->all();
     }
-    
+
     public static function modal(): array
     {
         return collect([
             Accordion::block(),
             AccordionLight::block(),
+            Anchor::block(),
             BgForMainSection::block(),
             Button::block(),
             CardsBlockWithButton::block(),
@@ -161,7 +168,7 @@ final class BlockRegistry
             Title::block(),
             YandexMap::block(),
         ])
-            ->sortBy(fn($block) => (string)$block->getLabel())
+            ->sortBy(fn ($block) => (string) $block->getLabel())
             ->values()
             ->all();
     }

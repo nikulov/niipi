@@ -3,11 +3,13 @@
 Когда: появилась новая сущность, требующая CRUD в админке.
 
 ## Генерация
+
 ```bash
 vendor/bin/sail artisan make:filament-resource {Model} --no-interaction
 ```
 
 Filament 4 создаёт ресурс с раскладкой:
+
 ```
 app/Filament/Resources/{Models}/
   {Model}Resource.php
@@ -18,6 +20,7 @@ app/Filament/Resources/{Models}/
 ```
 
 ## Обязательные штрихи для этого проекта
+
 Опираться на `app/Filament/Resources/Posts/PostResource.php`:
 
 - `use App\Filament\Support\RoleAccessResource;` и реализовать
@@ -36,6 +39,7 @@ app/Filament/Resources/{Models}/
 - `protected static ?int $navigationSort = N;` — порядок внутри группы.
 
 ## Форма и таблица
+
 - Форма — статический метод `PostForm::configure(Schema $schema)`, возвращает
   `Filament\Schemas\Schema` (v4 использует `Schemas`, а не старый `Form`).
 - Таблица — статический метод в `Tables/PostsTable.php`, возвращает
@@ -43,19 +47,24 @@ app/Filament/Resources/{Models}/
 - Infolist — `Schemas/PostInfolist.php`.
 
 ## Модель со статусом
+
 Если модель имеет enum-статус:
+
 - В `$casts` — `'status' => PostStatus::class`.
 - Enum реализует `HasColor` и `HasLabel` из `Filament\Support\Contracts\*` —
   Filament подхватит цвет и подпись автоматически. Пример: `app/Enums/PostStatus.php`.
 
 ## Кэш
+
 Если модель попадает в публичный кэш (Post/Project/Category и т.д.), см. паттерн
 `patterns/cache-flush-on-save.md` и продумать теги.
 
 ## Локализация
+
 Строки — в `lang/*/panel.php`. Ключи короткие: `panel.new`, `panel.published`.
 
 ## Пост-шаги
+
 - Миграция + `sail artisan migrate`
 - Тесты `tests/Feature/` для сложной логики
 - `sail bin pint --dirty --format agent`

@@ -15,6 +15,7 @@ class BlockRegistryTest extends TestCase
         $expected = [
             'accordion',
             'accordion-light',
+            'anchor',
             'bg-for-main-section',
             'button',
             'cards-block-with-button',
@@ -43,18 +44,18 @@ class BlockRegistryTest extends TestCase
         $this->assertSame($expected, $names);
     }
 
-    public function test_top_section_is_hero_and_slider(): void
+    public function test_top_section_is_anchor_hero_and_slider(): void
     {
         $this->assertSame(
-            ['image-tittle-full-width', 'slider-full-width'],
+            ['anchor', 'image-tittle-full-width', 'slider-full-width'],
             $this->names(BlockRegistry::topSection())
         );
     }
 
-    public function test_bottom_section_is_news_and_projects(): void
+    public function test_bottom_section_is_anchor_news_and_projects(): void
     {
         $this->assertSame(
-            ['news-block', 'projects-block'],
+            ['anchor', 'news-block', 'projects-block'],
             $this->names(BlockRegistry::bottomSection())
         );
     }

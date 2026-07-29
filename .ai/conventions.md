@@ -1,17 +1,20 @@
 # Соглашения
 
 ## Стиль кода PHP
+
 - **Форматтер:** Laravel Pint. Запуск: `vendor/bin/sail bin pint --dirty --format agent` после правки PHP.
 - **PSR-4:** `App\` → `app/`, `Database\Factories\` → `database/factories/`,
   `Database\Seeders\` → `database/seeders/`, `Tests\` → `tests/`.
 
 ## Frontend
+
 - **Форматтер:** Prettier + `prettier-plugin-blade` + `prettier-plugin-tailwindcss`.
   Запуск: `npm run format` (или через Sail).
 - **Tailwind 4** — utility-first. Классы упорядочивает prettier-plugin-tailwindcss.
 - Alpine.js — маленькие интерактивы; крупные — Livewire-компоненты.
 
 ## Именование
+
 - **Модели:** ед. число, PascalCase (`Post`, `Project`).
 - **Enum:** `{Сущность}{Свойство}` (`PostStatus`, `CategoryType`).
 - **Filament Resources:** `{Модель}Resource` в
@@ -24,6 +27,7 @@
   (`ContentRenderer`, `NewsQuery`).
 
 ## Блочный контент
+
 - Новый тип блока = класс в `app/Blocks/Renderers/` + регистрация в
   `App\Blocks\BlockRenderRegistry` + запись в
   `app/Filament/Components/BlockRegistry/BlockRegistry.php` для админки.
@@ -31,6 +35,7 @@
   подкаталоге.
 
 ## Формы
+
 - Публичные — Livewire-компонент `PublicForm` под управлением модели `Form`.
 - Отправка — `App\Actions\Forms\SubmitFormAction` (rate-limit 5/300с/IP,
   внутри валидация через `FormRulesBuilder`, файлы через `SubmissionFilesStorer`,
@@ -40,38 +45,44 @@
   на ответственность, оркестратор — Action).
 
 ## Авторизация
+
 - Видимость ресурса в админке — trait `App\Filament\Support\RoleAccessResource`
-  + `allowedRoles()`.
+    - `allowedRoles()`.
 - Права на действия — политики `App\Policies\*Policy` наследуют `BasePolicy`
   (Admin bypass через `before()`).
 - Политики автоподхватываются по конвенции `App\Policies\{Model}Policy`;
   массив `$policies` в `AuthServiceProvoider` — легаси, не работает.
 
 ## Presenter / Composer
+
 - Тяжёлые данные для view выносятся в `App\Presenters\{Blocks|Forms}\*` —
   плоские массивы или объекты для Blade.
 - Данные, шаримые в много шаблонов — через `App\View\Composers\*` в
   `AppServiceProvider::boot()` (`View::composer(...)`).
 
 ## Кэш
+
 - Драйвер должен поддерживать теги (Valkey). Использование:
   `cache()->tags([...])->remember(key, ttl, fn)`.
 - Модели контента флашат теги в `booted()` (см.
   [patterns/cache-flush-on-save.md](patterns/cache-flush-on-save.md)).
 - Single-row сущности (`Footer`, `GlobalSetting`) — `Cache::rememberForever`
-  + `Cache::forget` в `saved`/`deleted`.
+    - `Cache::forget` в `saved`/`deleted`.
 
 ## Миграции
+
 - Именование Laravel-стандарт: `YYYY_MM_DD_HHMMSS_action_on_table.php`.
 - Изменения существующих таблиц оформлять отдельными миграциями
   (`add_x_to_y_table`, `change_x_type_on_y_table`, `drop_x_from_y_table`).
 
 ## Тесты
+
 - PHPUnit 11 (не Pest, судя по `phpunit.xml`).
 - `tests/Unit/` — юниты; `tests/Feature/` — фичи (в т.ч. HTTP).
 - Тестовая БД: `DB_DATABASE=testing` (см. `phpunit.xml`).
 
 ## Прочее
+
 - Cookie `cookie_consent` не шифруется (см. `bootstrap/app.php`).
 - Хелперы приложения — `app/helpers.php`, подключается в `bootstrap/app.php`.
 - **Никогда не удалять существующие тесты без явного разрешения.**

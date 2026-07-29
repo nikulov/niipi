@@ -3,6 +3,7 @@
 Публичный Livewire-компонент, рендерящий кастомную форму.
 
 ## Скелет (см. `app/Livewire/Forms/PublicForm.php`)
+
 ```php
 final class PublicForm extends Component
 {
@@ -22,6 +23,7 @@ final class PublicForm extends Component
 ```
 
 ## Ключевые приёмы
+
 - **`WithFileUploads`** — для файлов; временное хранилище Livewire.
 - **`componentKey`** — уникальный идентификатор экземпляра компонента для DOM
   (нужен, если на странице может быть несколько форм). Дефолт — `form:{id}`.
@@ -36,6 +38,7 @@ final class PublicForm extends Component
   `mount()`. Если добавляешь новый «пред-выбираемый» тип — расширь метод.
 
 ## Загрузка формы
+
 Только активные формы с активными полями:
 
 ```php
@@ -47,7 +50,9 @@ Form::query()
 ```
 
 ## Валидация
+
 Правила формируются в `App\Services\Forms\FormRulesBuilder` на основе:
+
 - `FormField::rules` (assoc-массив `правило => сообщение` или список правил)
 - `FormField::extra` (для `type=file` — `multiple`, `max_files`, `max_size_kb`, `accept_mimes`)
 - `FormField::required`, `FormField::type` (`text`/`email`/`select`/`radio`/`checkbox`/`file`)
@@ -56,6 +61,7 @@ Form::query()
 `Illuminate\Validation\ValidationException`).
 
 ## Защита от спама
+
 - **Honeypot** `website` — см. выше.
 - **RateLimiter** в `SubmitFormAction::handle()`: `forms:{form_id}:{ip}` — 5 попыток
   за 300 секунд, дальше `ValidationException` с ключом `form`

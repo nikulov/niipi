@@ -19,7 +19,7 @@
                 <input id="website" type="text" wire:model="website" autocomplete="off" tabindex="-1" />
             </div>
 
-            @foreach (($viewData['fields'] ?? []) as $field)
+            @foreach ($viewData['fields'] ?? [] as $field)
                 <div class="relative w-full space-y-2">
                     <x-dynamic-component :component="$field['component']" :field="$field" />
                 </div>

@@ -3,15 +3,21 @@
     $multiple = $getMultiple();
     $statePath = $getStatePath();
 
-    $files = $paginator->getCollection()->map(fn ($f) => [
-        'id' => $f->id,
-        'path' => $f->path,
-        'filename' => $f->filename,
-        'title' => $f->title,
-        'url' => $f->url,
-        'type' => $f->type->value,
-        'human_size' => $f->human_size,
-    ])->values()->all();
+    $files = $paginator
+        ->getCollection()
+        ->map(
+            fn ($f) => [
+                'id' => $f->id,
+                'path' => $f->path,
+                'filename' => $f->filename,
+                'title' => $f->title,
+                'url' => $f->url,
+                'type' => $f->type->value,
+                'human_size' => $f->human_size,
+            ],
+        )
+        ->values()
+        ->all();
 
     $lastPage = $paginator->lastPage();
     $total = $paginator->total();
@@ -62,14 +68,21 @@
                 >
                     <div class="flex aspect-square w-full items-center justify-center overflow-hidden rounded bg-gray-100 dark:bg-gray-800">
                         @if ($file['type'] === 'image')
-                            <img src="{{ $file['url'] }}" alt="{{ $file['filename'] }}" class="h-full w-full object-cover" loading="lazy" />
+                            <img
+                                src="{{ $file['url'] }}"
+                                alt="{{ $file['filename'] }}"
+                                class="h-full w-full object-cover"
+                                loading="lazy"
+                            />
                         @else
                             <span class="text-3xl">{{ $file['type'] === 'document' ? '📄' : '📎' }}</span>
                         @endif
                     </div>
 
-                    <p class="mt-1 truncate text-center text-xs text-gray-600 dark:text-gray-400"
-                       title="{{ $file['filename'] }} ({{ $file['human_size'] }})">
+                    <p
+                        class="mt-1 truncate text-center text-xs text-gray-600 dark:text-gray-400"
+                        title="{{ $file['filename'] }} ({{ $file['human_size'] }})"
+                    >
                         {{ $file['title'] ?: $file['filename'] }}
                     </p>
 
@@ -92,25 +105,28 @@
 
         @if ($total > 0)
             <div class="flex flex-col items-center justify-between gap-2 sm:flex-row">
-                <div class="text-xs text-gray-500 dark:text-gray-400">
-                    {{ $from }}–{{ $to }} / {{ $total }}
-                </div>
+                <div class="text-xs text-gray-500 dark:text-gray-400">{{ $from }}–{{ $to }} / {{ $total }}</div>
 
                 @if ($lastPage > 1)
                     <div class="flex items-center gap-2">
-                        <button type="button"
+                        <button
+                            type="button"
                             @click="if (page > 1) page = page - 1"
                             :disabled="page <= 1"
-                            class="rounded-md bg-white px-3 py-1.5 text-sm text-gray-700 ring-1 ring-gray-950/10 transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-white/5 dark:text-gray-200 dark:ring-white/20 dark:hover:bg-white/10">
+                            class="rounded-md bg-white px-3 py-1.5 text-sm text-gray-700 ring-1 ring-gray-950/10 transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-white/5 dark:text-gray-200 dark:ring-white/20 dark:hover:bg-white/10"
+                        >
                             ←
                         </button>
                         <span class="text-sm text-gray-700 dark:text-gray-200">
-                            <span x-text="page"></span> / {{ $lastPage }}
+                            <span x-text="page"></span>
+                            / {{ $lastPage }}
                         </span>
-                        <button type="button"
+                        <button
+                            type="button"
                             @click="if (page < {{ $lastPage }}) page = page + 1"
                             :disabled="page >= {{ $lastPage }}"
-                            class="rounded-md bg-white px-3 py-1.5 text-sm text-gray-700 ring-1 ring-gray-950/10 transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-white/5 dark:text-gray-200 dark:ring-white/20 dark:hover:bg-white/10">
+                            class="rounded-md bg-white px-3 py-1.5 text-sm text-gray-700 ring-1 ring-gray-950/10 transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-white/5 dark:text-gray-200 dark:ring-white/20 dark:hover:bg-white/10"
+                        >
                             →
                         </button>
                     </div>
@@ -118,7 +134,8 @@
 
                 @if ($multiple)
                     <div x-show="Array.isArray(selected) && selected.length > 0" class="text-xs text-gray-500 dark:text-gray-400">
-                        {{ __('panel.media_selected') }}: <span x-text="selected.length"></span>
+                        {{ __('panel.media_selected') }}:
+                        <span x-text="selected.length"></span>
                     </div>
                 @endif
             </div>

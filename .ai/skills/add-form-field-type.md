@@ -4,23 +4,26 @@
 `App\Livewire\Forms\PublicForm` (не путать с Filament Forms).
 
 ## Модели
+
 - `App\Models\Form` — конфиг формы (title, applicant_type, success_message,
   user_mail_attachments, is_active, settings json, mail-настройки).
 - `App\Models\FormField` — поле:
-  - `type`, `name`, `label` (longtext), `placeholder`
-  - `required` (bool), `is_enabled` (bool), `sort`
-  - `options` (json array — с ключами `value`, `label`, опционально `default`)
-  - `rules` (json — assoc `правило => сообщение` или список правил)
-  - `extra` (json — для `type=file`: `multiple`, `max_files`, `max_size_kb`,
-    `accept_mimes[]`)
+    - `type`, `name`, `label` (longtext), `placeholder`
+    - `required` (bool), `is_enabled` (bool), `sort`
+    - `options` (json array — с ключами `value`, `label`, опционально `default`)
+    - `rules` (json — assoc `правило => сообщение` или список правил)
+    - `extra` (json — для `type=file`: `multiple`, `max_files`, `max_size_kb`,
+      `accept_mimes[]`)
 
 ## Где живёт логика
+
 - Публичный компонент — `app/Livewire/Forms/PublicForm.php`.
 - Blade-шаблон — `resources/views/livewire/forms/`.
 - Presenter — `App\Presenters\Forms\PublicFormPresenter` (готовит `viewData`).
 - Отправка — `App\Actions\Forms\SubmitFormAction`.
 
 ## Шаги для нового типа
+
 1. **Blade**: добавить partial под новый `type` в `resources/views/livewire/forms/`
    (или в существующий switch по типу). Смотреть, как отрисованы уже имеющиеся
    типы — `select`, `radio` (`PublicForm::applySelectAndRadioDefaults()` учитывает
@@ -36,9 +39,11 @@
    что `applySelectAndRadioDefaults()` покрывает его или расширь метод.
 
 ## Файлы
+
 - Если поле принимает вложения — модель `FormSubmissionFile` и трейт
   `Livewire\WithFileUploads` уже подключены в `PublicForm`.
 
 ## Тесты
+
 - `tests/Feature/` — путь: рендер компонента → submit → корректная запись в
   `FormSubmission` + вложения.

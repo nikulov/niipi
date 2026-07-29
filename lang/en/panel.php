@@ -164,7 +164,7 @@ return [
     'accent' => 'Accent',
     'accent_additional' => 'Accent additional',
     'btn' => 'Button',
-    
+
     'submission' => 'Submission',
     'submissions' => 'Submissions',
     'status_new' => 'New',
@@ -214,10 +214,10 @@ return [
     'no' => 'No',
     'field_placeholder' => 'Field placeholder',
     'textarea' => 'Textarea',
-    'file'     => 'File',
-    'select'   => 'Select',
+    'file' => 'File',
+    'select' => 'Select',
     'checkbox' => 'Checkbox',
-    'radio'    => 'Radio Button',
+    'radio' => 'Radio Button',
     'all' => 'All',
     'too_many_attempts' => 'Too many attempts. Please try again in :seconds seconds.',
     'send' => 'Send',
@@ -259,6 +259,9 @@ return [
     'user_name' => 'User name',
     'user' => 'User',
     'users' => 'Users',
+
+    'anchor' => 'Anchor',
+    'anchor_duplicate' => 'Anchor ":anchor" is already used',
 
     'media_file' => 'Media file',
     'media_files' => 'Media files',

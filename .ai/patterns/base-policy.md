@@ -4,17 +4,19 @@
 инварианта:
 
 1. **Admin bypass** через `before()`:
-   ```php
-   public function before(User $user, string $ability): ?bool
-   {
-       return $user->role === UserRole::Admin ? true : null;
-   }
-   ```
-   Admin автоматически проходит все проверки без затрагивания per-action методов.
+    ```php
+    public function before(User $user, string $ability): ?bool
+    {
+        return $user->role === UserRole::Admin ? true : null;
+    }
+    ```
+    Admin автоматически проходит все проверки без затрагивания per-action методов.
 2. **Хелперы ролей** — `isEditor()`, `isViewer()`, `isEditorOrViewer()`.
 
 ## Пример реализации
+
 `app/Policies/PostPolicy.php`:
+
 ```php
 class PostPolicy extends BasePolicy
 {
@@ -28,12 +30,14 @@ class PostPolicy extends BasePolicy
 ```
 
 ## Регистрация
+
 Политики подхватываются **автоматически** по конвенции
 `App\Policies\{Model}Policy`. Массив `$policies` в `AuthServiceProvoider` — легаси
 (остался от Laravel <=10), в текущем Laravel 12 не используется, поскольку
 класс не расширяет `Illuminate\Foundation\Support\Providers\AuthServiceProvider`.
 
 ## Правило
+
 - Новую модель → создать `App\Policies\{Model}Policy extends BasePolicy` рядом
   с существующими. Больше нигде регистрировать не надо.
 - Никогда не запрещать что-то в `before()` — только разрешать (`true`), иначе

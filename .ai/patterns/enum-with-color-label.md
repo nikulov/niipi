@@ -4,6 +4,7 @@ Enum'ы статусов реализуют интерфейсы Filament — т
 цвет, подпись и иконку.
 
 ## Пример
+
 `app/Enums/PostStatus.php`:
 
 ```php
@@ -27,14 +28,17 @@ enum PostStatus: string implements HasColor, HasLabel
 ```
 
 ## Подключение
+
 1. **Модель**: `protected $casts = ['status' => PostStatus::class];`.
 2. **Filament форма/таблица**: указывать enum напрямую — Filament подхватит
    `HasColor`, `HasLabel` (импортируется из `Filament\Support\Contracts\*`).
 3. **Иконка**: `heroicon-o-*` — стандартные heroicon имена.
 
 ## Опциональный метод `options()`
+
 Возвращает `['value' => 'Label']` для мест, где нужен обычный ассоциативный
 массив (например, невфреймворковый Select).
 
 ## Список enum'ов проекта
+
 См. [../domain.md](../domain.md#enums-appenums).

@@ -1,6 +1,7 @@
 # Рабочий процесс
 
 ## Локальный запуск через Sail
+
 Все PHP/Artisan/Composer/Node команды — через Sail.
 
 ```bash
@@ -13,6 +14,7 @@ vendor/bin/sail npm run dev
 ```
 
 ## Артизан-команды
+
 ```bash
 vendor/bin/sail artisan make:migration create_foo_table --no-interaction
 vendor/bin/sail artisan migrate
@@ -22,30 +24,37 @@ vendor/bin/sail artisan tinker --execute 'App\Models\Post::count()'  # толь�
 ```
 
 ## Тесты
+
 ```bash
 vendor/bin/sail artisan test --compact
 vendor/bin/sail artisan test --compact --filter=SomeFeatureTest
 ```
+
 Тестовая БД поднимается по `DB_DATABASE=testing` (см. `phpunit.xml`).
 
 ## Форматтеры
+
 После правки PHP:
+
 ```bash
 vendor/bin/sail bin pint --dirty --format agent
 ```
 
 Для фронтенда (Blade/CSS/JS):
+
 ```bash
 vendor/bin/sail npm run format
 ```
 
 ## Сервисы Sail
+
 - MySQL — БД
 - Valkey — Redis-совместимый (кэш/сессии/очереди при необходимости)
 - Meilisearch — поиск
 - Mailpit — перехват писем в dev (доступен через веб-интерфейс порта Mailpit)
 
 ## Деплой
+
 - Staging: скрипт `deploy-stage.sh` из ветки `staging`. Target:
   `/var/www/niipi-stage`.
 - Prod: скрипт `deploy-prod.sh` из ветки `main`.
@@ -57,9 +66,11 @@ vendor/bin/sail npm run format
 - Локально эти команды **не запускать** — они предназначены для CI/CD-пути.
 
 ## Коммиты
+
 - Ветвление: `staging` — ежедневная разработка, `main` — прод.
 - Не добавлять упоминаний Claude/Anthropic в сообщения коммитов.
 
 ## Ассеты
+
 - Dev: `vendor/bin/sail npm run dev` (Vite watch).
 - Prod-сборка: `vendor/bin/sail npm run build`.

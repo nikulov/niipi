@@ -3,6 +3,7 @@
 namespace Tests\Unit\Blocks\Renderers;
 
 use App\Blocks\BlockRenderRegistry;
+use App\Blocks\Renderers\AnchorRenderer;
 use App\Blocks\Renderers\FormRenderer;
 use App\Blocks\Renderers\NewsBlockRenderer;
 use App\Blocks\Renderers\NewsFullRenderer;
@@ -16,6 +17,7 @@ class BlockRenderRegistryTest extends TestCase
     {
         $map = BlockRenderRegistry::map();
 
+        $this->assertSame(AnchorRenderer::class, $map[AnchorRenderer::key()]);
         $this->assertSame(NewsBlockRenderer::class, $map[NewsBlockRenderer::key()]);
         $this->assertSame(ProjectsBlockRenderer::class, $map[ProjectsBlockRenderer::key()]);
         $this->assertSame(NewsFullRenderer::class, $map[NewsFullRenderer::key()]);

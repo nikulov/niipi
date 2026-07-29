@@ -3,6 +3,7 @@
 Единая форма для всех рендереров блочного контента.
 
 ## Интерфейс
+
 `App\Blocks\Contracts\BlockRenderer`:
 
 ```php
@@ -12,10 +13,12 @@ public function render(array $data, HasBlockSections $model, int $index): string
 ```
 
 ## Канонический пример
+
 `app/Blocks/Renderers/TitleRenderer.php` — тонкий класс: возвращает
 `view('components.sections.title', $data)->render()`.
 
 ## Правила
+
 - **`key()` эксклюзивен** — не совпадать с другими блоками; тот же ключ должен
   использовать соответствующий Filament-компонент в
   `app/Filament/Components/*.php`.
@@ -28,6 +31,7 @@ public function render(array $data, HasBlockSections $model, int $index): string
   `getRenderCacheId()`).
 
 ## Диспетчеризация
+
 `App\Blocks\BlockRenderRegistry::for(string $type)` возвращает класс или `null`.
 Регистрируется в методе `map()` — там же список ключей.
 

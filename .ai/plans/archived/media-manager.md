@@ -11,6 +11,7 @@
 ## Что сделано
 
 **Инфраструктура:**
+
 - Миграция `media_files` + `media_file_usages` (морф-пивот).
 - Enum `MediaFileType` (image/document/other) + `fromMimeType()`.
 - Модели `MediaFile`, `MediaFileUsage`.
@@ -20,6 +21,7 @@
   `livewire-tmp/`, **`forms/`** (защита `FormSubmissionFile`).
 
 **Filament:**
+
 - Ресурс `MediaFileResource` под группой навигации «Медиа» (Admin+Editor+Viewer).
 - `MediaFilePolicy` по конвенции проекта: Admin=all, Editor=CRU, Viewer=R.
 - Табличная страница с ImageColumn превью, фильтрами по типу и used/unused, badge
@@ -29,6 +31,7 @@
   (grid, поиск с debounce 500ms, пагинация через entangle).
 
 **Интеграция:**
+
 - Трейт подключён к: `Page`, `Post`, `Project`, `Footer`, `GlobalSetting`.
 - `MediaFile::deleted` → `Cache::forget('footer.data')` + `Cache::forget('global_settings')`
   (проектные кэши, где могут осесть пути).
@@ -64,10 +67,10 @@
 
 ## Коммиты
 
-| Дата | SHA | Описание |
-|---|---|---|
-| 2026-07-28 | `43fe3fc` | план `.ai/plans/media-manager/` |
-| 2026-07-28 | `7c4fd8c` | инфра медиа + ресурс + пикер + политика + тесты |
+| Дата       | SHA       | Описание                                                         |
+| ---------- | --------- | ---------------------------------------------------------------- |
+| 2026-07-28 | `43fe3fc` | план `.ai/plans/media-manager/`                                  |
+| 2026-07-28 | `7c4fd8c` | инфра медиа + ресурс + пикер + политика + тесты                  |
 | 2026-07-29 | `cb7ae5c` | пикер в 16 сайтов + чистка GlobalSettingForm + theme.css @source |
 
 ## Ключевые файлы (для контекста будущих сессий)

@@ -4,6 +4,7 @@
 `Filament\Forms\Components\Builder\Block`.
 
 ## Форма класса
+
 Опираться на `app/Filament/Components/Title.php`:
 
 ```php
@@ -42,6 +43,7 @@ final class Title
 ```
 
 ## Правила
+
 - **`key()` совпадает с ключом рендерера** в `app/Blocks/Renderers/{Name}Renderer.php`.
 - **12-колоночная сетка** — крупным полям `->columnSpanFull()` или
   `->columnSpan(6)`.
@@ -49,16 +51,16 @@ final class Title
 - **Класс `final`** — от него не наследуются.
 - **Регистрация** — в `app/Filament/Components/BlockRegistry/BlockRegistry.php`.
   Есть следующие статические методы:
-  - `all()` — полный список для общих мест.
-  - `topSection()` — блоки, допустимые в верхней секции
-    (сейчас: `ImageTittleFullWidth`, `SliderFullWidth`).
-  - `mainSection()` — основная секция (большинство блоков).
-  - `bottomSection()` — низ (`NewsBlock`, `ProjectsBlock`).
-  - `tabs()` — блоки, доступные **внутри** `TabsBlock` как вложенные.
-  - `modal()` — блоки, доступные **внутри** `ModalBlock` как вложенные.
+    - `all()` — полный список для общих мест.
+    - `topSection()` — блоки, допустимые в верхней секции
+      (сейчас: `ImageTittleFullWidth`, `SliderFullWidth`).
+    - `mainSection()` — основная секция (большинство блоков).
+    - `bottomSection()` — низ (`NewsBlock`, `ProjectsBlock`).
+    - `tabs()` — блоки, доступные **внутри** `TabsBlock` как вложенные.
+    - `modal()` — блоки, доступные **внутри** `ModalBlock` как вложенные.
 
-  Новый блок обычно добавлять в `all()` **и** в `mainSection()`. В `tabs()` /
-  `modal()` — если предполагается вкладывать в Tabs/Modal.
+    Новый блок обычно добавлять в `all()` **и** в `mainSection()`. В `tabs()` /
+    `modal()` — если предполагается вкладывать в Tabs/Modal.
 
 - **BgForMainSection** — особый блок-настройка (`isSectionOptionBlock`), не
   рендерится через `BlockRenderRegistry`; данные достаются через

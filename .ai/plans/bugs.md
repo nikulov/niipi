@@ -17,6 +17,7 @@
 ## P0 — активные баги
 
 ### 1. `FormRulesBuilder::parseExtraRules` тихо роняет list-form правила
+
 **Файл:** `app/Services/Forms/FormRulesBuilder.php:170`
 
 **Симптом:** пользовательские правила валидации из
@@ -31,6 +32,7 @@
 не запрещает list-форму → админ легко напишет её и ничего не заметит.
 
 **Фикс (варианты):**
+
 - В `parseExtraRules` для не-assoc возвращать `[array_values($rules), []]`
   (без пользовательских сообщений).
 - Плюс: документировать в helper-text редактора, что assoc-форма
@@ -43,6 +45,7 @@
 ---
 
 ### 2. `SendFormSubmissionEmails` не идемпотентен
+
 **Файл:** `app/Jobs/SendFormSubmissionEmails.php:96`
 
 **Симптом:** админ получает дубликаты писем при retry. Если admin-письмо
@@ -53,6 +56,7 @@
 трекает, что admin-часть уже завершена.
 
 **Фикс (варианты):**
+
 - Хранить прогресс на submission: колонки `admin_sent_at`, `user_sent_at`;
   в начале handle пропускать уже отправленные плечи.
 - Разбить на два отдельных job'а (admin и user) — независимые retry.
@@ -64,6 +68,7 @@
 ---
 
 ### 3. `SubmitFormAction` оставляет осиротевшие файлы при откате транзакции
+
 **Файлы:** `app/Actions/Forms/SubmitFormAction.php:57`,
 `app/Services/Forms/SubmissionFilesStorer.php:45`
 
@@ -72,6 +77,7 @@
 `storage/app/public/forms/{formId}/{submissionId}/` без строки в БД.
 
 **Фикс (варианты):**
+
 - Собрать список загруженных путей и удалить их в `catch` вокруг
   `DB::transaction`.
 - Собирать `UploadedFile` и вызывать `store()` **после** успешного
@@ -83,6 +89,7 @@
 ## P1 — активные, но узкие
 
 ### 4. `HasSectionOptions::getSectionOption` возвращает null от первого пустого блока
+
 **Файл:** `app/Models/Concerns/HasSectionOptions.php:29`
 
 **Симптом:** если на странице **два** блока с одинаковым типом (например,
@@ -90,6 +97,7 @@
 `data`, метод вернёт `null` и до второго блока не дойдёт.
 
 **Трасса:**
+
 ```php
 foreach ($blocks as $block) {
     if (($block['type'] ?? null) !== $blockType) continue;
@@ -104,6 +112,7 @@ Filament (`->maxItems(1)`).
 ---
 
 ### 5. `SubmissionsStats` «Новых сегодня» не фильтрует по статусу
+
 **Файл:** `app/Filament/Widgets/SubmissionsStats.php:22`
 
 **Симптом:** счётчик показывает **все** отправки за день (включая
@@ -115,6 +124,7 @@ Filament (`->maxItems(1)`).
 ---
 
 ### 6. `SubmitFormAction::handle` — update статуса вне транзакции
+
 **Файл:** `app/Actions/Forms/SubmitFormAction.php:67`
 
 **Симптом:** `$submission->update(['status' => Processing])` идёт **после**
@@ -131,6 +141,7 @@ commit и update), submission останется в статусе `New` с уж
 ## P2 — латентные / низкий приоритет
 
 ### 7. Type-hint `Post $post` в forceDelete/forceDeleteAny (11 полиси)
+
 **Файлы:** `CategoryPolicy.php:37`, `FooterPolicy.php:37`,
 `FormFieldPolicy.php:37`, `FormPolicy.php:37`, `FormSubmissionFilePolicy.php:37`,
 `FormSubmissionPolicy.php:37`, `GlobalSettingPolicy.php:37`,
@@ -152,6 +163,7 @@ commit и update), submission останется в статусе `New` с уж
 ---
 
 ### 8. `FormRulesBuilder::filterMimesRules` слишком агрессивен
+
 **Файл:** `app/Services/Forms/FormRulesBuilder.php:148`
 
 **Симптом:** отбрасывает и `mimes:*`, и `mimetypes:*` из extras. Это
@@ -168,6 +180,7 @@ commit и update), submission останется в статусе `New` с уж
 ---
 
 ### 9. `AbstractContentFull::mount` не типизирует `categoryIds`
+
 **Файл:** `app/Livewire/Components/AbstractContentFull.php:37`
 
 **Симптом:** `array_values` сохраняет исходные типы. `NewsQuery::list` /
@@ -185,6 +198,7 @@ commit и update), submission останется в статусе `New` с уж
 ## P3 — cleanup
 
 ### 10. Пустой try/catch в `PublicForm::submit`
+
 **Файл:** `app/Livewire/Forms/PublicForm.php:99`
 
 ```php
@@ -201,6 +215,7 @@ try {
 ---
 
 ### 11. Опечатка `AuthServiceProvoider` + мёртвый `$policies`
+
 **Файл:** `app/Providers/AuthServiceProvoider.php`
 
 Класс и файл названы с опечаткой (`Provoider` вместо `Provider`).
@@ -213,6 +228,7 @@ try {
 ---
 
 ### 12. `ProjectObserver` параметр называется `$post`
+
 **Файл:** `app/Observers/ProjectObserver.php:10`
 
 `public function saving(Project $post)` — переменная `$post` для модели
@@ -221,6 +237,7 @@ try {
 ---
 
 ### 13. `CategoryStatus::Published = 'active'`
+
 **Файл:** `app/Enums/CategoryStatus.php:10`
 
 Значение отличается от `Post/Page/ProjectStatus::Published = 'published'`
@@ -231,6 +248,7 @@ try {
 ---
 
 ### 14. `FormEmailTemplateRenderer` — коллизия имён data/file полей
+
 **Файл:** `app/Services/Forms/FormEmailTemplateRenderer.php:78`
 
 Если текстовое поле и file-поле называются одинаково, URL файлов

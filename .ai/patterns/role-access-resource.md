@@ -5,6 +5,7 @@ Filament-ресурсы объявляют роли, которым видна �
 действий (create/update/delete/…) закрывается **политиками** — см. ниже.
 
 ## Использование
+
 ```php
 class PostResource extends Resource
 {
@@ -19,7 +20,9 @@ class PostResource extends Resource
 ```
 
 ## Что реально делает trait
+
 Смотри `app/Filament/Support/RoleAccessResource.php` — переопределяет только:
+
 - `shouldRegisterNavigation()` — прячет пункт меню, если у юзера роль вне `allowedRoles()`.
 - `canViewAny()` — блокирует список записей ресурса.
 
@@ -27,6 +30,7 @@ class PostResource extends Resource
 только Admin.
 
 ## Авторизация действий — Policies
+
 Все остальные проверки (`create`, `update`, `delete`, `deleteAny`, ...) идут через
 классы в `app/Policies/`. Они наследуются от `App\Policies\BasePolicy`:
 
@@ -39,6 +43,7 @@ public function before(User $user, string $ability): ?bool
 
 Дальше методы политики опираются на `isEditor()` / `isViewer()` /
 `isEditorOrViewer()`. Пример `App\Policies\PostPolicy`:
+
 - `viewAny`/`view` → editor или viewer
 - `create`/`update` → editor
 - `delete`/`deleteAny`/`forceDelete*` → всегда false (только Admin через `before()`).
@@ -49,16 +54,18 @@ public function before(User $user, string $ability): ?bool
 оставлен как памятка.
 
 ## Реальная роль-матрица (staging)
-| Ресурс | allowedRoles() |
-|---|---|
-| Post, Project, Category | Admin, Editor, Viewer |
-| Page, User, Form, FormSubmission | Admin, Viewer |
-| Menu, Footer, GlobalSetting | Admin only |
+
+| Ресурс                           | allowedRoles()        |
+| -------------------------------- | --------------------- |
+| Post, Project, Category          | Admin, Editor, Viewer |
+| Page, User, Form, FormSubmission | Admin, Viewer         |
+| Menu, Footer, GlobalSetting      | Admin only            |
 
 Viewer видит контент, но политики закрывают запись. Editor реально имеет право
 писать только по Post/Project (см. соответствующие политики).
 
 ## Не забывать
+
 - Новый ресурс без trait'а показывается всем и по умолчанию доступен всем
   ролям — обязательно подключить trait и указать `allowedRoles()`.
 - Для реального ограничения create/update/delete — писать соответствующую

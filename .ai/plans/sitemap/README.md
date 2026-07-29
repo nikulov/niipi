@@ -20,7 +20,7 @@
 - **Password-фильтр из промта — не нужен.** Ни одна из наших контент-моделей не
   имеет колонки `password`.
 - **`scopePublished` уже есть** у Page/Post/Project (`status = Published AND
-  published_at <= now()`).
+published_at <= now()`).
 - **Cache store** — Valkey (Redis-совместимый). `CACHE_STORE=redis`, теги
   поддерживаются.
 - **`booted()` уже есть у Post и Project** (флашит `['news','categories']` /
@@ -40,10 +40,10 @@
 ## Order of work
 
 1. **Контроллер + view.**
-   - `app/Http/Controllers/SitemapController.php` (`__invoke`, приватный
-     `urls()`, константа `ENTITIES = [Post => 'news.show', Project => 'projects.show']`).
-   - `resources/views/sitemap.blade.php` — `<urlset>` c `<loc>` + `<lastmod>`
-     (через `updated_at?->toAtomString()`).
+    - `app/Http/Controllers/SitemapController.php` (`__invoke`, приватный
+      `urls()`, константа `ENTITIES = [Post => 'news.show', Project => 'projects.show']`).
+    - `resources/views/sitemap.blade.php` — `<urlset>` c `<loc>` + `<lastmod>`
+      (через `updated_at?->toAtomString()`).
 2. **Роут.** `Route::get('/sitemap.xml', SitemapController::class)->name('sitemap')`
    в `routes/web.php` **выше** `Route::get('/{slug}', …)` — иначе catch-all
    заберёт запрос (regex `^(?!admin|api|login|register).+` не исключает
@@ -55,10 +55,10 @@
 5. **robots.txt.** Дописать в существующий `public/robots.txt`:
    `Sitemap: https://niipigrad.ru/sitemap.xml`.
 6. **Обновить `.ai/`.**
-   - `file-map.md` — новый контроллер + view (+ robots-контроллер, если B).
-   - `architecture.md` — маршрут `/sitemap.xml` (+ `/robots.txt`, если B).
-   - `patterns/cache-flush-on-save.md` — упомянуть общий тег `sitemap` для
-     публично-индексируемых моделей.
+    - `file-map.md` — новый контроллер + view (+ robots-контроллер, если B).
+    - `architecture.md` — маршрут `/sitemap.xml` (+ `/robots.txt`, если B).
+    - `patterns/cache-flush-on-save.md` — упомянуть общий тег `sitemap` для
+      публично-индексируемых моделей.
 
 ## Файлы
 

@@ -5,6 +5,7 @@ namespace App\Blocks;
 use App\Blocks\Contracts\BlockRenderer;
 use App\Blocks\Renderers\AccordionLightRenderer;
 use App\Blocks\Renderers\AccordionRenderer;
+use App\Blocks\Renderers\AnchorRenderer;
 use App\Blocks\Renderers\ButtonRenderer;
 use App\Blocks\Renderers\CardsBlockWithButtonRenderer;
 use App\Blocks\Renderers\CardsBlockWithImageTitleRenderer;
@@ -26,8 +27,6 @@ use App\Blocks\Renderers\TabsBlockRenderer;
 use App\Blocks\Renderers\TextFullRenderer;
 use App\Blocks\Renderers\TitleRenderer;
 use App\Blocks\Renderers\YandexMapRenderer;
-use App\Filament\Components\CardsBlockWithImageTitle;
-
 
 final class BlockRenderRegistry
 {
@@ -37,6 +36,7 @@ final class BlockRenderRegistry
         return [
             AccordionRenderer::key() => AccordionRenderer::class,
             AccordionLightRenderer::key() => AccordionLightRenderer::class,
+            AnchorRenderer::key() => AnchorRenderer::class,
             ButtonRenderer::key() => ButtonRenderer::class,
             CardsBlockWithButtonRenderer::key() => CardsBlockWithButtonRenderer::class,
             CardsBlockWithImageTitleRenderer::key() => CardsBlockWithImageTitleRenderer::class,
@@ -60,7 +60,7 @@ final class BlockRenderRegistry
             YandexMapRenderer::key() => YandexMapRenderer::class,
         ];
     }
-    
+
     /** @return class-string<BlockRenderer>|null */
     public static function for(string $type): ?string
     {

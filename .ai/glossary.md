@@ -4,8 +4,8 @@
 - **Блок** — единица блочного контента страницы. Пара «конфиг в админке» +
   «рендерер в `app/Blocks/Renderers/`». См. [domain.md](domain.md).
 - **Block Registry** — два реестра:
-  - `App\Blocks\BlockRenderRegistry` — сопоставление тип → рендерер (публичная часть).
-  - `app/Filament/Components/BlockRegistry/BlockRegistry.php` — конфиг блока в Filament (админка).
+    - `App\Blocks\BlockRenderRegistry` — сопоставление тип → рендерер (публичная часть).
+    - `app/Filament/Components/BlockRegistry/BlockRegistry.php` — конфиг блока в Filament (админка).
 - **Post** — новость. Публично: `/news/{slug}`.
 - **Project** — проект. Публично: `/projects/{slug}`.
 - **Page** — статическая или составная страница. Публично: `/{slug}` или `/`.
