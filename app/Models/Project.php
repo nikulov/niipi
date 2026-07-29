@@ -127,6 +127,7 @@ class Project extends Model implements HasBlockSections, HasMeta
     {
         return [
             ['projects', 'categories'],
+            ['sitemap'],
         ];
     }
 }

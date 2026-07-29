@@ -127,6 +127,7 @@ class Post extends Model implements HasBlockSections, HasMeta
     {
         return [
             ['news', 'categories'],
+            ['sitemap'],
         ];
     }
 }

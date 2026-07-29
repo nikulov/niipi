@@ -18,6 +18,7 @@
 | `Models/` | Eloquent модели (Page, Post, Project, Category, Menu, Footer, GlobalSetting, Form, FormField, FormSubmission, FormSubmissionFile, User) |
 | `Models/Concerns/HasSectionOptions.php` | Механика «блоков-настроек» (например, `bg-for-main-section`) |
 | `Http/Controllers/ContentController.php` | Публичные страницы: `page()`, `post()`, `project()` |
+| `Http/Controllers/SitemapController.php` | `__invoke` → XML-карта из Page/Post/Project, кэш тегом `sitemap` (TTL 1ч, backstop) |
 | `Http/Controllers/MenuController.php` | **Пустой класс**, роутов не имеет, кандидат на удаление |
 | `Livewire/Components/` | `AbstractContentFull` (база), `ProjectsFull`, `NewsFull` — списки с категориями и пагинацией |
 | `Livewire/Forms/PublicForm.php` | Публичная форма (WithFileUploads + honeypot) |
@@ -71,6 +72,7 @@ Filament-компоненты в `app/Filament/Components/` — один-в-од
   `logo/`, `menu/`, `other/`, `sections/`
 - `livewire/components/`, `livewire/forms/` — шаблоны Livewire
 - `includes/`, `emails/`, `forms/`, `vendor/`
+- `sitemap.blade.php` — XML для `/sitemap.xml` (см. `SitemapController`)
 
 ## resources/css/
 - `app.css` — Tailwind 4 корневой файл (`@theme`, `@source`, `@utility`)

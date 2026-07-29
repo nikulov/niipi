@@ -4,7 +4,8 @@
 
 ## Active
 
-_(пусто)_
+- [Динамический sitemap.xml](sitemap/README.md) — контроллер + view + флаш кэша
+  тегом `sitemap` на save/delete Page/Post/Project + запись в `robots.txt`.
 
 ## Wrapping up
 

@@ -85,4 +85,14 @@ class Page extends Model implements HasBlockSections, HasMeta
     {
         return [];
     }
+
+    protected static function booted(): void
+    {
+        $flush = function (): void {
+            cache()->tags(['sitemap'])->flush();
+        };
+
+        static::saved($flush);
+        static::deleted($flush);
+    }
 }

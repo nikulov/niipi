@@ -19,6 +19,8 @@
   - `/` → `ContentController@page`
   - `/news/{slug}` → `ContentController@post`
   - `/projects/{slug}` → `ContentController@project`
+  - `/sitemap.xml` → `SitemapController` (обязательно **выше** catch-all `/{slug}`,
+    иначе regex страницы заберёт запрос)
   - `/{slug}` (кроме `admin|api|login|register`) → `ContentController@page`
   - `/login` → редирект на `/admin/login`
 - Filament регистрируется через `App\Providers\Filament\AdminPanelProvider`
