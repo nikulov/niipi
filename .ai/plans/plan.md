@@ -4,7 +4,11 @@
 
 ## Active
 
-_(пусто)_
+- [Nginx: HSTS и канонические редиректы](nginx-hsts/README.md) —
+  раскатано 2026-07-30: prod получил HSTS + security headers + TLS 1.2/1.3
+  + HTTP/2 + PHP-restriction + `/storage/`-защиту + `$realpath_root`;
+  stage — HSTS `max-age=300` + HTTP/2. Осталось: followup-проверки
+  через сутки-двое ([followup-checks.md](nginx-hsts/followup-checks.md)).
 
 ## Wrapping up
 
