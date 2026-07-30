@@ -4,8 +4,6 @@
 
 ## Active
 
-- [Динамический sitemap.xml](sitemap/README.md) — контроллер + view + флаш кэша
-  тегом `sitemap` на save/delete Page/Post/Project + запись в `robots.txt`.
 - [Копирование сущности](duplicate-entity/README.md) — row action «Копировать»
   для Post/Project/Page/Form: суффикс `(копия N)` / `-copy-N`, сброс статуса,
   клон пивотов и HasMany.
@@ -16,6 +14,10 @@ _(пусто)_
 
 ## Archive
 
+- [Динамический sitemap.xml](archived/sitemap.md) — контроллер + view +
+  тегированный кэш `sitemap`, флаш на `saved`/`deleted` у Page/Post/Project,
+  строка `Sitemap:` в `robots.txt`. Committed 2026-07-29..30
+  (`a2bfc9a`, `2840ad7`).
 - [Блок «Якорь»](archived/anchor-block.md) — служебный блок контент-билдера:
   пустой `<div id="…">` для хеш-ссылок, уникальность slug через всю форму
   (включая Tabs/Modal), доступен во всех 6 секциях. Committed 2026-07-29 (`16b2c55`).
