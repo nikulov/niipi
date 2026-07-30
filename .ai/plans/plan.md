@@ -6,6 +6,9 @@
 
 - [Динамический sitemap.xml](sitemap/README.md) — контроллер + view + флаш кэша
   тегом `sitemap` на save/delete Page/Post/Project + запись в `robots.txt`.
+- [Копирование сущности](duplicate-entity/README.md) — row action «Копировать»
+  для Post/Project/Page/Form: суффикс `(копия N)` / `-copy-N`, сброс статуса,
+  клон пивотов и HasMany.
 
 ## Wrapping up
 

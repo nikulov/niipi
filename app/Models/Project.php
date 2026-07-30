@@ -6,6 +6,7 @@ use App\Blocks\Contracts\HasBlockSections;
 use App\Contracts\HasMeta;
 use App\Enums\ProjectStatus;
 use App\Filament\Components\ImageTittleFullWidth;
+use App\Models\Concerns\Duplicatable;
 use App\Models\Concerns\HasSectionOptions;
 use App\Models\Concerns\TracksMediaUsage;
 use Illuminate\Database\Eloquent\Builder;
@@ -14,6 +15,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Project extends Model implements HasBlockSections, HasMeta
 {
+    use Duplicatable;
     use HasSectionOptions;
     use TracksMediaUsage;
 
@@ -50,6 +52,18 @@ class Project extends Model implements HasBlockSections, HasMeta
     public function categories(): BelongsToMany
     {
         return $this->belongsToMany(Category::class, 'category_project');
+    }
+
+    public function prepareDuplicate(Model $copy): void
+    {
+        $copy->status = ProjectStatus::Draft;
+        $copy->published_at = null;
+    }
+
+    public function copyRelationsTo(Model $copy): void
+    {
+        $this->loadMissing('categories');
+        $copy->categories()->attach($this->categories->pluck('id')->all());
     }
 
     public function getBlocksForSection(?string $section): array

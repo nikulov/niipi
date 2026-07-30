@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Blocks\Contracts\HasBlockSections;
 use App\Contracts\HasMeta;
 use App\Enums\PageStatus;
+use App\Models\Concerns\Duplicatable;
 use App\Models\Concerns\HasSectionOptions;
 use App\Models\Concerns\TracksMediaUsage;
 use Illuminate\Database\Eloquent\Builder;
@@ -12,6 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Page extends Model implements HasBlockSections, HasMeta
 {
+    use Duplicatable;
     use HasSectionOptions;
     use TracksMediaUsage;
 
@@ -46,6 +48,12 @@ class Page extends Model implements HasBlockSections, HasMeta
     public function setSlugAttribute(?string $value): void
     {
         $this->attributes['slug'] = $value ? ltrim($value, '/') : null;
+    }
+
+    public function prepareDuplicate(Model $copy): void
+    {
+        $copy->status = PageStatus::Draft;
+        $copy->published_at = null;
     }
 
     public function getBlocksForSection(?string $section): array

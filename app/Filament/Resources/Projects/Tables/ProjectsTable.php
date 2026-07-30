@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Projects\Tables;
 
 use App\Enums\ProjectStatus;
+use App\Filament\Actions\CopyAction;
 use App\Models\Project;
 use Carbon\Carbon;
 use Filament\Actions\Action;
@@ -44,7 +45,7 @@ class ProjectsTable
                 TextColumn::make('updated_at')->label(__('panel.updated_at'))
                     ->sortable()
                     ->formatStateUsing(function ($state) {
-                        if (!$state) {
+                        if (! $state) {
                             return null;
                         }
                         $date = Carbon::parse($state);
@@ -52,6 +53,7 @@ class ProjectsTable
                         if ($hours > 6) {
                             return $date->translatedFormat('d.m.Y H:i');
                         }
+
                         return $date->diffForHumans();
                     }),
             ])
@@ -72,7 +74,7 @@ class ProjectsTable
                         DatePicker::make('created_from')->label(__('panel.created_from'))
                             ->columnSpan(3)
                             ->maxDate(now())
-                            ->minDate(fn() => Project::min('created_at')),
+                            ->minDate(fn () => Project::min('created_at')),
                         DatePicker::make('created_until')->label(__('panel.created_until'))
                             ->columnSpan(3)
                             ->maxDate(now()),
@@ -83,18 +85,18 @@ class ProjectsTable
                         return $query
                             ->when(
                                 $data['created_from'],
-                                fn(Builder $query, $date): Builder => $query->whereDate('created_at', '>=', $date),
+                                fn (Builder $query, $date): Builder => $query->whereDate('created_at', '>=', $date),
                             )
                             ->when(
                                 $data['created_until'],
-                                fn(Builder $query, $date): Builder => $query->whereDate('created_at', '<=', $date),
+                                fn (Builder $query, $date): Builder => $query->whereDate('created_at', '<=', $date),
                             );
-                    })
-            
+                    }),
+
             ], layout: FiltersLayout::AboveContent)->deferFilters(false)
             ->filtersFormColumns(12)
             ->filtersTriggerAction(
-                fn(Action $action) => $action
+                fn (Action $action) => $action
                     ->button()
                     ->label(__('panel.filter')),
             )
@@ -102,6 +104,10 @@ class ProjectsTable
                 EditAction::make()->label(__(''))
                     ->iconSize('md')
                     ->tooltip(__('panel.edit_post')),
+                CopyAction::make()
+                    ->tooltip(__('panel.copy_project'))
+                    ->modalHeading(fn (Project $record) => __('panel.copy_project_confirm', ['title' => $record->title]))
+                    ->successNotificationTitle(__('panel.project_copied')),
                 DeleteAction::make()->label(__(''))
                     ->iconSize('md')
                     ->tooltip(__('panel.delete_post')),

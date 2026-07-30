@@ -60,6 +60,21 @@
 - Данные, шаримые в много шаблонов — через `App\View\Composers\*` в
   `AppServiceProvider::boot()` (`View::composer(...)`).
 
+## Копирование сущности
+
+- Модели с action «Копировать» подключают трейт `App\Models\Concerns\Duplicatable`.
+  Обязательно переопределяют `prepareDuplicate(Model $copy)` (сброс
+  статуса/активности). Опционально — `copyRelationsTo(Model $copy)` для
+  HasMany/BelongsToMany. Модели без пары `title` + `slug` переопределяют
+  `duplicateTitleColumn()` и `duplicateSlugColumn()` (Form → `name` / `null`).
+- Логика суффиксов (`(копия N)` / `-copy-N`) и `nextCopyNumber` — в
+  `App\Services\ModelDuplicator`. Всё в `DB::transaction`.
+- Filament row action — `App\Filament\Actions\CopyAction`
+  (`getDefaultName='copy'`, чтобы не пересекаться со встроенным
+  `Filament\Actions\ReplicateAction`). Авторизуется через
+  `Gate::allows('create', $record::class)` — Filament v4 авто-авторизует
+  только built-in actions, кастомные надо гейтить руками.
+
 ## Кэш
 
 - Драйвер должен поддерживать теги (Valkey). Использование:
