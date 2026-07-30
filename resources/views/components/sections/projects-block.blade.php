@@ -8,7 +8,7 @@
             <div class="relative flex w-full flex-col">
                 <a href="{{ $card['url'] }}">
                     <div class="relative">
-                        <img src="{{ $card['thumbnail'] }}" alt="" class="bg-primary/20 h-75 w-full object-cover" />
+                        <img src="{{ $card['thumbnail'] }}" alt="{{ $card['title'] }}" class="bg-primary/20 h-75 w-full object-cover" />
                         <div class="bg-primary/20 absolute inset-0"></div>
                     </div>
 

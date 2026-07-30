@@ -9,7 +9,7 @@
     <div class="flex flex-col gap-x-32 gap-y-15">
         @foreach ($cards as $card)
             <article class="relative grid w-full gap-6 md:grid-cols-2">
-                <x-other.thumbnail-full card-url="{{ $card['url'] }}" card-thumbnail="{{ $card['thumbnail'] }}" />
+                <x-other.thumbnail-full card-url="{{ $card['url'] }}" card-thumbnail="{{ $card['thumbnail'] }}" card-title="{{ $card['title'] }}" />
 
                 <x-other.card-news-full :card="$card" />
             </article>

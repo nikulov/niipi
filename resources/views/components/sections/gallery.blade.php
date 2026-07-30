@@ -1,6 +1,12 @@
 @props([
     'urls' => ['gallery/posts/default/image-2-1766065371.jpg', 'gallery/posts/default/image-3-1766065371.jpg', 'gallery/posts/default/umg-1766065371.jpg', 'gallery/posts/default/main-slider-01-v2-3-1766065371.jpg', 'gallery/posts/default/standart-1766065371.jpg', 'gallery/posts/default/gpzu-1766065371.jpg', 'gallery/posts/default/kuzmina-aa-kazanysh-1-1766065371.jpeg'],
+    'pageTitle' => null,
 ])
+
+@php
+    $altBase = $pageTitle ?: config('app.name');
+    $altFor = fn (int $i) => $altBase.' — фото '.($i + 1);
+@endphp
 
 <section
     x-data="{
@@ -30,7 +36,7 @@
                 class="relative block aspect-4/3 w-full cursor-pointer overflow-hidden transition hover:opacity-80"
                 @click="openAt({{ $i }})"
             >
-                <img src="{{ public_asset($url) }}" class="h-full w-full object-cover" loading="lazy" alt="" />
+                <img src="{{ public_asset($url) }}" class="h-full w-full object-cover" loading="lazy" alt="{{ $altFor($i) }}" />
             </button>
         @endforeach
     </div>
@@ -60,9 +66,9 @@
                 style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff"
             >
                 <div class="swiper-wrapper h-full">
-                    @foreach ($urls as $url)
+                    @foreach ($urls as $i => $url)
                         <div class="swiper-slide flex h-full items-center justify-center">
-                            <img src="{{ public_asset($url) }}" class="h-full max-h-full w-full object-contain" alt="" />
+                            <img src="{{ public_asset($url) }}" class="h-full max-h-full w-full object-contain" alt="{{ $altFor($i) }}" />
                         </div>
                     @endforeach
                 </div>
@@ -84,9 +90,9 @@
             <!-- Thumbs -->
             <div class="swiper js-gallery-slider-thumbs mt-6 h-35.5 w-full max-w-5xl max-sm:h-24">
                 <div class="swiper-wrapper mx-auto h-full w-max!">
-                    @foreach ($urls as $url)
+                    @foreach ($urls as $i => $url)
                         <div class="swiper-slide h-35.5! w-50! cursor-pointer opacity-70 max-sm:h-24! max-sm:w-30!">
-                            <img src="{{ public_asset($url) }}" class="h-full w-full object-cover" alt="" />
+                            <img src="{{ public_asset($url) }}" class="h-full w-full object-cover" alt="{{ $altFor($i) }}" />
                         </div>
                     @endforeach
                 </div>
