@@ -262,8 +262,9 @@ echo | openssl s_client -connect 127.0.0.1:443 -servername niipigrad.ru -tls1_1 
 Изначальные — с учётом расширения scope см. «Итог раскатки» наверху.
 
 - **Не** трогали: сертификаты (только читали SAN для проверки),
-  permissions, глобальный `/etc/nginx/nginx.conf` cleanup, PHP-fpm-пул,
-  ssl_stapling, CSP-заголовок.
+  permissions, PHP-fpm-пул, ssl_stapling, CSP-заголовок.
+- **~~Не трогали `nginx.conf` cleanup~~** — сделано 2026-07-30
+  (см. followup-checks.md пункт D).
 - **Не** подавали домен в hstspreload.org (директиву `preload` убрали
   из заголовка сознательно — необратимо ~6-12 месяцев).
 - **~~Не удаляли `prod2.niipigrad.ru`~~** — удалён 2026-07-30 через
