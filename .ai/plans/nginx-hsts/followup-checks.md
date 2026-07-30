@@ -111,11 +111,12 @@ Stage — тестовый стенд, никаких пользовательс
 только `stage.niipigrad.ru`. Основной wildcard prod-серт вне зоны
 Certbot (`/etc/ssl/prod/_.niipigrad.ru.*`) — не тронут.
 
-Побочно замечены **stale .bak-файлы** в `/etc/nginx/sites-available/`:
-- `niipigrad-prod.bak-20260525-{155818,160150,160508}`
-Ссылаются на prod2 в закомментированных строках. Не активны
-(не в sites-enabled), но захламляют. Если руки дойдут — перенести
-в `/root/backup/` или удалить.
+~~Побочно замечены stale .bak-файлы в `/etc/nginx/sites-available/`.~~
+Убраны 2026-07-30: `mv` в `/root/backup/nginx-sites-available-bak/`
+(3 файла: `niipigrad-prod.bak-20260525-{155818,160150,160508}`).
+`sites-available/` теперь содержит только `default`, `niipigrad-prod`,
+`niipigrad-stage`. `nginx -t` после уборки — чисто, reload не нужен
+(в `sites-enabled` ничего не менялось).
 
 ### D. ~~Глобальный `nginx.conf` cleanup~~ — сделано 2026-07-30
 
