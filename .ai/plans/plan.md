@@ -4,9 +4,7 @@
 
 ## Active
 
-- [Копирование сущности](duplicate-entity/README.md) — row action «Копировать»
-  для Post/Project/Page/Form: суффикс `(копия N)` / `-copy-N`, сброс статуса,
-  клон пивотов и HasMany.
+_(пусто)_
 
 ## Wrapping up
 
@@ -14,6 +12,10 @@ _(пусто)_
 
 ## Archive
 
+- [Копирование сущности](archived/duplicate-entity.md) — row action
+  «Копировать» для Post/Project/Page/Form: суффиксы «(копия N)» /
+  `-copy-N`, сброс статуса, клон пивотов и HasMany, `CopyAction` с
+  явной авторизацией по `create` ability. Committed 2026-07-30 (`baa1e52`).
 - [Динамический sitemap.xml](archived/sitemap.md) — контроллер + view +
   тегированный кэш `sitemap`, флаш на `saved`/`deleted` у Page/Post/Project,
   строка `Sitemap:` в `robots.txt`. Committed 2026-07-29..30
