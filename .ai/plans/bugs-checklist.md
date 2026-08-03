@@ -59,3 +59,7 @@
 - [ ] **#14** `FormEmailTemplateRenderer` — теоретическая коллизия имён
       data/file полей (файл перезаписывает текст).
       `app/Services/Forms/FormEmailTemplateRenderer.php:78`
+- [ ] **#16** Счётчики категорий stale до 10 мин после наступления
+      `published_at` по расписанию — кэш `getCategories()` (TTL 600с)
+      инвалидируется только на `saved`/`deleted`.
+      `app/Livewire/Components/AbstractContentFull.php:83-90`

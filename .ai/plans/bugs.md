@@ -296,6 +296,42 @@ try {
 
 ---
 
+### 16. Счётчики категорий stale до 10 мин после наступления `published_at`
+
+**Файл:** `app/Livewire/Components/AbstractContentFull.php:83-90`
+
+**Симптом:** `getCategories()` кэширует результат `buildCategoriesQuery`
+(включая `posts_count`/`projects_count`) на 600 секунд по тегам
+`['news','categories']` / `['projects','categories']`. Кэш
+инвалидируется только на `Post|Project|Category::saved|deleted`.
+
+После фикса #15 счётчик правильно **не** учитывает будущие публикации,
+а `NewsQuery::list()` — вообще без кэша. Значит, когда `published_at`
+наступает **по расписанию** (без save/update), карточки появляются
+сразу, а счётчик обновится только на следующем `saved|deleted` или
+через 10 минут TTL.
+
+Окно расхождения: ≤ 10 минут после наступления `published_at`.
+
+**Почему P3:** редкий сценарий (посты обычно публикуются вручную и уже
+`published`), расхождение временное и в сторону занижения (счётчик <
+реального). Не ломает функциональность.
+
+**Варианты фикса:**
+
+- Планировщик: `Schedule::call(fn () => cache()->tags(['news','categories','projects'])->flush())->everyMinute()` в
+  `routes/console.php`. Дёшево, но флашит и не связанное.
+- Планировщик умнее: раз в минуту `Post::query()->where('status', Published)->where('published_at', '<=', now())->whereRaw('published_at > NOW() - INTERVAL 2 MINUTE')`
+  → если есть — флашить теги.
+- Убрать кэш из `getCategories` целиком (тогда каждый рендер `/news` и
+  `/projects` даёт лишний SELECT на categories + withCount).
+- Считать `posts_count` inline в SQL без кэша (короткий запрос).
+
+**Тест:** имитировать наступление `published_at` через `Carbon::setTestNow`
++ проверить, что кэш инвалидирован или сразу пересчитывается.
+
+---
+
 ## Definition of done секции
 
 - P0 (пункты 1–3) закрыты, добавлены регресс-тесты.
