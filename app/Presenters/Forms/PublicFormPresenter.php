@@ -9,7 +9,7 @@ final class PublicFormPresenter
     public function present(Form $form): array
     {
         $settings = is_array($form->settings) ? $form->settings : [];
-        
+
         return [
             'id' => (int) $form->id,
             'title' => (string) $form->title,
@@ -19,20 +19,20 @@ final class PublicFormPresenter
             'fields' => $this->presentFields($form),
         ];
     }
-    
+
     private function presentFields(Form $form): array
     {
         $out = [];
-        
+
         foreach ($form->fields as $field) {
             if (! $field->is_enabled) {
                 continue;
             }
-            
+
             $isFile = $field->type === 'file';
-            
+
             $extra = is_array($field->extra) ? $field->extra : [];
-            
+
             $out[] = [
                 'key' => (string) $field->id,
                 'type' => (string) $field->type,
@@ -49,10 +49,10 @@ final class PublicFormPresenter
                 'file' => $isFile ? $this->presentFileConfig($extra) : null,
             ];
         }
-        
+
         return $out;
     }
-    
+
     private function mapInputType(string $type): ?string
     {
         return match ($type) {
@@ -61,34 +61,38 @@ final class PublicFormPresenter
             default => null,
         };
     }
-    
+
     private function normalizeOptions($options): array
     {
         if (! is_array($options)) {
             return [];
         }
-        
+
         $out = [];
-        
+
         foreach ($options as $row) {
             if (! is_array($row)) {
                 continue;
             }
-            
+
             $value = (string) ($row['value'] ?? '');
-            if ($value === '') {
+            $disabled = (bool) ($row['disabled'] ?? false);
+
+            if ($value === '' && ! $disabled) {
                 continue;
             }
-            
+
             $out[] = [
                 'value' => $value,
                 'label' => (string) ($row['label'] ?? $value),
+                'disabled' => $disabled,
+                'default' => (bool) ($row['default'] ?? false),
             ];
         }
-        
+
         return $out;
     }
-    
+
     private function mapComponent(string $type): string
     {
         return match ($type) {
@@ -101,30 +105,30 @@ final class PublicFormPresenter
             default => 'form.fields.input',
         };
     }
-    
+
     private function extractDefault($options): ?string
     {
-        if (!is_array($options)) {
+        if (! is_array($options)) {
             return null;
         }
-        
+
         foreach ($options as $row) {
             if (
                 is_array($row)
-                && !empty($row['default'])
-                && !empty($row['value'])
+                && ! empty($row['default'])
+                && (! empty($row['value']) || ! empty($row['disabled']))
             ) {
-                return (string) $row['value'];
+                return (string) ($row['value'] ?? '');
             }
         }
-        
+
         return null;
     }
-    
+
     private function presentFileConfig(array $extra): array
     {
         $multiple = (bool) ($extra['multiple'] ?? false);
-        
+
         $accept = [];
         $rawMimes = $extra['accept_mimes'] ?? [];
         if (is_array($rawMimes)) {
@@ -134,7 +138,7 @@ final class PublicFormPresenter
                 }
             }
         }
-        
+
         return [
             'multiple' => $multiple,
             'maxFiles' => $multiple ? max(1, (int) ($extra['max_files'] ?? 1)) : 1,

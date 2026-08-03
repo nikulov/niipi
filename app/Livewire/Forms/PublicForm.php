@@ -63,7 +63,7 @@ final class PublicForm extends Component
             if (! array_key_exists($name, $this->data) || $this->data[$name] === null || $this->data[$name] === '') {
                 $default = $field['default'] ?? null;
 
-                if (is_string($default) && $default !== '') {
+                if (is_string($default)) {
                     $this->data[$name] = $default;
                 }
             }

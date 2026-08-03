@@ -10,7 +10,7 @@
 - `App\Models\FormField` — поле:
     - `type`, `name`, `label` (longtext), `placeholder`
     - `required` (bool), `is_enabled` (bool), `sort`
-    - `options` (json array — с ключами `value`, `label`, опционально `default`)
+    - `options` (json array — с ключами `value`, `label`, опционально `default`, `disabled`; последнее актуально для `select`. Пустой `value` разрешён только при `disabled: true` — это плейсхолдер, на нём срабатывает HTML5 `required`)
     - `rules` (json — assoc `правило => сообщение` или список правил)
     - `extra` (json — для `type=file`: `multiple`, `max_files`, `max_size_kb`,
       `accept_mimes[]`)
