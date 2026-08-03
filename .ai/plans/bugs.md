@@ -138,6 +138,42 @@ commit и update), submission останется в статусе `New` с уж
 
 ---
 
+### 15. ~~Счётчики категорий в `NewsFull`/`ProjectsFull` включают будущие публикации~~ ✅ исправлено
+
+**Файлы:**
+- `app/Livewire/Components/NewsFull.php:27-30` (`posts as posts_count`)
+- `app/Livewire/Components/ProjectsFull.php:27-30` (`projects as projects_count`)
+- `app/Livewire/Components/AbstractContentFull.php:127-134` (`getTotalCount` — счётчик «Все»)
+
+**Симптом:** после фикса 91c28d2 (`NewsQuery`/`ProjectsQuery` → `->published()`)
+выборка карточек фильтрует посты/проекты по `published_at <= now()`, а
+счётчики — нет. Расхождение: «Строительство (5)», клик → показывает 3
+(два будущих не рендерятся, но всё ещё учтены в счётчике). Аналогично
+для tab «Все».
+
+**Трасса:**
+```php
+// NewsFull.php
+->withCount([
+    'posts as posts_count' => fn ($q) =>
+    $q->where('status', PostStatus::Published->value),
+]);
+// без ->where('published_at', '<=', now())
+```
+
+**Фикс:**
+- В обоих `buildCategoriesQuery` — добавить `->where('published_at', '<=', now())`
+  внутрь замыкания `withCount`.
+- В `AbstractContentFull::getTotalCount` — добавить `->where($contentTable.'.published_at', '<=', now())`
+  после фильтра по статусу.
+- Тесты: `tests/Feature/Livewire/NewsFullTest.php`, `ProjectsFullTest.php` — добавить
+  кейс «пост с будущим `published_at` не учитывается в счётчике».
+
+**Почему P1, не P0:** визуальное расхождение цифр в списке категорий.
+Не ломает функциональность, но выглядит как баг.
+
+---
+
 ## P2 — латентные / низкий приоритет
 
 ### 7. Type-hint `Post $post` в forceDelete/forceDeleteAny (11 полиси)

@@ -25,6 +25,11 @@
 - [ ] **#6** `SubmitFormAction::handle` — update статуса вне транзакции
       → orphan state при сбое БД между commit и update.
       `app/Actions/Forms/SubmitFormAction.php:67`
+- [x] **#15** Счётчики категорий и «Все» в `NewsFull`/`ProjectsFull` не
+      фильтруют по `published_at <= now()` → расхождение с выборкой
+      карточек после фикса 91c28d2.
+      `app/Livewire/Components/{NewsFull,ProjectsFull}.php:27-30`
+      + `AbstractContentFull.php:127-134`
 
 ## P2 — латентные
 

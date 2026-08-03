@@ -25,8 +25,9 @@ final class ProjectsFull extends AbstractContentFull
                 fn ($q) => $q->whereIn('id', $ids)
             )
             ->withCount([
-                'projects as projects_count' => fn ($q) =>
-                $q->where('status', ProjectStatus::Published->value),
+                'projects as projects_count' => fn ($q) => $q
+                    ->where('status', ProjectStatus::Published->value)
+                    ->where('published_at', '<=', now()),
             ]);
     }
 
@@ -59,22 +60,22 @@ final class ProjectsFull extends AbstractContentFull
     {
         return $this->queryString;
     }
-    
+
     protected function getContentTable(): string
     {
         return 'projects';
     }
-    
+
     protected function getContentPrimaryKey(): string
     {
         return 'id';
     }
-    
+
     protected function getStatusColumn(): string
     {
         return 'status';
     }
-    
+
     protected function getPublishedStatusValue(): string|int
     {
         return ProjectStatus::Published->value;

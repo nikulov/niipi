@@ -131,6 +131,7 @@ abstract class AbstractContentFull extends Component
             ->join($contentTable, $contentTable.'.'.$contentPk, '=', $pivot.'.'.$fk)
             ->whereIn($pivot.'.category_id', $categoryIds)
             ->where($contentTable.'.'.$statusCol, '=', $published)
+            ->where($contentTable.'.published_at', '<=', now())
             ->distinct()
             ->count($pivot.'.'.$fk);
     }
