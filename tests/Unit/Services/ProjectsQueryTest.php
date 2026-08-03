@@ -16,7 +16,7 @@ class ProjectsQueryTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_list_returns_only_published_and_limited(): void
+    public function test_list_returns_only_published_and_not_future(): void
     {
         $published = Project::create([
             'title' => 'Published',
@@ -42,12 +42,11 @@ class ProjectsQueryTest extends TestCase
             'published_at' => now()->addDay(),
         ]);
 
-        $service = new ProjectsQuery();
-        $items = $service->list(2);
+        $service = new ProjectsQuery;
+        $items = $service->list(10);
 
-        $this->assertCount(2, $items);
-        $this->assertSame('future', $items->first()->slug);
-        $this->assertTrue($items->pluck('id')->contains($published->id));
+        $this->assertCount(1, $items);
+        $this->assertSame($published->id, $items->first()->id);
     }
 
     public function test_list_filters_by_category_and_can_paginate(): void
@@ -77,7 +76,7 @@ class ProjectsQueryTest extends TestCase
 
         $projectA->categories()->attach($category->id);
 
-        $service = new ProjectsQuery();
+        $service = new ProjectsQuery;
 
         $filtered = $service->list(10, [$category->id]);
         $this->assertCount(1, $filtered);

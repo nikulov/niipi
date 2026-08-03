@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use App\Enums\ProjectStatus;
 use App\Models\Project;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -18,7 +17,7 @@ final class ProjectsQuery
     ): Collection|LengthAwarePaginator {
         $query = Project::query()
             ->with('categories')
-            ->where('status', ProjectStatus::Published->value)
+            ->published()
             ->orderByDesc('published_at');
 
         if ($categoryIds && $categoryIds !== []) {

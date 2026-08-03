@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use App\Enums\PostStatus;
 use App\Models\Post;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -18,7 +17,7 @@ final class NewsQuery
     ): Collection|LengthAwarePaginator {
         $query = Post::query()
             ->with('categories')
-            ->where('status', PostStatus::Published->value)
+            ->published()
             ->orderByDesc('published_at');
 
         if ($categoryIds && $categoryIds !== []) {
