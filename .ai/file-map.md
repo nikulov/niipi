@@ -67,7 +67,16 @@ Accordion, AccordionLight, Anchor, Button, CardsBlockWithButton,
 CardsBlockWithImageTitle, CategoryList, Form, Gallery, ImageFull,
 ImageText, ImageTittleFullWidth (sic — с двойной `t`), InfoBlockWithAchievements,
 InfoBlockWithButtons, ModalBlock, NewsBlock, NewsFull, ProjectsBlock,
-ProjectsFull, SliderFullWidth, TabsBlock, TextFull, Title, YandexMap.
+ProjectsFull, RelatedThematic, SliderFullWidth, TabsBlock, TextFull, Title,
+YandexMap.
+
+`RelatedThematic` — полиморфный блок «тематическая подборка»: в Post показывает
+связанные новости, в Project — связанные проекты. Категории по умолчанию —
+из `$model->categories()`; в `data.categoryIds` можно переопределить. Текущий
+Post/Project исключается из выдачи. Кнопка «Смотреть все» ведёт на
+`/news?newsCategory={slug}` / `/projects?projectsCategory={slug}` с первой
+категорией текущей записи. Только в `mainSection`. Добавляется дефолтом при
+создании Post/Project (`CreatePost`/`CreateProject`) перед `CategoryList`.
 
 Filament-компоненты в `app/Filament/Components/` — один-в-один с рендерерами
 плюс `BgForMainSection` (спец-блок настройки).

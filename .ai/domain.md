@@ -60,6 +60,12 @@ Page/Post/Project содержат три JSON-секции: `top_section`, `mai
 Специальный блок `bg-for-main-section` — не рендерится, но `HasSectionOptions`
 достаёт его данные через `getBgForMainSection()`.
 
+При создании Post и Project в main-секцию (если она не пуста) автоматически
+добавляются два блока в порядке: `related-thematic` (тематическая подборка
+из категорий записи) → `category-list` (список категорий записи).
+Логика — в `CreatePost::appendDefaultMainBlock()` и
+`CreateProject::appendDefaultMainBlock()`.
+
 ## Формы (custom form builder)
 
 - `Form` описывает форму (не путать с `Filament\Schemas\Form`).

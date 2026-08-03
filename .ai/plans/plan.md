@@ -4,6 +4,10 @@
 
 ## Active
 
+- [Блок «Тематическая подборка»](related-thematic-block/README.md) —
+  новый полиморфный блок для Post/Project: 5 квадратных карточек по
+  категориям текущей записи, кнопка «Смотреть все» с префилтром первой
+  категории. Добавляется дефолтом в main-секцию перед `CategoryList`.
 - [Nginx: HSTS и канонические редиректы](nginx-hsts/README.md) —
   раскатано 2026-07-30: prod получил HSTS + security headers + TLS 1.2/1.3
   + HTTP/2 + PHP-restriction + `/storage/`-защиту + `$realpath_root`;

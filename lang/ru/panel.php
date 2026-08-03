@@ -298,6 +298,11 @@ return [
     'anchor' => 'Якорь',
     'anchor_duplicate' => 'Якорь ":anchor" уже используется',
 
+    'related_thematic_label' => 'Тематическая подборка',
+    'related_thematic' => 'По этой теме',
+    'related_thematic_all_btn' => 'Смотреть все',
+    'related_thematic_categories_hint' => 'Если не выбрано — берутся категории текущей записи.',
+
     'media_file' => 'Медиа-файл',
     'media_files' => 'Медиа-файлы',
     'media_files_list' => 'Медиа-файлы',

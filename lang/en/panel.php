@@ -276,6 +276,11 @@ return [
     'anchor' => 'Anchor',
     'anchor_duplicate' => 'Anchor ":anchor" is already used',
 
+    'related_thematic_label' => 'Related thematic',
+    'related_thematic' => 'Related',
+    'related_thematic_all_btn' => 'View all',
+    'related_thematic_categories_hint' => 'If empty — the record’s own categories are used.',
+
     'media_file' => 'Media file',
     'media_files' => 'Media files',
     'media_files_list' => 'Media files',
