@@ -1,38 +1,19 @@
 # Чек-лист: баги и cleanup
 
-Детали и обоснования — в [bugs.md](bugs.md). Здесь только галочки.
+Детали и обоснования — в [bugs.md](bugs.md). Здесь только галочки по
+**открытым** пунктам. Закрытые (#1, #3–#6, #15, #17–#21) переехали в
+[archived/bugs.md](archived/bugs.md).
 
-## P0 — активные баги
+## P0
 
-- [x] **#1** `FormRulesBuilder::parseExtraRules` роняет list-form правила
-      → пользовательская валидация не срабатывает.
-      `app/Services/Forms/FormRulesBuilder.php:170` — `12bd4dd`
 - [ ] **#2** `SendFormSubmissionEmails` не идемпотентен → дубли админу,
       падение одного плеча глушит второе, статус врёт.
       `app/Jobs/SendFormSubmissionEmails.php:96`
       План отложен: [form-mail-idempotency](form-mail-idempotency/README.md)
-- [x] **#3** `SubmitFormAction` оставляет осиротевшие файлы при откате
-      DB-транзакции.
-      `app/Actions/Forms/SubmitFormAction.php:57` + `SubmissionFilesStorer.php:45`
-      — `85f7630`, `a484fdb`
 
-## P1 — активные, узкие
+## P1
 
-- [ ] **#4** `HasSectionOptions::getSectionOption` возвращает null от
-      первого пустого блока-настройки; второй такой же блок недостижим.
-      `app/Models/Concerns/HasSectionOptions.php:29`
-- [ ] **#5** `SubmissionsStats` «Новых сегодня» считает все статусы, не
-      только `New`.
-      `app/Filament/Widgets/SubmissionsStats.php:22`
-- [x] **#6** `SubmitFormAction::handle` — update статуса вне транзакции
-      → orphan state при сбое БД между commit и update.
-      `app/Actions/Forms/SubmitFormAction.php:67` — `85f7630`
-      (хвосты выбранного варианта — в [bugs.md](bugs.md#6))
-- [x] **#15** Счётчики категорий и «Все» в `NewsFull`/`ProjectsFull` не
-      фильтруют по `published_at <= now()` → расхождение с выборкой
-      карточек после фикса 91c28d2.
-      `app/Livewire/Components/{NewsFull,ProjectsFull}.php:27-30`
-      + `AbstractContentFull.php:127-134`
+_(пусто — все закрыты)_
 
 ## P2 — латентные
 
@@ -66,18 +47,3 @@
       `published_at` по расписанию — кэш `getCategories()` (TTL 600с)
       инвалидируется только на `saved`/`deleted`.
       `app/Livewire/Components/AbstractContentFull.php:83-90`
-
-## Исправлено в ревью 2026-08-04
-
-Коммиты `4e2e324`, `16c934f`.
-
-- [x] **#17** Кнопка «Смотреть все» в `related-thematic` строила URL по
-      первой категории записи и игнорировала override `data.categoryIds`
-      → кнопка удалена.
-- [x] **#18** Плейсхолдер-опция (пустой `value` + `disabled`) протекала в
-      `radio` и рендерилась выбираемой радиокнопкой с пустым значением.
-- [x] **#19** Дефолт `radio` жил только в state — в разметке не было
-      `@checked`, ничего не выглядело отмеченным.
-- [x] **#20** Несколько `default: true`: `extractDefault` брала первую,
-      `@selected` помечал все → DOM расходился со state.
-- [x] **#21** Опция с `value: "0"` не могла быть дефолтом — `!empty("0")`.

@@ -4,6 +4,10 @@
 тестового покрытия закрыты). Компактный чек-лист статусов — в
 [bugs-checklist.md](bugs-checklist.md).
 
+Здесь только **открытое**. Закрытые пункты (#1, #3–#6, #15, #17–#21) —
+в [archived/bugs.md](archived/bugs.md); нумерация сквозная, номера не
+переиспользуются.
+
 ## Легенда
 
 - **P0** — активный баг, ломает пользовательский поток, чинить срочно.
@@ -15,34 +19,6 @@
 ---
 
 ## P0 — активные баги
-
-### 1. ~~`FormRulesBuilder::parseExtraRules` тихо роняет list-form правила~~ ✅ исправлено
-
-**Файл:** `app/Services/Forms/FormRulesBuilder.php:170`
-
-**Симптом:** пользовательские правила валидации из
-`FormField::$rules = ['min:3', 'email']` (list-форма JSON) не применяются
-— поле не проверяется вовсе. Работает только assoc-форма
-`['min:3' => 'message']`.
-
-**Трасса:** `array_keys(['min:3']) = [0]`, `range(0, 0) = [0]`, `[0] !== [0]` →
-`false` → `$isAssoc = false` → `return [[], $messages]`.
-
-**Контекст:** админ-UI (`FieldsRelationManager.php:131`) — свободный JSON,
-не запрещает list-форму → админ легко напишет её и ничего не заметит.
-
-**Фикс:** коммит `12bd4dd`. Один проход по массиву разбирает все три формы:
-int-ключ несёт правило, string-ключ — пару `правило => сообщение`, пустые
-и не-string правила отбрасываются. Побочно закрыт худший кейс — смешанная
-форма, где `array_keys()` протаскивал int-ключ `0` в набор правил и
-валидатор падал с `BadMethodCallException`. Сообщения по-прежнему
-привязываются только к assoc-записям, list-форма в helper-text
-(`rules_help`) описана.
-
-**Тест:** `tests/Unit/Services/Forms/FormRulesBuilderTest.php` — добавлены
-кейсы list-формы и смешанной.
-
----
 
 ### 2. `SendFormSubmissionEmails` не идемпотентен
 
@@ -70,137 +46,6 @@ int-ключ несёт правило, string-ключ — пару `прави
 **Фикс:** отложен 2026-08-04 как некритичный. Разобранный план с выбором
 варианта, решениями и тестами —
 [plans/form-mail-idempotency/README.md](form-mail-idempotency/README.md).
-
----
-
-### 3. ~~`SubmitFormAction` оставляет осиротевшие файлы при откате транзакции~~ ✅ исправлено
-
-**Файлы:** `app/Actions/Forms/SubmitFormAction.php:57`,
-`app/Services/Forms/SubmissionFilesStorer.php:45`
-
-**Симптом:** `$upload->store()` пишет файл на диск **до** `FormSubmissionFile::create`;
-если DB-транзакция откатится (deadlock, constraint), файл остаётся в
-`storage/app/public/forms/{formId}/{submissionId}/` без строки в БД.
-
-**Фикс:** коммиты `85f7630`, `a484fdb`. Выбран первый вариант:
-`SubmissionFilesStorer::store()` получил четвёртый параметр
-`array &$stored`, куда пишет `disk`/`path` **до** `FormSubmissionFile::create`;
-`SubmitFormAction` обернул `DB::transaction` в `try/catch` и удаляет
-накопленные пути перед пробросом исключения. Передача по ссылке нужна
-именно для падения на середине `store()` — о файле, чья строка ещё не
-создана, узнать больше неоткуда. Каждый `delete` завёрнут в `rescue()`,
-чтобы сбой уборки не подменил собой исходную причину отката.
-
-**Тесты:** `tests/Unit/Actions/SubmitFormActionTest.php` — откат после
-`store()` и откат на середине `store()` (multi-поле, падение на втором
-файле). Оба фиксируют предусловие «файлы были на диске» снимком
-`allFiles()` изнутри listener'а: без него тест остаётся зелёным в мире,
-где `store()` вообще не вызывался.
-
-**Осталось:** `Storage::delete()` оставляет пустой каталог
-`forms/{formId}/{submissionId}/`; `UploadedFile::store()` может вернуть
-`false` и тогда в `$stored` ляжет `['path' => false]` вразрез с докблоком
-(то же значение давно пишется в `FormSubmissionFile.path`).
-
----
-
-## P1 — активные, но узкие
-
-### 4. `HasSectionOptions::getSectionOption` возвращает null от первого пустого блока
-
-**Файл:** `app/Models/Concerns/HasSectionOptions.php:29`
-
-**Симптом:** если на странице **два** блока с одинаковым типом (например,
-`bg-for-main-section`), а у первого нет ключа `bgForMainSection` в
-`data`, метод вернёт `null` и до второго блока не дойдёт.
-
-**Трасса:**
-
-```php
-foreach ($blocks as $block) {
-    if (($block['type'] ?? null) !== $blockType) continue;
-    return $block['data'][$key] ?? null;  // ← первый матч, даже если null
-}
-```
-
-**Фикс:** пропускать первый матч, если `data.$key` пустой; или
-явно ограничить блоки-настройки одним экземпляром на страницу через
-Filament (`->maxItems(1)`).
-
----
-
-### 5. `SubmissionsStats` «Новых сегодня» не фильтрует по статусу
-
-**Файл:** `app/Filament/Widgets/SubmissionsStats.php:22`
-
-**Симптом:** счётчик показывает **все** отправки за день (включая
-`Sent`, `Failed`, `Processing`), хотя лейбл «Новые сегодня» и соседние
-счётчики фильтруют по статусу.
-
-**Фикс:** добавить `->where('status', FormSubmissionStatus::New->value)`.
-
----
-
-### 6. ~~`SubmitFormAction::handle` — update статуса вне транзакции~~ ✅ исправлено
-
-**Файл:** `app/Actions/Forms/SubmitFormAction.php:67`
-
-**Симптом:** `$submission->update(['status' => Processing])` идёт **после**
-`DB::transaction`. Если update упадёт (сетевой сбой БД в момент между
-commit и update), submission останется в статусе `New` с уже
-загруженными файлами и НЕбез диспатча job'а.
-
-**Фикс:** коммит `85f7630`. Взят первый вариант — update переехал внутрь
-транзакции, последним шагом перед `return`. Диспатч
-`SendFormSubmissionEmails` остался снаружи, после коммита.
-
-**Хвосты выбранного варианта** (обсуждаемо, второй вариант их снимает):
-
-- На каждую отправку остаётся лишний UPDATE: `SubmissionCreator` пишет
-  `New`, следом транзакция переводит в `Processing`.
-- `FormSubmissionStatus::New` больше не наблюдаем снаружи транзакции — в
-  `app/` он читается только в `SubmissionCreator`, так что в фильтре
-  статусов админки это теперь всегда пустой пункт.
-- Тест отката (#3) завязан на этот самый UPDATE — ловит
-  `FormSubmission::updating`. Переход на второй вариант (`Processing`
-  сразу в `SubmissionCreator::create`) потребует переписать его на другой
-  триггер.
-
----
-
-### 15. ~~Счётчики категорий в `NewsFull`/`ProjectsFull` включают будущие публикации~~ ✅ исправлено
-
-**Файлы:**
-- `app/Livewire/Components/NewsFull.php:27-30` (`posts as posts_count`)
-- `app/Livewire/Components/ProjectsFull.php:27-30` (`projects as projects_count`)
-- `app/Livewire/Components/AbstractContentFull.php:127-134` (`getTotalCount` — счётчик «Все»)
-
-**Симптом:** после фикса 91c28d2 (`NewsQuery`/`ProjectsQuery` → `->published()`)
-выборка карточек фильтрует посты/проекты по `published_at <= now()`, а
-счётчики — нет. Расхождение: «Строительство (5)», клик → показывает 3
-(два будущих не рендерятся, но всё ещё учтены в счётчике). Аналогично
-для tab «Все».
-
-**Трасса:**
-```php
-// NewsFull.php
-->withCount([
-    'posts as posts_count' => fn ($q) =>
-    $q->where('status', PostStatus::Published->value),
-]);
-// без ->where('published_at', '<=', now())
-```
-
-**Фикс:**
-- В обоих `buildCategoriesQuery` — добавить `->where('published_at', '<=', now())`
-  внутрь замыкания `withCount`.
-- В `AbstractContentFull::getTotalCount` — добавить `->where($contentTable.'.published_at', '<=', now())`
-  после фильтра по статусу.
-- Тесты: `tests/Feature/Livewire/NewsFullTest.php`, `ProjectsFullTest.php` — добавить
-  кейс «пост с будущим `published_at` не учитывается в счётчике».
-
-**Почему P1, не P0:** визуальное расхождение цифр в списке категорий.
-Не ломает функциональность, но выглядит как баг.
 
 ---
 
@@ -362,74 +207,6 @@ try {
 
 ---
 
-## Найдено и исправлено в ревью 2026-08-04
-
-Ревью правок сессии 2026-08-03 (`4a89f3b..a437c80`). Все пять уже в
-`staging` — коммиты `4e2e324` и `16c934f`.
-
-### 17. ~~Кнопка «Смотреть все» в `related-thematic` игнорировала override категорий~~ ✅ исправлено
-
-**Файл:** `app/Blocks/Renderers/RelatedThematicRenderer.php:67` (удалён)
-
-URL строился по первой категории записи, а подборка — по
-`data.categoryIds`, если он задан. Итог: сетка из категории X, ссылка на
-Y; при пустых категориях записи — `/news` вообще без фильтра.
-
-**Фикс:** кнопка удалена целиком вместе с полем `btnLabel` и ключом
-`related_thematic_all_btn`.
-
----
-
-### 18. ~~Плейсхолдер-опция протекала в `radio`~~ ✅ исправлено
-
-**Файл:** `app/Presenters/Forms/PublicFormPresenter.php:81`
-
-`normalizeOptions` пропускал пустой `value` при `disabled: true` для
-любого типа поля, а `radio.blade.php` про `disabled` не знал → строка
-плейсхолдера рендерилась обычной выбираемой радиокнопкой с пустым
-значением.
-
-**Фикс:** `normalizeOptions($options, $type)` — исключение только для
-`select`; в `radio.blade.php` добавлен `@disabled`.
-
----
-
-### 19. ~~Дефолт `radio` не отражался в разметке~~ ✅ исправлено
-
-**Файл:** `resources/views/components/form/fields/radio.blade.php`
-
-`applySelectAndRadioDefaults` клал дефолт в state, `select.blade.php`
-получил `@selected` (`d9a5919`), а radio — нет. Визуально ничего не было
-отмечено, но форма отправляла дефолт.
-
-**Фикс:** `@checked($opt['default'] ?? false)`.
-
----
-
-### 20. ~~Несколько `default: true` — DOM расходился со state~~ ✅ исправлено
-
-**Файл:** `app/Presenters/Forms/PublicFormPresenter.php`
-
-`extractDefault` брала первую помеченную опцию, а `@selected` помечал
-все → браузер применял последнюю.
-
-**Фикс:** `normalizeOptions` гасит флаг у всех, кроме первой;
-`extractDefault` читает уже нормализованный список, а не сырой JSON.
-
----
-
-### 21. ~~Опция с `value: "0"` не могла быть дефолтом~~ ✅ исправлено
-
-**Файл:** `app/Presenters/Forms/PublicFormPresenter.php:119` (в старой редакции)
-
-`! empty($row['value'])` считает `"0"` пустым → опция отбрасывалась как
-дефолт, хотя `normalizeOptions` её оставлял.
-
-**Фикс:** ушёл вместе с рефактором из #20 — условие по сырому JSON
-исчезло.
-
----
-
 ## Проверено — не баг
 
 - **Опциональный `select` с плейсхолдером отправляется штатно.**
@@ -445,10 +222,13 @@ test_select_placeholder_passes_when_optional_and_blocks_when_required`.
 
 ## Definition of done секции
 
-- P0 (пункты 1–3) закрыты, добавлены регресс-тесты.
-- P1 (пункты 4–6) закрыты или сознательно отложены с записью в
-  `.ai/decisions.md`.
-- P2/P3 — по приоритету.
+- P0: #1 и #3 закрыты с регресс-тестами, #2 сознательно отложен с планом
+  в [form-mail-idempotency](form-mail-idempotency/README.md).
+- P1: закрыты все (#4, #5, #6, #15) — часть исправлением, часть решением
+  «не чиним», обоснования в [archived/bugs.md](archived/bugs.md).
+- P2/P3 — по приоритету, все открыты.
 - Чек-лист `bugs-checklist.md` синхронен с этим файлом.
+- Закрытый пункт переезжает в `archived/bugs.md` целиком, вместе с
+  обоснованием и принятыми остаточными рисками.
 - Баги, найденные в ревью после 2026-07-14, дописываются сюда со
   сквозной нумерацией (последний номер — 21).
