@@ -18,6 +18,7 @@ final class BgForMainSection
     {
         return Block::make(self::key())->label(__('panel.bg_for_main_section'))
             ->columnSpanFull()
+            ->maxItems(1)
             ->schema([
 
                 FileUpload::make('bgForMainSection')->label(__(key: 'panel.image'))

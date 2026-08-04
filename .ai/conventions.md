@@ -36,6 +36,15 @@
   `app/Filament/Components/BlockRegistry/BlockRegistry.php` для админки.
 - Шаблоны — Blade в `resources/views/components/sections/` или соответствующем
   подкаталоге.
+- **Блок-настройка** (не рендерится, а задаёт параметр секции — тип из
+  `HasSectionOptions::sectionOptionBlockTypes()`, сейчас
+  `bg-for-main-section`) регистрируется с `->maxItems(1)` и **только в той
+  секции, которую настраивает**. Причина: `getSectionOption()` читает
+  первый блок нужного типа и дальше не идёт, а `getBlocksForSection()`
+  видит только верхний уровень JSON-колонки — экземпляр во вложенном
+  билдере (`tabs()`, `modal()`) не прочитается никогда. `maxItems`
+  фильтрует пикер, но не валидирует сохранение и не чинит уже
+  сохранённые записи.
 
 ## Alt у картинок
 
