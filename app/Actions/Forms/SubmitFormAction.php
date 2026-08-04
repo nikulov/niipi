@@ -74,9 +74,10 @@ final class SubmitFormAction
             });
         } catch (Throwable $e) {
             // строки FormSubmissionFile откатились вместе с транзакцией,
-            // а файлы на диске — нет
+            // а файлы на диске — нет. rescue(): сбой уборки логируется, но не
+            // подменяет собой исходную причину отката
             foreach ($stored as $file) {
-                Storage::disk($file['disk'])->delete($file['path']);
+                rescue(fn () => Storage::disk($file['disk'])->delete($file['path']));
             }
 
             throw $e;
