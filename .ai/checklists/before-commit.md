@@ -1,6 +1,6 @@
 # Перед коммитом
 
-- [ ] Прогнал `vendor/bin/sail bin pint --dirty --format agent` (если менял PHP).
+- [ ] Прогнал `vendor/bin/sail bin pint --dirty` (если менял PHP).
 - [ ] Прогнал `vendor/bin/sail npm run format` (если менял Blade/CSS/JS).
 - [ ] Прогнал релевантные тесты: `vendor/bin/sail artisan test --compact --filter=...`.
 - [ ] Не удалил и не отключил существующие тесты без явного разрешения.

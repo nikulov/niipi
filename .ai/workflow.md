@@ -37,8 +37,11 @@ vendor/bin/sail artisan test --compact --filter=SomeFeatureTest
 После правки PHP:
 
 ```bash
-vendor/bin/sail bin pint --dirty --format agent
+vendor/bin/sail bin pint --dirty
 ```
+
+`--format` понимает только `txt` (дефолт), `json`, `checkstyle`, `junit`,
+`gitlab`. Проверка без правки файлов — `--test`.
 
 Для фронтенда (Blade/CSS/JS):
 

@@ -2,7 +2,10 @@
 
 ## Стиль кода PHP
 
-- **Форматтер:** Laravel Pint. Запуск: `vendor/bin/sail bin pint --dirty --format agent` после правки PHP.
+- **Форматтер:** Laravel Pint. Запуск: `vendor/bin/sail bin pint --dirty` после правки PHP.
+  `--format` принимает только `txt` (дефолт), `json`, `checkstyle`, `junit`, `gitlab`;
+  `agent` и `github` не поддерживаются (pint 1.25) — падает с «Format [...] is not supported».
+  Проверка без правки файлов — `--test`.
 - **PSR-4:** `App\` → `app/`, `Database\Factories\` → `database/factories/`,
   `Database\Seeders\` → `database/seeders/`, `Tests\` → `tests/`.
 

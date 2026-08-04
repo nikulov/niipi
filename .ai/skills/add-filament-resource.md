@@ -67,4 +67,4 @@ app/Filament/Resources/{Models}/
 
 - Миграция + `sail artisan migrate`
 - Тесты `tests/Feature/` для сложной логики
-- `sail bin pint --dirty --format agent`
+- `sail bin pint --dirty`

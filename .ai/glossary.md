@@ -13,5 +13,5 @@
 - **Sail** — Laravel Sail (Docker-обёртка). Все команды идут через `vendor/bin/sail`.
 - **Valkey** — Redis-совместимый сервис в `compose.yaml` (открытый форк Redis).
 - **Mailpit** — dev-перехватчик исходящих писем.
-- **Pint** — Laravel Pint, PHP-форматтер (запуск: `sail bin pint --dirty --format agent`).
+- **Pint** — Laravel Pint, PHP-форматтер (запуск: `sail bin pint --dirty`).
 - **PublicForm** — Livewire-компонент публичной формы (`app/Livewire/Forms/PublicForm.php`).

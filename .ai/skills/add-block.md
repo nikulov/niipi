@@ -48,5 +48,5 @@ final class TitleRenderer implements BlockRenderer
 
 ## Форматирование
 
-- `vendor/bin/sail bin pint --dirty --format agent`
+- `vendor/bin/sail bin pint --dirty`
 - `vendor/bin/sail npm run format` для blade
