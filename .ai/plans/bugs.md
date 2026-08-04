@@ -16,7 +16,7 @@
 
 ## P0 — активные баги
 
-### 1. `FormRulesBuilder::parseExtraRules` тихо роняет list-form правила
+### 1. ~~`FormRulesBuilder::parseExtraRules` тихо роняет list-form правила~~ ✅ исправлено
 
 **Файл:** `app/Services/Forms/FormRulesBuilder.php:170`
 
@@ -31,16 +31,16 @@
 **Контекст:** админ-UI (`FieldsRelationManager.php:131`) — свободный JSON,
 не запрещает list-форму → админ легко напишет её и ничего не заметит.
 
-**Фикс (варианты):**
+**Фикс:** коммит `12bd4dd`. Один проход по массиву разбирает все три формы:
+int-ключ несёт правило, string-ключ — пару `правило => сообщение`, пустые
+и не-string правила отбрасываются. Побочно закрыт худший кейс — смешанная
+форма, где `array_keys()` протаскивал int-ключ `0` в набор правил и
+валидатор падал с `BadMethodCallException`. Сообщения по-прежнему
+привязываются только к assoc-записям, list-форма в helper-text
+(`rules_help`) описана.
 
-- В `parseExtraRules` для не-assoc возвращать `[array_values($rules), []]`
-  (без пользовательских сообщений).
-- Плюс: документировать в helper-text редактора, что assoc-форма
-  привязывает сообщения к правилам.
-
-**Тест:** есть `tests/Unit/Services/Forms/FormRulesBuilderTest.php` — сейчас
-проверяет только assoc-форму (адаптирован под текущее поведение). После
-фикса добавить кейс с list-формой.
+**Тест:** `tests/Unit/Services/Forms/FormRulesBuilderTest.php` — добавлены
+кейсы list-формы и смешанной.
 
 ---
 
@@ -67,7 +67,7 @@
 
 ---
 
-### 3. `SubmitFormAction` оставляет осиротевшие файлы при откате транзакции
+### 3. ~~`SubmitFormAction` оставляет осиротевшие файлы при откате транзакции~~ ✅ исправлено
 
 **Файлы:** `app/Actions/Forms/SubmitFormAction.php:57`,
 `app/Services/Forms/SubmissionFilesStorer.php:45`
@@ -76,13 +76,25 @@
 если DB-транзакция откатится (deadlock, constraint), файл остаётся в
 `storage/app/public/forms/{formId}/{submissionId}/` без строки в БД.
 
-**Фикс (варианты):**
+**Фикс:** коммиты `85f7630`, `a484fdb`. Выбран первый вариант:
+`SubmissionFilesStorer::store()` получил четвёртый параметр
+`array &$stored`, куда пишет `disk`/`path` **до** `FormSubmissionFile::create`;
+`SubmitFormAction` обернул `DB::transaction` в `try/catch` и удаляет
+накопленные пути перед пробросом исключения. Передача по ссылке нужна
+именно для падения на середине `store()` — о файле, чья строка ещё не
+создана, узнать больше неоткуда. Каждый `delete` завёрнут в `rescue()`,
+чтобы сбой уборки не подменил собой исходную причину отката.
 
-- Собрать список загруженных путей и удалить их в `catch` вокруг
-  `DB::transaction`.
-- Собирать `UploadedFile` и вызывать `store()` **после** успешного
-  commit транзакции (но тогда submissionId для пути надо знать заранее).
-- Периодическая cron-задача чистки orphan-файлов (не идеально).
+**Тесты:** `tests/Unit/Actions/SubmitFormActionTest.php` — откат после
+`store()` и откат на середине `store()` (multi-поле, падение на втором
+файле). Оба фиксируют предусловие «файлы были на диске» снимком
+`allFiles()` изнутри listener'а: без него тест остаётся зелёным в мире,
+где `store()` вообще не вызывался.
+
+**Осталось:** `Storage::delete()` оставляет пустой каталог
+`forms/{formId}/{submissionId}/`; `UploadedFile::store()` может вернуть
+`false` и тогда в `$stored` ляжет `['path' => false]` вразрез с докблоком
+(то же значение давно пишется в `FormSubmissionFile.path`).
 
 ---
 
@@ -123,7 +135,7 @@ Filament (`->maxItems(1)`).
 
 ---
 
-### 6. `SubmitFormAction::handle` — update статуса вне транзакции
+### 6. ~~`SubmitFormAction::handle` — update статуса вне транзакции~~ ✅ исправлено
 
 **Файл:** `app/Actions/Forms/SubmitFormAction.php:67`
 
@@ -132,9 +144,21 @@ Filament (`->maxItems(1)`).
 commit и update), submission останется в статусе `New` с уже
 загруженными файлами и НЕбез диспатча job'а.
 
-**Фикс:** переместить update внутрь транзакции, либо ставить `Processing`
-сразу при создании (в `SubmissionCreator::create`), а не переводить
-после.
+**Фикс:** коммит `85f7630`. Взят первый вариант — update переехал внутрь
+транзакции, последним шагом перед `return`. Диспатч
+`SendFormSubmissionEmails` остался снаружи, после коммита.
+
+**Хвосты выбранного варианта** (обсуждаемо, второй вариант их снимает):
+
+- На каждую отправку остаётся лишний UPDATE: `SubmissionCreator` пишет
+  `New`, следом транзакция переводит в `Processing`.
+- `FormSubmissionStatus::New` больше не наблюдаем снаружи транзакции — в
+  `app/` он читается только в `SubmissionCreator`, так что в фильтре
+  статусов админки это теперь всегда пустой пункт.
+- Тест отката (#3) завязан на этот самый UPDATE — ловит
+  `FormSubmission::updating`. Переход на второй вариант (`Processing`
+  сразу в `SubmissionCreator::create`) потребует переписать его на другой
+  триггер.
 
 ---
 

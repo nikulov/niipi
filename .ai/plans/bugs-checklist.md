@@ -4,15 +4,16 @@
 
 ## P0 — активные баги
 
-- [ ] **#1** `FormRulesBuilder::parseExtraRules` роняет list-form правила
+- [x] **#1** `FormRulesBuilder::parseExtraRules` роняет list-form правила
       → пользовательская валидация не срабатывает.
-      `app/Services/Forms/FormRulesBuilder.php:170`
+      `app/Services/Forms/FormRulesBuilder.php:170` — `12bd4dd`
 - [ ] **#2** `SendFormSubmissionEmails` не идемпотентен → админ получает
       дубли писем при retry.
       `app/Jobs/SendFormSubmissionEmails.php:96`
-- [ ] **#3** `SubmitFormAction` оставляет осиротевшие файлы при откате
+- [x] **#3** `SubmitFormAction` оставляет осиротевшие файлы при откате
       DB-транзакции.
       `app/Actions/Forms/SubmitFormAction.php:57` + `SubmissionFilesStorer.php:45`
+      — `85f7630`, `a484fdb`
 
 ## P1 — активные, узкие
 
@@ -22,9 +23,10 @@
 - [ ] **#5** `SubmissionsStats` «Новых сегодня» считает все статусы, не
       только `New`.
       `app/Filament/Widgets/SubmissionsStats.php:22`
-- [ ] **#6** `SubmitFormAction::handle` — update статуса вне транзакции
+- [x] **#6** `SubmitFormAction::handle` — update статуса вне транзакции
       → orphan state при сбое БД между commit и update.
-      `app/Actions/Forms/SubmitFormAction.php:67`
+      `app/Actions/Forms/SubmitFormAction.php:67` — `85f7630`
+      (хвосты выбранного варианта — в [bugs.md](bugs.md#6))
 - [x] **#15** Счётчики категорий и «Все» в `NewsFull`/`ProjectsFull` не
       фильтруют по `published_at <= now()` → расхождение с выборкой
       карточек после фикса 91c28d2.
