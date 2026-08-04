@@ -49,9 +49,8 @@ public function before(User $user, string $ability): ?bool
 - `delete`/`deleteAny`/`forceDelete*` → всегда false (только Admin через `before()`).
 
 Политики автоподхватываются Laravel по конвенции `App\Policies\{Model}Policy`.
-Массив `$policies` в `App\Providers\AuthServiceProvoider` — легаси и не работает
-(класс не расширяет `Illuminate\Foundation\Support\Providers\AuthServiceProvider`),
-оставлен как памятка.
+`AuthServiceProvider` с массивом `$policies` в проекте был, но не работал и
+удалён 2026-08-04 — регистрировать политики вручную не нужно.
 
 ## Реальная роль-матрица (staging)
 

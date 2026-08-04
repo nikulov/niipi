@@ -77,8 +77,10 @@
     - `allowedRoles()`.
 - Права на действия — политики `App\Policies\*Policy` наследуют `BasePolicy`
   (Admin bypass через `before()`).
-- Политики автоподхватываются по конвенции `App\Policies\{Model}Policy`;
-  массив `$policies` в `AuthServiceProvoider` — легаси, не работает.
+- Политики автоподхватываются по конвенции `App\Policies\{Model}Policy`.
+  `AuthServiceProvider` в проекте нет — он не нужен и заводить его для
+  регистрации политик не надо (удалён 2026-08-04 вместе с мёртвым
+  массивом `$policies`).
 
 ## Presenter / Composer
 

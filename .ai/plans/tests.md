@@ -30,7 +30,6 @@
 | Presenters/Blocks                         |        4 |           4 | ✅                                                 |
 | Presenters/Forms                          |        2 |           2 | ✅                                                 |
 | Providers/AppServiceProvider              |        1 |           1 | ✅                                                 |
-| Providers/AuthServiceProvoider            |        1 |           0 | ➖ мёртвый код (см. `.ai/decisions.md`)            |
 | Providers/Filament/AdminPanelProvider     |        1 |           1 | ✅                                                 |
 | Services/ContentRenderer                  |        1 |           1 | ✅                                                 |
 | Services/Forms/\*                         |        6 |           6 | ⚠️ 2 падают (см. ниже)                             |
@@ -186,6 +185,4 @@ bottomSection/tabs/modal` содержат ожидаемые ключи бло�
 
 - Прогон `--coverage` (line coverage) — если понадобится, добавим отдельной
   задачей: нужен Xdebug/pcov в Sail-образе.
-- Тесты на `Providers/AuthServiceProvoider` — по `.ai/decisions.md`
-  это мёртвый код, кандидат на удаление.
 - Тесты на `Http/Controllers/MenuController` — пустой класс без роутов.

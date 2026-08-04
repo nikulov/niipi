@@ -8,7 +8,7 @@
 - `deploy-stage.sh`, `deploy-prod.sh` — деплой (staging/prod)
 - `prettier.config.cjs`, `.prettierignore` — форматирование (blade + tailwind)
 - `bootstrap/app.php` — сборка приложения
-- `bootstrap/providers.php` — список провайдеров (внимание к опечатке `AuthServiceProvoider`)
+- `bootstrap/providers.php` — список провайдеров (`AppServiceProvider`, `AdminPanelProvider`)
 - `routes/web.php` — публичные роуты
 - `routes/console.php` — консольные команды (только `inspire`)
 - `vite.config.js` — Vite + `@tailwindcss/vite`
@@ -48,7 +48,6 @@
 | `Presenters/Blocks/`                                                  | `NewsBlockPresenter`, `NewsFullPresenter`, `ProjectsBlockPresenter`, `ProjectsFullPresenter` — DTO карточек                                                  |
 | `Enums/`                                                              | `PageStatus`, `PostStatus`, `ProjectStatus`, `CategoryStatus`, `CategoryType`, `FormApplicantType`, `FormSubmissionStatus`, `UserRole`                       |
 | `Providers/AppServiceProvider.php`                                    | Observers, `helpers.php`, `Filament\Notifications::alignment`, share `year`, `settings`, footer composer                                                     |
-| `Providers/AuthServiceProvoider.php`                                  | **Имя с опечаткой** (класс и файл). `protected $policies = [...]` — мёртвый код (Laravel 12 автоподхватывает политики по конвенции)                          |
 | `Providers/Filament/AdminPanelProvider.php`                           | Панель `admin`, тема, автопоиск ресурсов/страниц/виджетов, hardcoded `navigationGroups` (русские строки)                                                     |
 | `Observers/`                                                          | `PageObserver`, `PostObserver`, `ProjectObserver` — авто-`published_at` при переходе в Published                                                             |
 | `Policies/BasePolicy.php`                                             | `before()` = Admin bypass; хелперы `isEditor`, `isViewer`, `isEditorOrViewer`                                                                                |

@@ -15,8 +15,8 @@
 
 - `bootstrap/app.php` — сборка приложения. Регистрирует `app/helpers.php`.
   Cookie `cookie_consent` исключён из encryptCookies. Health-check: `/up`.
-- `bootstrap/providers.php` — три провайдера: `AppServiceProvider`,
-  `AuthServiceProvoider` (sic), `Filament\AdminPanelProvider`.
+- `bootstrap/providers.php` — два провайдера: `AppServiceProvider`,
+  `Filament\AdminPanelProvider`.
 - `routes/web.php`:
     - `/` → `ContentController@page`
     - `/news/{slug}` → `ContentController@post`
@@ -49,9 +49,8 @@
 - `Presenters/Blocks/` (карточки News/Projects) и `Presenters/Forms/`
   (public form + submission) — тонкие DTO/адаптеры для view.
 - `Enums/` — статусы и типы (см. [domain.md](domain.md)).
-- `Providers/` — сервис-провайдеры, включая Filament. `AuthServiceProvoider`
-  (sic) — с опечаткой в имени, `$policies` массив не используется
-  (Laravel 12 подхватывает политики по конвенции).
+- `Providers/` — сервис-провайдеры, включая Filament. `AuthServiceProvider`
+  нет и не нужен: политики Laravel 12 подхватывает по конвенции.
 - `Observers/` — `PostObserver`, `PageObserver`, `ProjectObserver`: авто-
   выставляют `published_at = now()` при первой публикации.
 - `Policies/` — все наследуют `BasePolicy` (Admin bypass через `before()`).

@@ -32,9 +32,11 @@ class PostPolicy extends BasePolicy
 ## Регистрация
 
 Политики подхватываются **автоматически** по конвенции
-`App\Policies\{Model}Policy`. Массив `$policies` в `AuthServiceProvoider` — легаси
-(остался от Laravel <=10), в текущем Laravel 12 не используется, поскольку
-класс не расширяет `Illuminate\Foundation\Support\Providers\AuthServiceProvider`.
+`App\Policies\{Model}Policy`. Регистрировать их где-либо не нужно:
+`AuthServiceProvider` в проекте нет — он держал легаси-массив `$policies`
+от Laravel ≤10, который не работал (класс не расширял
+`Illuminate\Foundation\Support\Providers\AuthServiceProvider`), и удалён
+2026-08-04 вместе с самим файлом.
 
 ## Правило
 
