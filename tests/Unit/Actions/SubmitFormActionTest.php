@@ -7,6 +7,7 @@ use App\Enums\FormSubmissionStatus;
 use App\Jobs\SendFormSubmissionEmails;
 use App\Models\Form;
 use App\Models\FormField;
+use App\Models\FormSubmission;
 use App\Models\FormSubmissionFile;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
@@ -14,6 +15,7 @@ use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
+use RuntimeException;
 use Tests\TestCase;
 
 class SubmitFormActionTest extends TestCase
@@ -107,6 +109,55 @@ class SubmitFormActionTest extends TestCase
         Bus::assertDispatched(SendFormSubmissionEmails::class, function (SendFormSubmissionEmails $job) use ($submission) {
             return $job->submissionId === $submission->id;
         });
+    }
+
+    public function test_stored_files_are_removed_when_transaction_rolls_back(): void
+    {
+        Bus::fake();
+        Storage::fake('public');
+
+        $form = Form::create([
+            'name' => 'contact',
+            'title' => 'Contact',
+        ]);
+
+        FormField::create([
+            'form_id' => $form->id,
+            'type' => 'file',
+            'name' => 'resume',
+            'label' => 'Resume',
+            'required' => true,
+            'is_enabled' => true,
+            'extra' => [
+                'disk' => 'public',
+                'accept_mimes' => ['application/pdf'],
+                'max_size_kb' => 256,
+            ],
+        ]);
+
+        // падение уже после того, как файл лёг на диск: статус переводится
+        // в Processing последним шагом транзакции
+        FormSubmission::updating(function (): void {
+            throw new RuntimeException('boom');
+        });
+
+        try {
+            app(SubmitFormAction::class)->handle(
+                $form,
+                [],
+                ['resume' => UploadedFile::fake()->create('resume.pdf', 10, 'application/pdf')],
+                '127.0.0.1',
+                'UA'
+            );
+
+            $this->fail('RuntimeException expected');
+        } catch (RuntimeException) {
+            // ожидаемо — исключение пробрасывается наружу после уборки
+        }
+
+        $this->assertSame(0, FormSubmission::count());
+        $this->assertSame(0, FormSubmissionFile::count());
+        $this->assertSame([], Storage::disk('public')->allFiles());
     }
 
     public function test_handle_throws_when_rate_limited(): void
