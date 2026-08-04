@@ -7,9 +7,10 @@
 - [x] **#1** `FormRulesBuilder::parseExtraRules` роняет list-form правила
       → пользовательская валидация не срабатывает.
       `app/Services/Forms/FormRulesBuilder.php:170` — `12bd4dd`
-- [ ] **#2** `SendFormSubmissionEmails` не идемпотентен → админ получает
-      дубли писем при retry.
+- [ ] **#2** `SendFormSubmissionEmails` не идемпотентен → дубли админу,
+      падение одного плеча глушит второе, статус врёт.
       `app/Jobs/SendFormSubmissionEmails.php:96`
+      План отложен: [form-mail-idempotency](form-mail-idempotency/README.md)
 - [x] **#3** `SubmitFormAction` оставляет осиротевшие файлы при откате
       DB-транзакции.
       `app/Actions/Forms/SubmitFormAction.php:57` + `SubmissionFilesStorer.php:45`
