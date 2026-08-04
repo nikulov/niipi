@@ -12,7 +12,9 @@ final class FormEmailTemplateRenderer
     {
         $context = $this->buildContext($submission);
 
-        return $this->replacePlaceholders($template, $context);
+        // Тема — почтовый заголовок, не HTML: экранированные сущности
+        // получатель увидел бы как есть («Иванов &amp; Партнёры»).
+        return $this->replacePlaceholders($template, $context, escape: false);
     }
 
     public function renderBodyHtml(FormSubmission $submission, string $templateMd): string
@@ -31,9 +33,9 @@ final class FormEmailTemplateRenderer
         return $this->replacePlaceholders($templateMd, $context);
     }
 
-    private function replacePlaceholders(string $template, array $context): string
+    private function replacePlaceholders(string $template, array $context, bool $escape = true): string
     {
-        return preg_replace_callback('/\{\{\s*([a-zA-Z0-9_.-]+)\s*\}\}/', function (array $m) use ($context) {
+        return preg_replace_callback('/\{\{\s*([a-zA-Z0-9_.-]+)\s*\}\}/', function (array $m) use ($context, $escape) {
             $key = $m[1];
 
             $value = Arr::get($context, $key);
@@ -47,7 +49,7 @@ final class FormEmailTemplateRenderer
             }
 
             // Важно: экранируем, чтобы юзер не смог инжектить HTML в письма.
-            return e((string) $value);
+            return $escape ? e((string) $value) : (string) $value;
         }, $template) ?? $template;
     }
 
