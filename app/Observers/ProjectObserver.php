@@ -7,13 +7,13 @@ use App\Models\Project;
 
 class ProjectObserver
 {
-    public function saving(Project $post): void
+    public function saving(Project $project): void
     {
         if (
-            $post->status === ProjectStatus::Published &&
-            $post->published_at === null
+            $project->status === ProjectStatus::Published &&
+            $project->published_at === null
         ) {
-            $post->published_at = now();
+            $project->published_at = now();
         }
     }
 }
