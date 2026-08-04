@@ -11,37 +11,37 @@ class PagePolicy extends BasePolicy
     {
         return $this->isViewer($user);
     }
-    
+
     public function view(User $user, Page $page): bool
     {
         return $this->isViewer($user);
     }
-    
+
     public function create(User $user): bool
     {
         return false;
     }
-    
+
     public function update(User $user, Page $page): bool
     {
         return false;
     }
-    
+
     public function delete(User $user, Page $page): bool
     {
         return false;
     }
-    
+
     public function deleteAny(User $user): bool
     {
         return false;
     }
-    
-    public function forceDelete(User $user, Post $post): bool
+
+    public function forceDelete(User $user, Page $page): bool
     {
         return false;
     }
-    
+
     public function forceDeleteAny(User $user): bool
     {
         return false;

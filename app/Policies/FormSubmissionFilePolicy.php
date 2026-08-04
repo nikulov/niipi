@@ -11,37 +11,37 @@ class FormSubmissionFilePolicy extends BasePolicy
     {
         return $this->isViewer($user);
     }
-    
+
     public function view(User $user, FormSubmissionFile $file): bool
     {
         return $this->isViewer($user);
     }
-    
+
     public function create(User $user): bool
     {
         return false;
     }
-    
+
     public function update(User $user, FormSubmissionFile $file): bool
     {
         return false;
     }
-    
+
     public function delete(User $user, FormSubmissionFile $file): bool
     {
         return false;
     }
-    
+
     public function deleteAny(User $user): bool
     {
         return false;
     }
-    
-    public function forceDelete(User $user, Post $post): bool
+
+    public function forceDelete(User $user, FormSubmissionFile $file): bool
     {
         return false;
     }
-    
+
     public function forceDeleteAny(User $user): bool
     {
         return false;

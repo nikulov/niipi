@@ -11,37 +11,37 @@ class CategoryPolicy extends BasePolicy
     {
         return $this->isEditorOrViewer($user);
     }
-    
+
     public function view(User $user, Category $category): bool
     {
         return $this->isEditorOrViewer($user);
     }
-    
+
     public function create(User $user): bool
     {
         return $this->isEditor($user);
     }
-    
+
     public function update(User $user, Category $category): bool
     {
         return $this->isEditor($user);
     }
-    
+
     public function delete(User $user, Category $category): bool
     {
         return false;
     }
-    
+
     public function deleteAny(User $user): bool
     {
         return false;
     }
-    
-    public function forceDelete(User $user, Post $post): bool
+
+    public function forceDelete(User $user, Category $category): bool
     {
         return false;
     }
-    
+
     public function forceDeleteAny(User $user): bool
     {
         return false;
