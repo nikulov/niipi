@@ -41,7 +41,7 @@
 | `PageStatus`           | Draft/Published/Archived                                                 | Page                |
 | `PostStatus`           | Draft/Published/Archived                                                 | Post                |
 | `ProjectStatus`        | Draft/Published/Archived                                                 | Project             |
-| `CategoryStatus`       | Draft/Published(=`active`)/Archived — **value `Published` = `'active'`** | Category            |
+| `CategoryStatus`       | Draft/Published(=`active`)/Archived — **value `Published` = `'active'` намеренно: категория «активна», а не «опубликована». Не выравнивать с `'published'`** | Category            |
 | `CategoryType`         | Posts/Projects                                                           | Category (тематика) |
 | `FormApplicantType`    | Person/Company/All                                                       | Form                |
 | `FormSubmissionStatus` | New/Processing/Sent/Failed                                               | FormSubmission      |
