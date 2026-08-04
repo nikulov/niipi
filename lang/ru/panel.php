@@ -300,7 +300,6 @@ return [
 
     'related_thematic_label' => 'Тематическая подборка',
     'related_thematic' => 'По этой теме',
-    'related_thematic_all_btn' => 'Смотреть все',
     'related_thematic_categories_hint' => 'Если не выбрано — берутся категории текущей записи.',
 
     'media_file' => 'Медиа-файл',

@@ -99,24 +99,7 @@ class RelatedThematicRendererTest extends TestCase
         $this->assertMatchesRegularExpression('/Post [012]/', $html);
     }
 
-    public function test_button_url_uses_first_category_for_post(): void
-    {
-        $catA = $this->postCategory('Alpha', 'alpha');
-        $catB = $this->postCategory('Beta', 'beta');
-
-        $current = $this->publishedPost('Current', 'current');
-        // orderBy('name') → alpha раньше beta
-        $current->categories()->attach([$catA->id, $catB->id]);
-
-        $related = $this->publishedPost('Related', 'related');
-        $related->categories()->attach($catA->id);
-
-        $html = app(RelatedThematicRenderer::class)->render([], $current, 0);
-
-        $this->assertStringContainsString('newsCategory=alpha', $html);
-    }
-
-    public function test_project_variant_uses_project_query_and_projects_prefix(): void
+    public function test_project_variant_uses_project_query(): void
     {
         $category = $this->projectCategory('Design', 'design');
 
@@ -129,8 +112,8 @@ class RelatedThematicRendererTest extends TestCase
         $html = app(RelatedThematicRenderer::class)->render([], $current, 0);
 
         $this->assertStringContainsString('Related', $html);
+        $this->assertStringContainsString('projects/related', $html);
         $this->assertStringNotContainsString('Current', $html);
-        $this->assertStringContainsString('projectsCategory=design', $html);
     }
 
     private function postCategory(string $name, string $slug): Category

@@ -4,10 +4,6 @@
 
 ## Active
 
-- [Блок «Тематическая подборка»](related-thematic-block/README.md) —
-  новый полиморфный блок для Post/Project: 5 квадратных карточек по
-  категориям текущей записи, кнопка «Смотреть все» с префилтром первой
-  категории. Добавляется дефолтом в main-секцию перед `CategoryList`.
 - [Nginx: HSTS и канонические редиректы](nginx-hsts/README.md) —
   раскатано 2026-07-30: prod получил HSTS + security headers + TLS 1.2/1.3
   + HTTP/2 + PHP-restriction + `/storage/`-защиту + `$realpath_root`;
@@ -20,6 +16,11 @@ _(пусто)_
 
 ## Archive
 
+- [Блок «Тематическая подборка»](archived/related-thematic-block.md) —
+  полиморфный блок для Post/Project: сетка карточек по категориям текущей
+  записи, `excludeId` в `NewsQuery`/`ProjectsQuery`, дефолтная вставка в
+  main-секцию перед `CategoryList`. Committed 2026-08-03 (`2feaf76`,
+  `aa49322`), кнопка «Смотреть все» убрана по ревью 2026-08-04.
 - [Копирование сущности](archived/duplicate-entity.md) — row action
   «Копировать» для Post/Project/Page/Form: суффиксы «(копия N)» /
   `-copy-N`, сброс статуса, клон пивотов и HasMany, `CopyAction` с

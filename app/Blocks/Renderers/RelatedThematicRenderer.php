@@ -41,9 +41,7 @@ final class RelatedThematicRenderer implements BlockRenderer
             ? array_values(array_map('intval', $overrideIds))
             : null;
 
-        $modelCategories = $model->categories()->orderBy('name')->get();
-
-        $categoryIds = $overrideIds ?? $modelCategories->pluck('id')->all();
+        $categoryIds = $overrideIds ?? $model->categories()->pluck('categories.id')->all();
 
         if (empty($categoryIds)) {
             return '';
@@ -64,18 +62,9 @@ final class RelatedThematicRenderer implements BlockRenderer
             : ProjectsBlockPresenter::make($m)
         )->toArray();
 
-        $firstCategorySlug = $modelCategories->first()?->slug;
-        $basePath = $isPost ? 'news' : 'projects';
-        $queryParam = $isPost ? 'newsCategory' : 'projectsCategory';
-
-        $btnUrl = url($basePath.($firstCategorySlug ? '?'.$queryParam.'='.urlencode($firstCategorySlug) : ''));
-
         return view('components.sections.related-thematic', [
             'title' => $data['title'] ?? '',
-            'btnLabel' => $data['btnLabel'] ?? __('panel.related_thematic_all_btn'),
-            'btnUrl' => $btnUrl,
             'cards' => $cards,
-            'isPost' => $isPost,
         ])->render();
     }
 }

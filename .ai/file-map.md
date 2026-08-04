@@ -73,10 +73,11 @@ YandexMap.
 `RelatedThematic` — полиморфный блок «тематическая подборка»: в Post показывает
 связанные новости, в Project — связанные проекты. Категории по умолчанию —
 из `$model->categories()`; в `data.categoryIds` можно переопределить. Текущий
-Post/Project исключается из выдачи. Кнопка «Смотреть все» ведёт на
-`/news?newsCategory={slug}` / `/projects?projectsCategory={slug}` с первой
-категорией текущей записи. Только в `mainSection`. Добавляется дефолтом при
-создании Post/Project (`CreatePost`/`CreateProject`) перед `CategoryList`.
+Post/Project исключается из выдачи. Только заголовок и сетка карточек —
+кнопки «Смотреть все» нет (убрана 2026-08-04; в JSON старых записей мог
+остаться ключ `btnLabel`, рендерер его игнорирует). Только в `mainSection`.
+Добавляется дефолтом при создании Post/Project (`CreatePost`/`CreateProject`)
+перед `CategoryList`.
 
 Filament-компоненты в `app/Filament/Components/` — один-в-один с рендерерами
 плюс `BgForMainSection` (спец-блок настройки).

@@ -1,9 +1,6 @@
 @props([
     'title' => '',
-    'btnLabel' => '',
-    'btnUrl' => '#',
     'cards' => [],
-    'isPost' => true,
 ])
 
 @php
@@ -38,6 +35,4 @@
             </a>
         @endforeach
     </div>
-
-    <x-buttons.btn url="{{ $btnUrl }}" text="{{ $btnLabel }}" type="btn-secondary" class="self-center md:self-end" />
 </section>

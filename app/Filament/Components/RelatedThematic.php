@@ -27,19 +27,16 @@ final class RelatedThematic
 
                 Textarea::make('title')->label(__('panel.title'))
                     ->autosize()
-                    ->columnSpan(4)
+                    ->columnSpan(9)
                     ->default(__('panel.related_thematic'))
                     ->required(),
 
                 TextInput::make('limit')->label(__('panel.limit'))
-                    ->columnSpan(2)
-                    ->numeric()
+                    ->columnSpan(3)
+                    ->integer()
+                    ->minValue(1)
+                    ->maxValue(20)
                     ->default(5)
-                    ->required(),
-
-                TextInput::make('btnLabel')->label(__('panel.btn_label'))
-                    ->columnSpan(6)
-                    ->default(__('panel.related_thematic_all_btn'))
                     ->required(),
 
                 Select::make('categoryIds')->label(__('panel.category'))
@@ -59,7 +56,6 @@ final class RelatedThematic
                 'data' => [
                     'title' => __('panel.related_thematic'),
                     'limit' => 5,
-                    'btnLabel' => __('panel.related_thematic_all_btn'),
                 ],
             ],
         ];
