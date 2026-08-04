@@ -4,9 +4,9 @@
 тестового покрытия закрыты). Компактный чек-лист статусов — в
 [bugs-checklist.md](bugs-checklist.md).
 
-Здесь только **открытое**. Закрытые пункты (#1, #3–#6, #15, #17–#21) —
-в [archived/bugs.md](archived/bugs.md); нумерация сквозная, номера не
-переиспользуются.
+Здесь только **открытое**. Закрытые пункты (#1, #3–#7, #10, #12, #15,
+#17–#21) — в [archived/bugs.md](archived/bugs.md); нумерация сквозная,
+номера не переиспользуются.
 
 ## Легенда
 
@@ -51,28 +51,6 @@
 
 ## P2 — латентные / низкий приоритет
 
-### 7. Type-hint `Post $post` в forceDelete/forceDeleteAny (11 полиси)
-
-**Файлы:** `CategoryPolicy.php:37`, `FooterPolicy.php:37`,
-`FormFieldPolicy.php:37`, `FormPolicy.php:37`, `FormSubmissionFilePolicy.php:37`,
-`FormSubmissionPolicy.php:37`, `GlobalSettingPolicy.php:37`,
-`MenuPolicy.php:37`, `PagePolicy.php:37`, `ProjectPolicy.php:37`,
-`UserPolicy.php:37` (`ProjectPolicy` ещё и в `view/update` использует
-`Project $post`, что валидно, но криво по именованию).
-
-**Симптом:** для Editor/Viewer (перед `before()` = null) вызов
-`Gate::forUser($editor)->allows('forceDelete', $category)` даёт
-`TypeError` — сигнатура ждёт `Post`, а прилетает `Category`.
-
-**Почему не активно сейчас:** `grep 'use SoftDeletes' app/Models/`
-пусто → Filament не показывает force-delete UI. TypeError достижим
-только если кто-то добавит SoftDeletes или вручную вызовет Gate.
-
-**Фикс:** заменить `Post $post` на соответствующий тип модели во всех
-полиси. Быстрый механический патч.
-
----
-
 ### 8. `FormRulesBuilder::filterMimesRules` слишком агрессивен
 
 **Файл:** `app/Services/Forms/FormRulesBuilder.php:148`
@@ -108,23 +86,6 @@
 
 ## P3 — cleanup
 
-### 10. Пустой try/catch в `PublicForm::submit`
-
-**Файл:** `app/Livewire/Forms/PublicForm.php:99`
-
-```php
-try {
-    $action->handle(...);
-    ...
-} catch (ValidationException $e) {
-    throw $e;
-}
-```
-
-`catch { throw }` — no-op. Убрать блок целиком, оставить голый вызов.
-
----
-
 ### 11. Опечатка `AuthServiceProvoider` + мёртвый `$policies`
 
 **Файл:** `app/Providers/AuthServiceProvoider.php`
@@ -135,15 +96,6 @@ try {
 
 **Фикс:** либо переименовать (изменить `bootstrap/providers.php`), либо
 удалить файл целиком, если провайдер действительно пустой.
-
----
-
-### 12. `ProjectObserver` параметр называется `$post`
-
-**Файл:** `app/Observers/ProjectObserver.php:10`
-
-`public function saving(Project $post)` — переменная `$post` для модели
-`Project`. Копипаста из `PostObserver`. Переименовать в `$project`.
 
 ---
 
@@ -226,7 +178,8 @@ test_select_placeholder_passes_when_optional_and_blocks_when_required`.
   в [form-mail-idempotency](form-mail-idempotency/README.md).
 - P1: закрыты все (#4, #5, #6, #15) — часть исправлением, часть решением
   «не чиним», обоснования в [archived/bugs.md](archived/bugs.md).
-- P2/P3 — по приоритету, все открыты.
+- P2/P3 — по приоритету. Механические (#7, #10, #12) закрыты одним
+  заходом, остались #8, #9, #11, #13, #14, #16.
 - Чек-лист `bugs-checklist.md` синхронен с этим файлом.
 - Закрытый пункт переезжает в `archived/bugs.md` целиком, вместе с
   обоснованием и принятыми остаточными рисками.

@@ -1,8 +1,8 @@
 # Чек-лист: баги и cleanup
 
 Детали и обоснования — в [bugs.md](bugs.md). Здесь только галочки по
-**открытым** пунктам. Закрытые (#1, #3–#6, #15, #17–#21) переехали в
-[archived/bugs.md](archived/bugs.md).
+**открытым** пунктам. Закрытые (#1, #3–#7, #10, #12, #15, #17–#21)
+переехали в [archived/bugs.md](archived/bugs.md).
 
 ## P0
 
@@ -17,8 +17,6 @@ _(пусто — все закрыты)_
 
 ## P2 — латентные
 
-- [ ] **#7** Type-hint `Post $post` в forceDelete/forceDeleteAny в 11
-      полиси (латентно: SoftDeletes нигде не используется).
 - [ ] **#8** `FormRulesBuilder::filterMimesRules` сносит валидный
       `mimes:*` вместе с `mimetypes:*` (латентно: UI скрывает rules для
       file-полей).
@@ -29,14 +27,9 @@ _(пусто — все закрыты)_
 
 ## P3 — cleanup
 
-- [ ] **#10** Пустой try/catch в `PublicForm::submit`.
-      `app/Livewire/Forms/PublicForm.php:99`
 - [ ] **#11** Опечатка `AuthServiceProvoider` + мёртвый `$policies`
       (документировано в `.ai/decisions.md`).
       `app/Providers/AuthServiceProvoider.php`
-- [ ] **#12** `ProjectObserver::saving(Project $post)` — переименовать
-      параметр в `$project`.
-      `app/Observers/ProjectObserver.php:10`
 - [ ] **#13** `CategoryStatus::Published = 'active'` расходится с
       `'published'` в `Post/Page/ProjectStatus`.
       `app/Enums/CategoryStatus.php:10`

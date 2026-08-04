@@ -10,6 +10,9 @@
 | 4 | `getSectionOption` не видит второй блок-настройку | закрыт со стороны админки, `maxItems(1)` |
 | 5 | «Новых сегодня» не фильтрует по статусу | закрыт как косметика, не чинили |
 | 6 | Update статуса вне транзакции | исправлен, `85f7630` |
+| 7 | `Post $post` в `forceDelete` у 11 полиси | исправлен, `de3fd5f` |
+| 10 | Пустой try/catch в `PublicForm::submit` | исправлен, `64c132c` |
+| 12 | `ProjectObserver` принимает `$post` | исправлен, `d58ce9b` |
 | 15 | Счётчики категорий включают будущие публикации | исправлен, `b88045e` |
 | 17 | «Смотреть все» игнорировала override категорий | исправлен, `4e2e324` |
 | 18 | Плейсхолдер-опция протекала в `radio` | исправлен, `16c934f` |
@@ -168,6 +171,67 @@ commit и update), submission останется в статусе `New` с уж
   `FormSubmission::updating`. Переход на второй вариант (`Processing`
   сразу в `SubmissionCreator::create`) потребует переписать его на другой
   триггер.
+
+---
+
+### 7. ~~Type-hint `Post $post` в forceDelete (11 полиси)~~ ✅ исправлено
+
+**Файлы:** `CategoryPolicy`, `FooterPolicy`, `FormFieldPolicy`, `FormPolicy`,
+`FormSubmissionFilePolicy`, `FormSubmissionPolicy`, `GlobalSettingPolicy`,
+`MenuPolicy`, `PagePolicy`, `ProjectPolicy`, `UserPolicy` — во всех
+`forceDelete(User $user, Post $post)`, копипаста из `PostPolicy`.
+
+**Симптом:** сигнатура ждёт `Post`, а Laravel передаст модель самой
+полиси → `TypeError`.
+
+**Нашлось при фиксе (в исходной записи не было):** в 10 из 11 файлов
+`App\Models\Post` вообще **не импортирован**. В неймспейсе `App\Policies`
+голое `Post` резолвится в `App\Policies\Post` — класса с таким именем нет,
+то есть под такой аргумент не подходит вообще ничто. Импорт был только в
+`ProjectPolicy` (и в `PostPolicy`, где хинт правильный).
+
+**Почему не стреляло:** `forceDelete` вызывается только при мягком
+удалении, `SoftDeletes` нет ни в одной модели → Filament кнопку не
+показывает, право никто не запрашивает.
+
+**Фикс:** в каждой полиси свой тип модели; имя параметра взято такое же,
+как в соседних `view`/`update`/`delete` того же файла. В `ProjectPolicy`
+дополнительно убран осиротевший `use App\Models\Post;` и `Project $post`
+переименован в `$project` в `view`/`update`/`delete` (там же поправлен
+закомментированный пример «только свои»). `PostPolicy` не тронут —
+там хинт верный.
+
+**Имена параметров** из той же копипасты добиты следом, отдельным
+проходом: `Footer $form` → `$footer`, `Menu $page` → `$menu`,
+`GlobalSetting $page` → `$globalSetting`, `User $post` → `$model`
+(в `UserPolicy` оба аргумента типа `User`, имя `$user` занято первым).
+В `FormPolicy`, `PagePolicy` и `PostPolicy` имена `$form`/`$page`/`$post`
+законны — не трогали. Тела методов параметр нигде не используют, так что
+правка чисто сигнатурная.
+
+---
+
+### 10. ~~Пустой try/catch в `PublicForm::submit`~~ ✅ исправлено
+
+**Файл:** `app/Livewire/Forms/PublicForm.php:99`
+
+`catch (ValidationException $e) { throw $e; }` — no-op: ловит и тут же
+пробрасывает.
+
+**Фикс:** обёртка снята, тело поднято на уровень выше. Импорт
+`Illuminate\Validation\ValidationException` стал неиспользуемым и удалён.
+Поведение не изменилось — исключение как летело наружу, так и летит.
+
+---
+
+### 12. ~~`ProjectObserver` параметр называется `$post`~~ ✅ исправлено
+
+**Файл:** `app/Observers/ProjectObserver.php:10`
+
+`saving(Project $post)` — копипаста из `PostObserver`, тип верный, имя
+врёт.
+
+**Фикс:** `$post` → `$project`, вместе с тремя обращениями в теле.
 
 ---
 
