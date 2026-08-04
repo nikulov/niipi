@@ -26,6 +26,7 @@
 - [plans/tests.md](plans/tests.md) — покрытие тестами: инвентаризация и бэклог
 - [plans/bugs.md](plans/bugs.md) — баги и cleanup из deep-review (детали и трассы)
 - [plans/bugs-checklist.md](plans/bugs-checklist.md) — чек-лист по багам
+- [plans/bug-report-2026-08-04.md](plans/bug-report-2026-08-04.md) — баги с прода по логам (#23–#40)
 
 ## Рецепты
 
