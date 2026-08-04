@@ -5,7 +5,6 @@ namespace App\Livewire\Forms;
 use App\Actions\Forms\SubmitFormAction;
 use App\Models\Form;
 use App\Presenters\Forms\PublicFormPresenter;
-use Illuminate\Validation\ValidationException;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -81,24 +80,19 @@ final class PublicForm extends Component
 
         $uploads = $this->normalizeUploads($this->uploads);
 
-        try {
-            $action->handle(
-                $this->form,
-                $this->data,
-                $uploads,
-                request()->getClientIp(),
-                request()->userAgent(),
-            );
+        $action->handle(
+            $this->form,
+            $this->data,
+            $uploads,
+            request()->getClientIp(),
+            request()->userAgent(),
+        );
 
-            $this->submitted = true;
+        $this->submitted = true;
 
-            $this->reset(['data', 'uploads', 'website']);
+        $this->reset(['data', 'uploads', 'website']);
 
-            $this->dispatch('form-submitted', componentKey: $this->componentKey);
-
-        } catch (ValidationException $e) {
-            throw $e;
-        }
+        $this->dispatch('form-submitted', componentKey: $this->componentKey);
     }
 
     private function normalizeUploads(array $uploads): array
