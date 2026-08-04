@@ -96,6 +96,7 @@ return [
     'id' => 'ID',
     'no_submissions_for_preview' => 'No submissions for preview',
     'options_help' => 'Options help',
+    'options_help_select' => 'Array of options. The first row may act as a placeholder: {"label": "Choose a topic", "value": "", "disabled": true, "default": true} — an empty value is allowed only together with "disabled": true, and such an option keeps HTML5 required working. The "default" flag is honoured only on the first option that carries it.',
     'preview_admin_mail' => 'Admin mail preview',
     'preview_user_mail' => 'User mail preview',
     'send_test_admin_mail' => 'Send test admin mail',

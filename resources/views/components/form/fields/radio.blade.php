@@ -13,6 +13,8 @@
                 type="radio"
                 wire:model="{{ $field['wireModel'] }}"
                 value="{{ $opt['value'] ?? '' }}"
+                @checked($opt['default'] ?? false)
+                @disabled($opt['disabled'] ?? false)
                 @if (! empty($field["required"] ?? null) && $loop->first) required aria-required="true" @endif
                 class="peer sr-only"
             />

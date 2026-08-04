@@ -50,9 +50,59 @@ class PublicFormTest extends TestCase
             ],
         ]);
 
-        Livewire::test(PublicForm::class, ['formId' => $form->id])
+        $html = Livewire::test(PublicForm::class, ['formId' => $form->id])
             ->assertSet('data.category', 'a')
-            ->assertSet('data.choice', 'y');
+            ->assertSet('data.choice', 'y')
+            ->html();
+
+        // разметка должна совпадать со state, иначе выбранное «на глаз» и отправленное расходятся
+        $this->assertMatchesRegularExpression('/value="a"[^>]*selected/', $html);
+        $this->assertMatchesRegularExpression('/value="y"[^>]*checked/', $html);
+        $this->assertDoesNotMatchRegularExpression('/value="x"[^>]*checked/', $html);
+    }
+
+    public function test_select_placeholder_passes_when_optional_and_blocks_when_required(): void
+    {
+        $optional = $this->formWithPlaceholderSelect(required: false);
+
+        // «in:» — не implicit-правило, для пустой строки Laravel его пропускает
+        Livewire::test(PublicForm::class, ['formId' => $optional->id])
+            ->assertSet('data.topic', '')
+            ->call('submit')
+            ->assertHasNoErrors()
+            ->assertSet('submitted', true);
+
+        $required = $this->formWithPlaceholderSelect(required: true);
+
+        Livewire::test(PublicForm::class, ['formId' => $required->id])
+            ->assertSet('data.topic', '')
+            ->call('submit')
+            ->assertHasErrors('data.topic')
+            ->assertSet('submitted', false);
+    }
+
+    private function formWithPlaceholderSelect(bool $required): Form
+    {
+        $form = Form::create([
+            'name' => 'placeholder-'.($required ? 'required' : 'optional'),
+            'title' => 'Contact',
+            'is_active' => true,
+        ]);
+
+        FormField::create([
+            'form_id' => $form->id,
+            'type' => 'select',
+            'name' => 'topic',
+            'label' => 'Topic',
+            'required' => $required,
+            'is_enabled' => true,
+            'options' => [
+                ['label' => 'Выберите тему', 'value' => '', 'disabled' => true, 'default' => true],
+                ['label' => 'ПЗЗ', 'value' => 'pzz'],
+            ],
+        ]);
+
+        return $form;
     }
 
     public function test_honeypot_field_skips_submission(): void

@@ -24,7 +24,7 @@
 - **FormField** — поле формы:
     - `type`, `name`, `label` (longtext), `placeholder`
     - `required` (bool), `is_enabled` (bool), `sort`
-    - `options` (json — `[{value, label, default?, disabled?}, ...]`; `disabled` работает только для `select` (`<option disabled>`); пустой `value` допустим **только** при `disabled: true` — паттерн плейсхолдера с сохранением HTML5 `required`)
+    - `options` (json — `[{value, label, default?, disabled?}, ...]`; пустой `value` допустим **только** у `select` вместе с `disabled: true` — паттерн плейсхолдера с сохранением HTML5 `required`, у `radio` такие строки отбрасываются. `default` учитывается только у **первой** помеченной опции — `PublicFormPresenter::normalizeOptions()` гасит флаг у остальных, чтобы разметка (`@selected`/`@checked`) совпадала со state Livewire)
     - `rules` (json — assoc `правило => сообщение` или список)
     - `extra` (json — для `type=file`: `multiple`, `max_files`, `max_size_kb`, `accept_mimes`)
 - **FormSubmission** — заявка. `data` (json), `status` (`FormSubmissionStatus`),

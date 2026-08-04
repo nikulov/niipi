@@ -33,6 +33,8 @@ final class PublicFormPresenter
 
             $extra = is_array($field->extra) ? $field->extra : [];
 
+            $options = $this->normalizeOptions($field->options, (string) $field->type);
+
             $out[] = [
                 'key' => (string) $field->id,
                 'type' => (string) $field->type,
@@ -43,9 +45,9 @@ final class PublicFormPresenter
                 'wireModel' => $isFile ? "uploads.{$field->name}" : "data.{$field->name}",
                 'errorKey' => $isFile ? "uploads.{$field->name}" : "data.{$field->name}",
                 'inputType' => $this->mapInputType((string) $field->type),
-                'options' => $this->normalizeOptions($field->options),
+                'options' => $options,
                 'component' => $this->mapComponent((string) $field->type),
-                'default' => $this->extractDefault($field->options),
+                'default' => $this->extractDefault($options),
                 'file' => $isFile ? $this->presentFileConfig($extra) : null,
             ];
         }
@@ -62,13 +64,14 @@ final class PublicFormPresenter
         };
     }
 
-    private function normalizeOptions($options): array
+    private function normalizeOptions($options, string $type): array
     {
         if (! is_array($options)) {
             return [];
         }
 
         $out = [];
+        $defaultTaken = false;
 
         foreach ($options as $row) {
             if (! is_array($row)) {
@@ -78,15 +81,19 @@ final class PublicFormPresenter
             $value = (string) ($row['value'] ?? '');
             $disabled = (bool) ($row['disabled'] ?? false);
 
-            if ($value === '' && ! $disabled) {
+            // Пустой value — только плейсхолдер select'а: <option value="" disabled>
+            if ($value === '' && ! ($disabled && $type === 'select')) {
                 continue;
             }
+
+            $default = ! $defaultTaken && (bool) ($row['default'] ?? false);
+            $defaultTaken = $defaultTaken || $default;
 
             $out[] = [
                 'value' => $value,
                 'label' => (string) ($row['label'] ?? $value),
                 'disabled' => $disabled,
-                'default' => (bool) ($row['default'] ?? false),
+                'default' => $default,
             ];
         }
 
@@ -106,19 +113,11 @@ final class PublicFormPresenter
         };
     }
 
-    private function extractDefault($options): ?string
+    private function extractDefault(array $options): ?string
     {
-        if (! is_array($options)) {
-            return null;
-        }
-
-        foreach ($options as $row) {
-            if (
-                is_array($row)
-                && ! empty($row['default'])
-                && (! empty($row['value']) || ! empty($row['disabled']))
-            ) {
-                return (string) ($row['value'] ?? '');
+        foreach ($options as $option) {
+            if ($option['default']) {
+                return $option['value'];
             }
         }
 
