@@ -210,6 +210,7 @@ return [
     'rules_help' => 'Additional validation rules. Format: JSON object.
                     Example: {"min:3":"","max:255":"","regex:/^[a-z0-9_]+$/i":"Only latin letters and digits"}
                     Empty value uses the default message.
+                    A plain list works too: ["min:3","max:255"] — with default messages.
                     Do not include "required" here — it is controlled by the Required toggle.',
     'field_type' => 'Field type',
     'field_label' => 'Field label',

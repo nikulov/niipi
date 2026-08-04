@@ -332,6 +332,87 @@ try {
 
 ---
 
+## Найдено и исправлено в ревью 2026-08-04
+
+Ревью правок сессии 2026-08-03 (`4a89f3b..a437c80`). Все пять уже в
+`staging` — коммиты `4e2e324` и `16c934f`.
+
+### 17. ~~Кнопка «Смотреть все» в `related-thematic` игнорировала override категорий~~ ✅ исправлено
+
+**Файл:** `app/Blocks/Renderers/RelatedThematicRenderer.php:67` (удалён)
+
+URL строился по первой категории записи, а подборка — по
+`data.categoryIds`, если он задан. Итог: сетка из категории X, ссылка на
+Y; при пустых категориях записи — `/news` вообще без фильтра.
+
+**Фикс:** кнопка удалена целиком вместе с полем `btnLabel` и ключом
+`related_thematic_all_btn`.
+
+---
+
+### 18. ~~Плейсхолдер-опция протекала в `radio`~~ ✅ исправлено
+
+**Файл:** `app/Presenters/Forms/PublicFormPresenter.php:81`
+
+`normalizeOptions` пропускал пустой `value` при `disabled: true` для
+любого типа поля, а `radio.blade.php` про `disabled` не знал → строка
+плейсхолдера рендерилась обычной выбираемой радиокнопкой с пустым
+значением.
+
+**Фикс:** `normalizeOptions($options, $type)` — исключение только для
+`select`; в `radio.blade.php` добавлен `@disabled`.
+
+---
+
+### 19. ~~Дефолт `radio` не отражался в разметке~~ ✅ исправлено
+
+**Файл:** `resources/views/components/form/fields/radio.blade.php`
+
+`applySelectAndRadioDefaults` клал дефолт в state, `select.blade.php`
+получил `@selected` (`d9a5919`), а radio — нет. Визуально ничего не было
+отмечено, но форма отправляла дефолт.
+
+**Фикс:** `@checked($opt['default'] ?? false)`.
+
+---
+
+### 20. ~~Несколько `default: true` — DOM расходился со state~~ ✅ исправлено
+
+**Файл:** `app/Presenters/Forms/PublicFormPresenter.php`
+
+`extractDefault` брала первую помеченную опцию, а `@selected` помечал
+все → браузер применял последнюю.
+
+**Фикс:** `normalizeOptions` гасит флаг у всех, кроме первой;
+`extractDefault` читает уже нормализованный список, а не сырой JSON.
+
+---
+
+### 21. ~~Опция с `value: "0"` не могла быть дефолтом~~ ✅ исправлено
+
+**Файл:** `app/Presenters/Forms/PublicFormPresenter.php:119` (в старой редакции)
+
+`! empty($row['value'])` считает `"0"` пустым → опция отбрасывалась как
+дефолт, хотя `normalizeOptions` её оставлял.
+
+**Фикс:** ушёл вместе с рефактором из #20 — условие по сырому JSON
+исчезло.
+
+---
+
+## Проверено — не баг
+
+- **Опциональный `select` с плейсхолдером отправляется штатно.**
+  `FormRulesBuilder::optionValues()` выбрасывает пустые значения из
+  `Rule::in()`, а в state лежит `''` — выглядит так, будто `nullable` +
+  `in:` обязаны ронять отправку. Не роняют: Laravel пропускает
+  неимплицитные правила для пустой строки
+  (`Validator::presentOrRuleIsImplicit`). Обе ветки — optional проходит,
+  required падает — закреплены в `PublicFormTest::
+test_select_placeholder_passes_when_optional_and_blocks_when_required`.
+
+---
+
 ## Definition of done секции
 
 - P0 (пункты 1–3) закрыты, добавлены регресс-тесты.
@@ -339,3 +420,5 @@ try {
   `.ai/decisions.md`.
 - P2/P3 — по приоритету.
 - Чек-лист `bugs-checklist.md` синхронен с этим файлом.
+- Баги, найденные в ревью после 2026-07-14, дописываются сюда со
+  сквозной нумерацией (последний номер — 21).

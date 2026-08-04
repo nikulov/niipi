@@ -61,7 +61,7 @@ class FormRulesBuilderTest extends TestCase
             ],
         ]);
 
-        $builder = new FormRulesBuilder();
+        $builder = new FormRulesBuilder;
         [$rules, $messages] = $builder->build($form);
 
         $this->assertSame(['required', 'min:3'], $rules['data.name']);
@@ -112,7 +112,7 @@ class FormRulesBuilderTest extends TestCase
             'rules' => ['dimensions:min_width=10' => 'слишком узко'],
         ]);
 
-        $builder = new FormRulesBuilder();
+        $builder = new FormRulesBuilder;
         [$rules, $messages] = $builder->build($form);
 
         $this->assertSame(
@@ -127,5 +127,53 @@ class FormRulesBuilderTest extends TestCase
         );
 
         $this->assertSame('слишком узко', $messages['data.photos.dimensions']);
+    }
+
+    public function test_list_form_rules_are_applied_without_messages(): void
+    {
+        [$rules, $messages] = $this->buildFor(['min:3', 'max:10']);
+
+        $this->assertSame(['nullable', 'min:3', 'max:10'], $rules['data.name']);
+        $this->assertSame([], $messages);
+    }
+
+    public function test_mixed_form_keeps_both_shapes_and_leaks_no_integer_key(): void
+    {
+        [$rules, $messages] = $this->buildFor(['min:3', 'max:10' => 'Слишком длинно']);
+
+        $this->assertSame(['nullable', 'min:3', 'max:10'], $rules['data.name']);
+        $this->assertSame('Слишком длинно', $messages['data.name.max']);
+        $this->assertArrayNotHasKey('data.name.min', $messages);
+    }
+
+    public function test_blank_and_non_string_rules_are_dropped(): void
+    {
+        [$rules, $messages] = $this->buildFor(['  ', 'min:3', 42, ['nested']]);
+
+        $this->assertSame(['nullable', 'min:3'], $rules['data.name']);
+        $this->assertSame([], $messages);
+    }
+
+    /** @return array{0: array<string, mixed>, 1: array<string, string>} */
+    private function buildFor(array $fieldRules): array
+    {
+        $form = Form::create([
+            'name' => 'rules-'.uniqid(),
+            'title' => 'Rules',
+        ]);
+
+        FormField::create([
+            'form_id' => $form->id,
+            'type' => 'text',
+            'name' => 'name',
+            'label' => 'Name',
+            'required' => false,
+            'is_enabled' => true,
+            'rules' => $fieldRules,
+        ]);
+
+        $form->load('fields');
+
+        return (new FormRulesBuilder)->build($form);
     }
 }
