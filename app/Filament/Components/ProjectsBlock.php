@@ -53,6 +53,7 @@ final class ProjectsBlock
                     ->columnSpan(12)
                     ->multiple()
                     ->searchable()
+                    ->reorderable()
                     ->options(fn () => Project::query()->orderBy('title')->pluck('title', 'id'))
                     ->helperText(__(key: 'panel.pinned_projects_hint')),
 

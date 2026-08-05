@@ -7,9 +7,11 @@
 
 ## Что сделано (2026-08-05)
 
-- `ProjectsBlock` — `Select::make('projectIds')`, multiple + searchable,
-  опции из всех проектов по алфавиту. Порядок в блоке = порядок добавления
-  в поле (состояние Filament-мультиселекта хранит выбор в порядке клика).
+- `ProjectsBlock` — `Select::make('projectIds')`, multiple + searchable +
+  `reorderable()`, опции из всех проектов по алфавиту. Порядок в блоке =
+  порядок массива в state; выбранные элементы перетаскиваются мышью
+  (`Select::reorderable()` есть с Filament v4, флаг доезжает до
+  `dist/components/select.js`, отдельной сборки ассетов не требует).
 - `ProjectsQuery::byIds(array $ids)` — опубликованные проекты в порядке
   переданных id; неопубликованные и несуществующие id молча выпадают.
 - `ProjectsQuery::list()` — пятый аргумент расширен с `?int $excludeId` до
