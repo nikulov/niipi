@@ -45,18 +45,27 @@ class SubmissionDataNormalizerTest extends TestCase
 
         FormField::create([
             'form_id' => $form->id,
+            'type' => 'phone',
+            'name' => 'phone',
+            'label' => 'Phone',
+            'is_enabled' => true,
+        ]);
+
+        FormField::create([
+            'form_id' => $form->id,
             'type' => 'text',
             'name' => 'hidden',
             'label' => 'Hidden',
             'is_enabled' => false,
         ]);
 
-        $normalizer = new SubmissionDataNormalizer();
+        $normalizer = new SubmissionDataNormalizer;
 
         $validated = [
             'data' => [
                 'name' => 'Alice',
                 'agree' => '1',
+                'phone' => '+7 (452) 354 32 53',
                 'resume' => 'should_be_ignored',
                 'hidden' => 'secret',
                 'empty' => '   ',
@@ -70,6 +79,7 @@ class SubmissionDataNormalizerTest extends TestCase
         $this->assertSame([
             'agree' => true,
             'name' => 'Alice',
+            'phone' => '+74523543253',
         ], $normalized);
     }
 }

@@ -104,7 +104,7 @@ class FormRulesBuilderTest extends TestCase
         $builder = new FormRulesBuilder;
         [$rules, $messages] = $builder->build($form);
 
-        $regex = 'regex:/^\+7 \d{3} \d{3} \d{2} \d{2}$/';
+        $regex = 'regex:/^\+7 \(\d{3}\) \d{3} \d{2} \d{2}$/';
 
         $this->assertSame(['required', $regex], $rules['data.phone']);
         $this->assertSame(__('panel.invalid_phone'), $messages['data.phone.regex']);

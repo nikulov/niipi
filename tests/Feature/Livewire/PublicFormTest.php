@@ -108,10 +108,13 @@ class PublicFormTest extends TestCase
             ->assertSet('submitted', false);
 
         Livewire::test(PublicForm::class, ['formId' => $form->id])
-            ->set('data.phone', '+7 911 111 11 11')
+            ->set('data.phone', '+7 (452) 354 32 53')
             ->call('submit')
             ->assertHasNoErrors()
             ->assertSet('submitted', true);
+
+        // the mask is for humans; storage keeps the compact number
+        $this->assertSame('+74523543253', FormSubmission::latest('id')->first()->data['phone']);
     }
 
     private function formWithPlaceholderSelect(bool $required): Form

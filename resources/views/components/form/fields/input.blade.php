@@ -21,7 +21,7 @@
         x-on:keydown.backspace="onBackspace($event)"
         inputmode="tel"
         autocomplete="tel"
-        maxlength="16"
+        maxlength="18"
     @endif
     @if(!empty($field['placeholder'] ?? null)) placeholder="{{ $field['placeholder'] }}" @endif
     @if (!empty($field['required'] ?? null)) required aria-required="true" @endif

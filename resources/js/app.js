@@ -141,10 +141,14 @@ function phoneMask(model) {
         let out = '+7';
         let at = 1;
 
-        for (const size of groups) {
+        for (const [index, size] of groups.entries()) {
             if (at >= digits.length) break;
 
-            out += ' ' + digits.slice(at, at + size);
+            const part = digits.slice(at, at + size);
+
+            // the area code goes in parentheses, closed once it is complete
+            out += index === 0 ? ' (' + part + (part.length === size ? ')' : '') : ' ' + part;
+
             at += size;
         }
 
@@ -197,15 +201,23 @@ function phoneMask(model) {
             this.push('');
         },
 
-        // without this, Backspace on a separator eats a space the mask immediately restores
+        // Backspace must delete a digit, not a separator the mask immediately restores —
+        // ") " is two of them in a row. The "+7" prefix is fixed, so deleting into it is a no-op
         onBackspace(event) {
             const el = event.target;
-            const start = el.selectionStart;
+            let pos = el.selectionStart;
 
-            if (start === null || start === 0 || start !== el.selectionEnd) return;
-            if (/\d/.test(el.value[start - 1])) return;
+            if (pos === null || pos !== el.selectionEnd) return;
 
-            el.setSelectionRange(start - 1, start - 1);
+            while (pos > 0 && !/\d/.test(el.value[pos - 1])) pos--;
+
+            if (pos <= 2) {
+                event.preventDefault();
+
+                return;
+            }
+
+            el.setSelectionRange(pos, pos);
         },
 
         // wire:model listens to the same input event and listener order is not guaranteed,
