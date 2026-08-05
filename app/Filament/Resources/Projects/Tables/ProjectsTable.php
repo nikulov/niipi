@@ -32,6 +32,7 @@ class ProjectsTable
                     ->sortable(),
                 TextColumn::make('sort_order')->label(__('panel.sort_order'))
                     ->placeholder('—')
+                    ->toggleable(isToggledHiddenByDefault: true)
                     ->sortable(),
                 TextColumn::make('status')->label(__('panel.status'))
                     ->badge()
