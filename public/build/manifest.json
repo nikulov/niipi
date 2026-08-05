@@ -20,7 +20,7 @@
     "src": "public/fonts/centurygothic_bold.ttf"
   },
   "resources/css/app.css": {
-    "file": "assets/app-DUApQyZx.css",
+    "file": "assets/app-CpmbFUac.css",
     "src": "resources/css/app.css",
     "isEntry": true,
     "name": "app",
@@ -126,7 +126,7 @@
     "src": "resources/images/layout/slider-right-arrow.svg"
   },
   "resources/js/app.js": {
-    "file": "assets/app-wtTDRK4A.js",
+    "file": "assets/app-BUuq6iVZ.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true
