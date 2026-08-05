@@ -189,12 +189,12 @@ cp /etc/nginx/sites-enabled/niipigrad-stage /root/backup/niipigrad-stage.$(date 
       что add_header корректно наследуется в nested location).
       TLS 1.2 работает, TLS 1.1 отклоняется (`no protocols available`).
       `/wp-admin.php` → 404 (PHP-restriction активна).
-- [ ] 6. Через сутки-двое, если всё чисто:
-      - Обсудить подъём stage `max-age` до боевого. При подъёме нужно
-        будет добавить HSTS-дубли в `/vendor/livewire/`, `/vendor/filament/`
-        и статику stage-конфига (см. решение из «Key decisions & context»).
-      - Подача prod в hstspreload.org — только после отдельного решения
-        (см. выше про `preload`; сейчас директивы нет).
+- [x] 6. Followup прогнан 2026-08-05 — [followup-checks.md](followup-checks.md).
+      5 из 6 проверок чисто, SSL Labs дал **A+** без предупреждений.
+      Оба решения из этого пункта закрыты ещё 30.07: stage `max-age`
+      не поднимаем (стенд тестовый), в hstspreload не подаём.
+      **Остался хвост:** проверка OPcache / `$realpath_root` — деплоев
+      с 15.07 не было, проверяется первой же выкаткой.
 
 ## Итоговые конфиги
 
@@ -243,12 +243,19 @@ for url in \
 done
 ```
 
-Ожидаемо (после раскатки 2026-07-30):
+Ожидаемо (после раскатки 2026-07-30, перепроверено 2026-08-05):
 - Все prod-HTTPS-ответы — `HTTP/2`, HSTS + 3 security-headers
   (включая 403 из nested `/storage/.dotfile` — headers наследуются).
 - `/wp-admin.php` → `HTTP/2 404` (PHP-restriction).
 - HTTP-редиректы — без HSTS (по RFC 6797).
 - Stage main — `HTTP/2 200 + strict-transport-security: max-age=300`.
+- `/vendor/livewire/livewire.js` → **404, и это правильно**: ассеты
+  Livewire не публиковались, каталога `public/vendor/` нет, а
+  `location ^~ /vendor/livewire/` делает `try_files $uri =404`. Живой
+  ассет — `/livewire/livewire.min.js?id=…` (200, 152 КБ, через
+  `location ^~ /livewire/` → `/index.php`), его и надо проверять.
+  Строка с `/vendor/livewire/` в списке выше оставлена как проверка
+  того, что блок не отдаёт лишнего.
 
 TLS-версии:
 ```

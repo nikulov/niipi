@@ -12,6 +12,8 @@
       (`UnableToRetrieveMetadata` на `livewire-tmp`). 14 раз, из них
       **2 живых 04.08** — посетитель дважды не смог отправить заявку.
       `app/Actions/Forms/SubmitFormAction.php:53` ← `PublicForm.php:85`
+      **Отложен 2026-08-05** — нет репро на пустой путь, непонятно, что
+      чинить. См. [plan.md](plan.md) → «Отложено».
 - [x] **#24** `Undefined array key "successMessage"` → 500 при рендере
       публичной формы. 28 раз, **20 из них за две секунды 04.08**.
       Исправлен 2026-08-05: `#[Locked]` на серверные свойства `PublicForm`

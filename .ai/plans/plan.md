@@ -4,24 +4,41 @@
 
 ## Active
 
-- [Падения публичной формы](public-form-crashes/README.md) — две пятисотки на
-  `/contacts` из [bug-report-2026-08-04.md](bug-report-2026-08-04.md).
-  #24 (`successMessage` + `#[Locked]`) сделан 2026-08-05;
-  #23 (мёртвый файл в валидации) не начат.
+_(пусто)_
+
+## Wrapping up
+
 - [Nginx: HSTS и канонические редиректы](nginx-hsts/README.md) —
   раскатано 2026-07-30: prod получил HSTS + security headers + TLS 1.2/1.3
   + HTTP/2 + PHP-restriction + `/storage/`-защиту + `$realpath_root`;
   stage — HSTS `max-age=300` + HTTP/2. 2026-08-05 добавлен catch-all
   `zz-catch-all` — закрыт баг #25 (сайт отдавался по голому IP).
-  Осталось: followup-проверки
-  через сутки-двое ([followup-checks.md](nginx-hsts/followup-checks.md)).
+  Followup прогнан 2026-08-05
+  ([followup-checks.md](nginx-hsts/followup-checks.md)): 5 из 6 проверок
+  чисто, **SSL Labs A+** без предупреждений, ни одной пятисотки сверх
+  уже заведённых багов. **Хвост один:** проверить OPcache /
+  `$realpath_root` — деплоев с 15.07 не было, проверяется первой же
+  выкаткой. После неё план уходит в Archive.
 
-## Wrapping up
+## Отложено
 
-_(пусто)_
+Разобрано, план фикса готов, но браться пока не за что — ждём недостающего
+знания. Не архив: сделать надо.
+
+- [Падения публичной формы](public-form-crashes/README.md) — #24
+  (`successMessage` + `#[Locked]`) сделан 2026-08-05. **#23** (500 при
+  отправке с файлом, мёртвый `livewire-tmp/livewire-tmp` в валидации)
+  отложен 2026-08-05: механизм разобран, два слоя защиты расписаны, но
+  непонятно, что именно чинить — сценарий, порождающий пустой путь, не
+  воспроизведён. Снимается локальным репро на конфигурации поля
+  `multiple: true, max_files: 5, max_size_kb: 5120`.
 
 ## Archive
 
+- [Ручной порядок проектов](archived/project-sort-order.md) — поле
+  `sort_order` у Project: `1, 2, 3…` сверху, `0`/`null` — в конец, внутри
+  одного значения по дате. `scopeOrdered()` + `ProjectsQuery`, поле и
+  колонка в Filament. Сделано 2026-08-05.
 - [Идемпотентность писем по заявкам](archived/form-mail-idempotency.md) —
   баг #2, разобран и **закрыт 2026-08-04 как won't fix**: код оставлен как
   есть, риск дублей принят, готовый план фикса сохранён в файле.
