@@ -124,6 +124,43 @@ class ProjectsQueryTest extends TestCase
         ], $ids);
     }
 
+    public function test_by_ids_keeps_the_given_order_and_drops_unpublished(): void
+    {
+        $first = $this->publishedProject('First', 'first', now()->subDay());
+        $second = $this->publishedProject('Second', 'second', now()->subDays(2));
+
+        $draft = Project::create([
+            'title' => 'Draft',
+            'description' => 'Desc',
+            'slug' => 'draft',
+            'status' => ProjectStatus::Draft->value,
+            'published_at' => now()->subDay(),
+        ]);
+
+        $service = new ProjectsQuery;
+
+        $this->assertSame(
+            [$second->id, $first->id],
+            $service->byIds([$second->id, $draft->id, $first->id, 99999])->pluck('id')->all()
+        );
+
+        $this->assertTrue($service->byIds([])->isEmpty());
+    }
+
+    public function test_list_excludes_multiple_ids(): void
+    {
+        $kept = $this->publishedProject('Kept', 'kept', now()->subDay());
+        $excludedA = $this->publishedProject('Excluded A', 'excluded-a', now()->subDays(2));
+        $excludedB = $this->publishedProject('Excluded B', 'excluded-b', now()->subDays(3));
+
+        $ids = (new ProjectsQuery)
+            ->list(10, null, false, 'page', [$excludedA->id, $excludedB->id])
+            ->pluck('id')
+            ->all();
+
+        $this->assertSame([$kept->id], $ids);
+    }
+
     private function publishedProject(string $title, string $slug, $publishedAt, ?int $sortOrder = null): Project
     {
         return Project::create([

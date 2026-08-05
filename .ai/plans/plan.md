@@ -35,6 +35,10 @@ _(пусто)_
 
 ## Archive
 
+- [Закреплённые проекты в блоке «Проекты»](archived/projects-block-pinned.md) —
+  `data.projectIds` в `projects-block`: выбранные идут первыми, остаток
+  добирается автоподбором. Заодно починен ключ количества (`quantity` →
+  `limit`), который рендерер не читал. Сделано 2026-08-05.
 - [Ручной порядок проектов](archived/project-sort-order.md) — поле
   `sort_order` у Project: `1, 2, 3…` сверху, `0`/`null` — в конец, внутри
   одного значения по дате. `scopeOrdered()` + `ProjectsQuery`, поле и

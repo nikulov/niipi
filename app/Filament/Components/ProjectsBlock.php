@@ -4,8 +4,10 @@ namespace App\Filament\Components;
 
 use App\Filament\Forms\Components\MediaPickerAction;
 use App\Filament\Forms\Components\UrlInput;
+use App\Models\Project;
 use Filament\Forms\Components\Builder\Block;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 
@@ -30,9 +32,10 @@ final class ProjectsBlock
                     ->default(__(key: 'panel.projects'))
                     ->required(),
 
-                TextInput::make('quantity')->label(__(key: 'panel.quantity'))
+                TextInput::make('limit')->label(__(key: 'panel.quantity'))
                     ->columnSpan(1)
                     ->numeric()
+                    ->minValue(1)
                     ->default(4)
                     ->required(),
 
@@ -46,6 +49,13 @@ final class ProjectsBlock
                     ->required()
                     ->default('projects'),
 
+                Select::make('projectIds')->label(__(key: 'panel.pinned_projects'))
+                    ->columnSpan(12)
+                    ->multiple()
+                    ->searchable()
+                    ->options(fn () => Project::query()->orderBy('title')->pluck('title', 'id'))
+                    ->helperText(__(key: 'panel.pinned_projects_hint')),
+
                 FileUpload::make('bgImageUrl')->label(__(key: 'panel.bg_image'))
                     ->columnSpan(12)
                     ->preserveFilenames()
@@ -56,7 +66,7 @@ final class ProjectsBlock
                     ->visibility('public')
                     ->image()
                     ->imageEditor()
-                    ->imageEditorAspectRatios([null, '16:9'])
+                    ->imageEditorAspectRatioOptions([null, '16:9'])
                     ->required()
                     ->hintAction(MediaPickerAction::make('bgImageUrl', imagesOnly: true)),
             ]);

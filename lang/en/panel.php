@@ -6,6 +6,8 @@ return [
     'content' => 'Content',
     'image' => 'Image',
     'status' => 'Status',
+    'pinned_projects' => 'Pinned projects',
+    'pinned_projects_hint' => 'Shown first, in the order they were added. Remaining slots are filled automatically. Select nothing to fill the whole block automatically.',
     'sort_order' => 'Order',
     'sort_order_hint' => '1 comes first, then 2, 3… Empty or 0 goes last, sorted by publication date.',
     'published_at' => 'Published at',

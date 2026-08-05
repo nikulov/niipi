@@ -13,7 +13,7 @@ final class ProjectsQuery
         ?array $categoryIds = null,
         bool $paginate = false,
         string $pageName = 'page',
-        ?int $excludeId = null,
+        int|array|null $excludeIds = null,
     ): Collection|LengthAwarePaginator {
         $query = Project::query()
             ->with('categories')
@@ -24,8 +24,10 @@ final class ProjectsQuery
             $query->whereHas('categories', fn ($q) => $q->whereIn('categories.id', $categoryIds));
         }
 
-        if ($excludeId !== null) {
-            $query->where('id', '!=', $excludeId);
+        $excludeIds = array_filter((array) $excludeIds, fn ($id) => $id !== null);
+
+        if ($excludeIds !== []) {
+            $query->whereNotIn('id', $excludeIds);
         }
 
         if (! $paginate) {
@@ -33,5 +35,24 @@ final class ProjectsQuery
         }
 
         return $query->paginate($perPageOrLimit, ['*'], $pageName)->withQueryString();
+    }
+
+    public function byIds(array $ids): Collection
+    {
+        $ids = array_values(array_unique(array_map('intval', $ids)));
+
+        if ($ids === []) {
+            return new Collection;
+        }
+
+        $positions = array_flip($ids);
+
+        return Project::query()
+            ->with('categories')
+            ->published()
+            ->whereIn('id', $ids)
+            ->get()
+            ->sortBy(fn (Project $project) => $positions[$project->getKey()])
+            ->values();
     }
 }
