@@ -5,6 +5,7 @@ namespace App\Livewire\Forms;
 use App\Actions\Forms\SubmitFormAction;
 use App\Models\Form;
 use App\Presenters\Forms\PublicFormPresenter;
+use Livewire\Attributes\Locked;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -12,16 +13,23 @@ final class PublicForm extends Component
 {
     use WithFileUploads;
 
+    // Всё, что компонент строит сам, закрыто от клиента: чексумма покрывает
+    // снапшот, но не карту `updates`, и без #[Locked] эти свойства
+    // переписываются запросом. Открытыми остаются только те, что на wire:model.
+    #[Locked]
     public Form $form;
 
+    #[Locked]
     public array $viewData = [];
 
     public array $data = [];
 
     public array $uploads = [];
 
+    #[Locked]
     public bool $submitted = false;
 
+    #[Locked]
     public ?string $componentKey = null;
 
     public string $website = '';

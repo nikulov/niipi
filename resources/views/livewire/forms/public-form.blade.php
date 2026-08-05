@@ -52,7 +52,7 @@
                             <div
                                 class="text-text dark:text-white-dark rich-editor py-inner-section-y flex flex-col items-center justify-center"
                             >
-                                {!! $viewData['successMessage'] !!}
+                                {!! $viewData['successMessage'] ?? '' !!}
                             </div>
                         </div>
                     </x-layout.main-section-border>

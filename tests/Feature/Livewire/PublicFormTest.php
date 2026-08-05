@@ -11,7 +11,9 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Storage;
+use Livewire\Features\SupportLockedProperties\CannotUpdateLockedPropertyException;
 use Livewire\Livewire;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\TestCase;
 
 class PublicFormTest extends TestCase
@@ -187,5 +189,44 @@ class PublicFormTest extends TestCase
 
         $this->assertSame(1, FormSubmission::count());
         Bus::assertDispatched(SendFormSubmissionEmails::class);
+    }
+
+    /**
+     * Чексумма Livewire покрывает снапшот, но не карту `updates` — без
+     * #[Locked] клиент переписывал viewData и ронял рендер шаблона.
+     *
+     * @return list<array{0: string, 1: mixed}>
+     */
+    public static function lockedPropertiesProvider(): array
+    {
+        return [
+            'viewData' => ['viewData', []],
+            'submitted' => ['submitted', true],
+            'componentKey' => ['componentKey', 'spoofed'],
+        ];
+    }
+
+    #[DataProvider('lockedPropertiesProvider')]
+    public function test_server_owned_properties_reject_client_updates(string $property, mixed $value): void
+    {
+        $form = Form::create([
+            'name' => 'contact',
+            'title' => 'Contact',
+            'is_active' => true,
+        ]);
+
+        FormField::create([
+            'form_id' => $form->id,
+            'type' => 'text',
+            'name' => 'name',
+            'label' => 'Name',
+            'is_enabled' => true,
+        ]);
+
+        $component = Livewire::test(PublicForm::class, ['formId' => $form->id]);
+
+        $this->expectException(CannotUpdateLockedPropertyException::class);
+
+        $component->set($property, $value);
     }
 }

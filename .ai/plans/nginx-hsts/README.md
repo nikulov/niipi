@@ -257,6 +257,76 @@ echo | openssl s_client -connect 127.0.0.1:443 -servername niipigrad.ru -tls1_1 
 ```
 Ожидаемо: TLS 1.2 — Protocol : TLSv1.2. TLS 1.1 — `no protocols available`.
 
+## Catch-all для голого IP — раскатано 2026-08-05
+
+Закрывает #25 из [../bug-report-2026-08-04.md](../bug-report-2026-08-04.md).
+
+**Что нашли.** Ни один `server`-блок на 443 не помечен `default_server`,
+поэтому nginx берёт дефолтом первый загруженный блок с `listen 443` — main-блок
+`niipigrad-prod`. Отсюда `https://89.108.113.198/contacts` отдавал приложение,
+и оттуда пришли 20 из 22 пятисоток по #24. На 80-м `default_server` есть — сайт
+`default` с `root /var/www/html`, отдаёт заглушку `index.nginx-debian.html`.
+
+**Решение.** Отдельный файл [zz-catch-all.conf](zz-catch-all.conf):
+80 → 301 на канонический домен, 443 → `ssl_reject_handshake on`.
+
+Редирект на 443 невозможен в принципе: TLS-рукопожатие происходит до появления
+HTTP-запроса, а сертификат `*.niipigrad.ru` на IP не выписан — браузер показал
+бы `ERR_CERT_COMMON_NAME_INVALID` раньше любого 301. Поэтому рвём рукопожатие.
+
+Побочный эффект в плюс: бот, долбивший форму через IP, отваливается на TLS и
+до приложения не доходит вовсе. Вариант с редиректом его бы не остановил —
+он не проверяет сертификаты и просто пошёл бы по 301 на домен.
+
+**Почему префикс `zz-`.** `sites-enabled` подключается по алфавиту, файл должен
+грузиться после `niipigrad-prod`: там `listen [::]:443 ssl http2 ipv6only=on`,
+а `ipv6only` — сокет-параметр, задаётся только в первом объявлении адреса.
+
+**Почему снимаем `default`.** Он владеет `listen 80 default_server`, а два
+`default_server` на одном порту nginx не соберёт.
+
+```bash
+mkdir -p /root/backup
+cp /etc/nginx/sites-available/default /root/backup/default.$(date +%F).conf
+# записать /etc/nginx/sites-available/zz-catch-all из zz-catch-all.conf
+ln -s /etc/nginx/sites-available/zz-catch-all /etc/nginx/sites-enabled/
+rm /etc/nginx/sites-enabled/default
+nginx -t
+systemctl reload nginx
+```
+
+Откат — вернуть симлинк `default`, снять `zz-catch-all`, `reload`.
+
+Конфиг раскатан без комментариев (по просьбе владельца), файл
+[zz-catch-all.conf](zz-catch-all.conf) в плане совпадает с серверным
+один-в-один. Обоснование живёт здесь, в README.
+
+`nginx -t` прошёл без предупреждений — опасений про `protocol options
+redefined` и `ipv6only` не подтвердилось, префикс `zz-` своё дело сделал.
+
+**Проверено после раскатки 2026-08-05:**
+
+| Запрос | Результат |
+| --- | --- |
+| `https://niipigrad.ru/` | 200, HTTP/2, HSTS и security headers на месте |
+| `https://niipigrad.ru/contacts` | 200 |
+| `https://www.niipigrad.ru/` | 301 → `https://niipigrad.ru/` |
+| `https://stage.niipigrad.ru/` | 200 |
+| `http://89.108.113.198/` | 301 → `https://niipigrad.ru/` |
+| `http://89.108.113.198/contacts` | 301 → `https://niipigrad.ru/contacts` — путь сохраняется |
+| `https://89.108.113.198/` | `SSL routines:ST_CONNECT:tlsv1 unrecognized name` |
+
+Проверено и с сервера, и снаружи с локальной машины. Stage не задело: свой
+`server_name`, свой сертификат, SNI совпадает.
+
+**Бэкапы:** `/root/backup/default.2026-08-05.conf` (сам сайт `default`) и
+`/root/backup/sites-enabled.2026-08-05.txt` (состав симлинков до правки).
+
+**Остаточный риск.** `ssl_reject_handshake` рубит клиентов, не присылающих
+SNI. Браузеры его шлют все; под удар попадает самописный мониторинг или
+healthcheck, если он ходит на голый IP по HTTPS. **С владельцем не сверено** —
+если что-то такое молча отвалится, причина здесь.
+
 ## Boundaries
 
 Изначальные — с учётом расширения scope см. «Итог раскатки» наверху.
