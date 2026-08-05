@@ -25,6 +25,7 @@ class Project extends Model implements HasBlockSections, HasMeta
         'slug',
         'thumbnail',
         'status',
+        'sort_order',
         'published_at',
         'meta_title',
         'meta_keywords',
@@ -39,6 +40,7 @@ class Project extends Model implements HasBlockSections, HasMeta
         'main_section' => 'array',
         'bottom_section' => 'array',
         'published_at' => 'datetime',
+        'sort_order' => 'integer',
         'status' => ProjectStatus::class,
     ];
 
@@ -47,6 +49,14 @@ class Project extends Model implements HasBlockSections, HasMeta
         return $query
             ->where('status', ProjectStatus::Published->value)
             ->where('published_at', '<=', now());
+    }
+
+    public function scopeOrdered(Builder $query): Builder
+    {
+        return $query
+            ->orderByRaw('CASE WHEN sort_order IS NULL OR sort_order = 0 THEN 1 ELSE 0 END')
+            ->orderByRaw('NULLIF(sort_order, 0)')
+            ->orderByDesc('published_at');
     }
 
     public function categories(): BelongsToMany

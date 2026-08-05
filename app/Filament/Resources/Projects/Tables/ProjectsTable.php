@@ -30,6 +30,9 @@ class ProjectsTable
                     ->searchable()
                     ->wrap()
                     ->sortable(),
+                TextColumn::make('sort_order')->label(__('panel.sort_order'))
+                    ->placeholder('—')
+                    ->sortable(),
                 TextColumn::make('status')->label(__('panel.status'))
                     ->badge()
                     ->icon(fn (ProjectStatus $state) => $state->getIcon()),

@@ -18,7 +18,7 @@ final class ProjectsQuery
         $query = Project::query()
             ->with('categories')
             ->published()
-            ->orderByDesc('published_at');
+            ->ordered();
 
         if ($categoryIds && $categoryIds !== []) {
             $query->whereHas('categories', fn ($q) => $q->whereIn('categories.id', $categoryIds));

@@ -105,13 +105,33 @@ class ProjectsQueryTest extends TestCase
         $this->assertSame(2, $paginated->total());
     }
 
-    private function publishedProject(string $title, string $slug, $publishedAt): Project
+    public function test_list_sorts_by_sort_order_then_by_published_at(): void
+    {
+        $withoutOrder = $this->publishedProject('No order', 'no-order', now()->subDays(10));
+        $zeroOrder = $this->publishedProject('Zero order', 'zero-order', now()->subDay(), 0);
+        $second = $this->publishedProject('Second', 'second', now()->subDays(9), 2);
+        $firstOlder = $this->publishedProject('First older', 'first-older', now()->subDays(8), 1);
+        $firstNewer = $this->publishedProject('First newer', 'first-newer', now()->subDays(7), 1);
+
+        $ids = (new ProjectsQuery)->list(10)->pluck('id')->all();
+
+        $this->assertSame([
+            $firstNewer->id,
+            $firstOlder->id,
+            $second->id,
+            $zeroOrder->id,
+            $withoutOrder->id,
+        ], $ids);
+    }
+
+    private function publishedProject(string $title, string $slug, $publishedAt, ?int $sortOrder = null): Project
     {
         return Project::create([
             'title' => $title,
             'description' => 'Desc',
             'slug' => $slug,
             'status' => ProjectStatus::Published->value,
+            'sort_order' => $sortOrder,
             'published_at' => $publishedAt,
         ]);
     }

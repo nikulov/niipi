@@ -8,6 +8,11 @@
   `['news','categories']`.
 - **Project** — проекты (`/projects/{slug}`). Пивот `category_project`.
   Флашит теги `['projects','categories']`.
+  `sort_order` (nullable unsigned int) — ручной порядок в публичных списках:
+  `1, 2, 3…` сверху, `0`/`null` — в конец, внутри одного значения — по
+  `published_at` desc. Реализация — `scopeOrdered()`, применяется в
+  `ProjectsQuery::list()` (значит, во всех публичных выборках). Колонка
+  называется `sort_order`, а не `order` — `order` зарезервирован в MySQL.
 - **Category** — категории. `type` (`CategoryType`: `posts`/`projects`) отделяет
   категории новостей от категорий проектов. Есть scope'ы `posts()`, `projects()`.
   Флашит теги обеих групп при save/delete.

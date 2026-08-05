@@ -6,6 +6,8 @@ return [
     'content' => 'Content',
     'image' => 'Image',
     'status' => 'Status',
+    'sort_order' => 'Order',
+    'sort_order_hint' => '1 comes first, then 2, 3… Empty or 0 goes last, sorted by publication date.',
     'published_at' => 'Published at',
     'meta_title' => 'Meta title',
     'meta_keywords' => 'Meta keywords',

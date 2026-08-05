@@ -91,6 +91,12 @@ class ProjectForm
                                     modifyQueryUsing: fn (EloquentBuilder $query) => $query->projects())
                                 ->columnSpan(6),
 
+                            TextInput::make('sort_order')->label(__('panel.sort_order'))
+                                ->columnSpan(6)
+                                ->integer()
+                                ->minValue(0)
+                                ->helperText(__('panel.sort_order_hint')),
+
                         ])->columnSpan(8),
 
                         FileUpload::make('thumbnail')->label(__('panel.thumbnail'))
