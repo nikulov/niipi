@@ -83,6 +83,37 @@ class PublicFormTest extends TestCase
             ->assertSet('submitted', false);
     }
 
+    public function test_phone_must_match_mask_format(): void
+    {
+        $form = Form::create([
+            'name' => 'phone-form',
+            'title' => 'Contact',
+            'is_active' => true,
+        ]);
+
+        FormField::create([
+            'form_id' => $form->id,
+            'type' => 'phone',
+            'name' => 'phone',
+            'label' => 'Phone',
+            'required' => true,
+            'is_enabled' => true,
+        ]);
+
+        // the mask is client-side only, so raw input bypassing JS must be rejected server-side
+        Livewire::test(PublicForm::class, ['formId' => $form->id])
+            ->set('data.phone', '89111111111')
+            ->call('submit')
+            ->assertHasErrors('data.phone')
+            ->assertSet('submitted', false);
+
+        Livewire::test(PublicForm::class, ['formId' => $form->id])
+            ->set('data.phone', '+7 911 111 11 11')
+            ->call('submit')
+            ->assertHasNoErrors()
+            ->assertSet('submitted', true);
+    }
+
     private function formWithPlaceholderSelect(bool $required): Form
     {
         $form = Form::create([

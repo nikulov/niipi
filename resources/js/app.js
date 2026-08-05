@@ -121,10 +121,106 @@ function themeToggle() {
     };
 }
 
+function phoneMask(model) {
+    const groups = [3, 3, 2, 2];
+
+    const digitsOf = (value) => value.replace(/\D/g, '');
+
+    // leading 7/8 is the country code; any other first digit means the code is missing
+    function normalize(digits) {
+        if (digits === '') return '';
+
+        const rest = /^[78]/.test(digits) ? digits.slice(1) : digits;
+
+        return ('7' + rest).slice(0, 11);
+    }
+
+    function format(digits) {
+        if (digits === '') return '';
+
+        let out = '+7';
+        let at = 1;
+
+        for (const size of groups) {
+            if (at >= digits.length) break;
+
+            out += ' ' + digits.slice(at, at + size);
+            at += size;
+        }
+
+        return out;
+    }
+
+    function caretAt(value, digitCount) {
+        if (digitCount < 1) return value === '' ? 0 : 2;
+
+        let seen = 0;
+
+        for (let i = 0; i < value.length; i++) {
+            if (/\d/.test(value[i]) && ++seen === digitCount) return i + 1;
+        }
+
+        return value.length;
+    }
+
+    return {
+        onInput(el) {
+            const raw = el.value;
+            const rawDigits = digitsOf(raw);
+            const caretDigits = digitsOf(raw.slice(0, el.selectionStart ?? raw.length)).length;
+
+            // normalization may prepend the country code, shifting the caret one digit right
+            const shift = rawDigits !== '' && !/^[78]/.test(rawDigits) ? 1 : 0;
+
+            const value = format(normalize(rawDigits));
+
+            el.value = value;
+
+            const caret = caretAt(value, caretDigits + shift);
+            el.setSelectionRange(caret, caret);
+
+            this.push(value);
+        },
+
+        onFocus(el) {
+            if (el.value !== '') return;
+
+            el.value = '+7 ';
+            el.setSelectionRange(3, 3);
+        },
+
+        onBlur(el) {
+            // a bare country code must not reach validation of an optional field
+            if (digitsOf(el.value).length > 1) return;
+
+            el.value = '';
+            this.push('');
+        },
+
+        // without this, Backspace on a separator eats a space the mask immediately restores
+        onBackspace(event) {
+            const el = event.target;
+            const start = el.selectionStart;
+
+            if (start === null || start === 0 || start !== el.selectionEnd) return;
+            if (/\d/.test(el.value[start - 1])) return;
+
+            el.setSelectionRange(start - 1, start - 1);
+        },
+
+        // wire:model listens to the same input event and listener order is not guaranteed,
+        // so write to the component explicitly; false = local only, no server request
+        push(value) {
+            this.$wire.set(model, value, false);
+        },
+    };
+}
+
 document.addEventListener('alpine:init', () => {
     Alpine.data('imageGalleryModal', imageGalleryModal);
     Alpine.data('initToTopButton', initToTopButton);
     Alpine.data('themeToggle', themeToggle);
+    Alpine.data('phoneMask', phoneMask);
 
     initToTopThemeBySection();
 });

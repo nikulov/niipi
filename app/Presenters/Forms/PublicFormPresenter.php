@@ -60,6 +60,7 @@ final class PublicFormPresenter
         return match ($type) {
             'text' => 'text',
             'email' => 'email',
+            'phone' => 'tel',
             default => null,
         };
     }

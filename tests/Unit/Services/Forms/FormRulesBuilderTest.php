@@ -75,6 +75,44 @@ class FormRulesBuilderTest extends TestCase
         $this->assertSame('Слишком коротко', $messages['data.name.min']);
     }
 
+    public function test_phone_field_gets_masked_format_rule(): void
+    {
+        $form = Form::create([
+            'name' => 'phones',
+            'title' => 'Phones',
+        ]);
+
+        FormField::create([
+            'form_id' => $form->id,
+            'type' => 'phone',
+            'name' => 'phone',
+            'label' => 'Phone',
+            'required' => true,
+            'is_enabled' => true,
+        ]);
+
+        FormField::create([
+            'form_id' => $form->id,
+            'type' => 'phone',
+            'name' => 'phone_alt',
+            'label' => 'Alt phone',
+            'required' => false,
+            'is_enabled' => true,
+            'rules' => ['regex:/^\+7/' => 'Свой формат'],
+        ]);
+
+        $builder = new FormRulesBuilder;
+        [$rules, $messages] = $builder->build($form);
+
+        $regex = 'regex:/^\+7 \d{3} \d{3} \d{2} \d{2}$/';
+
+        $this->assertSame(['required', $regex], $rules['data.phone']);
+        $this->assertSame(__('panel.invalid_phone'), $messages['data.phone.regex']);
+
+        $this->assertSame(['nullable', $regex, 'regex:/^\+7/'], $rules['data.phone_alt']);
+        $this->assertSame('Свой формат', $messages['data.phone_alt.regex']);
+    }
+
     public function test_build_rules_for_file_fields(): void
     {
         $form = Form::create([

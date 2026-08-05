@@ -60,6 +60,28 @@ Form::query()
 Ошибки — через `ValidationException` (import из
 `Illuminate\Validation\ValidationException`).
 
+## Маска телефона (тип поля `phone`)
+
+Маска `+7 911 111 11 11` — клиентская, Alpine-компонент `phoneMask(model)` в
+`resources/js/app.js`, навешивается в `components/form/fields/input.blade.php`
+только при `type === 'phone'` (`x-on:input|focus|blur|keydown.backspace`).
+
+Ключевое:
+
+- **Синхронизация с Livewire — через `$wire.set(model, value, false)`**, а не
+  через нативный `input`-эвент: `wire:model` слушает тот же эвент на том же
+  элементе, порядок слушателей Alpine и Livewire не гарантирован. `false` —
+  локальная запись без запроса на сервер, значение уедет при submit.
+- `focus` на пустом поле подставляет `+7 `, `blur` очищает поле, если цифр
+  не больше одной — иначе необязательное поле уедет в валидацию с `+7 `.
+- `keydown.backspace` на разделителе сдвигает каретку влево, иначе Backspace
+  «съедает» пробел, который маска тут же возвращает.
+- `mapInputType()` в презентере отдаёт для `phone` тип `tel`.
+
+Серверная проверка — ветка `phone` в `FormRulesBuilder`:
+`regex:/^\+7 \d{3} \d{3} \d{2} \d{2}$/`, сообщение `panel.invalid_phone`
+(не перетирает кастомное сообщение из `FormField::rules`).
+
 ## Защита от спама
 
 - **Honeypot** `website` — см. выше.

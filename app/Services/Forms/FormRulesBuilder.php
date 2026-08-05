@@ -7,6 +7,9 @@ use Illuminate\Validation\Rule;
 
 final class FormRulesBuilder
 {
+    /** The format produced by the client-side mask: "+7 911 111 11 11". */
+    private const PHONE_RULE = 'regex:/^\+7 \d{3} \d{3} \d{2} \d{2}$/';
+
     public function build(Form $form): array
     {
         $rules = [];
@@ -37,6 +40,15 @@ final class FormRulesBuilder
 
             if ($field->type === 'email') {
                 $rules[$keyData] = array_merge($base, ['email'], $extra);
+
+                continue;
+            }
+
+            if ($field->type === 'phone') {
+                $rules[$keyData] = array_merge($base, [self::PHONE_RULE], $extra);
+
+                // a message set in the admin panel wins over the default one
+                $messages["{$keyData}.regex"] ??= __('panel.invalid_phone');
 
                 continue;
             }

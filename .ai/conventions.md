@@ -84,6 +84,9 @@
 - Файлы вложений — модель `FormSubmissionFile`.
 - Специализированные сервисы — `app/Services/Forms/` (по одному классу
   на ответственность, оркестратор — Action).
+- Поле `phone` — клиентская маска `+7 911 111 11 11` (Alpine-компонент
+  `phoneMask` в `resources/js/app.js`) + серверный `regex` в `FormRulesBuilder`.
+  Подробности — [patterns/livewire-public-form.md](patterns/livewire-public-form.md).
 
 ## Livewire: публичные свойства
 
