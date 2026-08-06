@@ -64,7 +64,7 @@
                 </span>
 
                 <div
-                    class="border-accent-dark bg-accent-dark flex h-12.25 min-h-12.25 min-w-60 flex-row items-center justify-center gap-2 border px-3"
+                    class="flex h-12.25 min-h-12.25 min-w-60 flex-row items-center justify-center gap-2 border border-[#7ba2ba] bg-[#7ba2ba] px-3"
                 >
                     <a
                         :href="share('https://vk.com/share.php?url={url}&title={title}')"
