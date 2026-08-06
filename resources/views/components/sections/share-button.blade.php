@@ -38,7 +38,7 @@
                 @click="open = ! open"
                 :aria-expanded="open"
                 aria-label="{{ __('page.share') }}"
-                class="{{ $btnType }}-bg relative inline-flex h-12.25 min-h-12.25 w-12.25 min-w-12.25 cursor-pointer items-center justify-center border transition-all duration-300 [clip-path:polygon(8px_0,100%_0,100%_calc(100%-8px),calc(100%-8px)_100%,0_100%,0_8px)]"
+                class="{{ $btnType }}-bg relative inline-flex h-12.25 min-h-12.25 w-12.25 min-w-12.25 cursor-pointer items-center justify-center transition-all duration-300 [clip-path:polygon(8px_0,100%_0,100%_calc(100%-8px),calc(100%-8px)_100%,0_100%,0_8px)]"
             >
                 <x-icon.icon-share class="{{ $btnType }}-text h-10 w-10 fill-white" />
             </button>
@@ -63,9 +63,7 @@
                     {{ __('page.link_copied') }}
                 </span>
 
-                <div
-                    class="flex h-12.25 min-h-12.25 min-w-60 flex-row items-center justify-center gap-2 border border-[#7ba2ba] bg-[#7ba2ba] px-3"
-                >
+                <div class="flex h-12.25 min-h-12.25 min-w-60 flex-row items-center justify-center gap-2 bg-[#7ba2ba] px-3">
                     <a
                         :href="share('https://vk.com/share.php?url={url}&title={title}')"
                         target="_blank"
