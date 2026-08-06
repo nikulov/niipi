@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Projects\Schemas;
 
 use App\Enums\ProjectStatus;
 use App\Filament\Components\BlockRegistry\BlockRegistry;
+use App\Filament\Components\Title;
 use App\Filament\Forms\Components\MediaPickerAction;
 use App\Models\Project;
 use Filament\Actions\Action;
@@ -14,6 +15,7 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Fieldset;
 use Filament\Schemas\Components\Group;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
@@ -39,13 +41,17 @@ class ProjectForm
                             ->columnSpan(24)
                             ->maxLength(500)
                             ->live(onBlur: true)
-                            ->afterStateUpdated(function (Set $set, Get $get, ?string $state, string $operation) {
-                                // Only auto-generate slug on create and only if slug is empty
-                                if ($operation !== 'create' || filled($get('slug'))) {
+                            ->afterStateUpdated(function (Set $set, Get $get, ?string $state, ?string $old, string $operation) {
+                                // Slug and the default title block are only filled in on create
+                                if ($operation !== 'create') {
                                     return;
                                 }
 
-                                $set('slug', Str::slug((string) $state));
+                                if (blank($get('slug'))) {
+                                    $set('slug', Str::slug((string) $state));
+                                }
+
+                                Title::syncRecordTitle($set, $get, $state, $old);
                             }),
 
                         Textarea::make('description')->label(__('panel.excerpt_project'))
@@ -127,8 +133,10 @@ class ProjectForm
                             ->hintAction(MediaPickerAction::make('thumbnail', imagesOnly: true, maxSize: 2048)),
                     ]),
 
-                Fieldset::make('seo')->label(__('panel.seo'))
+                Section::make('seo')->label(__('panel.seo'))
                     ->columns(12)
+                    ->collapsible()
+                    ->collapsed()
                     ->columnSpanFull()
                     ->schema([
 
@@ -178,6 +186,7 @@ class ProjectForm
                             ->reorderableWithButtons()
                             ->columnSpanFull()
                             ->blockPickerWidth('md')
+                            ->default(Title::getDefaultBlock())
                             ->blocks(BlockRegistry::mainSection()),
                     ]),
 

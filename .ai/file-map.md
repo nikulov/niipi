@@ -83,6 +83,35 @@ Title, YandexMap.
 у всех четырёх `.btn-*-bg` есть вложенный `&[aria-expanded='true']` с теми же
 цветами, что и `hover:`. `aria-expanded` во всём проекте только у этого
 триггера, так что остальных кнопок правило не касается.
+`ShareButton::getDefaultBlock($btnUrl, $btnLabel)` — дефолтный блок для
+Post/Project (см. [domain.md](domain.md#блочный-контент)); в отличие от
+`CategoryList`/`RelatedThematic` метод параметризован, потому что новости и
+проекты ведут на разные разделы. `btnUrl` хранится с ведущим слэшем (`/news`),
+так как шаблон подставляет его в `href` как есть, а блок стоит на вложенной
+странице `/news/{slug}` — относительный `news` (как в дефолте `NewsBlock`)
+там бы сломался.
+
+`Title` (`title`, «Заголовок») — кроме схемы держит логику автоподстановки
+заголовка записи (только Post/Project, для Page ничего не подставляется):
+
+- `Title::getDefaultBlock()` — дефолтный блок main-секции форм Post/Project
+  (`h2`, `position=center`, без `title`). Подключён через
+  `Builder::make('main_section')->default(...)`, то есть срабатывает только
+  на создании: `default()` применяется при `fill(null)` и существующие записи
+  на Edit не трогает.
+- `Title::syncRecordTitle(Set, Get, $state, $old)` — вызывается из
+  `afterStateUpdated` поля `title` в `PostForm`/`ProjectForm` (там же живёт
+  автогенерация slug, оба действия только при `operation === 'create'`).
+  Пишет заголовок записи в **первый** блок `title` из `main_section` точечным
+  `$set("main_section.{key}.data.title", …)`. Условие — заголовок блока пуст
+  **или** равен `$old` (предыдущему значению поля): правки опечаток доезжают,
+  переписанный вручную H2 не затирается. `$old` даёт Filament
+  (`callAfterStateUpdatedHook`).
+- `default()` у Textarea блока — предзаполнение при **ручном** добавлении
+  блока: Filament кладёт новый item в state и только потом зовёт `fill(null)`,
+  поэтому в `$livewire->data` новый блок уже виден. Подставляем заголовок,
+  только если блок `title` во всей форме единственный (рекурсивный обход
+  включает вложенные `tabs-block`/`modal-block`).
 
 `RelatedThematic` — полиморфный блок «тематическая подборка»: в Post показывает
 связанные новости, в Project — связанные проекты. Категории по умолчанию —

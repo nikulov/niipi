@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Posts\Pages;
 
 use App\Filament\Components\CategoryList;
 use App\Filament\Components\RelatedThematic;
+use App\Filament\Components\ShareButton;
 use App\Filament\Resources\Posts\PostResource;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
@@ -37,6 +38,7 @@ class CreatePost extends CreateRecord
             ...$state,
             ...RelatedThematic::getDefaultBlock(),
             ...CategoryList::getDefaultBlock(),
+            ...ShareButton::getDefaultBlock('/news', __('panel.all_news')),
         ];
     }
 

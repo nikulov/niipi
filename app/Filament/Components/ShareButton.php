@@ -56,4 +56,21 @@ final class ShareButton
 
             ])->columns(24);
     }
+
+    /** Default block for Post/Project: share bar plus a button back to the section index. */
+    public static function getDefaultBlock(string $btnUrl, string $btnLabel): array
+    {
+        return [
+            [
+                'type' => self::key(),
+                'data' => [
+                    'btnLabel' => $btnLabel,
+                    'btnUrl' => $btnUrl,
+                    'btnType' => 'btn-primary',
+                    'btnPosition' => 'end',
+                    'blank' => false,
+                ],
+            ],
+        ];
+    }
 }

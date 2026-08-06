@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Projects\Pages;
 
 use App\Filament\Components\CategoryList;
 use App\Filament\Components\RelatedThematic;
+use App\Filament\Components\ShareButton;
 use App\Filament\Resources\Projects\ProjectResource;
 use Filament\Resources\Pages\CreateRecord;
 
@@ -28,6 +29,7 @@ class CreateProject extends CreateRecord
             ...$state,
             ...RelatedThematic::getDefaultBlock(),
             ...CategoryList::getDefaultBlock(),
+            ...ShareButton::getDefaultBlock('/projects', __('panel.all-projects')),
         ];
     }
 

@@ -66,10 +66,22 @@ Page/Post/Project содержат три JSON-секции: `top_section`, `mai
 достаёт его данные через `getBgForMainSection()`.
 
 При создании Post и Project в main-секцию (если она не пуста) автоматически
-добавляются два блока в порядке: `related-thematic` (тематическая подборка
-из категорий записи) → `category-list` (список категорий записи).
-Логика — в `CreatePost::appendDefaultMainBlock()` и
-`CreateProject::appendDefaultMainBlock()`.
+добавляются три блока в порядке: `related-thematic` (тематическая подборка
+из категорий записи) → `category-list` (список категорий записи) →
+`share-button` («Поделиться + кнопка», ведёт на `/news` или `/projects`
+с подписью «Все новости»/«Все проекты»). Логика — в
+`CreatePost::appendDefaultMainBlock()` и
+`CreateProject::appendDefaultMainBlock()`, данные кнопки собирает
+`ShareButton::getDefaultBlock($btnUrl, $btnLabel)` (`btn-primary`,
+`btnPosition=end` — значения позиции только `start`/`center`/`end`, шаблон
+подставляет их в `md:justify-*`, `blank=false`).
+
+Форма создания Post/Project стартует с блока `title` в main-секции
+(`Builder::make('main_section')->default(Title::getDefaultBlock())`, `h2`,
+`position=center`), поэтому секция при создании практически всегда непуста —
+`related-thematic` и `category-list` теперь дописываются почти всегда (раньше
+запись без блоков не получала ни того, ни другого). Пустым блок не остаётся:
+заголовок записи проливается в него на лету, см. [file-map.md](file-map.md#блоки).
 
 ## Формы (custom form builder)
 
