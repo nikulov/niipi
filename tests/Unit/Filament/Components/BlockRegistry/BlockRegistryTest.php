@@ -34,6 +34,7 @@ class BlockRegistryTest extends TestCase
             'projects-block',
             'projects-full',
             'related-thematic',
+            'share-button',
             'slider-full-width',
             'text-full',
             'title',

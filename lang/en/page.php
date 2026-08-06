@@ -7,4 +7,7 @@ return [
     'website' => 'Website',
     'categories' => 'Categories',
     'change_site_theme' => 'Change site theme',
+    'share' => 'Share',
+    'copy_link' => 'Copy link',
+    'link_copied' => 'Link copied',
 ];

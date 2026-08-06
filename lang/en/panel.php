@@ -182,6 +182,8 @@ return [
     'accent' => 'Accent',
     'accent_additional' => 'Accent additional',
     'btn' => 'Button',
+    'share_btn' => 'Share + button',
+    'svg' => '*.svg only',
 
     'submission' => 'Submission',
     'submissions' => 'Submissions',

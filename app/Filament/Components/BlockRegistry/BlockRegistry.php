@@ -23,6 +23,7 @@ use App\Filament\Components\NewsFull;
 use App\Filament\Components\ProjectsBlock;
 use App\Filament\Components\ProjectsFull;
 use App\Filament\Components\RelatedThematic;
+use App\Filament\Components\ShareButton;
 use App\Filament\Components\SliderFullWidth;
 use App\Filament\Components\TabsBlock;
 use App\Filament\Components\TextFull;
@@ -57,6 +58,7 @@ final class BlockRegistry
             ProjectsBlock::block(),
             ProjectsFull::block(),
             RelatedThematic::block(),
+            ShareButton::block(),
             SliderFullWidth::block(),
             TextFull::block(),
             Title::block(),
@@ -96,6 +98,7 @@ final class BlockRegistry
             ProjectsBlock::block(),
             ProjectsFull::block(),
             RelatedThematic::block(),
+            ShareButton::block(),
             TabsBlock::block(),
             TextFull::block(),
             Title::block(),
@@ -135,6 +138,7 @@ final class BlockRegistry
             NewsFull::block(),
             ProjectsBlock::block(),
             ProjectsFull::block(),
+            ShareButton::block(),
             TextFull::block(),
             Title::block(),
             YandexMap::block(),
@@ -164,6 +168,7 @@ final class BlockRegistry
             NewsFull::block(),
             ProjectsBlock::block(),
             ProjectsFull::block(),
+            ShareButton::block(),
             TabsBlock::block(),
             TextFull::block(),
             Title::block(),

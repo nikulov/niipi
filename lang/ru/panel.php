@@ -205,6 +205,7 @@ return [
     'accent' => 'Акцентная',
     'accent_additional' => 'Акцентная доп.',
     'btn' => 'Кнопка',
+    'share_btn' => 'Поделиться + кнопка',
     'submission' => 'Заявка',
     'submissions' => 'Заявки',
     'status_new' => 'Новая',

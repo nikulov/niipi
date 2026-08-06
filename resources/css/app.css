@@ -196,6 +196,11 @@
 
     .btn-primary-bg {
         @apply border-primary bg-primary dark:border-accent dark:bg-accent hover:border-accent hover:bg-accent group-hover:border-accent group-hover:bg-accent dark:hover:border-accent dark:group-hover:border-accent dark:group-hover:bg-[#7BA2BA] dark:hover:bg-[#7BA2BA];
+
+        /* an expanded toggle keeps the hover colours — see the share trigger */
+        &[aria-expanded='true'] {
+            @apply border-accent bg-accent dark:border-accent dark:bg-[#7BA2BA];
+        }
     }
 
     .btn-secondary-text {
@@ -204,6 +209,10 @@
 
     .btn-secondary-bg {
         @apply border-accent bg-accent hover:border-accent group-hover:border-accent group-hover:bg-[#7BA2BA] hover:bg-[#7BA2BA];
+
+        &[aria-expanded='true'] {
+            @apply border-accent bg-[#7BA2BA];
+        }
     }
 
     .btn-accent-text {
@@ -212,6 +221,10 @@
 
     .btn-accent-bg {
         @apply border-accent-add bg-accent-add group-hover:border-[#9DDEE0] group-hover:bg-[#9DDEE0] hover:border-[#9DDEE0] hover:bg-[#9DDEE0];
+
+        &[aria-expanded='true'] {
+            @apply border-[#9DDEE0] bg-[#9DDEE0];
+        }
     }
 
     .btn-transparent-text {
@@ -220,6 +233,10 @@
 
     .btn-transparent-bg {
         @apply border-primary hover:border-primary group-hover:border-b-primary bg-white group-hover:bg-[#CBDEEA] hover:bg-[#CBDEEA] dark:border-[#364051] dark:bg-[#364051] dark:group-hover:border-[#3c4859] group-hover:dark:bg-[#3c4859] dark:hover:border-[#3c4859] hover:dark:bg-[#3c4859];
+
+        &[aria-expanded='true'] {
+            @apply border-primary bg-[#CBDEEA] dark:border-[#3c4859] dark:bg-[#3c4859];
+        }
     }
 
     /* END BTN colors */

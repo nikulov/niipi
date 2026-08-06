@@ -23,6 +23,7 @@ use App\Blocks\Renderers\NewsFullRenderer;
 use App\Blocks\Renderers\ProjectsBlockRenderer;
 use App\Blocks\Renderers\ProjectsFullRenderer;
 use App\Blocks\Renderers\RelatedThematicRenderer;
+use App\Blocks\Renderers\ShareButtonRenderer;
 use App\Blocks\Renderers\SliderFullWidthRenderer;
 use App\Blocks\Renderers\TabsBlockRenderer;
 use App\Blocks\Renderers\TextFullRenderer;
@@ -55,6 +56,7 @@ final class BlockRenderRegistry
             ProjectsBlockRenderer::key() => ProjectsBlockRenderer::class,
             ProjectsFullRenderer::key() => ProjectsFullRenderer::class,
             RelatedThematicRenderer::key() => RelatedThematicRenderer::class,
+            ShareButtonRenderer::key() => ShareButtonRenderer::class,
             SliderFullWidthRenderer::key() => SliderFullWidthRenderer::class,
             TabsBlockRenderer::key() => TabsBlockRenderer::class,
             TextFullRenderer::key() => TextFullRenderer::class,

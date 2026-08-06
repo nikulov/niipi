@@ -66,8 +66,23 @@ Accordion, AccordionLight, Anchor, Button, CardsBlockWithButton,
 CardsBlockWithImageTitle, CategoryList, Form, Gallery, ImageFull,
 ImageText, ImageTittleFullWidth (sic — с двойной `t`), InfoBlockWithAchievements,
 InfoBlockWithButtons, ModalBlock, NewsBlock, NewsFull, ProjectsBlock,
-ProjectsFull, RelatedThematic, SliderFullWidth, TabsBlock, TextFull, Title,
-YandexMap.
+ProjectsFull, RelatedThematic, ShareButton, SliderFullWidth, TabsBlock, TextFull,
+Title, YandexMap.
+
+`ShareButton` (`share-button`, «Поделиться + кнопка») — блок `button` плюс
+шаринг: слева от кнопки триггер, по клику полоска выезжает вправо **поверх**
+кнопки. **Схема в Filament идентична `Button`** — соцсети в админке не
+настраиваются: набор (ВК, Telegram, MAX, «копировать ссылку») и иконки
+(`components/icon/icon-{vk,telegram,max,link,share}`) зашиты в шаблон.
+Адреса собирает Alpine-хелпер `share()` из шаблонов с `{url}` / `{title}`,
+подставляя `location.href` и `document.title` — блок шарит ту страницу, на
+которой стоит. У MAX веб-диалога шаринга нет — только диплинк в приложение
+`https://max.ru/:share?text={url}` (`text` — тело сообщения, поэтому шарим
+голую ссылку без заголовка). Состояние — инлайновый `x-data`, в `app.js`
+ничего нет. Пока полоска открыта, триггер держит ховер-цвет: в `app.css`
+у всех четырёх `.btn-*-bg` есть вложенный `&[aria-expanded='true']` с теми же
+цветами, что и `hover:`. `aria-expanded` во всём проекте только у этого
+триггера, так что остальных кнопок правило не касается.
 
 `RelatedThematic` — полиморфный блок «тематическая подборка»: в Post показывает
 связанные новости, в Project — связанные проекты. Категории по умолчанию —
