@@ -6,6 +6,7 @@ use App\Enums\PostStatus;
 use App\Filament\Components\BlockRegistry\BlockRegistry;
 use App\Filament\Components\Title;
 use App\Filament\Forms\Components\MediaPickerAction;
+use App\Filament\Support\SeoSync;
 use App\Models\Post;
 use Filament\Actions\Action;
 use Filament\Forms\Components\Builder;
@@ -43,15 +44,15 @@ class PostForm
                             ->live(onBlur: true)
                             ->afterStateUpdated(function (Set $set, Get $get, ?string $state, ?string $old, string $operation) {
                                 // Slug and the default title block are only filled in on create
-                                if ($operation !== 'create') {
-                                    return;
+                                if ($operation === 'create') {
+                                    if (blank($get('slug'))) {
+                                        $set('slug', Str::slug((string) $state));
+                                    }
+
+                                    Title::syncRecordTitle($set, $get, $state, $old);
                                 }
 
-                                if (blank($get('slug'))) {
-                                    $set('slug', Str::slug((string) $state));
-                                }
-
-                                Title::syncRecordTitle($set, $get, $state, $old);
+                                SeoSync::copy($set, $get, 'meta_title', $state, $old);
                             }),
 
                         Textarea::make('description')->label(__('panel.excerpt'))
@@ -59,7 +60,11 @@ class PostForm
                             ->trim()
                             ->autosize()
                             ->columnSpan(24)
-                            ->maxLength(1000),
+                            ->maxLength(1000)
+                            ->live(onBlur: true)
+                            ->afterStateUpdated(function (Set $set, Get $get, ?string $state, ?string $old) {
+                                SeoSync::copy($set, $get, 'meta_description', $state, $old);
+                            }),
 
                         TextInput::make('slug')->label(__('panel.slug'))
                             ->maxLength(255)
@@ -127,7 +132,7 @@ class PostForm
                             ->hintAction(MediaPickerAction::make('thumbnail', imagesOnly: true, maxSize: 2048)),
                     ]),
 
-                Section::make('seo')->label(__('panel.seo'))
+                Section::make(__('panel.seo'))
                     ->columns(12)
                     ->collapsible()
                     ->collapsed()
@@ -136,7 +141,7 @@ class PostForm
 
                         // todo removed and unit to json for all meta
                         TextInput::make('meta_title')->label(__('panel.meta_title'))
-                            ->columnSpan(6)
+                            ->columnSpan(12)
                             ->trim()
                             ->maxLength(500),
 

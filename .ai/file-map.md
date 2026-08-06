@@ -33,6 +33,7 @@
 | `Filament/Forms/Components/CustomRepeater.php`                        | Repeater с нумерованными label'ами                                                                                                                           |
 | `Filament/Forms/Components/UrlInput.php`                              | TextInput с префиксом `niipigrad.ru/` и кнопкой открытия                                                                                                     |
 | `Filament/Support/RoleAccessResource.php`                             | Trait: `shouldRegisterNavigation()` + `canViewAny()` по `allowedRoles()`                                                                                     |
+| `Filament/Support/SeoSync.php`                                        | `copy()` — заливает `title`/`description` в `meta_title`/`meta_description` из `afterStateUpdated` форм Post/Project (см. ниже)                              |
 | `Filament/Actions/CopyAction.php`                                     | Row action «Копировать» (икона DocumentDuplicate, `getDefaultName='copy'`, вызывает `$record->duplicate()`)                                                    |
 | `Filament/Widgets/SubmissionsStats.php`                               | Dashboard stat-виджет по заявкам                                                                                                                             |
 | `Blocks/BlockRenderRegistry.php`                                      | Реестр рендереров (map `type => Renderer`)                                                                                                                   |
@@ -138,6 +139,22 @@ Filament-компоненты в `app/Filament/Components/` — один-в-од
 всех секциях (`all/top/main/bottom/tabs/modal`). Уникальность slug проверяется
 через всю форму (рекурсивный обход `$livewire->data`), а не только внутри
 текущего Builder.
+
+## Автозаполнение полей в формах Post/Project
+
+Всё висит на `afterStateUpdated` полей `title` и `description`
+(`PostForm`/`ProjectForm`); `description` ради этого стало `live(onBlur: true)`.
+
+| Что                                                        | Когда             | Защита от ручной правки                                 |
+| ---------------------------------------------------------- | ----------------- | ------------------------------------------------------- |
+| `slug` ← `title`                                           | только create     | пишем, лишь пока `slug` пуст                            |
+| блок `title` в `main_section`                              | только create     | пусто **или** равно `$old` (`Title::syncRecordTitle()`)  |
+| `meta_title` ← `title`, `meta_description` ← `description` | create **и** edit | пусто **или** равно `$old` (`SeoSync::copy()`)           |
+
+`$old` — предыдущее значение поля, его отдаёт Filament в
+`callAfterStateUpdatedHook()`. Правило «пусто или равно `$old`» означает:
+переименовал запись — SEO/заголовок блока догнали; написал свой текст —
+он больше не трогается.
 
 ## resources/views/
 
