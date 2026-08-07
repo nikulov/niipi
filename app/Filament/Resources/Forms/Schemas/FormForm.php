@@ -4,6 +4,8 @@ namespace App\Filament\Resources\Forms\Schemas;
 
 use App\Enums\FormApplicantType;
 use App\Filament\Forms\Components\MediaPickerAction;
+use App\Models\Form;
+use Closure;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Components\RichEditor;
@@ -125,7 +127,30 @@ class FormForm
                             ->schema([
 
                                 Toggle::make('send_user_mail')->label(__('panel.send_user_mail'))
-                                    ->live(),
+                                    ->live()
+                                    // Greyed out while the form has no email field: there would be
+                                    // nowhere to take the recipient from.
+                                    ->disabled(fn (?Form $record): bool => $record !== null && ! self::hasEmailField($record))
+                                    // Shown off and saved off: a form that lost its email field
+                                    // must not keep a switch that cannot work.
+                                    ->afterStateHydrated(function (Toggle $component, ?Form $record): void {
+                                        if ($record && ! self::hasEmailField($record)) {
+                                            $component->state(false);
+                                        }
+                                    })
+                                    ->dehydrated()
+                                    ->helperText(fn (?Form $record): ?string => $record && ! self::hasEmailField($record)
+                                        ? __('panel.form_has_no_email_field')
+                                        : null)
+                                    ->rules([
+                                        fn (?Form $record): Closure => function (string $attribute, $value, Closure $fail) use ($record) {
+                                            // Without an email field there is nowhere to take the
+                                            // recipient from — the letter would silently never go out.
+                                            if ($value && $record && ! self::hasEmailField($record)) {
+                                                $fail(__('panel.form_has_no_email_field'));
+                                            }
+                                        },
+                                    ]),
 
                                 TextInput::make('user_mail_subject')->label(__('panel.email_subject'))
                                     ->trim()
@@ -164,5 +189,13 @@ class FormForm
                     ])->columnSpanFull(),
 
             ])->columns(24);
+    }
+
+    private static function hasEmailField(Form $form): bool
+    {
+        return $form->fields()
+            ->where('is_enabled', true)
+            ->where('type', 'email')
+            ->exists();
     }
 }

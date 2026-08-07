@@ -14,6 +14,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Mail\Attachment;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Throwable;
@@ -42,10 +43,18 @@ final class SendFormSubmissionEmails implements ShouldQueue
         
         try {
             $form = $submission->form;
-            
+
+            // Letters that were expected but had nowhere to go. Silence here used
+            // to leave the submission marked as delivered.
+            $skipped = [];
+
             // --- ADMIN ---
             $adminEmail = $form?->recipient_admin_email;
-            
+
+            if ($form?->send_admin_mail === true && (! is_string($adminEmail) || trim($adminEmail) === '')) {
+                $skipped[] = __('panel.mail_skipped_no_admin_recipient');
+            }
+
             if (
                 $form?->send_admin_mail === true
                 && is_string($adminEmail) && $adminEmail !== ''
@@ -65,10 +74,13 @@ final class SendFormSubmissionEmails implements ShouldQueue
             }
             
             // --- USER ---
-            $data = is_array($submission->data) ? $submission->data : [];
-            $userEmail = $data['email'] ?? $data['user_email'] ?? null;
-            
-            if ($form?->send_user_mail === true && is_string($userEmail) && $userEmail !== '') {
+            $userEmail = $this->resolveUserEmail($submission);
+
+            if ($form?->send_user_mail === true && $userEmail === null) {
+                $skipped[] = __('panel.mail_skipped_no_user_email');
+            }
+
+            if ($form?->send_user_mail === true && $userEmail !== null) {
                 $userSubject = is_string($form->user_mail_subject ?? null) ? trim($form->user_mail_subject) : '';
                 $userBodyMd = is_string($form->user_mail_body_md ?? null) ? trim($form->user_mail_body_md) : '';
                 
@@ -89,9 +101,17 @@ final class SendFormSubmissionEmails implements ShouldQueue
                 }
             }
             
+            if ($skipped !== []) {
+                Log::warning('Form submission emails were not sent', [
+                    'submission_id' => $submission->id,
+                    'form_id' => $submission->form_id,
+                    'reasons' => $skipped,
+                ]);
+            }
+
             $submission->update([
-                'status' => FormSubmissionStatus::Sent,
-                'error_message' => null,
+                'status' => $skipped === [] ? FormSubmissionStatus::Sent : FormSubmissionStatus::Failed,
+                'error_message' => $skipped === [] ? null : implode(' ', $skipped),
             ]);
         } catch (Throwable $e) {
             $submission->update([
@@ -103,6 +123,31 @@ final class SendFormSubmissionEmails implements ShouldQueue
         }
     }
     
+    /**
+     * Conventional keys first, then the first email field of the form: the field
+     * may be named anything, and only its type says it holds an address.
+     */
+    private function resolveUserEmail(FormSubmission $submission): ?string
+    {
+        $data = is_array($submission->data) ? $submission->data : [];
+
+        $emailField = $submission->form?->fields
+            ->where('is_enabled', true)
+            ->firstWhere('type', 'email');
+
+        $keys = array_filter(['email', 'user_email', $emailField?->name]);
+
+        foreach ($keys as $key) {
+            $value = $data[$key] ?? null;
+
+            if (is_string($value) && trim($value) !== '') {
+                return trim($value);
+            }
+        }
+
+        return null;
+    }
+
     private function buildFormUserAttachments(array $paths, string $disk = 'public'): array
     {
         return collect($paths)

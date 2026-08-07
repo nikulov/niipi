@@ -122,7 +122,7 @@
                                                 style="{{ $table }} width: 100%; background-color: #ffffff"
                                             >
                                                 <tr>
-                                                    <td class="card-pad" style="padding: 36px; font-family: {{ $font }}">
+                                                    <td class="card-pad" style="padding: 36px 36px 72px 36px; font-family: {{ $font }}">
                                                         <div
                                                             style="
                                                                 text-align: right;
@@ -141,6 +141,8 @@
                                                                 font-family: {{ $font }};
                                                                 font-size: 16px;
                                                                 line-height: 1.65;
+                                                                max-width: 360px;
+                                                                margin: 0 auto;
                                                             "
                                                         >
                                                             {!! $bodyHtml !!}
@@ -152,11 +154,7 @@
                                                     <td
                                                         class="card-foot"
                                                         bgcolor="#f6f4f4"
-                                                        style="
-                                                            padding: 36px 36px 12px 36px;
-                                                            background-color: #f6f4f4;
-                                                            font-family: {{ $font }};
-                                                        "
+                                                        style="padding: 36px; background-color: #f6f4f4; font-family: {{ $font }}"
                                                     >
                                                         <table
                                                             role="presentation"
