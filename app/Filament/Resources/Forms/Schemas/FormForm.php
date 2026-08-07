@@ -15,6 +15,7 @@ use Filament\Schemas\Components\Group;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
+use Filament\Support\Enums\Alignment;
 
 class FormForm
 {
@@ -86,6 +87,10 @@ class FormForm
                     ->schema([
 
                         Section::make(__('panel.email_admin'))
+                            ->headerActions([
+                                FormMailActions::preview('admin'),
+                                FormMailActions::sendTest('admin'),
+                            ])
                             ->schema([
 
                                 Toggle::make('send_admin_mail')
@@ -108,9 +113,15 @@ class FormForm
                                     ->columnSpanFull()
                                     ->required(fn (Get $get): bool => (bool) $get('send_admin_mail')),
 
-                            ])->columnSpan(24),
+                            ])
+                            ->key('email-admin', isInheritable: false)
+                            ->columnSpan(24),
 
                         Section::make(__('panel.email_user'))
+                            ->headerActions([
+                                FormMailActions::preview('user'),
+                                FormMailActions::sendTest('user'),
+                            ])
                             ->schema([
 
                                 Toggle::make('send_user_mail')->label(__('panel.send_user_mail'))
@@ -147,7 +158,9 @@ class FormForm
                                     ->disabled(fn (Get $get): bool => ! (bool) $get('send_user_mail'))
                                     ->hintAction(MediaPickerAction::make('user_mail_attachments', multiple: true, acceptedMimeTypes: ['application/pdf', 'image/png', 'image/jpeg'], maxSize: 10240)),
 
-                            ])->columnSpan(24),
+                            ])
+                            ->key('email-user', isInheritable: false)
+                            ->columnSpan(24),
                     ])->columnSpanFull(),
 
             ])->columns(24);

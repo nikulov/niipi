@@ -55,7 +55,7 @@ final class SendFormSubmissionEmails implements ShouldQueue
                 
                 if ($adminSubject !== '' && $adminBodyMd !== '') {
                     $subject = $renderer->renderSubject($submission, $adminSubject);
-                    $html = $renderer->renderBodyHtml($submission, $adminBodyMd);
+                    $html = $renderer->renderLetterHtml($submission, $adminBodyMd);
                     $text = $renderer->renderBodyText($submission, $adminBodyMd);
                     
                     Mail::to($adminEmail)->send(new TemplatedFormSubmissionMail($subject, $html, $text));
@@ -74,7 +74,7 @@ final class SendFormSubmissionEmails implements ShouldQueue
                 
                 if ($userSubject !== '' && $userBodyMd !== '') {
                     $subject = $renderer->renderSubject($submission, $userSubject);
-                    $html = $renderer->renderBodyHtml($submission, $userBodyMd);
+                    $html = $renderer->renderLetterHtml($submission, $userBodyMd);
                     $text = $renderer->renderBodyText($submission, $userBodyMd);
                     
                     $formAttachments = $this->buildFormUserAttachments(

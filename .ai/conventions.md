@@ -106,6 +106,17 @@
   `phoneMask` в `resources/js/app.js`) + серверный `regex` в `FormRulesBuilder`;
   в БД уходит `+74523543253` (`SubmissionDataNormalizer`).
   Подробности — [patterns/livewire-public-form.md](patterns/livewire-public-form.md).
+- Экшены письма (предпросмотр, тестовая отправка) висят на своей секции
+  схемы, а не в шапке страницы — `Section::footerActions()`, билдеры в
+  `FormMailActions`. Секции даны явные ключи (`->key('email-admin',
+  isInheritable: false)`), по ним экшен и резолвится; иначе ключ считается
+  из русского заголовка транслитерацией. Шаблоны читаются из живого
+  состояния формы через `Get $get` — письмо можно проверить до сохранения.
+  В тесте экшен адресуется как
+  `TestAction::make('preview_admin_mail')->schemaComponent('email-admin')`;
+  для невидимого экшена (страница создания) работает только
+  `assertActionDoesNotExist()` — скрытые компоненты вырезаются из схемы,
+  и `assertActionHidden()` падает с `ActionNotResolvableException`.
 
 ## Livewire: публичные свойства
 

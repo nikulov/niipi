@@ -26,6 +26,29 @@ final class FormEmailTemplateRenderer
         return (string) Str::markdown($md);
     }
 
+    /**
+     * Body from the admin panel, wrapped into the branded email template.
+     */
+    public function renderLetterHtml(FormSubmission $submission, string $templateMd): string
+    {
+        return view('emails.email-template', [
+            'body' => $this->renderBodyHtml($submission, $templateMd),
+            // Submission date, not send date: the queue may reach the mail much later.
+            'date' => optional($submission->created_at)?->format('d.m.Y') ?? now()->format('d.m.Y'),
+        ])->render();
+    }
+
+    /**
+     * The letter as the admin wrote it: placeholders are left untouched so it is
+     * visible where each of them sits.
+     */
+    public function renderPreviewHtml(string $templateMd): string
+    {
+        return view('emails.email-template', [
+            'body' => (string) Str::markdown($templateMd),
+        ])->render();
+    }
+
     public function renderBodyText(FormSubmission $submission, string $templateMd): string
     {
         $context = $this->buildContext($submission);

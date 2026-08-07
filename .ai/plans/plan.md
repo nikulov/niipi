@@ -10,6 +10,11 @@
   не работает полностью. Чинится в `.env` (`MAIL_HOST=server319.hosting.reg.ru`),
   правильное решение — SSL для `mail.niipigrad.ru` у хостера.
 
+- [Вёрстка письма по макету](email-template/README.md) — брендовая обёртка
+  письма (шапка с логотипом, карточка, футер со ссылками и соцсетями) в
+  `emails/email-template.blade.php`. Пока только вёрстка и dev-превью,
+  подключение к Mailable — отдельно.
+
 ## Wrapping up
 
 - [Nginx: HSTS и канонические редиректы](nginx-hsts/README.md) —

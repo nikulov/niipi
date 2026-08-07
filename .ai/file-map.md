@@ -27,6 +27,7 @@
 | `Livewire/Forms/PublicForm.php`                                       | Публичная форма (WithFileUploads + honeypot)                                                                                                                 |
 | `Filament/Resources/{Entity}/`                                        | Filament ресурс — `Pages/`, `Schemas/`, `Tables/`, при необходимости `RelationManagers/`                                                                     |
 | `Filament/Resources/Forms/RelationManagers/FieldsRelationManager.php` | Поля формы (relation manager)                                                                                                                                |
+| `Filament/Resources/Forms/Schemas/FormMailActions.php`                | Предпросмотр и тестовая отправка письма — экшены секций «Письмо администратору / пользователю» в `FormForm`                                                   |
 | `Filament/Components/*.php`                                           | Filament Block-компоненты (по одному на тип блока)                                                                                                           |
 | `Filament/Components/BgForMainSection.php`                            | Спец-блок для «настроек секции»                                                                                                                              |
 | `Filament/Components/BlockRegistry/BlockRegistry.php`                 | Реестр блоков для Filament (`all()`, `topSection()`, `mainSection()`, `bottomSection()`, `tabs()`, `modal()`)                                                |
@@ -163,6 +164,11 @@ Filament-компоненты в `app/Filament/Components/` — один-в-од
   `logo/`, `menu/`, `other/`, `sections/`
 - `livewire/components/`, `livewire/forms/` — шаблоны Livewire
 - `includes/`, `emails/`, `forms/`, `vendor/`
+- `emails/email-template.blade.php` — брендовая обёртка письма по макету
+  (шапка с логотипом, карточка, футер). Табличная вёрстка 600px, все
+  переменные с дефолтами. Картинки берёт из `public/images/email/` —
+  **мимо Vite**: хэш в имени меняется при сборке, а письмо уходит со старой
+  ссылкой. Пока ни к одному Mailable не подключена.
 - `sitemap.blade.php` — XML для `/sitemap.xml` (см. `SitemapController`)
 
 ## resources/css/
