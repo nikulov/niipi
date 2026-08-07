@@ -44,6 +44,7 @@
 | `Services/ModelDuplicator.php`                                        | Копирование записи в `DB::transaction`: суффиксы `(копия N)` / `-copy-N`, replicate + patch title/slug, вызов хуков модели                                    |
 | `Services/NewsQuery.php`, `ProjectsQuery.php`                         | Публичные выборки (list + paginate)                                                                                                                          |
 | `Services/Forms/`                                                     | `FormRulesBuilder`, `FormValidationAttributesBuilder`, `SubmissionCreator`, `SubmissionDataNormalizer`, `SubmissionFilesStorer`, `FormEmailTemplateRenderer` |
+| `Services/Forms/FormEmailTemplateRenderer.php`                        | Шаблоны писем: `renderSubject()`, `renderBodyHtml()`/`renderBodyText()` (подстановка плейсхолдеров), `renderLetterHtml()` (боевое письмо в обёртке), `renderPreviewHtml()` (превью и тест — без подстановки) |
 | `Actions/Forms/SubmitFormAction.php`                                  | Оркестратор: rate-limit → валидация → нормализация → сохранение → job писем                                                                                  |
 | `Presenters/Forms/PublicFormPresenter.php`                            | `viewData` для `PublicForm`                                                                                                                                  |
 | `Presenters/Forms/FormSubmissionPresenter.php`                        | Для админки/писем                                                                                                                                            |
@@ -164,11 +165,16 @@ Filament-компоненты в `app/Filament/Components/` — один-в-од
   `logo/`, `menu/`, `other/`, `sections/`
 - `livewire/components/`, `livewire/forms/` — шаблоны Livewire
 - `includes/`, `emails/`, `forms/`, `vendor/`
-- `emails/email-template.blade.php` — брендовая обёртка письма по макету
-  (шапка с логотипом, карточка, футер). Табличная вёрстка 600px, все
-  переменные с дефолтами. Картинки берёт из `public/images/email/` —
-  **мимо Vite**: хэш в имени меняется при сборке, а письмо уходит со старой
-  ссылкой. Пока ни к одному Mailable не подключена.
+- `emails/email-template.blade.php` — брендовая обёртка письма: шапка-картинка
+  с запечённым логотипом, карточка 600px, футер с контактами и соцсетями.
+  Таблицы, стили только инлайн, в `<style>` один `@media`. Все переменные с
+  дефолтами. Картинки из `public/images/email/` — **мимо Vite**: хэш в имени
+  меняется при сборке, а письмо уходит со старой ссылкой. Подключена к обоим
+  письмам по заявкам через `FormEmailTemplateRenderer::renderLetterHtml()`.
+  Детали и хвосты — [plans/email-template/README.md](plans/email-template/README.md).
+- `forms/email-preview.blade.php` — модалка предпросмотра письма в админке,
+  рисует его в `<iframe srcdoc>`: письмо это целый документ, вставленный в
+  страницу он дрался бы стилями с панелью.
 - `sitemap.blade.php` — XML для `/sitemap.xml` (см. `SitemapController`)
 
 ## resources/css/

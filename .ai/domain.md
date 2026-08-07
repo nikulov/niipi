@@ -93,6 +93,15 @@ Page/Post/Project содержат три JSON-секции: `top_section`, `mai
 - Специализированные сервисы — `app/Services/Forms/` (rules, attributes,
   submission creator, file storer, data normalizer, email template renderer).
 - Отправка писем — асинхронный `App\Jobs\SendFormSubmissionEmails` (tries=5).
+  Оба письма, админское и клиентское, заворачиваются в брендовый шаблон
+  `emails/email-template.blade.php`; голые вью `form-submission-*` остались
+  запасным путём на случай пустых темы или тела.
+- **Адрес клиента** ищется по порядку: ключ `email`, ключ `user_email`, затем
+  первое включённое поле формы с `type = 'email'` — назвать поле могут как
+  угодно, тип надёжнее имени. Если адреса нет, а тумблер включён, заявка уходит
+  в `Failed` с причиной в `error_message`, а не помечается доставленной.
+- Тумблер «письмо пользователю» блокируется, если у формы нет включённого поля
+  типа Email (`FormForm::hasEmailField()`).
 
 ## Публичные запросы
 
