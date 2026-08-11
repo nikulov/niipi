@@ -53,7 +53,9 @@ final class FormEmailTemplateRenderer
     {
         $context = $this->buildContext($submission);
 
-        return $this->replacePlaceholders($templateMd, $context);
+        // Plain text part: entities would reach the reader as they are, and
+        // `emails.plain-text` prints the result raw for the same reason.
+        return $this->replacePlaceholders($templateMd, $context, escape: false);
     }
 
     private function replacePlaceholders(string $template, array $context, bool $escape = true): string

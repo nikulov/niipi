@@ -270,7 +270,7 @@ http://89.108.113.198/           -> 200   (без редиректа на https)
 **Статус: закрыт 2026-08-05.** Добавлен catch-all
 `/etc/nginx/sites-available/zz-catch-all`: 80 → 301 на канонический домен,
 443 → `ssl_reject_handshake on`. Симлинк сайта `default` снят. Конфиг,
-обоснование и проверки — [nginx-hsts](nginx-hsts/README.md), раздел
+обоснование и проверки — [nginx-hsts](archived/nginx-hsts.md), раздел
 «Catch-all для голого IP».
 
 Побочный эффект: бот из #24 теперь отваливается на TLS и до приложения не
@@ -521,6 +521,18 @@ View: `vendor/filament/actions/resources/views/components/modals.blade.php`.
 Таблица `jobs` пуста, новых падений с 25.05 нет — но эти 8 записей висят
 необработанными, письма по соответствующим заявкам не ушли.
 
+**Закрыт 2026-08-11: не оживляли, вычистили.** Записей стало десять
+(см. [правку в bug-report-2026-08-06](bug-report-2026-08-06.md#правка-к-40)),
+самая свежая от 06.08 — письма протухли, а переотправка заявки 1108 дала бы
+дубль (у неё в очереди два джоба, баг #2 не чинен). На проде выполнено
+`php artisan queue:flush` из `/var/www/niipigrad-prod/current` под
+`deploy_niipigrad`, `queue:failed` после этого пуст. Stage не трогали.
+
+Уточнение по составу: девять записей — `App\Jobs\SendFormSubmissionEmails`,
+а самая старая (03.03 13:00, `dbfa8d00-…`) — `Illuminate\Notifications\
+SendQueuedNotifications`, то есть системное уведомление, а не письмо по
+заявке. Очередь на проде — `redis@default`, не `database`.
+
 ---
 
 ## Шум — не баги
@@ -530,7 +542,7 @@ View: `vendor/filament/actions/resources/views/components/modals.blade.php`.
 - **4521 `access forbidden by rule`** в nginx error.log за 14 суток — сканеры
   ботов по `/.env` (183), `/.git/config` (104), `/.env.production`,
   `/.aws/credentials` и ещё ~40 вариантов. Правила из
-  [nginx-hsts](nginx-hsts/README.md) отрабатывают штатно, это и есть
+  [nginx-hsts](archived/nginx-hsts.md) отрабатывают штатно, это и есть
   ожидаемое поведение.
 - **918 из 20 072 ошибок 404** — сканирование `wp-*`, `.env`, `.git`,
   `admin`, `xmlrpc`, Exchange-эндпоинтов (`/owa/`, `/ews/exchange.asmx`),

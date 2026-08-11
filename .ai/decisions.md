@@ -59,3 +59,12 @@ Editor/Viewer видит ресурс, но фактические права ch
 `ContentController::normalizePageSlug()` — `null`, `/`, `home` → `home`.
 Модель `Page` со `slug='home'` — стартовая страница. Slug'ы всегда без
 ведущего `/` (см. `Page::setSlugAttribute`).
+
+## Системные письма брендируем темой markdown, а не подменой нотификаций
+
+`resources/views/vendor/mail/html/layout.blade.php` включает
+`emails.email-template` — и все `MailMessage` (Laravel и Filament) едут в
+брендовой обёртке разом, включая будущие. Альтернатива — биндить свой класс
+нотификации и рисовать `->view('emails.email-template')` — отвергнута: обёртка
+под каждое новое системное письмо. Следствие: `html/themes/default.css`
+инлайнится по всему документу, поэтому его селекторы заскоплены на `.letter`.

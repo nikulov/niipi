@@ -72,6 +72,25 @@ class FormEmailTemplateRendererTest extends TestCase
         $this->assertStringNotContainsString('<b>Bob</b>', $html);
     }
 
+    public function test_text_body_keeps_values_as_they_are(): void
+    {
+        $submission = new FormSubmission([
+            'form_id' => 1,
+            'status' => FormSubmissionStatus::Processing,
+            'data' => [
+                'company' => 'Иванов & Партнёры',
+            ],
+        ]);
+        $submission->id = 10;
+        $submission->setRelation('form', new Form(['name' => 'Contact']));
+
+        $text = (new FormEmailTemplateRenderer)
+            ->renderBodyText($submission, 'Заявка от {{ field.company }}');
+
+        // текстовая часть не HTML: сущности получатель увидел бы буквально
+        $this->assertSame('Заявка от Иванов & Партнёры', $text);
+    }
+
     public function test_renders_files_list_in_body(): void
     {
         Storage::fake('public');

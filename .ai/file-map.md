@@ -172,6 +172,18 @@ Filament-компоненты в `app/Filament/Components/` — один-в-од
   меняется при сборке, а письмо уходит со старой ссылкой. Подключена к обоим
   письмам по заявкам через `FormEmailTemplateRenderer::renderLetterHtml()`.
   Детали и хвосты — [plans/email-template/README.md](plans/email-template/README.md).
+  **Правишь вёрстку письма** — раскомментируй роут `/_preview/email` в
+  `routes/web.php` (он живой, просто закомментирован) и смотри шаблон в браузере
+  без отправки. Закончил — закомментируй обратно.
+- `vendor/mail/` — тема markdown-писем Laravel, через неё в брендовую обёртку
+  попадают все системные письма (сброс пароля, подтверждение email, коды MFA).
+  `html/layout.blade.php` вместо стандартной таблицы включает
+  `emails.email-template`, отдав ему телом `Markdown::parse($slot)` + subcopy,
+  завёрнутые в `<div class="letter">`. `html/themes/default.css` вычищен и
+  **заскоплен на `.letter`** — Laravel инлайнит его через `CssToInlineStyles` по
+  всему документу, и неограниченные селекторы (`p`, `a`, `body *`) переписали бы
+  футер шаблона. Строки Laravel переведены в `lang/ru.json`, строки Filament —
+  его собственные ru-переводы. Сводка — [plans/archived/system-emails.md](plans/archived/system-emails.md).
 - `forms/email-preview.blade.php` — модалка предпросмотра письма в админке,
   рисует его в `<iframe srcdoc>`: письмо это целый документ, вставленный в
   страницу он дрался бы стилями с панелью.

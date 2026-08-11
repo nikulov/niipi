@@ -4,10 +4,33 @@ namespace Tests\Unit\Mail;
 
 use App\Mail\TemplatedFormSubmissionMail;
 use Illuminate\Mail\Attachment;
+use Illuminate\Support\Facades\Mail;
 use Tests\TestCase;
 
 class TemplatedFormSubmissionMailTest extends TestCase
 {
+    /**
+     * The renderer no longer escapes the text part, so the view must print it
+     * raw — `{{ }}` there used to turn `&` into `&amp;amp;` on the way out.
+     */
+    public function test_text_part_is_not_escaped_twice(): void
+    {
+        $mail = new TemplatedFormSubmissionMail(
+            'Subject',
+            '<p>Hello</p>',
+            'Заявка от Иванов & Партнёры «Северный» <офис>'
+        );
+
+        Mail::to('client@example.test')->send($mail);
+
+        $message = Mail::mailer()->getSymfonyTransport()->messages()->first()->getOriginalMessage();
+
+        $this->assertSame(
+            'Заявка от Иванов & Партнёры «Северный» <офис>',
+            trim($message->getTextBody())
+        );
+    }
+
     public function test_envelope_and_content_with_text(): void
     {
         $mail = new TemplatedFormSubmissionMail('Subject', '<p>Hello</p>', 'Plain text');

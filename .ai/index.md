@@ -20,6 +20,11 @@
 - [decisions.md](decisions.md) — принятые архитектурные решения
 - [checklists/before-commit.md](checklists/before-commit.md) — перед коммитом
 
+## Инфраструктура
+
+- [infra/nginx/](infra/nginx/README.md) — боевые конфиги nginx (prod, stage,
+  catch-all), копия один-в-один с сервера
+
 ## Планы работ
 
 - [plans/plan.md](plans/plan.md) — индекс планов

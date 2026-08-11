@@ -12,7 +12,8 @@ Route::get('/projects/{slug}', [ContentController::class, 'project'])->name('pro
 
 Route::get('/sitemap.xml', SitemapController::class)->name('sitemap');
 
-// Temporary: live preview while the email template is being styled.
+// Live preview of the email template. Kept commented on purpose: uncomment
+// while editing emails/email-template.blade.php, comment back afterwards.
 // if (app()->isLocal()) {
 //     Route::get('/_preview/email', fn () => view('emails.email-template', [
 //         'body' => <<<'HTML'

@@ -56,11 +56,26 @@ vendor/bin/sail npm run format
 - Meilisearch — поиск
 - Mailpit — перехват писем в dev (доступен через веб-интерфейс порта Mailpit)
 
+## Доступ к серверу
+
+Прод и stage живут на одной машине: `ssh -i ~/.ssh/niipi-prod root@89.108.113.198`.
+
+- Prod — `/var/www/niipigrad-prod/current`, stage — `/var/www/niipigrad-stage/current`
+  (симлинк на `releases/<timestamp>`).
+- Artisan запускать от владельца релиза:
+  `sudo -u deploy_niipigrad php artisan …` — под root'ом артефакты в `storage/`
+  и `bootstrap/cache/` останутся с чужими правами.
+- Очередь на проде — **redis**, не `database`: падшие джобы смотреть через
+  `php artisan queue:failed`.
+- Любая команда на проде — только по явной просьбе, и только на том стенде,
+  который назвали.
+
 ## Деплой
 
 - Staging: скрипт `deploy-stage.sh` из ветки `staging`. Target:
-  `/var/www/niipi-stage`.
-- Prod: скрипт `deploy-prod.sh` из ветки `main`.
+  `/var/www/niipigrad-stage`.
+- Prod: скрипт `deploy-prod.sh` из ветки `main`. Target:
+  `/var/www/niipigrad-prod`.
 - Стратегия: releases-каталог + симлинк `current`, хранит 5 последних релизов.
 - Пост-шаги на сервере: `composer install --no-dev --optimize-autoloader`,
   `migrate --force`, `config:cache`, `route:cache`, `view:cache`,

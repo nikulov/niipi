@@ -4,12 +4,17 @@ namespace App\Models;
 
 use App\Enums\FormApplicantType;
 use App\Models\Concerns\Duplicatable;
+use App\Models\Concerns\TracksMediaUsage;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 final class Form extends Model
 {
     use Duplicatable;
+
+    // Mail attachments live in `user_mail_attachments`. Without usage tracking
+    // the media manager shows those files as unused and offers to delete them.
+    use TracksMediaUsage;
 
     protected $fillable = [
         'title',
