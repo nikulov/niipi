@@ -58,8 +58,6 @@ vendor/bin/sail npm run format
 
 ## Доступ к серверу
 
-Прод и stage живут на одной машине: `ssh -i ~/.ssh/niipi-prod root@89.108.113.198`.
-
 - Prod — `/var/www/niipigrad-prod/current`, stage — `/var/www/niipigrad-stage/current`
   (симлинк на `releases/<timestamp>`).
 - Artisan запускать от владельца релиза:
