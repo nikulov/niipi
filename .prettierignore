@@ -18,3 +18,8 @@ vite.config.js
 .env
 .gitignore
 /resources/views/vendor/notifications/*.blade.php
+
+# Whitespace-significant templates: blank lines and indentation are literal
+# output here, so reflowing them changes the rendered email.
+/resources/views/vendor/mail/text
+/resources/views/emails/plain-text.blade.php

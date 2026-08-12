@@ -1,7 +1,12 @@
 # Перед коммитом
 
 - [ ] Прогнал `vendor/bin/sail bin pint --dirty` (если менял PHP).
-- [ ] Прогнал `vendor/bin/sail npm run format` (если менял Blade/CSS/JS).
+- [ ] Отформатировал **только изменённые файлы** (если менял Blade/CSS/JS):
+      `vendor/bin/sail npx prettier --write <файл>`.
+      Массовый `npm run format` не запускать без нужды: он бьёт по всей
+      `resources/`, а там ~16 файлов, никогда через prettier не прогонявшихся
+      (в основном `views/vendor/mail/html/**`), и они уедут в чужой коммит.
+      Если всё-таки запустил — `git status` и откат постороннего.
 - [ ] Прогнал релевантные тесты: `vendor/bin/sail artisan test --compact --filter=...`.
 - [ ] Не удалил и не отключил существующие тесты без явного разрешения.
 - [ ] Ассеты собираются: `vendor/bin/sail npm run build` при изменениях фронтенда.
