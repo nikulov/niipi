@@ -12,6 +12,9 @@
             <x-menu.top />
 
             <div class="absolute right-10 flex items-center space-x-4 lg:right-0">
+                <a href="tel:+74952427707" aria-label="Позвонить" class="group">
+                    <x-icon.icon-call-phone class="h-6 w-6 cursor-pointer" />
+                </a>
                 <button type="button" x-data="themeToggle" @click="toggle" class="group cursor-pointer">
                     <x-icon.icon-switcher-theme />
                     <div
