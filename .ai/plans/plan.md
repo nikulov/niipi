@@ -4,7 +4,14 @@
 
 ## Active
 
-Пусто.
+- [ ] **После выката на прод — `media:sync --usages-only`.** Разовый шаг к
+  релизу с коммитом `7e33af5`: `Form` начал трекать медиа-usages, но уже
+  существующим формам записи в `media_file_usages` никто не проставит. Пока не
+  прогнали, вложения старых форм в медиатеке числятся неиспользуемыми, и их
+  можно удалить одним кликом — ровно тот сценарий, из-за которого письма
+  уходили без файлов. Команда: `sudo -u deploy_niipigrad php artisan media:sync
+  --usages-only` из `/var/www/niipigrad-prod/current`. Разбор —
+  [archived/mail-attachments.md](archived/mail-attachments.md).
 
 ## Wrapping up
 

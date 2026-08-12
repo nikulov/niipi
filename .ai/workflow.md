@@ -80,6 +80,9 @@ vendor/bin/sail npm run format
   `filament:optimize`, `filament:cache-components`, `queue:restart`,
   `systemctl reload php8.4-fpm`.
 - Локально эти команды **не запускать** — они предназначены для CI/CD-пути.
+- Разовые шаги к конкретному релизу живут в «Active» в
+  [plans/plan.md](plans/plan.md) — перед выкатом заглянуть туда. Сейчас там
+  висит `media:sync --usages-only` к релизу с `7e33af5`.
 
 ## Коммиты
 
