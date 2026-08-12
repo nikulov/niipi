@@ -171,7 +171,7 @@ Filament-компоненты в `app/Filament/Components/` — один-в-од
   дефолтами. Картинки из `public/images/email/` — **мимо Vite**: хэш в имени
   меняется при сборке, а письмо уходит со старой ссылкой. Подключена к обоим
   письмам по заявкам через `FormEmailTemplateRenderer::renderLetterHtml()`.
-  Детали и хвосты — [plans/email-template/README.md](plans/email-template/README.md).
+  Решения по вёрстке и сборке письма — [plans/archived/email-template.md](plans/archived/email-template.md).
   **Правишь вёрстку письма** — раскомментируй роут `/_preview/email` в
   `routes/web.php` (он живой, просто закомментирован) и смотри шаблон в браузере
   без отправки. Закончил — закомментируй обратно.
