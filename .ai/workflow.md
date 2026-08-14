@@ -43,11 +43,14 @@ vendor/bin/sail bin pint --dirty
 `--format` понимает только `txt` (дефолт), `json`, `checkstyle`, `junit`,
 `gitlab`. Проверка без правки файлов — `--test`.
 
-Для фронтенда (Blade/CSS/JS):
+Для фронтенда (Blade/CSS/JS) — точечно по изменённым файлам:
 
 ```bash
-vendor/bin/sail npm run format
+vendor/bin/sail npx prettier --write resources/views/…/file.blade.php
 ```
+
+`npm run format` (весь `resources/`) без нужды не запускать — подробности
+и причина в [conventions.md](conventions.md), раздел «Frontend».
 
 ## Сервисы Sail
 

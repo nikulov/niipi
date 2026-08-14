@@ -163,6 +163,9 @@ Filament-компоненты в `app/Filament/Components/` — один-в-од
 - `layout/` — макеты (в т.ч. `layout.page`)
 - `components/` — Blade-компоненты: `buttons/`, `form/`, `icon/`, `layout/`,
   `logo/`, `menu/`, `other/`, `sections/`
+- `components/icon/icon-call-phone.blade.php` — единственная анимированная
+  иконка: кейфреймы каскада дуг лежат отдельно, в `@theme` в `app.css`.
+  Правишь одно — смотри второе, см. [manual/tailwind-4.md](manual/tailwind-4.md).
 - `livewire/components/`, `livewire/forms/` — шаблоны Livewire
 - `includes/`, `emails/`, `forms/`, `vendor/`
 - `emails/email-template.blade.php` — брендовая обёртка письма: шапка-картинка
@@ -211,3 +214,5 @@ Filament-компоненты в `app/Filament/Components/` — один-в-од
 ## lang/
 
 - `panel.php` в каждой локали — все админ-строки (`__('panel.*')`).
+- `page.php` в каждой локали — строки публичного сайта (`__('page.*')`):
+  тултипы хедера, `aria-label`, alt галереи. Ключи держать парно в `ru/` и `en/`.
