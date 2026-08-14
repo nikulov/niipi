@@ -54,7 +54,7 @@
             <button
                 type="button"
                 class="absolute top-0 right-2 z-30 cursor-pointer p-2 text-2xl leading-none text-white md:right-10"
-                aria-label="Закрыть галерею"
+                aria-label="{{ __('page.close_gallery') }}"
                 @click="close()"
             >
                 <x-icon.icon-close-cross class="fill-accent hover:fill-accent-add h-6 w-6" />

@@ -11,4 +11,5 @@ return [
     'share' => 'Share',
     'copy_link' => 'Copy link',
     'link_copied' => 'Link copied',
+    'close_gallery' => 'Close gallery',
 ];
