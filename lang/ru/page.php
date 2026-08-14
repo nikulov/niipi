@@ -12,5 +12,6 @@ return [
     'copy_link' => 'Копировать ссылку',
     'link_copied' => 'Ссылка скопирована',
     'close_gallery' => 'Закрыть галерею',
+    'gallery_photo_alt' => ':base — фото :number',
 
 ];

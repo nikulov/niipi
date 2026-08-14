@@ -5,7 +5,7 @@
 
 @php
     $altBase = $pageTitle ?: config('app.name');
-    $altFor = fn (int $i) => $altBase.' — фото '.($i + 1);
+    $altFor = fn (int $i) => __('page.gallery_photo_alt', ['base' => $altBase, 'number' => $i + 1]);
 @endphp
 
 <section
