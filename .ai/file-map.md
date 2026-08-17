@@ -74,9 +74,14 @@ Title, YandexMap.
 
 `ShareButton` (`share-button`, «Поделиться + кнопка») — блок `button` плюс
 шаринг: слева от кнопки триггер, по клику полоска выезжает вправо **поверх**
-кнопки. **Схема в Filament идентична `Button`** — соцсети в админке не
-настраиваются: набор (ВК, Telegram, MAX, «копировать ссылку») и иконки
-(`components/icon/icon-{vk,telegram,max,link,share}`) зашиты в шаблон.
+кнопки. Схема — поля `Button` плюс репитер `socials` (`iconUrl` — SVG на
+public-диске, `title` — он же `aria-label`, `shareUrl` — шаблон адреса) и
+тумблер `showCopy`. **Пустой `socials` — полоски нет вообще**, рендерится
+только основная кнопка. Дефолтный набор (ВК, Telegram, MAX) — в
+`ShareButton::defaultSocials()`, туда же смотрит `getDefaultBlock()`; пути —
+`images/icon/{vk,telegram,max}.svg` на public-диске, исходники для заливки
+продублированы в git в `public/images/icon/`. Зашитыми в шаблоне
+остались только `icon-share` (триггер) и `icon-link` (копирование).
 Адреса собирает Alpine-хелпер `share()` из шаблонов с `{url}` / `{title}`,
 подставляя `location.href` и `document.title` — блок шарит ту страницу, на
 которой стоит. У MAX веб-диалога шаринга нет — только диплинк в приложение

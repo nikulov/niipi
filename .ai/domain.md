@@ -74,7 +74,8 @@ Page/Post/Project содержат три JSON-секции: `top_section`, `mai
 `CreateProject::appendDefaultMainBlock()`, данные кнопки собирает
 `ShareButton::getDefaultBlock($btnUrl, $btnLabel)` (`btn-primary`,
 `btnPosition=end` — значения позиции только `start`/`center`/`end`, шаблон
-подставляет их в `md:justify-*`, `blank=false`).
+подставляет их в `md:justify-*`, `blank=false`, `showCopy=true`, `socials`
+из `ShareButton::defaultSocials()`).
 
 Форма создания Post/Project стартует с блока `title` в main-секции
 (`Builder::make('main_section')->default(Title::getDefaultBlock())`, `h2`,

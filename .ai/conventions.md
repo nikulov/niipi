@@ -109,6 +109,29 @@
   `FileUpload`. Ни `resource_path()`, ни `Storage::path()` не нормализуют
   `..` — перед чтением проверять путь на traversal и на ожидаемое
   расширение, иначе `../.env` уедет в разметку страницы.
+- **У `FileUpload` дефолт задаётся массивом, а хранится строкой.**
+  `hydrateDefaultState()` кладёт значение прямо в raw state, минуя state-касты
+  (`HasState.php:481`), а raw state у загрузки — массив путей. Строка в
+  `->default()` роняет форму (`Argument #2 ($value) must be of type array` из
+  правила валидации и `foreach()` в `getUploadedFiles()`). После сохранения
+  значение снова строка — `FileUploadStateCast::get()` для не-`multiple`
+  отдаёт `Arr::first()`. Если тот же набор пишется и в БД напрямую, держать
+  две формы: пример — `ShareButton::defaultSocials()` (строка, как в JSON)
+  и `defaultSocialsAsFormState()` (массив, для `->default()`).
+- **`FileUpload` выбрасывает из состояния пути, которых нет на диске**
+  (`BaseFileUpload::afterStateHydrated`, проверка `getDisk()->exists()`).
+  Поэтому дефолт поля-загрузки нельзя задать «наперёд»: пока файла в
+  `storage/app/public` нет, значение молча пропадёт при первом сохранении
+  формы. Отключается через `->fetchFileInformation(false)`, но тогда у
+  настоящих загрузок пропадают размер и mime.
+- **Новые статические SVG — не в `resources/images/`**: папка в `.gitignore`
+  (лежащие там 34 файла старше правила и потому отслеживаются), новые файлы
+  в релиз не уедут. Отслеживаемое место для статики — `public/images/`.
+  Но `inline_svg()` в `public/` **не смотрит** (только `resource_path()` →
+  диск `public`), и `FileUpload` с `->disk('public')` — тоже: у него корень
+  `storage/app/public`. Иконки, которые должны и рисоваться, и показываться
+  в админке, живут на public-диске; копия в `public/images/` нужна только
+  чтобы файл был в git и его было чем залить на новом стенде.
 
 ## Формы
 

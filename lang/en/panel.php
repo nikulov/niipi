@@ -132,7 +132,7 @@ return [
     'quantity' => 'Quantity',
     'contact-data' => 'Contacts',
     'social' => 'Social',
-    'add-social-icon' => 'Add social icon',
+    'add_social_icon' => 'Add social icon',
     'site-title' => 'Site title',
     'site-description' => 'Site description',
     'admin-email' => 'Admin email',
@@ -157,7 +157,7 @@ return [
     'custom_url' => 'Custom URL',
     'label' => 'Label',
     // Footer (Resources/Footers/Schemas/FooterForm.php)
-    'social-icon' => 'Social icon',
+    'social_icon' => 'Social icon',
     'url' => 'URL',
     'publications' => 'Publications',
     'projects_list' => 'Projects list',
@@ -186,6 +186,9 @@ return [
     'accent_additional' => 'Accent additional',
     'btn' => 'Button',
     'share_btn' => 'Share + button',
+    'show_copy_link' => '“Copy link” button',
+    'share_url' => 'Share URL',
+    'share_url_hint' => 'Template: {url} — the page address, {title} — its title. For example: https://vk.com/share.php?url={url}&title={title}',
     'svg' => '*.svg only',
 
     'submission' => 'Submission',

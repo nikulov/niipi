@@ -25,19 +25,62 @@ class ShareButtonRendererTest extends TestCase
         $this->assertStringContainsString('/read', $html);
     }
 
-    public function test_share_targets_are_templates_filled_in_by_the_browser(): void
+    public function test_renders_a_link_per_configured_social(): void
     {
-        $html = (new ShareButtonRenderer)->render([], new StubHasBlockSections, 0);
+        $html = (new ShareButtonRenderer)->render([
+            'socials' => [
+                ['iconUrl' => 'images/share/vk.svg', 'title' => 'ВКонтакте', 'shareUrl' => 'https://vk.com/share.php?url={url}'],
+                ['iconUrl' => 'images/share/max.svg', 'title' => 'MAX', 'shareUrl' => 'https://max.ru/:share?text={url}'],
+            ],
+        ], new StubHasBlockSections, 0);
 
-        $this->assertStringContainsString('vk.com/share.php?url={url}', $html);
-        $this->assertStringContainsString('t.me/share/url?url={url}', $html);
-        $this->assertStringContainsString('max.ru/:share?text={url}', $html);
+        // `@js()` escapes slashes, so assert on the slash-free tail of each template
+        $this->assertStringContainsString('share.php?url={url}', $html);
+        $this->assertStringContainsString(':share?text={url}', $html);
+        $this->assertStringContainsString('aria-label="ВКонтакте"', $html);
+        $this->assertStringContainsString('aria-label="MAX"', $html);
     }
 
-    public function test_copy_link_button_is_always_rendered(): void
+    public function test_share_targets_are_templates_filled_in_by_the_browser(): void
     {
-        $html = (new ShareButtonRenderer)->render([], new StubHasBlockSections, 0);
+        $html = (new ShareButtonRenderer)->render([
+            'socials' => [
+                ['iconUrl' => 'images/share/vk.svg', 'title' => 'ВКонтакте', 'shareUrl' => 'https://vk.com/share.php?url={url}&title={title}'],
+            ],
+        ], new StubHasBlockSections, 0);
 
-        $this->assertStringContainsString('navigator.clipboard', $html);
+        $this->assertStringContainsString("replaceAll('{url}', encodeURIComponent(location.href))", $html);
+        $this->assertStringContainsString("replaceAll('{title}', encodeURIComponent(document.title))", $html);
+    }
+
+    public function test_share_bar_is_dropped_when_no_socials_are_configured(): void
+    {
+        $html = (new ShareButtonRenderer)->render([
+            'btnLabel' => 'Read more',
+        ], new StubHasBlockSections, 0);
+
+        $this->assertStringNotContainsString('aria-expanded', $html);
+        $this->assertStringNotContainsString('navigator.clipboard', $html);
+        $this->assertStringContainsString('Read more', $html);
+    }
+
+    public function test_copy_link_button_follows_the_toggle(): void
+    {
+        $socials = [
+            ['iconUrl' => 'images/share/vk.svg', 'title' => 'ВКонтакте', 'shareUrl' => 'https://vk.com/share.php?url={url}'],
+        ];
+
+        $with = (new ShareButtonRenderer)->render([
+            'socials' => $socials,
+            'showCopy' => true,
+        ], new StubHasBlockSections, 0);
+
+        $without = (new ShareButtonRenderer)->render([
+            'socials' => $socials,
+            'showCopy' => false,
+        ], new StubHasBlockSections, 0);
+
+        $this->assertStringContainsString('@click="copy()"', $with);
+        $this->assertStringNotContainsString('@click="copy()"', $without);
     }
 }
