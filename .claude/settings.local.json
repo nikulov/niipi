@@ -8,7 +8,6 @@
             "Edit(.claude/**)",
             "Edit(.ai/**)",
             "Edit(tests/**)",
-            "Write(.ai/**)",
 
             "Bash(ls)",
             "Bash(ls *)",
