@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
+use League\Flysystem\FilesystemException;
 use Throwable;
 
 final class SubmitFormAction
@@ -47,12 +48,27 @@ final class SubmitFormAction
 
         $attributes = $this->attributesBuilder->build($form);
 
-        $validated = validator(
-            ['data' => $data, 'uploads' => $uploads],
-            $rules,
-            $messages,
-            $attributes
-        )->validate();
+        // `FilesystemAdapter::size()` is the only adapter method without a
+        // try/catch: it throws even with `'throw' => false` on the disk, so the
+        // `max:` rule turns a broken file into a 500. Catch the whole
+        // FilesystemException family — this is a net under the filtering done in
+        // PublicForm, there is no point narrowing it to a single class
+        try {
+            $validated = validator(
+                ['data' => $data, 'uploads' => $uploads],
+                $rules,
+                $messages,
+                $attributes
+            )->validate();
+        } catch (FilesystemException $e) {
+            // if anything still got here, the logs have to show it — we should
+            // not learn about it from a visitor complaint
+            report($e);
+
+            throw ValidationException::withMessages([
+                'form' => __('panel.upload_broken'),
+            ]);
+        }
 
         $normalizedData = $this->normalizer->normalize($form, $validated);
 

@@ -5,8 +5,11 @@ namespace App\Livewire\Forms;
 use App\Actions\Forms\SubmitFormAction;
 use App\Models\Form;
 use App\Presenters\Forms\PublicFormPresenter;
+use Illuminate\Validation\ValidationException;
+use League\Flysystem\FilesystemException;
 use Livewire\Attributes\Locked;
 use Livewire\Component;
+use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 use Livewire\WithFileUploads;
 
 final class PublicForm extends Component
@@ -105,6 +108,8 @@ final class PublicForm extends Component
 
     private function normalizeUploads(array $uploads): array
     {
+        $uploads = $this->rejectMissingFiles($uploads);
+
         foreach (($this->viewData['fields'] ?? []) as $field) {
             if (($field['type'] ?? null) !== 'file') {
                 continue;
@@ -135,6 +140,71 @@ final class PublicForm extends Component
         }
 
         return $uploads;
+    }
+
+    /**
+     * Livewire takes the temporary file path from the client at face value.
+     * A failed write answers `200 {"paths":[""]}`, and after hydration that
+     * empty path becomes a dead `livewire-tmp/livewire-tmp` which the `max:`
+     * rule turns into a 500 on `size()`. Drop such a file before validation —
+     * and out of the state as well, otherwise it survives the retry and the
+     * visitor stays stuck on the same error until the page is reloaded.
+     *
+     * Walks `$uploads` itself rather than `viewData['fields']`: with an empty
+     * `viewData` the field loop is a no-op and the hole stays open.
+     */
+    private function rejectMissingFiles(array $uploads): array
+    {
+        $lost = [];
+
+        foreach ($uploads as $name => $value) {
+            if (is_array($value)) {
+                $kept = array_values(array_filter($value, fn ($file) => ! $this->isMissingFile($file)));
+
+                if (count($kept) !== count($value)) {
+                    $lost[] = $name;
+                    $uploads[$name] = $kept;
+                }
+
+                continue;
+            }
+
+            if ($this->isMissingFile($value)) {
+                $lost[] = $name;
+                $uploads[$name] = null;
+            }
+        }
+
+        if ($lost === []) {
+            return $uploads;
+        }
+
+        $this->uploads = $uploads;
+
+        // staying silent is not an option: for an optional field the submission
+        // would go through without the attachment while the visitor believes
+        // the file was attached
+        throw ValidationException::withMessages(
+            array_fill_keys(
+                array_map(fn (string $name) => "uploads.{$name}", $lost),
+                __('panel.upload_lost'),
+            )
+        );
+    }
+
+    private function isMissingFile(mixed $file): bool
+    {
+        if (! $file instanceof TemporaryUploadedFile) {
+            return false;
+        }
+
+        try {
+            return ! $file->exists();
+        } catch (FilesystemException) {
+            // the disk could not answer — treat the file as dead: validation
+            // would fail on it anyway, only with a 500
+            return true;
+        }
     }
 
     public function render()
