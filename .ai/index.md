@@ -56,3 +56,5 @@
 - [manual/tailwind-4.md](manual/tailwind-4.md)
 - [manual/filament-4.md](manual/filament-4.md)
 - [manual/livewire-3.md](manual/livewire-3.md)
+- [manual/filesystem-disks.md](manual/filesystem-disks.md) — `throw`/`report` у
+  дисков, какие сбои записи молчат и почему `store()` не возвращает `false`

@@ -6,6 +6,9 @@ use App\Models\Form;
 use App\Models\FormSubmission;
 use App\Models\FormSubmissionFile;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\ValidationException;
 
 final class SubmissionFilesStorer
 {
@@ -48,6 +51,23 @@ final class SubmissionFilesStorer
                 }
 
                 $path = $upload->store($dir, $disk);
+
+                // `TemporaryUploadedFile::storeAs()` discards what `put()`
+                // returned and always hands back the path it composed, so a
+                // failed write would otherwise be recorded as a healthy row
+                // pointing at nothing. Bug #42
+                if (! $path || ! Storage::disk($disk)->exists($path)) {
+                    Log::warning('form submission file was not stored', [
+                        'submission' => $submission->id,
+                        'field' => $field->name,
+                        'disk' => $disk,
+                        'path' => $path,
+                    ]);
+
+                    throw ValidationException::withMessages([
+                        "uploads.{$field->name}" => __('panel.upload_not_saved'),
+                    ]);
+                }
 
                 $stored[] = ['disk' => $disk, 'path' => $path];
 

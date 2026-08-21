@@ -42,6 +42,17 @@
 на действия — Policies. `BasePolicy::before()` даёт Admin bypass. Причина:
 Editor/Viewer видит ресурс, но фактические права check-ает уже политика.
 
+## Диски: `throw => false`, но `report => true`
+
+Сбой записи по-прежнему возвращает `false` вместо исключения — приложение
+защищается само (проверки в `PublicForm` и `SubmissionFilesStorer`), а не
+рассчитывает на падение. Но `'report' => true` включён обоим дискам: без него
+неудачная запись не оставляет следа вообще нигде, и сломанный `livewire-tmp`
+на проде выяснялся только по жалобе посетителя (баг #23). `'throw' => true`
+диску `local` рассматривали и отложили: цена — гонка в vendor'ном
+`cleanupOldUploads()`, которая даст редкие 500 на загрузке. Матрица поведения —
+[manual/filesystem-disks.md](manual/filesystem-disks.md).
+
 ## Формы: rate-limit по IP
 
 `SubmitFormAction` использует `RateLimiter` (5 попыток за 300 секунд по

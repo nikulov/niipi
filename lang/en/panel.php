@@ -250,6 +250,7 @@ return [
     'too_many_attempts' => 'Too many attempts. Please try again in :seconds seconds.',
     'upload_lost' => 'The file was not uploaded. Please attach it again.',
     'upload_broken' => 'The attached file could not be read. Please attach it again.',
+    'upload_not_saved' => 'The file could not be saved. Please submit the form again.',
     'send' => 'Send',
     'select_options' => 'Select options',
     'change_theme' => 'Change site theme',

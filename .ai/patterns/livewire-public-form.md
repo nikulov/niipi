@@ -49,6 +49,28 @@ Form::query()
     ->firstOrFail();
 ```
 
+## Загруженные файлы: путь приходит от клиента
+
+Livewire принимает путь временного файла из снапшота на веру, поэтому перед
+валидацией стоят два слоя (баг #23, разбор —
+[plans/public-form-crashes](../plans/public-form-crashes/README.md)):
+
+1. **`PublicForm::rejectMissingFiles()`** — идёт по самому `$uploads` (не по
+   `viewData['fields']`: при пустом `viewData` обход полей был бы no-op),
+   выбрасывает `TemporaryUploadedFile`, у которых `exists()` — ложь, кладёт
+   очищенное обратно в `$this->uploads`, пишет `Log::warning` и кидает
+   `ValidationException` на затронутые поля. Молчать нельзя: у необязательного
+   поля заявка ушла бы без вложения.
+2. **`SubmitFormAction`** — `try/catch (FilesystemException)` вокруг
+   `validate()` с `report($e)`. Сетка: `FilesystemAdapter::size()` кидает даже
+   при `'throw' => false` у диска, а правило `max:` его зовёт.
+
+Третье место — `SubmissionFilesStorer` после `store()` проверяет
+`exists()`: `TemporaryUploadedFile::storeAs()` выбрасывает результат `put()`,
+поэтому неудачная запись иначе становится строкой в БД с путём в никуда
+(баг #42). Подробности про флаги дисков —
+[manual/filesystem-disks.md](../manual/filesystem-disks.md).
+
 ## Валидация
 
 Правила формируются в `App\Services\Forms\FormRulesBuilder` на основе:

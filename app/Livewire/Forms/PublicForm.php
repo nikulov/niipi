@@ -5,6 +5,7 @@ namespace App\Livewire\Forms;
 use App\Actions\Forms\SubmitFormAction;
 use App\Models\Form;
 use App\Presenters\Forms\PublicFormPresenter;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 use League\Flysystem\FilesystemException;
 use Livewire\Attributes\Locked;
@@ -159,18 +160,27 @@ final class PublicForm extends Component
 
         foreach ($uploads as $name => $value) {
             if (is_array($value)) {
-                $kept = array_values(array_filter($value, fn ($file) => ! $this->isMissingFile($file)));
+                $kept = [];
+
+                foreach ($value as $file) {
+                    if ($this->isMissingFile($file)) {
+                        $lost[$name][] = $file->getFilename();
+
+                        continue;
+                    }
+
+                    $kept[] = $file;
+                }
 
                 if (count($kept) !== count($value)) {
-                    $lost[] = $name;
-                    $uploads[$name] = $kept;
+                    $uploads[$name] = array_values($kept);
                 }
 
                 continue;
             }
 
             if ($this->isMissingFile($value)) {
-                $lost[] = $name;
+                $lost[$name][] = $value->getFilename();
                 $uploads[$name] = null;
             }
         }
@@ -181,12 +191,19 @@ final class PublicForm extends Component
 
         $this->uploads = $uploads;
 
+        // the visitor gets a field error, but a broken disk has to be visible
+        // from the logs as well — nothing else on this path reports it
+        Log::warning('public form dropped temporary files that no longer exist', [
+            'form' => $this->form->id,
+            'fields' => $lost,
+        ]);
+
         // staying silent is not an option: for an optional field the submission
         // would go through without the attachment while the visitor believes
         // the file was attached
         throw ValidationException::withMessages(
             array_fill_keys(
-                array_map(fn (string $name) => "uploads.{$name}", $lost),
+                array_map(fn (string $name) => "uploads.{$name}", array_keys($lost)),
                 __('panel.upload_lost'),
             )
         );

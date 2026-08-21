@@ -3,14 +3,18 @@
 namespace Tests\Feature\Livewire;
 
 use App\Actions\Forms\SubmitFormAction;
+use App\Jobs\SendFormSubmissionEmails;
 use App\Livewire\Forms\PublicForm;
 use App\Models\Form;
 use App\Models\FormField;
 use App\Models\FormSubmission;
+use App\Models\FormSubmissionFile;
 use Facades\Livewire\Features\SupportFileUploads\GenerateSignedUploadUrl;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Bus;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 use League\Flysystem\PathTraversalDetected;
@@ -50,6 +54,59 @@ class PublicFormUploadCrashTest extends TestCase
             ->assertSet('uploads.attachment', []);
 
         $this->assertSame(0, FormSubmission::count());
+    }
+
+    /**
+     * A field error is what the visitor gets; the log is what we get. Without
+     * it a broken disk stays invisible: layer 2 never runs, because layer 1
+     * throws first.
+     */
+    public function test_dropped_file_is_logged(): void
+    {
+        $records = [];
+
+        Log::listen(function ($message) use (&$records) {
+            $records[] = $message->level.': '.$message->message;
+        });
+
+        $form = $this->formWithFileField();
+
+        Livewire::test(PublicForm::class, ['formId' => $form->id])
+            ->set('data.name', 'Alice')
+            ->call('_finishUpload', 'uploads.attachment', [''], true)
+            ->call('submit')
+            ->assertHasErrors('uploads.attachment');
+
+        $this->assertCount(1, $records);
+        $this->assertStringContainsString('warning: public form dropped temporary files', $records[0]);
+    }
+
+    /**
+     * Bug #42. `TemporaryUploadedFile::storeAs()` discards what `put()`
+     * returned, so a failed write used to produce a healthy-looking row
+     * pointing at a file that was never written.
+     */
+    public function test_failed_store_does_not_create_a_submission(): void
+    {
+        Bus::fake();
+
+        $disk = Mockery::mock(Filesystem::class);
+        $disk->shouldReceive('put')->andReturnFalse();
+        $disk->shouldReceive('exists')->andReturnFalse();
+        Storage::set('public', $disk);
+
+        $form = $this->formWithFileField();
+
+        Livewire::test(PublicForm::class, ['formId' => $form->id])
+            ->set('data.name', 'Alice')
+            ->set('uploads.attachment', [UploadedFile::fake()->create('report.pdf', 10, 'application/pdf')])
+            ->call('submit')
+            ->assertHasErrors('uploads.attachment')
+            ->assertSet('submitted', false);
+
+        $this->assertSame(0, FormSubmission::count());
+        $this->assertSame(0, FormSubmissionFile::count());
+        Bus::assertNotDispatched(SendFormSubmissionEmails::class);
     }
 
     /**
