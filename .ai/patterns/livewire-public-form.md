@@ -62,7 +62,7 @@ Form::query()
 
 ## Маска телефона (тип поля `phone`)
 
-Маска `+7 (452) 354 32 53` — клиентская, Alpine-компонент `phoneMask(model)` в
+Маска `+7 (452) 354-32-53` — клиентская, Alpine-компонент `phoneMask(model)` в
 `resources/js/app.js`, навешивается в `components/form/fields/input.blade.php`
 только при `type === 'phone'` (`x-on:input|focus|blur|keydown.backspace`).
 
@@ -80,7 +80,7 @@ Form::query()
 - `mapInputType()` в презентере отдаёт для `phone` тип `tel`.
 
 Серверная проверка — ветка `phone` в `FormRulesBuilder`:
-`regex:/^\+7 \(\d{3}\) \d{3} \d{2} \d{2}$/`, сообщение `panel.invalid_phone`
+`regex:/^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/`, сообщение `panel.invalid_phone`
 (не перетирает кастомное сообщение из `FormField::rules`).
 
 **Хранение — `+74523543253`, без маски.** Приведение — ветка `phone` в

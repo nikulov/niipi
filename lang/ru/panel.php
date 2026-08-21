@@ -227,7 +227,7 @@ return [
     'user_agent' => 'User-Agent',
     'email' => 'Email',
     'phone' => 'Телефон',
-    'invalid_phone' => 'Укажите телефон в формате +7 999 123 45 67.',
+    'invalid_phone' => 'Укажите телефон в формате +7 (999) 123-45-67.',
     'submission_confirmation' => 'Ваша заявка принята',
     'submission_thanks' => 'Спасибо! Мы получили вашу заявку и свяжемся с вами в ближайшее время.',
     'files' => 'Файлы',

@@ -146,8 +146,13 @@ function phoneMask(model) {
 
             const part = digits.slice(at, at + size);
 
-            // the area code goes in parentheses, closed once it is complete
-            out += index === 0 ? ' (' + part + (part.length === size ? ')' : '') : ' ' + part;
+            // the area code goes in parentheses, closed once it is complete;
+            // the two trailing pairs are joined by hyphens
+            if (index === 0) {
+                out += ' (' + part + (part.length === size ? ')' : '');
+            } else {
+                out += (index === 1 ? ' ' : '-') + part;
+            }
 
             at += size;
         }

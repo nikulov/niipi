@@ -108,7 +108,7 @@ class PublicFormTest extends TestCase
             ->assertSet('submitted', false);
 
         Livewire::test(PublicForm::class, ['formId' => $form->id])
-            ->set('data.phone', '+7 (452) 354 32 53')
+            ->set('data.phone', '+7 (452) 354-32-53')
             ->call('submit')
             ->assertHasNoErrors()
             ->assertSet('submitted', true);

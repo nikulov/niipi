@@ -65,7 +65,7 @@ class SubmissionDataNormalizerTest extends TestCase
             'data' => [
                 'name' => 'Alice',
                 'agree' => '1',
-                'phone' => '+7 (452) 354 32 53',
+                'phone' => '+7 (452) 354-32-53',
                 'resume' => 'should_be_ignored',
                 'hidden' => 'secret',
                 'empty' => '   ',

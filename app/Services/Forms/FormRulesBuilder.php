@@ -7,8 +7,8 @@ use Illuminate\Validation\Rule;
 
 final class FormRulesBuilder
 {
-    /** The format produced by the client-side mask: "+7 (452) 354 32 53". */
-    private const PHONE_RULE = 'regex:/^\+7 \(\d{3}\) \d{3} \d{2} \d{2}$/';
+    /** The format produced by the client-side mask: "+7 (452) 354-32-53". */
+    private const PHONE_RULE = 'regex:/^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/';
 
     public function build(Form $form): array
     {

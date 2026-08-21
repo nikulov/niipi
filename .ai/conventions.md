@@ -142,7 +142,7 @@
 - Файлы вложений — модель `FormSubmissionFile`.
 - Специализированные сервисы — `app/Services/Forms/` (по одному классу
   на ответственность, оркестратор — Action).
-- Поле `phone` — клиентская маска `+7 (452) 354 32 53` (Alpine-компонент
+- Поле `phone` — клиентская маска `+7 (452) 354-32-53` (Alpine-компонент
   `phoneMask` в `resources/js/app.js`) + серверный `regex` в `FormRulesBuilder`;
   в БД уходит `+74523543253` (`SubmissionDataNormalizer`).
   Подробности — [patterns/livewire-public-form.md](patterns/livewire-public-form.md).

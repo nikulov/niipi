@@ -205,7 +205,7 @@ return [
     'user_agent' => 'User agent',
     'email' => 'Email',
     'phone' => 'Phone',
-    'invalid_phone' => 'Enter the phone number in the format +7 999 123 45 67.',
+    'invalid_phone' => 'Enter the phone number in the format +7 (999) 123-45-67.',
     'submission_confirmation' => 'Your request has been received',
     'submission_thanks' => 'Thank you! We have received your request and will contact you shortly.',
     'files' => 'Files',
