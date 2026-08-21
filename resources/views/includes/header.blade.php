@@ -18,7 +18,7 @@
                 </a>
 
                 <a
-                    href="{{ route('page.index', 'contacts') }}?phone=call"
+                    href="{{ route('page.index', 'contacts') }}#phone-call"
                     aria-label="{{ __('page.contacts') }}"
                     class="group relative hidden lg:block"
                 >
