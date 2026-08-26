@@ -109,11 +109,7 @@ class PostForm
                             ->downloadable()
                             ->openable()
                             ->getUploadedFileNameForStorageUsing(
-                                fn ($file) => str(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME))
-                                    ->slug()
-                                    ->limit(20)
-                                    ->append('-'.time().'.'.$file->getClientOriginalExtension())
-                                    ->toString()
+                                fn ($file): string => generate_uploaded_file_name($file)
                             )
                             ->moveFiles()
                             ->default('gallery/posts/default/default-news-1772545321.png')

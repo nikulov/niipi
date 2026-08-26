@@ -26,11 +26,7 @@ final class Gallery
                     ->downloadable()
                     ->openable()
                     ->getUploadedFileNameForStorageUsing(
-                        fn ($file) => str(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME))
-                            ->slug()
-                            ->limit(25)
-                            ->append('-'.time().'.'.$file->getClientOriginalExtension())
-                            ->toString()
+                        fn ($file): string => generate_uploaded_file_name($file)
                     )
                     ->moveFiles()
                     ->disk('public')

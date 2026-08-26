@@ -219,7 +219,26 @@
             "Bash(mv tests/**)",
             "Bash(cp .claude/**)",
             "Bash(cp .ai/**)",
-            "Bash(cp tests/**)"
+            "Bash(cp tests/**)",
+
+            "Bash(mkdir .claude/**)",
+            "Bash(mkdir .ai/**)",
+            "Bash(mkdir tests/**)",
+            "Bash(rm -f .claude/**)",
+            "Bash(rm -f .ai/**)",
+            "Bash(rm -f tests/**)",
+            "Bash(rm -r .claude/**)",
+            "Bash(rm -r .ai/**)",
+            "Bash(rm -r tests/**)",
+            "Bash(rm -rf .claude/**)",
+            "Bash(rm -rf .ai/**)",
+            "Bash(rm -rf tests/**)",
+            "Bash(mv -f .claude/**)",
+            "Bash(mv -f .ai/**)",
+            "Bash(mv -f tests/**)",
+            "Bash(cp -r .claude/**)",
+            "Bash(cp -r .ai/**)",
+            "Bash(cp -r tests/**)"
         ]
     }
 }

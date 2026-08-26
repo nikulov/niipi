@@ -27,13 +27,13 @@ if (! function_exists('public_asset')) {
 }
 
 if (! function_exists('generate_uploaded_file_name')) {
-    function generate_uploaded_file_name(TemporaryUploadedFile $file, int $limit = 20): string
+    function generate_uploaded_file_name(TemporaryUploadedFile $file, int $limit = 50): string
     {
         return str(
             pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME)
         )
             ->slug()
-            ->limit($limit)
+            ->limit($limit, '')
             ->append('-'.time().'.'.$file->getClientOriginalExtension())
             ->toString();
     }

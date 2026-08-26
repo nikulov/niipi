@@ -4,7 +4,6 @@ namespace App\Filament\Resources\MediaFiles\Schemas;
 
 use App\Models\MediaFile;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\TextInput;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Fieldset;
 use Filament\Schemas\Components\Section;
@@ -36,13 +35,6 @@ class MediaFileForm
                             'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                             'text/plain',
                         ]),
-                ]),
-
-            Fieldset::make('meta')->label(__('panel.settings'))
-                ->columns(24)->columnSpanFull()
-                ->schema([
-                    TextInput::make('title')->label(__('panel.title'))->columnSpan(12)->maxLength(255),
-                    TextInput::make('alt')->label(__('panel.alt'))->columnSpan(12)->maxLength(255),
                 ]),
 
             Section::make(__('panel.media_file_info'))
