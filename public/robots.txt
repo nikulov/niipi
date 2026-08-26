@@ -1,2 +1,9 @@
 User-agent: *
-Disallow:
+Disallow: /admin
+Disallow: /livewire
+Disallow: /storage/forms
+Disallow: /storage/livewire-tmp
+Disallow: /up
+Disallow: /login
+
+Sitemap: https://niipigrad.ru/sitemap.xml

@@ -11,37 +11,37 @@ class FormPolicy extends BasePolicy
     {
         return $this->isViewer($user);
     }
-    
+
     public function view(User $user, Form $form): bool
     {
         return $this->isViewer($user);
     }
-    
+
     public function create(User $user): bool
     {
-          return false;
+        return false;
     }
-    
+
     public function update(User $user, Form $form): bool
     {
-          return false;
+        return false;
     }
-    
+
     public function delete(User $user, Form $form): bool
     {
         return false;
     }
-    
+
     public function deleteAny(User $user): bool
     {
         return false;
     }
-    
-    public function forceDelete(User $user, Post $post): bool
+
+    public function forceDelete(User $user, Form $form): bool
     {
         return false;
     }
-    
+
     public function forceDeleteAny(User $user): bool
     {
         return false;

@@ -6,4 +6,4 @@
     'imageAlt' => 'image',
 ])
 
-<x-other.image-title-full icon-url="{{$iconUrl}}" icon-alt="{{$iconAlt}}" image-url="{{$imageUrl}}" title="{{$title}}"/>
+<x-other.image-title-full icon-url="{{$iconUrl}}" icon-alt="{{$iconAlt}}" image-url="{{$imageUrl}}" title="{{$title}}" />

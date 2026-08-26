@@ -12,7 +12,9 @@ final class FormEmailTemplateRenderer
     {
         $context = $this->buildContext($submission);
 
-        return $this->replacePlaceholders($template, $context);
+        // Тема — почтовый заголовок, не HTML: экранированные сущности
+        // получатель увидел бы как есть («Иванов &amp; Партнёры»).
+        return $this->replacePlaceholders($template, $context, escape: false);
     }
 
     public function renderBodyHtml(FormSubmission $submission, string $templateMd): string
@@ -24,16 +26,41 @@ final class FormEmailTemplateRenderer
         return (string) Str::markdown($md);
     }
 
+    /**
+     * Body from the admin panel, wrapped into the branded email template.
+     */
+    public function renderLetterHtml(FormSubmission $submission, string $templateMd): string
+    {
+        return view('emails.email-template', [
+            'body' => $this->renderBodyHtml($submission, $templateMd),
+            // Submission date, not send date: the queue may reach the mail much later.
+            'date' => optional($submission->created_at)?->format('d.m.Y') ?? now()->format('d.m.Y'),
+        ])->render();
+    }
+
+    /**
+     * The letter as the admin wrote it: placeholders are left untouched so it is
+     * visible where each of them sits.
+     */
+    public function renderPreviewHtml(string $templateMd): string
+    {
+        return view('emails.email-template', [
+            'body' => (string) Str::markdown($templateMd),
+        ])->render();
+    }
+
     public function renderBodyText(FormSubmission $submission, string $templateMd): string
     {
         $context = $this->buildContext($submission);
 
-        return $this->replacePlaceholders($templateMd, $context);
+        // Plain text part: entities would reach the reader as they are, and
+        // `emails.plain-text` prints the result raw for the same reason.
+        return $this->replacePlaceholders($templateMd, $context, escape: false);
     }
 
-    private function replacePlaceholders(string $template, array $context): string
+    private function replacePlaceholders(string $template, array $context, bool $escape = true): string
     {
-        return preg_replace_callback('/\{\{\s*([a-zA-Z0-9_.-]+)\s*\}\}/', function (array $m) use ($context) {
+        return preg_replace_callback('/\{\{\s*([a-zA-Z0-9_.-]+)\s*\}\}/', function (array $m) use ($context, $escape) {
             $key = $m[1];
 
             $value = Arr::get($context, $key);
@@ -47,7 +74,7 @@ final class FormEmailTemplateRenderer
             }
 
             // Важно: экранируем, чтобы юзер не смог инжектить HTML в письма.
-            return e((string) $value);
+            return $escape ? e((string) $value) : (string) $value;
         }, $template) ?? $template;
     }
 

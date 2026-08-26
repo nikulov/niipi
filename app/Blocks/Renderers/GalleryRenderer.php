@@ -7,12 +7,21 @@ use App\Blocks\Contracts\HasBlockSections;
 
 final class GalleryRenderer implements BlockRenderer
 {
-    public static function key(): string { return 'gallery'; }
-    public static function version(): string { return '1'; }
-    
+    public static function key(): string
+    {
+        return 'gallery';
+    }
+
+    public static function version(): string
+    {
+        return '1';
+    }
+
     public function render(array $data, HasBlockSections $model, int $index): string
     {
-        return view('components.sections.gallery', $data)->render();
+        return view('components.sections.gallery', [
+            ...$data,
+            'pageTitle' => data_get($model, 'title'),
+        ])->render();
     }
-    
 }

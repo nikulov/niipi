@@ -3,11 +3,19 @@
 namespace App\Models;
 
 use App\Enums\FormApplicantType;
+use App\Models\Concerns\Duplicatable;
+use App\Models\Concerns\TracksMediaUsage;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 final class Form extends Model
 {
+    use Duplicatable;
+
+    // Mail attachments live in `user_mail_attachments`. Without usage tracking
+    // the media manager shows those files as unused and offers to delete them.
+    use TracksMediaUsage;
+
     protected $fillable = [
         'title',
         'name',
@@ -22,9 +30,9 @@ final class Form extends Model
         'is_active',
         'applicant_type',
         'settings',
-        'success_message'
+        'success_message',
     ];
-    
+
     protected $casts = [
         'is_active' => 'bool',
         'settings' => 'array',
@@ -33,14 +41,40 @@ final class Form extends Model
         'user_mail_attachments' => 'array',
         'applicant_type' => FormApplicantType::class,
     ];
-    
+
     public function fields(): HasMany
     {
         return $this->hasMany(FormField::class)->orderBy('sort');
     }
-    
+
     public function submissions(): HasMany
     {
         return $this->hasMany(FormSubmission::class)->latest();
+    }
+
+    public function duplicateTitleColumn(): string
+    {
+        return 'name';
+    }
+
+    public function duplicateSlugColumn(): ?string
+    {
+        return null;
+    }
+
+    public function prepareDuplicate(Model $copy): void
+    {
+        $copy->is_active = false;
+    }
+
+    public function copyRelationsTo(Model $copy): void
+    {
+        $this->loadMissing('fields');
+
+        foreach ($this->fields as $field) {
+            $new = $field->replicate();
+            $new->form_id = $copy->id;
+            $new->save();
+        }
     }
 }

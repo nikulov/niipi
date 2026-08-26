@@ -3,11 +3,14 @@
     'label' => 'подробнее',
 ])
 
-<a href="{{$url}}" class="btn-corner btn-corner-color group">
+<a href="{{ $url }}" class="btn-corner btn-corner-color group">
+    <div
+        class="btn-corner-color absolute top-0.75 -left-0.75 h-px min-h-px w-16 min-w-16 -rotate-45 border-b transition-all duration-300"
+    ></div>
 
-    <div class="absolute top-[3px] left-[-3px] -rotate-45 min-w-[64px] w-[64px] min-h-[1px] h-[1px] border-b transition-all duration-300 btn-corner-color"></div>
-    
-    <span class="text-btn-corner text-white relative z-10 pl-2.5">{{$label}}</span>
-    
-    <div class="absolute bottom-[3px] right-[-3px] -rotate-45 min-w-[12px] w-[12px] min-h-[1px] h-[1px] border-b transition-all duration-300 btn-corner-color"></div>
+    <span class="text-btn-corner relative z-10 pl-2.5 text-white">{{ $label }}</span>
+
+    <div
+        class="btn-corner-color absolute -right-0.75 bottom-0.75 h-px min-h-px w-3 min-w-3 -rotate-45 border-b transition-all duration-300"
+    ></div>
 </a>

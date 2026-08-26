@@ -5,17 +5,20 @@ namespace App\Models;
 use App\Blocks\Contracts\HasBlockSections;
 use App\Contracts\HasMeta;
 use App\Enums\PageStatus;
+use App\Models\Concerns\Duplicatable;
 use App\Models\Concerns\HasSectionOptions;
+use App\Models\Concerns\TracksMediaUsage;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
-
 class Page extends Model implements HasBlockSections, HasMeta
 {
+    use Duplicatable;
     use HasSectionOptions;
-    
+    use TracksMediaUsage;
+
     protected $table = 'pages';
-    
+
     protected $fillable = [
         'title',
         'slug',
@@ -24,9 +27,9 @@ class Page extends Model implements HasBlockSections, HasMeta
         'top_section',
         'main_section',
         'bottom_section',
-    
+
     ];
-    
+
     protected $casts = [
         'status' => PageStatus::class,
         'top_section' => 'array',
@@ -41,12 +44,18 @@ class Page extends Model implements HasBlockSections, HasMeta
             ->where('status', PageStatus::Published->value)
             ->where('published_at', '<=', now());
     }
-    
+
     public function setSlugAttribute(?string $value): void
     {
         $this->attributes['slug'] = $value ? ltrim($value, '/') : null;
     }
-    
+
+    public function prepareDuplicate(Model $copy): void
+    {
+        $copy->status = PageStatus::Draft;
+        $copy->published_at = null;
+    }
+
     public function getBlocksForSection(?string $section): array
     {
         $map = [
@@ -54,7 +63,7 @@ class Page extends Model implements HasBlockSections, HasMeta
             'main' => 'main_section',
             'bottom' => 'bottom_section',
         ];
-        
+
         if ($section === null) {
             return array_merge(
                 (array) ($this->top_section ?? []),
@@ -62,27 +71,36 @@ class Page extends Model implements HasBlockSections, HasMeta
                 (array) ($this->bottom_section ?? [])
             );
         }
-        
-        if (!isset($map[$section])) {
+
+        if (! isset($map[$section])) {
             return [];
         }
-        
+
         return (array) ($this->{$map[$section]} ?? []);
     }
-    
+
     public function getRenderCacheId(): string
     {
-        return 'page:' . $this->getKey();
+        return 'page:'.$this->getKey();
     }
-    
+
     public function getRenderUpdatedAtTimestamp(): int
     {
         return optional($this->updated_at)->timestamp ?? 0;
     }
-    
+
     public function meta(): array
     {
         return [];
     }
-    
+
+    protected static function booted(): void
+    {
+        $flush = function (): void {
+            cache()->tags(['sitemap'])->flush();
+        };
+
+        static::saved($flush);
+        static::deleted($flush);
+    }
 }

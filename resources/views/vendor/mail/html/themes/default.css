@@ -1,0 +1,189 @@
+/*
+ * Only the message body is themed here. The wrapper — header image, white card
+ * and footer — comes from resources/views/emails/email-template.blade.php and
+ * carries its own inline styles, which win over this file only for the exact
+ * properties they set. So every element selector is scoped to `.letter`, the
+ * div html/layout.blade.php wraps the rendered markdown in; unscoped rules
+ * would bleed into the template's footer.
+ */
+
+/* Body */
+
+.letter p,
+.letter ul,
+.letter ol,
+.letter blockquote {
+    color: #2f4a5f;
+    font-family: 'Century Gothic', 'Carlito', Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    line-height: 1.65;
+    margin: 0 0 16px;
+    text-align: left;
+}
+
+.letter ul,
+.letter ol {
+    padding-left: 20px;
+}
+
+.letter li {
+    color: #2f4a5f;
+    font-family: 'Century Gothic', 'Carlito', Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    line-height: 1.65;
+}
+
+.letter h1,
+.letter h2,
+.letter h3 {
+    color: #2f4a5f;
+    font-family: 'Century Gothic', 'Carlito', Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    margin: 0 0 16px;
+    text-align: left;
+}
+
+.letter h1 {
+    font-size: 20px;
+}
+
+.letter h2 {
+    font-size: 18px;
+}
+
+.letter h3 {
+    font-size: 16px;
+}
+
+.letter a {
+    color: #2f4a5f;
+}
+
+.letter img {
+    max-width: 100%;
+}
+
+.letter a img {
+    border: none;
+}
+
+/* Subcopy — the fallback link under the action button */
+
+.subcopy {
+    border-top: 1px solid #e2ddd8;
+    margin-top: 28px;
+    padding-top: 20px;
+}
+
+.subcopy p {
+    color: #676767;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.subcopy a {
+    color: #676767;
+}
+
+/* Buttons */
+
+.action {
+    margin: 28px auto;
+    padding: 0;
+    text-align: center;
+    width: 100%;
+    float: unset;
+}
+
+/* Two classes, so the white label beats `.letter a` on specificity. */
+.letter .button {
+    -webkit-text-size-adjust: none;
+    border-radius: 4px;
+    color: #ffffff;
+    display: inline-block;
+    font-family: 'Century Gothic', 'Carlito', Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    font-weight: bold;
+    overflow: hidden;
+    text-decoration: none;
+}
+
+.button-blue,
+.button-primary {
+    background-color: #2f4a5f;
+    border-bottom: 10px solid #2f4a5f;
+    border-left: 20px solid #2f4a5f;
+    border-right: 20px solid #2f4a5f;
+    border-top: 10px solid #2f4a5f;
+}
+
+.button-green,
+.button-success {
+    background-color: #16a34a;
+    border-bottom: 10px solid #16a34a;
+    border-left: 20px solid #16a34a;
+    border-right: 20px solid #16a34a;
+    border-top: 10px solid #16a34a;
+}
+
+.button-red,
+.button-error {
+    background-color: #dc2626;
+    border-bottom: 10px solid #dc2626;
+    border-left: 20px solid #dc2626;
+    border-right: 20px solid #dc2626;
+    border-top: 10px solid #dc2626;
+}
+
+/* Panels */
+
+.panel {
+    border-left: #2f4a5f solid 4px;
+    margin: 21px 0;
+}
+
+.panel-content {
+    background-color: #f6f4f4;
+    color: #2f4a5f;
+    padding: 16px;
+}
+
+.panel-content p {
+    color: #2f4a5f;
+    margin: 0;
+}
+
+.panel-item {
+    padding: 0;
+}
+
+/* Tables */
+
+.table table {
+    margin: 24px auto;
+    width: 100%;
+}
+
+.table th {
+    border-bottom: 1px solid #e2ddd8;
+    color: #2f4a5f;
+    font-family: 'Century Gothic', 'Carlito', Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    margin: 0;
+    padding-bottom: 8px;
+}
+
+.table td {
+    color: #2f4a5f;
+    font-family: 'Century Gothic', 'Carlito', Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    line-height: 18px;
+    margin: 0;
+    padding: 10px 0;
+}
+
+/* Utilities */
+
+.break-all {
+    word-break: break-all;
+}

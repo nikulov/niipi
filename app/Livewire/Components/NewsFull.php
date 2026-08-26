@@ -25,8 +25,9 @@ final class NewsFull extends AbstractContentFull
                 fn ($q) => $q->whereIn('id', $ids)
             )
             ->withCount([
-                'posts as posts_count' => fn ($q) =>
-                $q->where('status', PostStatus::Published->value),
+                'posts as posts_count' => fn ($q) => $q
+                    ->where('status', PostStatus::Published->value)
+                    ->where('published_at', '<=', now()),
             ]);
     }
 
@@ -59,22 +60,22 @@ final class NewsFull extends AbstractContentFull
     {
         return $this->queryString;
     }
-    
+
     protected function getContentTable(): string
     {
         return 'posts';
     }
-    
+
     protected function getContentPrimaryKey(): string
     {
         return 'id';
     }
-    
+
     protected function getStatusColumn(): string
     {
         return 'status';
     }
-    
+
     protected function getPublishedStatusValue(): string|int
     {
         return PostStatus::Published->value;

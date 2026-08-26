@@ -12,6 +12,23 @@
             <x-menu.top />
 
             <div class="absolute right-10 flex items-center space-x-4 lg:right-0">
+                {{-- touch devices dial the number, desktop goes to the contacts page --}}
+                <a href="tel:+74952427707" aria-label="{{ __('page.call') }}" class="lg:hidden">
+                    <x-icon.icon-call-phone class="h-6 w-6 cursor-pointer" />
+                </a>
+
+                <a
+                    href="{{ route('page.index', 'contacts') }}#phone-call"
+                    aria-label="{{ __('page.contacts') }}"
+                    class="group relative hidden lg:block"
+                >
+                    <x-icon.icon-call-phone class="h-6 w-6 cursor-pointer" />
+                    <div
+                        class="text-white-dark dark:text-primary absolute bottom-full left-0 mb-2.5 w-fit -translate-x-18.5 rounded bg-[#2e3445] px-3 py-1 text-xs opacity-0 transition-opacity duration-200 group-hover:opacity-100 dark:bg-[#EFF0F2]"
+                    >
+                        {{ __('page.contacts') }}
+                    </div>
+                </a>
                 <button type="button" x-data="themeToggle" @click="toggle" class="group cursor-pointer">
                     <x-icon.icon-switcher-theme />
                     <div

@@ -11,10 +11,12 @@
     @if (!empty($field['required'] ?? null)) required aria-required="true" @endif
     class="border-b-primary dark:border-b-accent-dark dark:focus:border-b-accent-add-dark focus:border-b-accent text-text dark:text-white-dark w-full border-b px-3 py-2 text-sm focus:outline-none"
 >
-    <option value="">{{ __('page.select_options') }}</option>
-
     @foreach ($field['options'] ?? [] as $opt)
-        <option value="{{ $opt['value'] }}">
+        <option
+            value="{{ $opt['value'] }}"
+            @disabled($opt['disabled'] ?? false)
+            @selected($opt['default'] ?? false)
+        >
             {{ $opt['label'] }}
         </option>
     @endforeach

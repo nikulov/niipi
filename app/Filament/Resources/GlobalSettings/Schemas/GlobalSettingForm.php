@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\GlobalSettings\Schemas;
 
 use Filament\Forms\Components\CodeEditor;
-use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Fieldset;
 use Filament\Schemas\Schema;
@@ -31,11 +30,7 @@ class GlobalSettingForm
                         TextInput::make('email')->label(__(key: 'panel.admin-email'))
                             ->trim()
                             ->columnSpan(12),
-
-//                        FileUpload::make('favicon')->label(__(key: 'panel.favicon'))
-//                            ->columnSpan(12)
-//                            ->image()
-//                            ->imageEditor()
+                        
                     ]),
                 
                 Fieldset::make('code')->label(__('panel.code'))

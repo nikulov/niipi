@@ -2,9 +2,13 @@
 
 namespace Tests\Unit\Services;
 
+use App\Blocks\Contracts\BlockRenderer;
 use App\Blocks\Contracts\HasBlockSections;
+use App\Blocks\Renderers\TitleRenderer;
 use App\Services\ContentRenderer;
 use Illuminate\Support\Facades\Log;
+use RuntimeException;
+use Tests\Support\StubHasBlockSections;
 use Tests\TestCase;
 
 class ContentRendererTest extends TestCase
@@ -47,5 +51,32 @@ class ContentRendererTest extends TestCase
         Log::shouldHaveReceived('warning')
             ->once()
             ->withArgs(fn ($message) => $message === 'Unknown block type');
+    }
+
+    public function test_render_exception_is_logged_and_pipeline_continues(): void
+    {
+        $this->app->bind(TitleRenderer::class, fn () => new class implements BlockRenderer {
+            public static function key(): string { return 'title'; }
+            public static function version(): string { return '1'; }
+
+            public function render(array $data, HasBlockSections $model, int $index): string
+            {
+                throw new RuntimeException('boom');
+            }
+        });
+
+        Log::spy();
+
+        $model = new StubHasBlockSections([
+            ['type' => 'title', 'data' => []],
+            ['type' => 'text-full', 'data' => ['textFull' => 'After boom']],
+        ]);
+
+        $html = (string) (new ContentRenderer())->renderSection($model, 'main');
+
+        $this->assertStringContainsString('After boom', $html);
+        Log::shouldHaveReceived('error')
+            ->once()
+            ->withArgs(fn ($message) => $message === 'Render failed');
     }
 }

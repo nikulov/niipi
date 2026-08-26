@@ -1,12 +1,10 @@
-import Swiper from "swiper";
-import {Autoplay, FreeMode, Navigation, Pagination, Thumbs, Keyboard} from "swiper/modules";
+import Swiper from 'swiper';
+import { Autoplay, FreeMode, Navigation, Pagination, Thumbs, Keyboard } from 'swiper/modules';
 
 document.addEventListener('DOMContentLoaded', initMainSlider);
 document.addEventListener('turbo:load', initMainSlider);
 
-
-function initMainSlider()
-{
+function initMainSlider() {
     const sliderEl = document.querySelector('.js-main-slider');
     if (!sliderEl) return;
 
@@ -50,8 +48,8 @@ function initMainSlider()
 function initGallerySliderForRoot(rootEl, startIndex = 0) {
     if (!rootEl) return;
 
-    const sliderEl = rootEl.querySelector(".js-gallery-slider");
-    const thumbsEl = rootEl.querySelector(".js-gallery-slider-thumbs");
+    const sliderEl = rootEl.querySelector('.js-gallery-slider');
+    const thumbsEl = rootEl.querySelector('.js-gallery-slider-thumbs');
     if (!sliderEl || !thumbsEl) return;
 
     if (sliderEl.__swiper) {
@@ -66,9 +64,9 @@ function initGallerySliderForRoot(rootEl, startIndex = 0) {
     const thumbsSwiper = new Swiper(thumbsEl, {
         modules: [FreeMode, Thumbs],
         loop: false,
-        direction: "horizontal",
+        direction: 'horizontal',
         spaceBetween: 10,
-        slidesPerView: "auto",
+        slidesPerView: 'auto',
         freeMode: true,
         watchSlidesProgress: true,
     });
@@ -81,8 +79,8 @@ function initGallerySliderForRoot(rootEl, startIndex = 0) {
         spaceBetween: 10,
 
         navigation: {
-            nextEl: rootEl.querySelector(".js-gallery-slider-next"),
-            prevEl: rootEl.querySelector(".js-gallery-slider-prev"),
+            nextEl: rootEl.querySelector('.js-gallery-slider-next'),
+            prevEl: rootEl.querySelector('.js-gallery-slider-prev'),
         },
 
         thumbs: {

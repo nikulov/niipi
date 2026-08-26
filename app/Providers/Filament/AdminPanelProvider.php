@@ -2,9 +2,6 @@
 
 namespace App\Providers\Filament;
 
-use App\Enums\UserRole;
-use App\Filament\Resources\Posts\PostResource;
-use App\Filament\Resources\Projects\ProjectResource;
 use Filament\Enums\ThemeMode;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
@@ -63,6 +60,7 @@ class AdminPanelProvider extends PanelProvider
                 'Публикации',
                 'Страницы',
                 'Формы',
+                'Медиа',
                 'Настройки',
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')

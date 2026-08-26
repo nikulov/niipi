@@ -7,4 +7,11 @@ return [
     'website' => 'Website',
     'categories' => 'Categories',
     'change_site_theme' => 'Change site theme',
+    'call' => 'Call',
+    'contacts' => 'Contacts',
+    'share' => 'Share',
+    'copy_link' => 'Copy link',
+    'link_copied' => 'Link copied',
+    'close_gallery' => 'Close gallery',
+    'gallery_photo_alt' => ':base — photo :number',
 ];

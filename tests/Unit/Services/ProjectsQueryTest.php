@@ -16,7 +16,7 @@ class ProjectsQueryTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_list_returns_only_published_and_limited(): void
+    public function test_list_returns_only_published_and_not_future(): void
     {
         $published = Project::create([
             'title' => 'Published',
@@ -42,12 +42,28 @@ class ProjectsQueryTest extends TestCase
             'published_at' => now()->addDay(),
         ]);
 
-        $service = new ProjectsQuery();
-        $items = $service->list(2);
+        $service = new ProjectsQuery;
+        $items = $service->list(10);
 
-        $this->assertCount(2, $items);
-        $this->assertSame('future', $items->first()->slug);
-        $this->assertTrue($items->pluck('id')->contains($published->id));
+        $this->assertCount(1, $items);
+        $this->assertSame($published->id, $items->first()->id);
+    }
+
+    public function test_list_applies_limit_and_excludes_given_id(): void
+    {
+        $newest = $this->publishedProject('Newest', 'newest', now()->subDay());
+        $middle = $this->publishedProject('Middle', 'middle', now()->subDays(2));
+        $this->publishedProject('Oldest', 'oldest', now()->subDays(3));
+
+        $service = new ProjectsQuery;
+
+        $limited = $service->list(2);
+        $this->assertCount(2, $limited);
+        $this->assertSame($newest->id, $limited->first()->id);
+
+        $withoutNewest = $service->list(10, null, false, 'page', $newest->id);
+        $this->assertCount(2, $withoutNewest);
+        $this->assertSame($middle->id, $withoutNewest->first()->id);
     }
 
     public function test_list_filters_by_category_and_can_paginate(): void
@@ -77,7 +93,7 @@ class ProjectsQueryTest extends TestCase
 
         $projectA->categories()->attach($category->id);
 
-        $service = new ProjectsQuery();
+        $service = new ProjectsQuery;
 
         $filtered = $service->list(10, [$category->id]);
         $this->assertCount(1, $filtered);
@@ -87,5 +103,73 @@ class ProjectsQueryTest extends TestCase
         $this->assertInstanceOf(LengthAwarePaginator::class, $paginated);
         $this->assertSame(1, $paginated->perPage());
         $this->assertSame(2, $paginated->total());
+    }
+
+    public function test_list_sorts_by_sort_order_then_by_published_at(): void
+    {
+        $withoutOrder = $this->publishedProject('No order', 'no-order', now()->subDays(10));
+        $zeroOrder = $this->publishedProject('Zero order', 'zero-order', now()->subDay(), 0);
+        $second = $this->publishedProject('Second', 'second', now()->subDays(9), 2);
+        $firstOlder = $this->publishedProject('First older', 'first-older', now()->subDays(8), 1);
+        $firstNewer = $this->publishedProject('First newer', 'first-newer', now()->subDays(7), 1);
+
+        $ids = (new ProjectsQuery)->list(10)->pluck('id')->all();
+
+        $this->assertSame([
+            $firstNewer->id,
+            $firstOlder->id,
+            $second->id,
+            $zeroOrder->id,
+            $withoutOrder->id,
+        ], $ids);
+    }
+
+    public function test_by_ids_keeps_the_given_order_and_drops_unpublished(): void
+    {
+        $first = $this->publishedProject('First', 'first', now()->subDay());
+        $second = $this->publishedProject('Second', 'second', now()->subDays(2));
+
+        $draft = Project::create([
+            'title' => 'Draft',
+            'description' => 'Desc',
+            'slug' => 'draft',
+            'status' => ProjectStatus::Draft->value,
+            'published_at' => now()->subDay(),
+        ]);
+
+        $service = new ProjectsQuery;
+
+        $this->assertSame(
+            [$second->id, $first->id],
+            $service->byIds([$second->id, $draft->id, $first->id, 99999])->pluck('id')->all()
+        );
+
+        $this->assertTrue($service->byIds([])->isEmpty());
+    }
+
+    public function test_list_excludes_multiple_ids(): void
+    {
+        $kept = $this->publishedProject('Kept', 'kept', now()->subDay());
+        $excludedA = $this->publishedProject('Excluded A', 'excluded-a', now()->subDays(2));
+        $excludedB = $this->publishedProject('Excluded B', 'excluded-b', now()->subDays(3));
+
+        $ids = (new ProjectsQuery)
+            ->list(10, null, false, 'page', [$excludedA->id, $excludedB->id])
+            ->pluck('id')
+            ->all();
+
+        $this->assertSame([$kept->id], $ids);
+    }
+
+    private function publishedProject(string $title, string $slug, $publishedAt, ?int $sortOrder = null): Project
+    {
+        return Project::create([
+            'title' => $title,
+            'description' => 'Desc',
+            'slug' => $slug,
+            'status' => ProjectStatus::Published->value,
+            'sort_order' => $sortOrder,
+            'published_at' => $publishedAt,
+        ]);
     }
 }

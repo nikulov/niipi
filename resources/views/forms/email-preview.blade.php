@@ -9,10 +9,13 @@
             <div class="mt-1 wrap-break-word">{{ $subject }}</div>
         </div>
 
-        <div class="rounded-lg border border-gray-200 dark:border-gray-700">
-            <div class="prose dark:prose-invert max-w-none p-4">
-                {!! $html !!}
-            </div>
-        </div>
+        {{-- The letter is a whole HTML document, so it is previewed in an iframe:
+             inlined in the page its styles would clash with the panel. --}}
+        <iframe
+            srcdoc="{{ $html }}"
+            sandbox=""
+            title="{{ $subject }}"
+            class="h-[70vh] w-full rounded-lg border border-gray-200 bg-white dark:border-gray-700"
+        ></iframe>
     @endif
 </div>

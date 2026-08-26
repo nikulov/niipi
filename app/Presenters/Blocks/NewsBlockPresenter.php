@@ -11,12 +11,13 @@ final class NewsBlockPresenter
         return [
             'title' => $post->title,
             'description' => $post->description,
-            'url' => url('news/' . $post->slug),
+            'url' => url('news/'.$post->slug),
+            'thumbnail' => public_asset($post->thumbnail),
             'publishedAt' => $post->published_at?->format('d.m.Y'),
             'categories' => $post->categories->map(static fn ($category) => [
                 'name' => $category->name,
                 'slug' => $category->slug,
-                'url' => url('news/category/' . $category->slug),
+                'url' => url('news/category/'.$category->slug),
             ])->toArray(),
         ];
     }

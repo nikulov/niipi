@@ -1,9 +1,9 @@
 <?php
 
-
 namespace App\Filament\Components;
 
 use App\Filament\Forms\Components\CustomRepeater;
+use App\Filament\Forms\Components\MediaPickerAction;
 use App\Filament\Forms\Components\UrlInput;
 use Filament\Actions\Action;
 use Filament\Forms\Components\Builder\Block;
@@ -17,23 +17,23 @@ final class SliderFullWidth
     {
         return 'slider-full-width';
     }
-    
+
     /** Build Filament Block */
     public static function block(): Block
     {
         return Block::make(self::key())->label(__('panel.slider_full_width'))
             ->columnSpanFull()
             ->schema([
-                
+
                 CustomRepeater::make('sliders')->label('')
                     ->deleteAction(
-                        fn(Action $action) => $action->requiresConfirmation(),
+                        fn (Action $action) => $action->requiresConfirmation(),
                     )
                     ->label('')
                     ->maxItems(20)
                     ->minItems(2)
                     ->hiddenLabel()
-                    ->itemLabel(fn(array $state): string => $state['title'] ?? __('panel.slide'))
+                    ->itemLabel(fn (array $state): string => $state['title'] ?? __('panel.slide'))
                     ->reorderableWithButtons()
                     ->cloneable()
                     ->addActionLabel(__(key: 'panel.add_slide'))
@@ -41,17 +41,17 @@ final class SliderFullWidth
                     ->collapsed()
                     ->reorderable()
                     ->schema([
-                        
+
                         Textarea::make('title')->label(__(key: 'panel.title'))
                             ->required()
                             ->autosize()
                             ->columnSpanFull()
                             ->trim()
                             ->live(onBlur: true),
-                        
+
                         UrlInput::make('url')->label(__(key: 'panel.title_url'))
-                        ->columnSpanFull(),
-                        
+                            ->columnSpanFull(),
+
                         FileUpload::make('iconUrl')->label(__(key: 'panel.icon'))
                             ->columnSpan(12)
                             ->preserveFilenames()
@@ -63,13 +63,14 @@ final class SliderFullWidth
                             ->image()
                             ->imageEditor()
                             ->imageEditorAspectRatios([null, '16:9'])
-                            ->required(),
-                        
+                            ->required()
+                            ->hintAction(MediaPickerAction::make('iconUrl', imagesOnly: true)),
+
                         TextInput::make('iconAlt')->label(__(key: 'panel.icon_alt'))
                             ->required()
                             ->trim()
                             ->columnSpan(12),
-                        
+
                         FileUpload::make('bgImageUrl')->label(__(key: 'panel.image'))
                             ->preserveFilenames()
                             ->downloadable()
@@ -81,15 +82,16 @@ final class SliderFullWidth
                             ->imageEditor()
                             ->imageEditorAspectRatios([null, '16:9'])
                             ->required()
-                            ->columnSpan(12),
-                        
+                            ->columnSpan(12)
+                            ->hintAction(MediaPickerAction::make('bgImageUrl', imagesOnly: true)),
+
                         TextInput::make('imageAlt')->label(__(key: 'panel.alt'))
                             ->required()
                             ->trim()
                             ->columnSpan(12),
-                        
+
                     ])->columns(24),
-            
+
             ]);
     }
 }

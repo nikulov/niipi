@@ -2,6 +2,8 @@
 
 namespace App\Filament\Resources\Forms\Tables;
 
+use App\Filament\Actions\CopyAction;
+use App\Models\Form;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -21,19 +23,19 @@ class FormsTable
                     ->withCount('submissions');
             })
             ->columns([
-                
+
                 TextColumn::make('id')->label(__('panel.id'))
                     ->toggleable(isToggledHiddenByDefault: true)
                     ->sortable(),
-                
+
                 TextColumn::make('name')->label(__('panel.name'))
                     ->searchable()
                     ->sortable(),
-                
+
                 TextColumn::make('applicant_type')->label(__('panel.applicant_type'))
                     ->badge()
                     ->sortable(),
-                
+
                 TextColumn::make('fields_list')->label(__('panel.fields'))
                     ->state(function ($record) {
                         return $record->fields
@@ -48,7 +50,7 @@ class FormsTable
                     ->wrap()
                     ->separator(' ')
                     ->toggleable(),
-                
+
                 TextColumn::make('submissions_count')->label(__('panel.submissions_count'))
                     ->url(fn ($record) => route('filament.admin.resources.form-submissions.index', [
                         'filters' => [
@@ -65,7 +67,7 @@ class FormsTable
                     ->icon(Heroicon::ArrowTopRightOnSquare)
                     ->iconPosition(IconPosition::After)
                     ->alignCenter(),
-                
+
                 TextColumn::make('created_at')->label(__('panel.created_at'))
                     ->dateTime('d.m.Y H:i')
                     ->sortable(),
@@ -73,6 +75,10 @@ class FormsTable
             ->defaultSort('created_at', 'desc')
             ->recordActions([
                 EditAction::make(),
+                CopyAction::make()
+                    ->tooltip(__('panel.copy_form'))
+                    ->modalHeading(fn (Form $record) => __('panel.copy_form_confirm', ['name' => $record->name]))
+                    ->successNotificationTitle(__('panel.form_copied')),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

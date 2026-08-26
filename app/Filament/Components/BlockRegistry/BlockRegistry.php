@@ -4,6 +4,7 @@ namespace App\Filament\Components\BlockRegistry;
 
 use App\Filament\Components\Accordion;
 use App\Filament\Components\AccordionLight;
+use App\Filament\Components\Anchor;
 use App\Filament\Components\BgForMainSection;
 use App\Filament\Components\Button;
 use App\Filament\Components\CardsBlockWithButton;
@@ -21,6 +22,8 @@ use App\Filament\Components\NewsBlock;
 use App\Filament\Components\NewsFull;
 use App\Filament\Components\ProjectsBlock;
 use App\Filament\Components\ProjectsFull;
+use App\Filament\Components\RelatedThematic;
+use App\Filament\Components\ShareButton;
 use App\Filament\Components\SliderFullWidth;
 use App\Filament\Components\TabsBlock;
 use App\Filament\Components\TextFull;
@@ -36,6 +39,7 @@ final class BlockRegistry
         return [
             Accordion::block(),
             AccordionLight::block(),
+            Anchor::block(),
             BgForMainSection::block(),
             Button::block(),
             CardsBlockWithButton::block(),
@@ -53,26 +57,30 @@ final class BlockRegistry
             NewsFull::block(),
             ProjectsBlock::block(),
             ProjectsFull::block(),
+            RelatedThematic::block(),
+            ShareButton::block(),
             SliderFullWidth::block(),
             TextFull::block(),
             Title::block(),
             YandexMap::block(),
         ];
     }
-    
+
     public static function topSection(): array
     {
         return [
+            Anchor::block(),
             ImageTittleFullWidth::block(),
             SliderFullWidth::block(),
         ];
     }
-    
+
     public static function mainSection(): array
     {
         return collect([
             Accordion::block(),
             AccordionLight::block(),
+            Anchor::block(),
             BgForMainSection::block(),
             Button::block(),
             CardsBlockWithButton::block(),
@@ -89,30 +97,33 @@ final class BlockRegistry
             NewsFull::block(),
             ProjectsBlock::block(),
             ProjectsFull::block(),
+            RelatedThematic::block(),
+            ShareButton::block(),
             TabsBlock::block(),
             TextFull::block(),
             Title::block(),
             YandexMap::block(),
         ])
-            ->sortBy(fn($block) => (string)$block->getLabel())
+            ->sortBy(fn ($block) => (string) $block->getLabel())
             ->values()
             ->all();
     }
-    
+
     public static function bottomSection(): array
     {
         return [
+            Anchor::block(),
             NewsBlock::block(),
             ProjectsBlock::block(),
         ];
     }
-    
+
     public static function tabs(): array
     {
         return collect([
             Accordion::block(),
             AccordionLight::block(),
-            BgForMainSection::block(),
+            Anchor::block(),
             Button::block(),
             CardsBlockWithButton::block(),
             CardsBlockWithImageTitle::block(),
@@ -127,21 +138,22 @@ final class BlockRegistry
             NewsFull::block(),
             ProjectsBlock::block(),
             ProjectsFull::block(),
+            ShareButton::block(),
             TextFull::block(),
             Title::block(),
             YandexMap::block(),
         ])
-            ->sortBy(fn($block) => (string)$block->getLabel())
+            ->sortBy(fn ($block) => (string) $block->getLabel())
             ->values()
             ->all();
     }
-    
+
     public static function modal(): array
     {
         return collect([
             Accordion::block(),
             AccordionLight::block(),
-            BgForMainSection::block(),
+            Anchor::block(),
             Button::block(),
             CardsBlockWithButton::block(),
             CardsBlockWithImageTitle::block(),
@@ -156,12 +168,13 @@ final class BlockRegistry
             NewsFull::block(),
             ProjectsBlock::block(),
             ProjectsFull::block(),
+            ShareButton::block(),
             TabsBlock::block(),
             TextFull::block(),
             Title::block(),
             YandexMap::block(),
         ])
-            ->sortBy(fn($block) => (string)$block->getLabel())
+            ->sortBy(fn ($block) => (string) $block->getLabel())
             ->values()
             ->all();
     }

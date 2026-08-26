@@ -5,6 +5,7 @@ namespace App\Blocks;
 use App\Blocks\Contracts\BlockRenderer;
 use App\Blocks\Renderers\AccordionLightRenderer;
 use App\Blocks\Renderers\AccordionRenderer;
+use App\Blocks\Renderers\AnchorRenderer;
 use App\Blocks\Renderers\ButtonRenderer;
 use App\Blocks\Renderers\CardsBlockWithButtonRenderer;
 use App\Blocks\Renderers\CardsBlockWithImageTitleRenderer;
@@ -21,13 +22,13 @@ use App\Blocks\Renderers\NewsBlockRenderer;
 use App\Blocks\Renderers\NewsFullRenderer;
 use App\Blocks\Renderers\ProjectsBlockRenderer;
 use App\Blocks\Renderers\ProjectsFullRenderer;
+use App\Blocks\Renderers\RelatedThematicRenderer;
+use App\Blocks\Renderers\ShareButtonRenderer;
 use App\Blocks\Renderers\SliderFullWidthRenderer;
 use App\Blocks\Renderers\TabsBlockRenderer;
 use App\Blocks\Renderers\TextFullRenderer;
 use App\Blocks\Renderers\TitleRenderer;
 use App\Blocks\Renderers\YandexMapRenderer;
-use App\Filament\Components\CardsBlockWithImageTitle;
-
 
 final class BlockRenderRegistry
 {
@@ -37,6 +38,7 @@ final class BlockRenderRegistry
         return [
             AccordionRenderer::key() => AccordionRenderer::class,
             AccordionLightRenderer::key() => AccordionLightRenderer::class,
+            AnchorRenderer::key() => AnchorRenderer::class,
             ButtonRenderer::key() => ButtonRenderer::class,
             CardsBlockWithButtonRenderer::key() => CardsBlockWithButtonRenderer::class,
             CardsBlockWithImageTitleRenderer::key() => CardsBlockWithImageTitleRenderer::class,
@@ -53,6 +55,8 @@ final class BlockRenderRegistry
             NewsFullRenderer::key() => NewsFullRenderer::class,
             ProjectsBlockRenderer::key() => ProjectsBlockRenderer::class,
             ProjectsFullRenderer::key() => ProjectsFullRenderer::class,
+            RelatedThematicRenderer::key() => RelatedThematicRenderer::class,
+            ShareButtonRenderer::key() => ShareButtonRenderer::class,
             SliderFullWidthRenderer::key() => SliderFullWidthRenderer::class,
             TabsBlockRenderer::key() => TabsBlockRenderer::class,
             TextFullRenderer::key() => TextFullRenderer::class,
@@ -60,7 +64,7 @@ final class BlockRenderRegistry
             YandexMapRenderer::key() => YandexMapRenderer::class,
         ];
     }
-    
+
     /** @return class-string<BlockRenderer>|null */
     public static function for(string $type): ?string
     {

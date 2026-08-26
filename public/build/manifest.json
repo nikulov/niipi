@@ -20,7 +20,7 @@
     "src": "public/fonts/centurygothic_bold.ttf"
   },
   "resources/css/app.css": {
-    "file": "assets/app-Cw28_8UL.css",
+    "file": "assets/app-CeaD5419.css",
     "src": "resources/css/app.css",
     "isEntry": true,
     "name": "app",
@@ -29,7 +29,7 @@
     ]
   },
   "resources/css/filament/admin/theme.css": {
-    "file": "assets/theme-BMM7TojO.css",
+    "file": "assets/theme-Dp3EQNwa.css",
     "src": "resources/css/filament/admin/theme.css",
     "isEntry": true,
     "name": "theme",
@@ -126,7 +126,7 @@
     "src": "resources/images/layout/slider-right-arrow.svg"
   },
   "resources/js/app.js": {
-    "file": "assets/app-wtTDRK4A.js",
+    "file": "assets/app-6Al8f24J.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true

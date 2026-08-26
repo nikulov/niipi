@@ -30,12 +30,15 @@ return [
 
     'disks' => [
 
+        // `report => true`: a failed write still returns false instead of
+        // throwing, but the reason lands in the log. Without it a broken
+        // livewire-tmp is invisible everywhere — that was bug #23
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app/private'),
             'serve' => true,
             'throw' => false,
-            'report' => false,
+            'report' => true,
         ],
 
         'public' => [
@@ -44,7 +47,7 @@ return [
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
             'throw' => false,
-            'report' => false,
+            'report' => true,
         ],
 
         's3' => [

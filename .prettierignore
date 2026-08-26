@@ -18,3 +18,9 @@ vite.config.js
 .env
 .gitignore
 /resources/views/vendor/notifications/*.blade.php
+
+# Published Laravel mail templates. The text/* ones are whitespace-significant —
+# blank lines and indentation are literal output — and reformatting any of them
+# makes the diff against upstream unreadable on a framework upgrade.
+/resources/views/vendor/mail
+/resources/views/emails/plain-text.blade.php

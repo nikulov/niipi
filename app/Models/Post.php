@@ -6,14 +6,19 @@ use App\Blocks\Contracts\HasBlockSections;
 use App\Contracts\HasMeta;
 use App\Enums\PostStatus;
 use App\Filament\Components\ImageTittleFullWidth;
+use App\Models\Concerns\Duplicatable;
 use App\Models\Concerns\HasSectionOptions;
+use App\Models\Concerns\TracksMediaUsage;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Post extends Model implements HasBlockSections, HasMeta
 {
+    use Duplicatable;
     use HasSectionOptions;
+    use TracksMediaUsage;
+
     protected $fillable = [
         'title',
         'description',
@@ -28,7 +33,7 @@ class Post extends Model implements HasBlockSections, HasMeta
         'main_section',
         'bottom_section',
     ];
-    
+
     protected $casts = [
         'top_section' => 'array',
         'main_section' => 'array',
@@ -43,12 +48,24 @@ class Post extends Model implements HasBlockSections, HasMeta
             ->where('status', PostStatus::Published->value)
             ->where('published_at', '<=', now());
     }
-    
+
     public function categories(): BelongsToMany
     {
         return $this->belongsToMany(Category::class, 'category_post');
     }
-    
+
+    public function prepareDuplicate(Model $copy): void
+    {
+        $copy->status = PostStatus::Draft;
+        $copy->published_at = null;
+    }
+
+    public function copyRelationsTo(Model $copy): void
+    {
+        $this->loadMissing('categories');
+        $copy->categories()->attach($this->categories->pluck('id')->all());
+    }
+
     public function getBlocksForSection(?string $section): array
     {
         $map = [
@@ -56,32 +73,32 @@ class Post extends Model implements HasBlockSections, HasMeta
             'main' => 'main_section',
             'bottom' => 'bottom_section',
         ];
-        
+
         if ($section === null) {
             return array_merge(
-                (array)($this->top_section ?? []),
-                (array)($this->main_section ?? []),
-                (array)($this->bottom_section ?? [])
+                (array) ($this->top_section ?? []),
+                (array) ($this->main_section ?? []),
+                (array) ($this->bottom_section ?? [])
             );
         }
-        
-        if (!isset($map[$section])) {
+
+        if (! isset($map[$section])) {
             return [];
         }
-        
-        return (array)($this->{$map[$section]} ?? []);
+
+        return (array) ($this->{$map[$section]} ?? []);
     }
-    
+
     public function getRenderCacheId(): string
     {
-        return 'post:' . $this->getKey();
+        return 'post:'.$this->getKey();
     }
-    
+
     public function getRenderUpdatedAtTimestamp(): int
     {
         return optional($this->updated_at)->timestamp ?? 0;
     }
-    
+
     public static function getDefaultBlock(): array
     {
         return
@@ -98,16 +115,16 @@ class Post extends Model implements HasBlockSections, HasMeta
                 ],
             ];
     }
-    
+
     public function meta(): array
     {
         return [
             'title' => $this->meta_title ?? $this->title,
             'description' => $this->meta_description,
             'keywords' => $this->meta_keywords,
-            ];
+        ];
     }
-    
+
     protected static function booted(): void
     {
         $flush = function (): void {
@@ -115,15 +132,16 @@ class Post extends Model implements HasBlockSections, HasMeta
                 cache()->tags($tags)->flush();
             }
         };
-        
+
         static::saved($flush);
         static::deleted($flush);
     }
-    
+
     private static function cacheTags(): array
     {
         return [
             ['news', 'categories'],
+            ['sitemap'],
         ];
     }
 }

@@ -38,6 +38,74 @@
     --spacing-inner-section-y: 56px;
     --spacing-inner-section-x: 32px; /* desktop */
     --spacing-after-title: 24px;
+
+    /* Ringing-signal pulse for the phone icon waves: they light up one after
+       another, stay lit, then all fade out together and the cycle restarts.
+       600ms cycle — wave 1 at 0ms, wave 2 at 50ms (8%), wave 3 at 100ms (17%),
+       everything fades from 300ms (50%) to 600ms.
+       The stagger lives in the keyframe percentages rather than in animation-delay
+       on purpose: a delay would shift the fade-out as well, and the waves have to
+       go dark at the same moment. Hence one @keyframes per wave.
+       Each wave still carries its own resting opacity in --call-wave-opacity. */
+    --animate-call-wave-1: call-wave-1 0.6s ease-out infinite;
+    --animate-call-wave-2: call-wave-2 0.6s ease-out infinite;
+    --animate-call-wave-3: call-wave-3 0.6s ease-out infinite;
+
+    @keyframes call-wave-1 {
+        0% {
+            fill: var(--call-wave-from);
+            opacity: var(--call-wave-opacity);
+        }
+
+        8%,
+        50% {
+            fill: var(--color-accent-add);
+            opacity: 1;
+        }
+
+        100% {
+            fill: var(--call-wave-from);
+            opacity: var(--call-wave-opacity);
+        }
+    }
+
+    @keyframes call-wave-2 {
+        0%,
+        8% {
+            fill: var(--call-wave-from);
+            opacity: var(--call-wave-opacity);
+        }
+
+        16%,
+        50% {
+            fill: var(--color-accent-add);
+            opacity: 1;
+        }
+
+        100% {
+            fill: var(--call-wave-from);
+            opacity: var(--call-wave-opacity);
+        }
+    }
+
+    @keyframes call-wave-3 {
+        0%,
+        17% {
+            fill: var(--call-wave-from);
+            opacity: var(--call-wave-opacity);
+        }
+
+        25%,
+        50% {
+            fill: var(--color-accent-add);
+            opacity: 1;
+        }
+
+        100% {
+            fill: var(--call-wave-from);
+            opacity: var(--call-wave-opacity);
+        }
+    }
 }
 
 @media (max-width: 768px) {
@@ -196,6 +264,11 @@
 
     .btn-primary-bg {
         @apply border-primary bg-primary dark:border-accent dark:bg-accent hover:border-accent hover:bg-accent group-hover:border-accent group-hover:bg-accent dark:hover:border-accent dark:group-hover:border-accent dark:group-hover:bg-[#7BA2BA] dark:hover:bg-[#7BA2BA];
+
+        /* an expanded toggle keeps the hover colours — see the share trigger */
+        &[aria-expanded='true'] {
+            @apply border-accent bg-accent dark:border-accent dark:bg-[#7BA2BA];
+        }
     }
 
     .btn-secondary-text {
@@ -204,6 +277,10 @@
 
     .btn-secondary-bg {
         @apply border-accent bg-accent hover:border-accent group-hover:border-accent group-hover:bg-[#7BA2BA] hover:bg-[#7BA2BA];
+
+        &[aria-expanded='true'] {
+            @apply border-accent bg-[#7BA2BA];
+        }
     }
 
     .btn-accent-text {
@@ -212,6 +289,10 @@
 
     .btn-accent-bg {
         @apply border-accent-add bg-accent-add group-hover:border-[#9DDEE0] group-hover:bg-[#9DDEE0] hover:border-[#9DDEE0] hover:bg-[#9DDEE0];
+
+        &[aria-expanded='true'] {
+            @apply border-[#9DDEE0] bg-[#9DDEE0];
+        }
     }
 
     .btn-transparent-text {
@@ -220,6 +301,10 @@
 
     .btn-transparent-bg {
         @apply border-primary hover:border-primary group-hover:border-b-primary bg-white group-hover:bg-[#CBDEEA] hover:bg-[#CBDEEA] dark:border-[#364051] dark:bg-[#364051] dark:group-hover:border-[#3c4859] group-hover:dark:bg-[#3c4859] dark:hover:border-[#3c4859] hover:dark:bg-[#3c4859];
+
+        &[aria-expanded='true'] {
+            @apply border-primary bg-[#CBDEEA] dark:border-[#3c4859] dark:bg-[#3c4859];
+        }
     }
 
     /* END BTN colors */

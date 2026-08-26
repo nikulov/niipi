@@ -7,5 +7,12 @@ return [
     'website' => 'Веб-страница',
     'categories' => 'Категории',
     'change_site_theme' => 'изменить тему сайта',
+    'call' => 'позвонить',
+    'contacts' => 'контакты',
+    'share' => 'Поделиться',
+    'copy_link' => 'Копировать ссылку',
+    'link_copied' => 'Ссылка скопирована',
+    'close_gallery' => 'Закрыть галерею',
+    'gallery_photo_alt' => ':base — фото :number',
 
 ];

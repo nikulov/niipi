@@ -23,7 +23,7 @@
                 </div>
             </a>
         @else
-            <img src="{{ $fileUrl }}" alt="{{ $imageAlt ?? '' }}" class="h-auto max-h-65 w-full object-cover object-top" loading="lazy" />
+            <img src="{{ $fileUrl }}" alt="{{ $imageAlt ?: $cardTitle }}" class="h-auto max-h-65 w-full object-cover object-top" loading="lazy" />
         @endif
 
         @if ($cardTitle)
