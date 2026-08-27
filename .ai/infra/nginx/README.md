@@ -1,7 +1,7 @@
 # nginx на проде
 
 Референс-копии боевых конфигов с `89.108.113.198`. Содержимое совпадает с
-сервером один-в-один (проверено по md5 20.08.2026).
+сервером один-в-один (проверено по md5 27.08.2026).
 
 На сервере файлы лежат в `/etc/nginx/sites-available/` **без расширения**
 (`niipigrad-prod`, не `niipigrad-prod.conf`), и все три — симлинки в
@@ -17,10 +17,14 @@
   `/vendor/filament/`, `/storage/` и статику — `add_header` **не
   наследуется** в location со своим `add_header`. TLS 1.2/1.3, HTTP/2,
   `= /index.php` как единственная точка exec, `$realpath_root` для
-  OPcache-friendly деплоя, dotfiles-deny перед статикой.
+  OPcache-friendly деплоя, dotfiles-deny перед статикой. С 27.08.2026 —
+  четыре `location =` с `return 410` на `/feed{,/}` и `/comments/feed{,/}`.
 - [niipigrad-stage.conf](niipigrad-stage.conf) — HSTS `max-age=300`,
   Certbot-managed http-server не тронут. В vendor/статике HSTS не
-  дублируется осознанно; при подъёме max-age до боевого — добавить.
+  дублируется, и поднимать max-age не планируется: прод пинит stage через
+  `includeSubDomains`, собственный max-age стенда ничего не решает.
+  С 27.08.2026 exec приведён к проду (`= /index.php` + `$realpath_root`),
+  dotfiles-deny перенесён вперёд статики — regex-порядок теперь как на проде.
 - [zz-catch-all.conf](zz-catch-all.conf) — голый IP: 80 → 301 на домен,
   443 → `ssl_reject_handshake`. Префикс `zz-` обязателен: файл должен
   грузиться после `niipigrad-prod` из-за `ipv6only` в первом объявлении
