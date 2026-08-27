@@ -267,7 +267,7 @@
 
         /* an expanded toggle keeps the hover colours — see the share trigger */
         &[aria-expanded='true'] {
-            @apply border-accent bg-accent dark:border-accent dark:bg-[#7BA2BA];
+            @apply border-[#7BA2BA] bg-[#7BA2BA];
         }
     }
 
