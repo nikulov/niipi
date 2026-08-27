@@ -120,7 +120,7 @@ final class ShareButton
                 'data' => [
                     'btnLabel' => $btnLabel,
                     'btnUrl' => $btnUrl,
-                    'btnType' => 'btn-primary',
+                    'btnType' => 'btn-secondary',
                     'btnPosition' => 'end',
                     'blank' => false,
                     'showCopy' => true,

@@ -9,35 +9,37 @@ use Tests\TestCase;
 
 class DefaultMainBlocksTest extends TestCase
 {
-    public function test_post_appends_share_button_related_thematic_and_category_list(): void
+    public function test_post_appends_category_list_share_button_and_related_thematic(): void
     {
         $state = $this->appendDefaultMainBlock(new CreatePost, [
             ['type' => 'title', 'data' => ['title' => 'Новость']],
         ]);
 
         $this->assertSame(
-            ['title', 'related-thematic', 'category-list', 'share-button'],
+            ['title', 'category-list', 'share-button', 'related-thematic'],
             array_column($state, 'type'),
         );
 
-        $this->assertSame('/news', $state[3]['data']['btnUrl']);
-        $this->assertSame('Все новости', $state[3]['data']['btnLabel']);
-        $this->assertSame('end', $state[3]['data']['btnPosition']);
+        $this->assertSame('/news', $state[2]['data']['btnUrl']);
+        $this->assertSame('Все новости', $state[2]['data']['btnLabel']);
+        $this->assertSame('end', $state[2]['data']['btnPosition']);
+        $this->assertSame('btn-secondary', $state[2]['data']['btnType']);
     }
 
-    public function test_project_share_button_points_at_the_projects_index(): void
+    public function test_project_appends_category_list_and_share_button_without_related_thematic(): void
     {
         $state = $this->appendDefaultMainBlock(new CreateProject, [
             ['type' => 'title', 'data' => ['title' => 'Проект']],
         ]);
 
         $this->assertSame(
-            ['title', 'related-thematic', 'category-list', 'share-button'],
+            ['title', 'category-list', 'share-button'],
             array_column($state, 'type'),
         );
 
-        $this->assertSame('/projects', $state[3]['data']['btnUrl']);
-        $this->assertSame('Все проекты', $state[3]['data']['btnLabel']);
+        $this->assertSame('/projects', $state[2]['data']['btnUrl']);
+        $this->assertSame('Все проекты', $state[2]['data']['btnLabel']);
+        $this->assertSame('btn-secondary', $state[2]['data']['btnType']);
     }
 
     public function test_empty_main_section_gets_no_default_blocks(): void

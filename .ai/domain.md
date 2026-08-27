@@ -66,13 +66,25 @@ Page/Post/Project содержат три JSON-секции: `top_section`, `mai
 достаёт его данные через `getBgForMainSection()`.
 
 При создании Post и Project в main-секцию (если она не пуста) автоматически
-добавляются три блока в порядке: `related-thematic` (тематическая подборка
-из категорий записи) → `category-list` (список категорий записи) →
-`share-button` («Поделиться + кнопка», ведёт на `/news` или `/projects`
-с подписью «Все новости»/«Все проекты»). Логика — в
-`CreatePost::appendDefaultMainBlock()` и
+добавляется хвост из служебных блоков: `category-list` (список категорий
+записи) и `share-button` («Поделиться + кнопка», ведёт на `/news` или
+`/projects` с подписью «Все новости»/«Все проекты»). У новостей к ним
+добавляется третьим `related-thematic` (тематическая подборка из категорий
+записи).
+
+**Состав хвоста у Post и Project разный** — не рассинхрон, а решение:
+
+| Ресурс    | Хвост main-секции                                     |
+| --------- | ----------------------------------------------------- |
+| `Post`    | `category-list` → `share-button` → `related-thematic` |
+| `Project` | `category-list` → `share-button`                      |
+
+У проектов тематической подборки нет намеренно (убрана 2026-08-27): в данные
+прода она никогда не попадала, и в `CreateProject` её больше не добавляют.
+
+Логика — в `CreatePost::appendDefaultMainBlock()` и
 `CreateProject::appendDefaultMainBlock()`, данные кнопки собирает
-`ShareButton::getDefaultBlock($btnUrl, $btnLabel)` (`btn-primary`,
+`ShareButton::getDefaultBlock($btnUrl, $btnLabel)` (`btn-secondary`,
 `btnPosition=end` — значения позиции только `start`/`center`/`end`, шаблон
 подставляет их в `md:justify-*`, `blank=false`, `showCopy=true`, `socials`
 из `ShareButton::defaultSocials()`).

@@ -47,7 +47,7 @@ final class ProjectsBlock
                 UrlInput::make('btnUrl')->label(__(key: 'panel.btn_url'))
                     ->columnSpan(5)
                     ->required()
-                    ->default('projects'),
+                    ->default('/projects'),
 
                 Select::make('projectIds')->label(__(key: 'panel.pinned_projects'))
                     ->columnSpan(12)
