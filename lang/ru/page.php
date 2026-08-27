@@ -8,7 +8,7 @@ return [
     'categories' => 'Категории',
     'change_site_theme' => 'изменить тему сайта',
     'call' => 'позвонить',
-    'contacts' => 'контакты',
+    'contacts' => 'связаться',
     'share' => 'Поделиться',
     'copy_link' => 'Копировать ссылку',
     'link_copied' => 'Ссылка скопирована',
