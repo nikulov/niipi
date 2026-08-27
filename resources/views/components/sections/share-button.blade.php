@@ -68,9 +68,7 @@
                         </span>
                     @endif
 
-                    <div
-                        class="bg-accent flex h-12.25 min-h-12.25 min-w-54.5 flex-row items-center justify-center gap-2 px-3 dark:bg-[#7ba2ba]"
-                    >
+                    <div class="flex h-12.25 min-h-12.25 min-w-54.5 flex-row items-center justify-center gap-2 bg-[#7ba2ba] px-3">
                         @foreach ($socials as $social)
                             <a
                                 :href="share(@js($social['shareUrl'] ?? ''))"

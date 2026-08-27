@@ -36,10 +36,10 @@ class CreatePost extends CreateRecord
 
         return [
             ...$state,
-            ...RelatedThematic::getDefaultBlock(),
             ...CategoryList::getDefaultBlock(),
             ...ShareButton::getDefaultBlock('/news', __('panel.all_news')),
-        ];
+            ...RelatedThematic::getDefaultBlock(),
+		];
     }
 
     protected function afterSave(): void
