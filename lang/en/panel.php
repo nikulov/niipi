@@ -189,6 +189,8 @@ return [
     'show_copy_link' => '“Copy link” button',
     'share_url' => 'Share URL',
     'share_url_hint' => 'Template: {url} — the page address, {title} — its title. For example: https://vk.com/share.php?url={url}&title={title}',
+    'url_input_hint' => 'Mind the leading slash in the address',
+    'url_input_tooltip' => 'With a leading slash the address is counted from the domain: /projects points at niipigrad.ru/projects. Without it the address is appended to the current one: from the page /projects/example the link projects leads to /projects/example/projects. External addresses go in full, with https://',
     'svg' => '*.svg only',
 
     'submission' => 'Submission',

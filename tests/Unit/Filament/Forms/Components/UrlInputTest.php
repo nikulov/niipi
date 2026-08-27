@@ -48,4 +48,27 @@ class UrlInputTest extends TestCase
         $this->assertSame('niipigrad.ru/', $input->getPrefixLabel());
         $this->assertSame(255, $input->getMaxLength());
     }
+
+    public function test_slash_hint_carries_the_icon_and_the_full_explanation(): void
+    {
+        [$text, $icon] = UrlInput::slashHint();
+
+        $this->assertSame(__('panel.url_input_hint'), $text->getContent());
+        $this->assertSame('heroicon-m-information-circle', $icon->getIcon());
+        $this->assertSame('gray', $icon->getColor());
+
+        // the full explanation hangs on the icon alone — the text is just the warning
+        $this->assertSame(__('panel.url_input_tooltip'), $icon->getTooltip());
+    }
+
+    public function test_both_hint_keys_are_translated_in_both_locales(): void
+    {
+        foreach (['ru', 'en'] as $locale) {
+            foreach (['panel.url_input_hint', 'panel.url_input_tooltip'] as $key) {
+                $this->assertNotSame($key, trans($key, [], $locale));
+            }
+
+            $this->assertStringContainsString('/projects', trans('panel.url_input_tooltip', [], $locale));
+        }
+    }
 }

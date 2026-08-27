@@ -213,6 +213,8 @@ return [
     'show_copy_link' => 'Кнопка «Копировать ссылку»',
     'share_url' => 'Ссылка для шаринга',
     'share_url_hint' => 'Шаблон: {url} — адрес страницы, {title} — её заголовок. Например: https://vk.com/share.php?url={url}&title={title}',
+    'url_input_hint' => 'Будьте внимательны со " / " в начале адреса',
+    'url_input_tooltip' => 'Со слэша в начале — адрес отсчитывается сразу от домена: /projects ведёт на niipigrad.ru/projects. Без слэша — дописывается к текущему адресу: со страницы /projects/nazvanie ссылка projects приведёт на /projects/nazvanie/projects. Внешние адреса — целиком, с https://',
     'submission' => 'Заявка',
     'submissions' => 'Заявки',
     'status_new' => 'Новая',
