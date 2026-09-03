@@ -341,6 +341,12 @@ nested array only when flattening changes the count (`Builder.php:1345`,
 `count($values) !== count(Arr::flatten($values, 1))`). `[[1]]` passes
 silently and filters by `1`; a payload has to be `[[1, 2]]` to blow up.
 
+Replayed over real HTTP after the fix: all five payloads now die at the lock
+with `Cannot update locked property: [...]` before a single query runs, and
+`category=missing` (not locked) answers 200 with the slug reset to `null`.
+The lock still answers 500, so a scanner keeps adding lines of the #32 shape
+to the log — that is the intended trade, not a leftover.
+
 ---
 
 ### 10. ~~Пустой try/catch в `PublicForm::submit`~~ ✅ исправлено

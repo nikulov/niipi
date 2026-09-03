@@ -82,6 +82,36 @@ vendor/bin/sail npx prettier --write resources/views/…/file.blade.php
   `sudo -u deploy_niipigrad php artisan config:cache` + `systemctl reload php8.4-fpm`,
   иначе значение подхватится только со следующим деплоем.
 
+### Логи и сервисы на проде (проверено 2026-09-03)
+
+- Логи приложения — `current/storage/logs/laravel-YYYY-MM-DD.log`. `storage`
+  общий через `shared/`, деплой их не теряет.
+- **`LOG_LEVEL=error`.** Всё, что пишется `Log::warning` (отсев мёртвых файлов
+  в `PublicForm`, например), в прод-лог не попадает вообще. И наоборот:
+  отсутствие файла за день не значит, что логи потёрли ротацией
+  (`LOG_DAILY_DAYS=90`) — в тихий день просто нечего писать.
+- nginx — `/var/log/nginx/access.log`, `.1`, `.2.gz`… `.14.gz` (две недели),
+  рядом `error.log`. Единственный источник по кодам ответа: 419, 499 и коды
+  статики в лог приложения не попадают.
+- Redis на самом деле **valkey**: `redis-cli` не установлен, звать
+  `valkey-cli`. Пароля нет (`requirepass` закомментирован, `REDIS_PASSWORD=`
+  пуст) — предупреждение `AUTH failed` в выводе игнорировать, команда всё
+  равно выполняется. Сессии в `db0`, кэш в `db1`, `maxmemory` не задан
+  (`noeviction`), `evicted_keys:0` — сессии не вытесняются, и `cache:clear`
+  на деплое их не трогает.
+- Воркер очереди — systemd, а не supervisor:
+  `worker-niipigrad-prod.service` (stage — `-stage`),
+  `User=deploy_niipigrad`, `queue:work redis --sleep=3 --tries=3
+  --max-time=3600`, `Restart=always`. Деплой делает `systemctl restart`.
+- В `storage/logs/worker.log` копятся фаталы вида
+  `include(.../releases/<старый>/vendor/...): Failed to open stream` — это
+  воркеры, чей релиз вычистил `KEEP_RELEASES`; systemd поднимает их заново,
+  вреда нет.
+- **Планировщика нет.** Пусты crontab'ы `root`, `deploy_niipigrad`,
+  `www-data`, `ubuntu`, systemd-таймера под `schedule:run` тоже нет. Сейчас
+  это верно: задач в `routes/console.php` нет. Появится первая — cron
+  придётся завести, иначе она молча не будет выполняться.
+
 ## Деплой
 
 - Staging: `/var/www/niipigrad-stage`, ветка `staging`. Prod:

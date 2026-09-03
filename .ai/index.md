@@ -39,6 +39,8 @@
 - [skills/add-filament-resource.md](skills/add-filament-resource.md) — Filament v4 ресурс
 - [skills/add-form-field-type.md](skills/add-form-field-type.md) — новый тип поля form builder
 - [skills/add-migration.md](skills/add-migration.md) — миграции
+- [skills/prod-log-triage.md](skills/prod-log-triage.md) — разбор жалобы «на
+  проде что-то сломалось» по логам
 
 ## Паттерны кода
 
