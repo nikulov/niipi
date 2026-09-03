@@ -168,6 +168,16 @@ Livewire покрывает снапшот, но не карту `updates`, по
 Образец — `App\Livewire\Forms\PublicForm`: залочены `$form`, `$viewData`,
 `$submitted`, `$componentKey`; открыты `$data`, `$uploads`, `$website`.
 
+`AbstractContentFull` — тот же раздел: `#[Locked]` на `$limit`,
+`$categoryIds`, `$componentKey`; `$category` открыт, его кормит query string,
+а слаг перепроверяет `updatedCategory()`.
+
+Normalize a client-writable value **at the point of use**, never once in
+`mount()` or in a `hydrate()` hook: `updateProperties()` runs after
+`trigger('hydrate')`, so whatever a hook clamps the update map overwrites.
+Образец — `filterIds()` / `perPage()` в `AbstractContentFull`. Второй слой
+нужен и без клиента: данные блока из CMS тоже приходят непроверенными.
+
 Механика и разбор реального падения —
 [manual/livewire-3.md](manual/livewire-3.md).
 

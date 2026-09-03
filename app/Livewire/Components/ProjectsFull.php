@@ -87,10 +87,10 @@ final class ProjectsFull extends AbstractContentFull
             ? $categories->firstWhere('slug', $this->category)?->id
             : null;
 
-        $filterIds = $selectedId ? [$selectedId] : $this->categoryIds;
+        $filterIds = $selectedId ? [$selectedId] : $this->filterIds();
 
         return $projectsQuery
-            ->list($this->limit, $filterIds, true, $this->getPageName())
+            ->list($this->perPage(), $filterIds, true, $this->getPageName())
             ->through(fn ($project) => ProjectsFullPresenter::make($project));
     }
 

@@ -4,6 +4,7 @@ namespace App\Blocks\Renderers;
 
 use App\Blocks\Contracts\BlockRenderer;
 use App\Blocks\Contracts\HasBlockSections;
+use App\Livewire\Components\AbstractContentFull;
 use Livewire\Livewire;
 
 final class ProjectsFullRenderer implements BlockRenderer
@@ -12,30 +13,30 @@ final class ProjectsFullRenderer implements BlockRenderer
     {
         return 'projects-full';
     }
-    
+
     public static function version(): string
     {
         return '2';
     }
-    
+
     public function render(array $data, HasBlockSections $model, int $index): string
     {
-        $limit = max(1, min(50, (int) ($data['limit'] ?? 10)));
-        
+        $limit = AbstractContentFull::clampLimit((int) ($data['limit'] ?? 10));
+
         $categoryIds = $data['categoryIds'] ?? null;
         $categoryIds = is_array($categoryIds) ? array_values($categoryIds) : null;
-        
+
         if (is_array($categoryIds) && count($categoryIds) === 0) {
             $categoryIds = null;
         }
-        
+
         $wireKey = sprintf(
             'block:%s:%s:%d',
             self::key(),
             $model->getRenderCacheId(),
             $index
         );
-        
+
         $mounted = Livewire::mount(
             'components.projects-full',
             [
@@ -45,11 +46,11 @@ final class ProjectsFullRenderer implements BlockRenderer
             ],
             $wireKey
         );
-        
+
         if (is_string($mounted)) {
             return $mounted;
         }
-        
+
         return method_exists($mounted, 'html') ? $mounted->html() : (string) $mounted;
     }
 }

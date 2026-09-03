@@ -52,6 +52,10 @@ Blade через `?? default`.
 
 Разбор реального случая — [../plans/bug-report-2026-08-04.md](../plans/bug-report-2026-08-04.md), пункт #24.
 
+Второй случай, та же механика — [../plans/archived/bugs.md](../plans/archived/bugs.md),
+пункт #9: `AbstractContentFull` жил с незалоченными `limit` и `categoryIds`,
+сканер сделал из них десять 500-к за две секунды 2026-08-28.
+
 ## Загруженные файлы переживают запрос строкой
 
 `TemporaryUploadedFile` не хранится между запросами как объект: при дегидрации

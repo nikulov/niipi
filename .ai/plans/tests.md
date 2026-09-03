@@ -166,6 +166,10 @@ bottomSection/tabs/modal` содержат ожидаемые ключи бло�
   `published_at`, `limit`, `excludeId`.
 - **Счётчики:** `NewsFullTest`/`ProjectsFullTest` — будущие публикации не
   попадают ни в счётчик категории, ни в «Все».
+- **Клиентские апдейты:** `NewsFullTest`/`ProjectsFullTest` — `#[Locked]` на
+  `limit`/`categoryIds`/`componentKey`, кламп `limit` и санитайз
+  `categoryIds` из данных блока, сброс неизвестного слага в
+  `updatedCategory()`.
 - **Формы, контракт опций** (`PublicFormPresenterTest`): плейсхолдер
   живёт только у `select`, у `radio` отбрасывается; побеждает первый
   `default`; `value: "0"` может быть дефолтом.

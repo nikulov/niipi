@@ -87,10 +87,10 @@ final class NewsFull extends AbstractContentFull
             ? $categories->firstWhere('slug', $this->category)?->id
             : null;
 
-        $filterIds = $selectedId ? [$selectedId] : $this->categoryIds;
+        $filterIds = $selectedId ? [$selectedId] : $this->filterIds();
 
         return $newsQuery
-            ->list($this->limit, $filterIds, true, $this->getPageName())
+            ->list($this->perPage(), $filterIds, true, $this->getPageName())
             ->through(fn ($post) => NewsFullPresenter::make($post));
     }
 

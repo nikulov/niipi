@@ -5,6 +5,7 @@ namespace App\Livewire\Components;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Livewire\Attributes\Locked;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -12,13 +13,21 @@ abstract class AbstractContentFull extends Component
 {
     use WithPagination;
 
+    public const MIN_LIMIT = 1;
+
+    public const MAX_LIMIT = 50;
+
+    #[Locked]
     public int $limit = 10;
 
     /** @var array<int>|null */
+    #[Locked]
     public ?array $categoryIds = null;
 
+    /** Open: driven by the query string and by setCategory(). */
     public ?string $category = null;
 
+    #[Locked]
     public ?string $componentKey = null;
 
     private ?Collection $categoriesCache = null;
@@ -33,11 +42,16 @@ abstract class AbstractContentFull extends Component
 
     public function mount(int $limit = 10, ?array $categoryIds = null, ?string $componentKey = null): void
     {
-        $this->limit = $limit;
+        $this->limit = self::clampLimit($limit);
         $this->categoryIds = is_array($categoryIds) ? array_values($categoryIds) : null;
         $this->componentKey = $componentKey;
 
         $this->normalizeCategory();
+    }
+
+    public static function clampLimit(int $limit): int
+    {
+        return max(self::MIN_LIMIT, min(self::MAX_LIMIT, $limit));
     }
 
     public function getPageName(): string
@@ -54,6 +68,11 @@ abstract class AbstractContentFull extends Component
         $this->resetPage($this->getPageName());
     }
 
+    public function updatedCategory(): void
+    {
+        $this->normalizeCategory();
+    }
+
     private function normalizeCategory(): void
     {
         if (! $this->category) {
@@ -65,18 +84,34 @@ abstract class AbstractContentFull extends Component
         }
     }
 
+    /**
+     * Second layer behind #[Locked]: block data reaches mount() unvalidated,
+     * so filterIds() and perPage() normalize on every use rather than once.
+     *
+     * @return array<int>|null
+     */
+    protected function filterIds(): ?array
+    {
+        if (! is_array($this->categoryIds)) {
+            return null;
+        }
+
+        $ids = array_values(array_filter(
+            array_map(fn ($v) => is_numeric($v) ? (int) $v : null, $this->categoryIds),
+            fn ($v) => is_int($v) && $v > 0
+        ));
+
+        return $ids === [] ? null : $ids;
+    }
+
+    protected function perPage(): int
+    {
+        return self::clampLimit($this->limit);
+    }
+
     protected function getCategories(): Collection
     {
-        $ids = is_array($this->categoryIds)
-            ? array_values(array_filter(
-                array_map(fn ($v) => is_numeric($v) ? (int) $v : null, $this->categoryIds),
-                fn ($v) => is_int($v) && $v > 0
-            ))
-            : null;
-
-        if ($ids === [] || $ids === null) {
-            $ids = null;
-        }
+        $ids = $this->filterIds();
 
         $cacheKey = $this->getCacheKey().':'.md5(json_encode($ids));
 

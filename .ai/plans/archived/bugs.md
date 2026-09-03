@@ -13,7 +13,7 @@
 | 6 | Update статуса вне транзакции | исправлен, `85f7630` |
 | 7 | `Post $post` в `forceDelete` у 11 полиси | исправлен, `de3fd5f` |
 | 8 | `filterMimesRules` сносит валидный `mimes:` | won't fix, недостижим |
-| 9 | `categoryIds` не типизируется до int | won't fix, не баг |
+| 9 | `categoryIds` не типизируется до int | переоткрыт 2026-09-03, исправлен |
 | 10 | Пустой try/catch в `PublicForm::submit` | исправлен, `64c132c` |
 | 11 | Опечатка `AuthServiceProvoider` + мёртвый `$policies` | исправлен, файл удалён |
 | 12 | `ProjectObserver` принимает `$post` | исправлен, `d58ce9b` |
@@ -292,7 +292,7 @@ commit и update), submission останется в статусе `New` с уж
 
 ---
 
-### 9. ~~`AbstractContentFull::mount` не типизирует `categoryIds`~~ ❌ won't fix
+### 9. `AbstractContentFull::mount` не типизирует `categoryIds` ✅ исправлен
 
 **Файл:** `app/Livewire/Components/AbstractContentFull.php:37`
 
@@ -317,6 +317,29 @@ commit и update), submission останется в статусе `New` с уж
 и звать из всех трёх мест (аксессор, а не разовая нормализация в `mount`:
 между запросами Livewire регидрирует свойство из пейлоада, `mount`
 повторно не выполняется).
+
+**Reopened and fixed 2026-09-03.** The 2026-08-04 call weighed the wrong
+payoff: the risk was never a swapped category filter, it was the 500. On
+2026-08-28 07:18 a scanner (`python-requests/2.25.1`, 36.72.214.2) posted
+arrays into the public properties of both components and collected ten 500s
+in two seconds — among them `Nested arrays may not be passed to whereIn
+method` out of `NewsFull:90` / `ProjectsFull:90`, the raw-value readers named
+above. `limit` turned out worse than `categoryIds`: it is an `int`, so a
+numeric string coerces cleanly and lands in `paginate()` — `limit=999999` is
+a heavy query, `limit=0` a `DivisionByZeroError`, a negative one an SQL error.
+The clamp in the renderers covered none of it, it only runs on mount.
+
+Fix: `#[Locked]` on `limit`, `categoryIds`, `componentKey` (the convention
+this component was missing all along), plus `filterIds()` / `perPage()` in
+`AbstractContentFull` as a second layer — block data from the CMS is not
+validated either — and both readers now go through them. `category` stays
+unlocked (query string feeds it), `updatedCategory()` re-validates the slug.
+Tests: `NewsFullTest`, `ProjectsFullTest`.
+
+Worth knowing when reproducing this shape of crash: `whereIn` rejects a
+nested array only when flattening changes the count (`Builder.php:1345`,
+`count($values) !== count(Arr::flatten($values, 1))`). `[[1]]` passes
+silently and filters by `1`; a payload has to be `[[1, 2]]` to blow up.
 
 ---
 
