@@ -6,6 +6,7 @@ use App\Models\Form;
 use App\Models\FormField;
 use App\Services\Forms\FormRulesBuilder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\In;
 use Tests\TestCase;
 
@@ -98,7 +99,6 @@ class FormRulesBuilderTest extends TestCase
             'label' => 'Alt phone',
             'required' => false,
             'is_enabled' => true,
-            'rules' => ['regex:/^\+7/' => 'Свой формат'],
         ]);
 
         $builder = new FormRulesBuilder;
@@ -107,10 +107,47 @@ class FormRulesBuilderTest extends TestCase
         $regex = 'regex:/^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/';
 
         $this->assertSame(['required', $regex], $rules['data.phone']);
+        $this->assertSame(['nullable', $regex], $rules['data.phone_alt']);
         $this->assertSame(__('panel.invalid_phone'), $messages['data.phone.regex']);
+    }
 
-        $this->assertSame(['nullable', $regex, 'regex:/^\+7/'], $rules['data.phone_alt']);
-        $this->assertSame('Свой формат', $messages['data.phone_alt.regex']);
+    /** Bug #43: rules left in the database from before the mask made the field unfillable. */
+    public function test_phone_field_ignores_rules_from_the_admin_panel(): void
+    {
+        $form = Form::create([
+            'name' => 'phones-legacy',
+            'title' => 'Phones',
+        ]);
+
+        FormField::create([
+            'form_id' => $form->id,
+            'type' => 'phone',
+            'name' => 'phone',
+            'label' => 'Phone',
+            'required' => true,
+            'is_enabled' => true,
+            'rules' => [
+                'regex:/^(?:\+7|8|7)\d{10}$/' => 'Телефон должен начинаться с +7, 8 или 7',
+                'max:6' => 'Слишком длинно',
+            ],
+        ]);
+
+        [$rules, $messages] = (new FormRulesBuilder)->build($form);
+
+        $this->assertSame(
+            ['required', 'regex:/^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/'],
+            $rules['data.phone']
+        );
+        $this->assertSame(__('panel.invalid_phone'), $messages['data.phone.regex']);
+        $this->assertArrayNotHasKey('data.phone.max', $messages);
+
+        $validator = Validator::make(
+            ['data' => ['phone' => '+7 (911) 111-11-11']],
+            ['data.phone' => $rules['data.phone']],
+            $messages
+        );
+
+        $this->assertFalse($validator->fails());
     }
 
     public function test_build_rules_for_file_fields(): void

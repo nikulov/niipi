@@ -25,6 +25,15 @@ final class FormRulesBuilder
 
             $base = $field->required ? ['required'] : ['nullable'];
 
+            // The client-side mask fixes the format, so rules from the admin panel are
+            // ignored for phone: any of them would only contradict PHONE_RULE.
+            if ($field->type === 'phone') {
+                $rules[$keyData] = array_merge($base, [self::PHONE_RULE]);
+                $messages["{$keyData}.regex"] = __('panel.invalid_phone');
+
+                continue;
+            }
+
             [$extra, $customMessages] = $this->parseExtraRules($field->rules, $keyData);
             $extra = $this->filterExtraRules($extra);
             $messages = array_merge($messages, $customMessages);
@@ -40,15 +49,6 @@ final class FormRulesBuilder
 
             if ($field->type === 'email') {
                 $rules[$keyData] = array_merge($base, ['email'], $extra);
-
-                continue;
-            }
-
-            if ($field->type === 'phone') {
-                $rules[$keyData] = array_merge($base, [self::PHONE_RULE], $extra);
-
-                // a message set in the admin panel wins over the default one
-                $messages["{$keyData}.regex"] ??= __('panel.invalid_phone');
 
                 continue;
             }

@@ -131,7 +131,8 @@ class FieldsRelationManager extends RelationManager
                     ->language(CodeEditor\Enums\Language::Json)
                     ->helperText(__('panel.rules_help'))
                     ->hidden(fn (callable $get) => $get('type') === 'file')
-                    ->visible(fn (callable $get) => ! in_array($get('type'), ['checkbox', 'radio'], true))
+                    // phone has no rules to set: the format comes from the mask
+                    ->visible(fn (callable $get) => ! in_array($get('type'), ['checkbox', 'radio', 'phone'], true))
                     ->json()
                     ->dehydrateStateUsing(fn ($state) => is_string($state) ? json_decode($state, true) : $state)
                     ->formatStateUsing(fn ($state) => is_array($state)
