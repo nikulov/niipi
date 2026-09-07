@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Forms\Schemas;
 use App\Enums\FormApplicantType;
 use App\Filament\Forms\Components\MediaPickerAction;
 use App\Models\Form;
+use App\Models\FormField;
 use Closure;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\MarkdownEditor;
@@ -17,7 +18,7 @@ use Filament\Schemas\Components\Group;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
-use Filament\Support\Enums\Alignment;
+use Illuminate\Support\HtmlString;
 
 class FormForm
 {
@@ -113,6 +114,7 @@ class FormForm
 
                                 MarkdownEditor::make('admin_mail_body_md')->label(__('panel.email_body'))
                                     ->columnSpanFull()
+                                    ->helperText(fn (?Form $record): HtmlString => self::placeholdersHint($record))
                                     ->required(fn (Get $get): bool => (bool) $get('send_admin_mail')),
 
                             ])
@@ -159,6 +161,7 @@ class FormForm
 
                                 MarkdownEditor::make('user_mail_body_md')
                                     ->label(__('panel.email_body'))
+                                    ->helperText(fn (?Form $record): HtmlString => self::placeholdersHint($record))
                                     ->required(fn (Get $get): bool => (bool) $get('send_user_mail'))
                                     ->columnSpanFull(),
 
@@ -189,6 +192,36 @@ class FormForm
                     ])->columnSpanFull(),
 
             ])->columns(24);
+    }
+
+    /**
+     * Cheat sheet under the letter body: the static context keys of
+     * {@see \App\Services\Forms\FormEmailTemplateRenderer} plus the form's own
+     * field names — their slugs are not visible anywhere else in the panel.
+     */
+    public static function placeholdersHint(?Form $record): HtmlString
+    {
+        $lines = [__('panel.email_placeholders_help')];
+
+        $fields = $record === null
+            ? collect()
+            : $record->fields()->where('is_enabled', true)->orderBy('sort')->get();
+
+        if ($fields->isNotEmpty()) {
+            $list = $fields
+                ->map(function (FormField $field): string {
+                    $placeholder = '<code>{{ field.'.e($field->name).' }}</code>';
+
+                    return $field->type === 'file'
+                        ? $placeholder.' '.e(__('panel.email_placeholders_file_note'))
+                        : $placeholder;
+                })
+                ->implode(', ');
+
+            $lines[] = e(__('panel.email_placeholders_form_fields')).' '.$list;
+        }
+
+        return new HtmlString(implode('<br>', $lines));
     }
 
     private static function hasEmailField(Form $form): bool

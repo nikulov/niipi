@@ -54,6 +54,7 @@
 - [patterns/role-access-resource.md](patterns/role-access-resource.md) — видимость ресурса по ролям
 - [patterns/base-policy.md](patterns/base-policy.md) — политики + Admin bypass
 - [patterns/livewire-public-form.md](patterns/livewire-public-form.md) — публичная форма на Livewire
+- [patterns/form-email-templates.md](patterns/form-email-templates.md) — письма форм: плейсхолдеры, ссылки на файлы, фолбэк
 
 ## Заметки по фреймворкам
 
