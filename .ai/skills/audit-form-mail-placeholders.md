@@ -51,15 +51,18 @@ effect on the next submission.
 
 ## Audit of 2026-09-07 (13 forms, 100 fields)
 
-Fixed in prod DB: `{{ filed.message }}` → `{{ field.message }}` (#1001
-«Обратная связь», the message body was missing from every admin letter) and
+Fixed by SQL: `{{ filed.message }}` → `{{ field.message }}` (#1001 «Обратная
+связь», the message body was missing from every admin letter) and
 `{{ filed.files }}` → `{{ files }}` (#1013 «СТО_ФЛ»).
 
-Left as they are, deliberately:
+Removed from the panel by the user: the `Изменения: {{ field.changes }}` line
+of #1013 «СТО_ФЛ» — no such field on that form, only the ЮЛ variants have it.
 
-- `{{ field.inn }}` in the admin template of #1000, #1002, #1006, #1010,
-  #1012, #1015 — `inn` exists but is disabled in all six. The user chose to
-  keep the line.
-- `{{ field.changes }}` in #1013 «СТО_ФЛ» — no such field on that form (only
-  the ЮЛ variants have it), so `Изменения:` is always empty. Not a typo,
-  needs a decision.
+Left in place deliberately: `{{ field.inn }}` in the admin template of #1000,
+#1002, #1006, #1010, #1012, #1015 — `inn` exists but is disabled in all six,
+so `ИНН:` is always empty. That is the only finding still open.
+
+Telling the two apart afterwards: `DB::table()->update()` does not touch
+`updated_at`, so a fresh `forms.updated_at` means somebody saved through the
+panel, never that the SQL fix landed. Verify a fix by re-running the audit,
+not by the timestamp.
