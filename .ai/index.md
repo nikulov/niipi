@@ -41,6 +41,8 @@
 - [skills/add-migration.md](skills/add-migration.md) — миграции
 - [skills/prod-log-triage.md](skills/prod-log-triage.md) — разбор жалобы «на
   проде что-то сломалось» по логам
+- [skills/audit-form-mail-placeholders.md](skills/audit-form-mail-placeholders.md)
+  — checking `{{ field.* }}` in form mail templates against the prod DB
 
 ## Паттерны кода
 
