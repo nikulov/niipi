@@ -50,6 +50,40 @@ class FormEmailTemplateRendererTest extends TestCase
         $this->assertStringNotContainsString('&lt;', $subject);
     }
 
+    public function test_renders_submission_meta_and_the_panel_link(): void
+    {
+        $submission = new FormSubmission([
+            'form_id' => 7,
+            'status' => FormSubmissionStatus::Processing,
+            'data' => [],
+            'ip' => '10.0.0.8',
+            'user_agent' => 'Mozilla/5.0',
+        ]);
+        $submission->id = 42;
+
+        $text = (new FormEmailTemplateRenderer)->renderBodyText(
+            $submission,
+            '{{ form.id }} {{ submission.ip }} {{ submission.user_agent }} {{ submission.url }}'
+        );
+
+        $this->assertStringContainsString('7', $text);
+        $this->assertStringContainsString('10.0.0.8', $text);
+        $this->assertStringContainsString('Mozilla/5.0', $text);
+        $this->assertStringContainsString(
+            route('filament.admin.resources.form-submissions.edit', ['record' => 42]),
+            $text
+        );
+    }
+
+    public function test_panel_link_is_empty_for_an_unsaved_submission(): void
+    {
+        $submission = new FormSubmission(['form_id' => 7, 'data' => []]);
+
+        $text = (new FormEmailTemplateRenderer)->renderBodyText($submission, '[{{ submission.url }}]');
+
+        $this->assertSame('[]', $text);
+    }
+
     public function test_html_body_still_escapes_values(): void
     {
         $submission = new FormSubmission([

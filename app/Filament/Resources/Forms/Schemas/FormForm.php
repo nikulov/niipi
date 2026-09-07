@@ -15,10 +15,12 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Group;
+use Filament\Schemas\Components\Html;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
 use Illuminate\Support\HtmlString;
+use Illuminate\Support\Str;
 
 class FormForm
 {
@@ -114,8 +116,9 @@ class FormForm
 
                                 MarkdownEditor::make('admin_mail_body_md')->label(__('panel.email_body'))
                                     ->columnSpanFull()
-                                    ->helperText(fn (?Form $record): HtmlString => self::placeholdersHint($record))
                                     ->required(fn (Get $get): bool => (bool) $get('send_admin_mail')),
+
+                                self::placeholdersSection('admin'),
 
                             ])
                             ->key('email-admin', isInheritable: false)
@@ -161,9 +164,10 @@ class FormForm
 
                                 MarkdownEditor::make('user_mail_body_md')
                                     ->label(__('panel.email_body'))
-                                    ->helperText(fn (?Form $record): HtmlString => self::placeholdersHint($record))
                                     ->required(fn (Get $get): bool => (bool) $get('send_user_mail'))
                                     ->columnSpanFull(),
+
+                                self::placeholdersSection('user'),
 
                                 FileUpload::make('user_mail_attachments')->label(__('panel.user_mail_attachments'))
                                     ->helperText(__('panel.user_mail_attachments_help'))
@@ -195,33 +199,106 @@ class FormForm
     }
 
     /**
-     * Cheat sheet under the letter body: the static context keys of
-     * {@see \App\Services\Forms\FormEmailTemplateRenderer} plus the form's own
-     * field names — their slugs are not visible anywhere else in the panel.
+     * Placeholder => lang key of its description. Mirrors the context built by
+     * {@see \App\Services\Forms\FormEmailTemplateRenderer::buildContext()},
+     * minus `submission.status`: in a letter it is always `processing`.
+     */
+    private const DEFAULT_PLACEHOLDERS = [
+        'form.name' => 'email_placeholder_form_name',
+        'form.id' => 'email_placeholder_form_id',
+        'submission.id' => 'email_placeholder_submission_id',
+        'submission.created_at' => 'email_placeholder_submission_created_at',
+        'submission.url' => 'email_placeholder_submission_url',
+        'submission.ip' => 'email_placeholder_submission_ip',
+        'submission.user_agent' => 'email_placeholder_submission_user_agent',
+        'files' => 'email_placeholder_files',
+    ];
+
+    /**
+     * Cheat sheet inside the collapsed section under the letter body: the static
+     * context keys plus the form's own field names — their slugs are not visible
+     * anywhere else in the panel.
      */
     public static function placeholdersHint(?Form $record): HtmlString
     {
-        $lines = [__('panel.email_placeholders_help')];
+        $defaults = [];
+
+        foreach (self::DEFAULT_PLACEHOLDERS as $placeholder => $langKey) {
+            $defaults[] = self::hintRow($placeholder, __('panel.'.$langKey));
+        }
+
+        $groups = [self::hintGroup(__('panel.email_placeholders_defaults'), $defaults)];
 
         $fields = $record === null
             ? collect()
             : $record->fields()->where('is_enabled', true)->orderBy('sort')->get();
 
         if ($fields->isNotEmpty()) {
-            $list = $fields
-                ->map(function (FormField $field): string {
-                    $placeholder = '<code>{{ field.'.e($field->name).' }}</code>';
+            $rows = [];
 
-                    return $field->type === 'file'
-                        ? $placeholder.' '.e(__('panel.email_placeholders_file_note'))
-                        : $placeholder;
-                })
-                ->implode(', ');
+            foreach ($fields as $field) {
+                $rows[] = self::hintRow('field.'.$field->name, self::fieldDescription($field));
+            }
 
-            $lines[] = e(__('panel.email_placeholders_form_fields')).' '.$list;
+            $groups[] = self::hintGroup(__('panel.email_placeholders_form_fields'), $rows);
         }
 
-        return new HtmlString(implode('<br>', $lines));
+        $groups[] = '<div>'.e(__('panel.email_placeholders_unknown')).'</div>';
+
+        return new HtmlString('<div style="display:grid;gap:0.75rem">'.implode('', $groups).'</div>');
+    }
+
+    /**
+     * Layout goes through inline styles on purpose: the theme scans
+     * `app/Filament/**` for classes, so utilities added here would stay dead
+     * until the assets are rebuilt. Colours are left to inherit — otherwise the
+     * hint would have to know about the dark theme.
+     */
+    private static function hintGroup(string $title, array $rows): string
+    {
+        return '<div style="display:grid;gap:0.25rem">'
+            .'<div style="font-weight:600">'.e($title).'</div>'
+            .implode('', $rows)
+            .'</div>';
+    }
+
+    private static function hintRow(string $placeholder, string $description): string
+    {
+        return '<div><code style="font-family:ui-monospace,monospace">{{ '
+            .e($placeholder)
+            .' }}</code> — '
+            .e($description)
+            .'</div>';
+    }
+
+    /**
+     * The label rather than the slug — but checkbox and radio labels are rich
+     * text, so they need flattening before they fit on one line.
+     */
+    private static function fieldDescription(FormField $field): string
+    {
+        $label = trim(preg_replace('/\s+/', ' ', strip_tags((string) $field->label)));
+
+        $description = $label === '' ? $field->name : Str::limit($label, 40);
+
+        return $field->type === 'file'
+            ? $description.' '.__('panel.email_placeholders_file_note')
+            : $description;
+    }
+
+    private static function placeholdersSection(string $type): Section
+    {
+        return Section::make(__('panel.email_placeholders'))
+            ->collapsible()
+            ->collapsed()
+            ->persistCollapsed()
+            // Explicit key: otherwise it is derived from the Russian heading by
+            // transliteration.
+            ->key('placeholders-'.$type, isInheritable: false)
+            ->columnSpanFull()
+            ->schema([
+                Html::make(fn (?Form $record): HtmlString => self::placeholdersHint($record)),
+            ]);
     }
 
     private static function hasEmailField(Form $form): bool

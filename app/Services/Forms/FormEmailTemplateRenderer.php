@@ -78,6 +78,24 @@ final class FormEmailTemplateRenderer
         }, $template) ?? $template;
     }
 
+    /**
+     * Link to the submission in the panel. Built from the route, not from
+     * `FormSubmissionResource::getUrl()`: the letter is rendered by a queue
+     * worker, where no panel is current.
+     */
+    private function panelUrl(FormSubmission $submission): ?string
+    {
+        if ($submission->getKey() === null) {
+            return null;
+        }
+
+        return rescue(
+            fn (): string => route('filament.admin.resources.form-submissions.edit', ['record' => $submission->getKey()]),
+            null,
+            report: false,
+        );
+    }
+
     private function buildContext(FormSubmission $submission): array
     {
         $data = is_array($submission->data) ? $submission->data : [];
@@ -127,6 +145,9 @@ final class FormEmailTemplateRenderer
                 'id' => $submission->id,
                 'created_at' => optional($submission->created_at)?->format('d.m.Y H:i'),
                 'status' => $submission->status?->value ?? (string) $submission->status,
+                'ip' => $submission->ip,
+                'user_agent' => $submission->user_agent,
+                'url' => $this->panelUrl($submission),
             ],
             'field' => $field,    // {{ field.email }}, {{ field.cv }} (file → URL)
             'files' => $filesList, // {{ files }}
