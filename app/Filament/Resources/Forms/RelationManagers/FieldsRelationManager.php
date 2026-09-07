@@ -187,6 +187,8 @@ class FieldsRelationManager extends RelationManager
 
                 TextColumn::make('name')->label(__('panel.name'))
                     ->copyable()
+                    // Without this the clipboard gets the state after `limit()`.
+                    ->copyableState(fn (string $state): string => $state)
                     ->limit(10)
                     ->wrap()
                     ->icon('heroicon-o-document-duplicate'),

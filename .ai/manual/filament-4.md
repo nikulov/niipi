@@ -69,3 +69,20 @@ Enum'ы, реализующие `Filament\Support\Contracts\HasColor` и `HasLab
 Trait `App\Filament\Support\RoleAccessResource` с методом
 `allowedRoles(): array` на `UserRole[]`. См.
 [../patterns/role-access-resource.md](../patterns/role-access-resource.md).
+
+## `copyable()` + `limit()` в колонке — копируется обрезанное
+
+`TextColumn` кладёт в буфер отформатированное состояние, а `formatState()`
+применяет `limit()`:
+
+```php
+// vendor/filament/tables/src/Columns/TextColumn.php:292
+$copyableStateJs = Js::from($this->getCopyableState($stateItem) ?? $this->formatState($stateItem));
+```
+
+Так что `->copyable()->limit(10)` копирует `personal_p...` вместе с
+многоточием. Лечится явным `->copyableState(fn (string $state): string =>
+$state)` — заданный `copyableState` отменяет обращение к `formatState()`
+целиком. Актуально для любой колонки, где копирование сочетается с `limit()`,
+`words()` или `formatStateUsing()` (пример — колонка `name` в
+`FieldsRelationManager`).
