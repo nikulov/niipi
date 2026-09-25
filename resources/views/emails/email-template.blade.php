@@ -8,7 +8,7 @@
     $bodyHtml = (string) ($body ?? ($slot ?? ''));
 
     $phone ??= '8 (495) 242-77-07';
-    $email ??= 'niipigrad_niipi@mosreg.ru';
+    $emails ??= ['niipi@mosreg.ru', 'info@niipi.ru'];
     $siteUrl ??= 'https://niipigrad.ru';
     $address ??= '129110, ул. Гиляровского, д. 47, стр. 3';
     $policyUrl ??= 'https://niipigrad.ru/pd_agreement';
@@ -50,7 +50,14 @@
                 .card-foot {
                     padding: 26px 22px !important;
                 }
-                .stack {
+                .stack-phone {
+                    display: block !important;
+                    width: 100% !important;
+                    padding: 8px 0 0 !important;
+                }
+            }
+            @media only screen and (max-width: 420px) {
+                .stack-mail {
                     display: block !important;
                     width: 100% !important;
                     padding: 4px 0 !important;
@@ -165,7 +172,25 @@
                                                             style="{{ $table }} margin: 0 auto"
                                                         >
                                                             <tr>
-                                                                <td class="stack" align="center" style="padding: 0 12px">
+                                                                @foreach ($emails as $mail)
+                                                                    <td class="stack-mail" align="center" style="padding: 0 12px">
+                                                                        <a
+                                                                            href="mailto:{{ $mail }}"
+                                                                            style="
+                                                                                color: #2f4a5f;
+                                                                                font-family: {{ $font }};
+                                                                                font-size: 14px;
+                                                                                font-weight: 700;
+                                                                                line-height: 1.5;
+                                                                                text-decoration: none;
+                                                                            "
+                                                                        >
+                                                                            {{ $mail }}
+                                                                        </a>
+                                                                    </td>
+                                                                @endforeach
+
+                                                                <td class="stack-phone" align="center" style="padding: 0 12px">
                                                                     <a
                                                                         href="tel:{{ preg_replace('/\D+/', '', $phone) }}"
                                                                         style="
@@ -178,22 +203,6 @@
                                                                         "
                                                                     >
                                                                         {{ $phone }}
-                                                                    </a>
-                                                                </td>
-
-                                                                <td class="stack" align="center" style="padding: 0 12px">
-                                                                    <a
-                                                                        href="mailto:{{ $email }}"
-                                                                        style="
-                                                                            color: #2f4a5f;
-                                                                            font-family: {{ $font }};
-                                                                            font-size: 14px;
-                                                                            font-weight: 700;
-                                                                            line-height: 1.5;
-                                                                            text-decoration: none;
-                                                                        "
-                                                                    >
-                                                                        {{ $email }}
                                                                     </a>
                                                                 </td>
                                                             </tr>
