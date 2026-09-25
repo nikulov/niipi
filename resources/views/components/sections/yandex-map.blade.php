@@ -6644,5 +6644,5 @@
 </script>
 
 <section class="px-inner-section-x my-inner-section-y mx-auto w-full max-w-1242">
-    <div id="map" style="height: 500px"></div>
+    <div id="map" class="isolate" style="height: 500px"></div>
 </section>

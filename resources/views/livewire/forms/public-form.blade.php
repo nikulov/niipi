@@ -45,12 +45,12 @@
                         <div class="px-inner-section-x to-top-dark relative flow-root">
                             <div @click.prevent="openSuccess = false" class="cursor-pointer">
                                 <x-icon.icon-close-cross
-                                    class="fill-accent-add dark:fill-accent-add-dark top-inner-section-y absolute right-10 h-6 w-6"
+                                    class="fill-accent-add dark:fill-accent-add-dark top-inner-section-y absolute right-10 z-100 h-6 w-6"
                                 />
                             </div>
 
                             <div
-                                class="text-text dark:text-white-dark rich-editor py-inner-section-y flex flex-col items-center justify-center"
+                                class="text-text dark:text-white-dark rich-editor flex flex-col items-center justify-center py-[calc(var(--spacing-inner-section-y)*2)]"
                             >
                                 {!! $viewData['successMessage'] ?? '' !!}
                             </div>

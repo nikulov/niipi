@@ -68,6 +68,26 @@
 `@layer components { ... }` — компонентные классы (`btn`, `card-wrapper`,
 `menu-link*`, `swiper-*`, `rich-editor *`).
 
+## z-index scale
+
+Fixed ladder, don't invent values outside it:
+
+| z | what |
+| --- | --- |
+| 10–30 | decor inside cards, sliders, galleries |
+| 50 | mobile menu, to-top button, cookie consent |
+| 60 | modals: form success, `modal-block`, gallery, accordion item |
+| 100 | close cross inside a modal |
+| 9999 | theme-switch fade (`layout/base.blade.php`) |
+
+Third-party widgets that inject their own DOM (Yandex Maps ymaps3 controls sit
+at `z-index: 1000`) must not be fought with a higher z on our side — that is an
+arms race and it breaks the ladder for every other modal. Give the widget's
+container its own stacking context instead: `class="isolate"` on `#map` in
+`sections/yandex-map.blade.php` clamps everything ymaps3 renders inside it.
+Styling the widget's own classes down is equally wrong — ymaps3 class names are
+obfuscated and change with the API version.
+
 ## Мобильные брейкпоинты
 
 Стандартные Tailwind (`sm md lg xl 2xl`). Меди-переопределения CSS-переменных
