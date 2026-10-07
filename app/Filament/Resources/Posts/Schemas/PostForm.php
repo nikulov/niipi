@@ -43,12 +43,10 @@ class PostForm
                             ->maxLength(500)
                             ->live(onBlur: true)
                             ->afterStateUpdated(function (Set $set, Get $get, ?string $state, ?string $old, string $operation) {
-                                // Slug and the default title block are only filled in on create
-                                if ($operation === 'create') {
-                                    if (blank($get('slug'))) {
-                                        $set('slug', Str::slug((string) $state));
-                                    }
+                                $set('slug', Str::slug((string) $state));
 
+                                // The default title block is only filled in on create
+                                if ($operation === 'create') {
                                     Title::syncRecordTitle($set, $get, $state, $old);
                                 }
 
